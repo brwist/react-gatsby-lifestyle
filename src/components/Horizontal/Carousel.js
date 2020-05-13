@@ -43,8 +43,6 @@ const Carousel = ({
     backgroundColor
 }) => {
 
-    console.log(items);
-
     const offset = 160
 
     const params = {

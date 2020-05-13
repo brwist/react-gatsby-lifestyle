@@ -6,6 +6,9 @@ import Title from './Title'
 import Video from './Video'
 import TextRenderer from './TextRenderer'
 
+import Swiper from 'react-id-swiper'
+import 'swiper/css/swiper.css'
+
 const Wrapper = styled.div`
     display: flex;
     flex-direction: ${props => props.type == 'Media Left' ? 'row' : 'row-reverse'};
@@ -55,19 +58,43 @@ const ContentBlock = ({
         video
     }
 }) => {
+
+    const offset = 160
+
+    const params = {
+        spaceBetween: offset,
+        slidesOffsetBefore: offset,
+        slidesOffsetAfter: offset,
+        slidesPerView: 'auto',
+        grabCursor: true,
+        scrollbar: {
+            el: '.swiper-scrollbar',
+            hide: false
+        }
+    }
+    
     return (
         <>
             <Wrapper type={type}>
                 <Media>
-                    {images ? images.map(({title, fluid}, i) => {
-                        return (
-                            <StyledImage 
-                                key={i}
-                                fluid={fluid} 
-                                alt={title} 
-                            />
-                        )
-                    }) : (
+                    {images && images.length > 1 ? (
+                        <StyledImage
+                            key={i}
+                            fluid={fluid}
+                            alt={title}
+                        />
+                    ) : (
+                        <Swiper {...params}>
+                            {images.map((image, i) => (
+                                <StyledImage
+                                    key={i}
+                                    fluid={image.fluid}
+                                    alt={image.title}
+                                />
+                            ))}
+                        </Swiper>
+                    )}
+                    {video && (
                         <Video
                             url={video.videoUrl}
                             placeholder={video.placeholder}
