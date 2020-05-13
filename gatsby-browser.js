@@ -1,7 +1,33 @@
-/**
- * Implement Gatsby's Browser APIs in this file.
- *
- * See: https://www.gatsbyjs.org/docs/browser-apis/
- */
+import React from 'react'
+import Provider from './src/components/Layout/Provider'
+import Layout from './src/components/Layout/Layout'
+import { DictionaryContext } from './src/contexts/dictionary'
 
-// You can delete this file if you're not using it
+export const wrapRootElement = ({ element }) => <Provider>{element}</Provider>
+
+export const wrapPageElement = ({
+    element,
+    props: {
+        location,
+        pageContext: {
+            dictionary,
+            layout,
+            theme,
+            instagram
+        }
+    }
+}) => {
+    return (
+        <DictionaryContext.Provider value={dictionary && dictionary.data}>
+            <Layout
+                lang={layout.langSlug}
+                location={location}
+                contentLayout={layout}
+                contentTheme={theme}
+                contentInstagram={instagram}
+            >
+                {element}
+            </Layout>
+        </DictionaryContext.Provider>
+    )
+}

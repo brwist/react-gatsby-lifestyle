@@ -1,11 +1,11 @@
 import React from 'react'
 
-const NotFound = () => {
+const NotFoundTemplate = () => {
     return (
         <div>
-            Not Found
+            
         </div>
     )
 }
 
-export default NotFound
+export default NotFoundTemplate
