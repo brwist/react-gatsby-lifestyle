@@ -2,23 +2,25 @@ import React from 'react'
 
 import Section from './Section'
 import HeroBanner from './../HeroBanner'
-import HorizontalScroll from './../Horizontal/HorizontalScroll'
+import HorizontalSection from './../Horizontal/HorizontalSection'
 import Faq from './../Faq'
 import Grid from './../Grid'
 import Upcoming from './../Upcoming'
 import JoinUs from './../JoinUs'
 import ContentBlock from './../ContentBlock'
 import InstagramFeed from './../InstagramFeed'
+import Contact from './../Contact'
 
 const Constructor = ({ 
     lang,
     data,
+    slug,
     category,
     instagram
 }) => {
     
-    const renderComponent = (typename, component, inView, backgroundColor) => {
-        console.log(typename)
+    const renderComponent = (typename, component, inView, slug, backgroundColor) => {
+        // console.log(typename)
         switch (typename) {
             case 'ContentfulComponentHeroBanner': return (
                 <HeroBanner 
@@ -29,9 +31,10 @@ const Constructor = ({
                 />
             )
             case 'ContentfulComponentHorizontalScroll': return (
-                <HorizontalScroll 
+                <HorizontalSection 
                     lang={lang} 
-                    inView={inView} 
+                    inView={inView}
+                    slug={slug}
                     data={component} 
                     category={category}
                     backgroundColor={backgroundColor} 
@@ -50,10 +53,28 @@ const Constructor = ({
                 <JoinUs lang={lang} inView={inView} data={component} />
             )
             case 'ContentfulComponentContentBlock': return (
-                <ContentBlock lang={lang} inView={inView} data={component} />
+                <ContentBlock 
+                    lang={lang} 
+                    inView={inView} 
+                    data={component} 
+                />
             )
             case 'ContentfulComponentInstagramFeed': return (
-                <InstagramFeed lang={lang} inView={inView} data={component} items={instagram} backgroundColor={backgroundColor}/>
+                <InstagramFeed 
+                    lang={lang} 
+                    inView={inView} 
+                    data={component} 
+                    items={instagram} 
+                    backgroundColor={backgroundColor}
+                />
+            )
+            case 'ContentfulComponentContact': return (
+                <Contact
+                    lang={lang}
+                    inView={inView}
+                    data={component}
+                    backgroundColor={backgroundColor}
+                />
             )
         }
     }
@@ -77,7 +98,7 @@ const Constructor = ({
                             flowLine
                         }}
                     >
-                        {inView => renderComponent(__typename, component, inView, backgroundColor)}
+                        {inView => renderComponent(__typename, component, inView, slug, backgroundColor)}
                     </Section>
                 )
             })}    

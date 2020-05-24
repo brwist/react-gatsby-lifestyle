@@ -10,12 +10,18 @@ export const ContactQuery = graphql`
         contentDescription {
             json
         }
+        image {
+            title
+            fluid(maxWidth: 1280, quality: 100) {
+                ...GatsbyContentfulFluid_withWebp
+            }
+        }
         locations {
             title
             instagram
             facebook
             address {
-              json
+                json
             }
         }
     }

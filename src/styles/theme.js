@@ -1,11 +1,13 @@
 import { css } from 'styled-components'
 
 const mobileVW = px => {
-    return `${(px / 375) * 100}vw`
+    const number = (px / 375) * 100
+    return `${number.toFixed(2)}vw`
 }
 
 const desktopVW = px => {
-    return `${(px / 1920) * 100}vw`
+    const number = (px / 1920) * 100
+    return `${number.toFixed(2)}vw`
 }
 
 const breakpoints = {
@@ -50,10 +52,6 @@ const fontSizes = {
 
 const sizes = {
     desktop: desktopVW(32)
-}
-
-const maxWidth = {
-    desktop: 1600
 }
 
 const styles = {
@@ -115,7 +113,6 @@ const theme = {
     fontFamilies,
     fontSizes,
     sizes,
-    maxWidth,
     styles,
     above,
     below,

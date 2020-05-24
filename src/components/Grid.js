@@ -5,10 +5,12 @@ import { Link } from 'gatsby'
 
 import Container from './Layout/Container'
 import ButtonArrow from './Buttons/ButtonArrow'
+import Tags from './Tags'
 
 import { generatePath } from './../utils/helpers'
+import TextRenderer from './TextRenderer'
 
-const Wrapper = styled(Container)`
+const Wrapper = styled.div`
     padding: calc(${props => props.theme.sizes.desktop} * 10) 0;
 `
 
@@ -26,7 +28,9 @@ const StyledItem = styled.li`
 
 `
 
-const ImageWrapper = styled.div`
+const ImageWrapper = styled(Link)`
+    display: block;
+    
     position: relative;
 
     margin-bottom: ${props => props.theme.sizes.desktop};
@@ -39,15 +43,23 @@ const StyledImage = styled(Image)`
     position: absolute !important;
 `
 
-const Title = styled.h4`
-    display: block;
+const Header = styled.div`
+    position: relative;
 
-    margin-bottom: ${props => props.theme.sizes.desktop};
+    ${props => props.theme.styles.flexBox.horCen};
+
+    margin-bottom: ${props => props.theme.desktopVW(24)};
+`
+
+const Heading = styled.h4`
+    display: block;
 
     font-family: ${props => props.theme.fontFamilies.plainLight};
     font-size: ${props => props.theme.fontSizes.desktop.h5};
     line-height: 1.3;
 `
+
+const Description = styled(TextRenderer)``
 
 const Footer = styled.div`
     ${props => props.theme.styles.flexBox.horCen};
@@ -63,16 +75,38 @@ const Category = styled.span`
     text-transform: uppercase;
 `
 
-const Item = ({ lang, data: { name, slug, category, featuredImage } }) => {
+const Item = ({ 
+    lang, 
+    gridCategory,
+    data: { 
+        name,
+        slug,
+        category,
+        featuredImage,
+        buttonLabel,
+        excerpt,
+        components
+    } 
+}) => {
     return (
         <StyledItem>
-            <ImageWrapper>
+            <ImageWrapper to={generatePath(lang, `${category.toLowerCase()}/${slug}`)}>
                 <StyledImage fluid={featuredImage.fluid} alt={featuredImage.title} />
             </ImageWrapper>
-            <Title>{name}</Title>
+            <Header>
+                <Heading>{name}</Heading>
+                {gridCategory == 'Careers' && components && components[0].tags && (
+                    <Tags data={components[0].tags} slice={1}/>
+                )}
+            </Header>
+            {gridCategory != 'News & Events' && (
+                <Description data={excerpt} />
+            )}
             <Footer>
-                <ButtonArrow label='Read more' to={generatePath(lang, slug)} />
-                <Category>{category}</Category>
+                <ButtonArrow label={buttonLabel || 'Read more'} to={generatePath(lang, `${category.toLowerCase()}/${slug}`)} />
+                {gridCategory == 'News & Events' && (
+                    <Category>{category}</Category>
+                )}
             </Footer>
         </StyledItem>
     )
@@ -83,16 +117,17 @@ const Grid = ({
     inView,
     data
 }) => {
-    const { category, items } = data
 
-    console.log(items);
+    const { category, items, filterable } = data
 
     return (
         <Wrapper>
-            <Filter>All categories</Filter>
-            <List>
-                {items.map((item, i) => <Item key={i} lang={lang} data={item} />)}
-            </List>
+            <Container>
+                {filterable && <Filter>All categories</Filter>}
+                <List>
+                    {items.map((item, i) => <Item key={i} lang={lang} data={item} gridCategory={category} />)}
+                </List>
+            </Container>
             {/* {isFetching && 'Fetching more list items...'} */}
         </Wrapper>
     )

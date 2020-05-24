@@ -6,8 +6,9 @@ import Constructor from './../components/Layout/Constructor'
 const PageTemplate = ({
     pageContext: {
         layout: {
-            langSlug
-        },
+            langSlug,
+            slug
+        }
     },
     data: {
         contentfulPage: {
@@ -21,6 +22,7 @@ const PageTemplate = ({
         <>
             <Constructor 
                 lang={langSlug}
+                slug={slug}
                 category={category}
                 data={components}
                 instagram={allInstaNode}

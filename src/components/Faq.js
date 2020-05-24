@@ -106,6 +106,7 @@ const Front = styled.div`
 const Question = styled.p`
     position: relative;
 
+    font-family: ${props => props.theme.fontFamilies.plainRegular};
     font-size: ${props => props.theme.fontSizes.desktop.h6};
     line-height: 1.3;
 
@@ -127,11 +128,18 @@ const Back = styled.div`
 
     background-color: ${props => props.theme.colors.white};
 
-    color: ${props => props.theme.colors.dark};
+    color: ${props => props.theme.colors.light};
 `
 
 const Answer = styled(TextRenderer)`
     position: relative;
+
+    width: 75%;
+
+    font-size: ${props => props.theme.fontSizes.desktop.h6};
+    line-height: 1.3;
+
+    color: currentColor;
 `
 
 const Background = styled(Image)`
@@ -142,7 +150,13 @@ const Background = styled(Image)`
 
     ${props => props.theme.styles.image.objectCover};
 
-    opacity: 0.35;
+    &:after {
+        content: '';
+        
+        ${props => props.theme.styles.element.fill};
+
+        background-color: rgba(16, 16, 16, 0.65);
+    }
 `
 
 const Faq = ({

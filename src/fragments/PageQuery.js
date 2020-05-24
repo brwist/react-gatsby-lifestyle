@@ -5,6 +5,7 @@ export const PageQuery = graphql`
         name
         category
         slug
+        hidden
         components {
             ... on ContentfulComponentContact {
                 ...ContactQuery

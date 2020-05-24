@@ -1,0 +1,116 @@
+import React, { useState, useEffect } from 'react'
+import styled from 'styled-components'
+
+import ButtonSubmit from './../Buttons/ButtonSubmit'
+import TextRenderer from './../TextRenderer'
+import Question from './Question'
+
+import { questions, results } from './../../data/selftest'
+
+const Wrapper = styled.div``
+
+const Title = styled.h4`
+    display: block;
+
+    margin-bottom: ${props => props.theme.sizes.desktop};
+
+    font-family: ${props => props.theme.fontFamilies.nbBold};
+    font-size: ${props => props.theme.fontSizes.desktop.h5};
+
+    text-transform: uppercase;
+`
+
+const Description = styled.p``
+
+const Questions = styled.div``
+
+const Form = styled.form`
+    margin-top: ${props => props.theme.desktopVW(80)};
+`
+
+const ResultWrapper = styled.div``
+
+const SelfTest = ({
+    lang,
+    className,
+    data: {
+        contentTitle,
+        contentDescription
+    }
+}) => {
+
+    const [answers, setAnswers] = useState([])
+    const [formResult, setFormResult] = useState(0)
+    const [formSubmitted, setFormSubmitted] = useState(false)
+    const [submitActive, setSubmitActive] = useState(false)
+    
+    const checkResult = (e) => {
+        e.preventDefault()
+
+        let faults = 0
+
+        answers.forEach((el, i) => {
+            if (questions[i].correct != el) faults++
+        })
+
+        setFormResult(faults < 3 ? 0 : 1)
+        setFormSubmitted(true)
+    }
+
+    useEffect(() => {
+        let defaultAnswers = []
+
+        questions.forEach((el) => {
+            defaultAnswers.push(2)
+        })
+
+        setAnswers(defaultAnswers)
+    }, [])
+
+    const changeAnswers = (value, index) => {
+        let currentAnswers = answers
+
+        currentAnswers[index] = value
+
+        setAnswers(currentAnswers)
+
+        if (!currentAnswers.includes(2)) {
+            setSubmitActive(true)
+        }
+    }
+
+    return (
+        <Wrapper>
+            {formSubmitted ? (
+                <ResultWrapper>
+                    <Title>{results[formResult].title}</Title>
+                    <Description>{results[formResult].description}</Description>
+                </ResultWrapper>
+            ) : (
+                <Questions>
+                    <Title>{contentTitle}</Title>
+                    <TextRenderer data={contentDescription} />
+                    <Form>
+                        {questions.map((question, i) => {
+                            return (
+                                <Question 
+                                    key={i} 
+                                    index={i + 1}
+                                    data={question}
+                                    questionState={e => changeAnswers(e, i)}
+                                />
+                            )
+                        })}
+                        <ButtonSubmit
+                            inactive={submitActive ? 'true' : 'false'}
+                            onClick={(e) => checkResult(e)}
+                            value='View my testresults'
+                        />
+                    </Form>
+                </Questions>
+            )}
+        </Wrapper>
+    )
+}
+
+export default SelfTest

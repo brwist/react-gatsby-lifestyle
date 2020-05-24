@@ -10,8 +10,11 @@ import { DictionaryContext } from './../contexts/dictionary'
 import { generatePath } from '../utils/helpers'
 
 const Wrapper = styled.div`
-    max-width: ${props => props.theme.breakpoints.wide}px;
     padding: calc(${props => props.theme.sizes.desktop} * 5) 0 calc(${props => props.theme.sizes.desktop} * 10) 0;
+`
+
+const StyledContainer = styled(Container)`
+    max-width: ${props => props.theme.breakpoints.wide}px;
 `
 
 const Grid = styled.ul`
@@ -22,7 +25,7 @@ const Grid = styled.ul`
 const Header = styled(Title)`
     position: absolute;
 
-    top: ${props => props.theme.desktopVW(250)};
+    top: ${props => props.theme.desktopVW(150)};
     left: 50%;
 
     width: 50%;
@@ -149,7 +152,7 @@ const Upcoming = ({
 }) => {
     return (
         <Wrapper>
-            <Container>
+            <StyledContainer>
                 <Header 
                     lang={lang} 
                     title={contentTitle} 
@@ -164,7 +167,7 @@ const Upcoming = ({
                     lang={lang} 
                     description={contentDescription}
                 />
-            </Container>
+            </StyledContainer>
         </Wrapper>
     )
 }

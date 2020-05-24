@@ -51,6 +51,10 @@ const GlobalStyle = createGlobalStyle`
 		overflow: ${props => props.shouldDisableScroll ? 'hidden' : 'auto'};
 		
 		color: ${props => props.theme.colors.light};
+
+		&.ReactModal__Body--open {
+			overflow: hidden;
+		}
     }
 
     *, *:before, *:after {
@@ -86,15 +90,26 @@ const GlobalStyle = createGlobalStyle`
 	}
 
 	p {
-		font-family: ${props => props.theme.fontFamilies.plainLight}, 'Arial', sans-serif;
+		font-family: ${props => props.theme.fontFamilies.plainLight};
 		font-size: ${props => props.theme.fontSizes.desktop.p};
-		line-height: 1.5;
+		line-height: 1.35;
 	}
 
-	h4 {
-		font-family: ${props => props.theme.fontFamilies.plainLight};
-		font-size: ${props => props.theme.fontSizes.desktop.h6};
-		line-height: 1.3;
+	.ReactModal__Overlay {
+		padding: ${props => props.theme.desktopVW(120)} 0;
+
+		background-color: rgba(16, 16, 16, 0.8) !important;
+
+		overflow: scroll;
+
+		z-index: 2;
+	}
+
+	.popup-modal {
+		width: 100%;
+		max-width: ${props => props.theme.desktopVW(1200)};
+
+		margin: 0 auto ${props => props.theme.desktopVW(120)} auto;
 	}
 `
 

@@ -6,6 +6,8 @@ import Container from './Layout/Container'
 import Title from './Title'
 import TextRenderer from './TextRenderer'
 import Testimonial from './Testimonial'
+import HomeBanner from './HomeBanner'
+import Locations from './Locations'
 
 const StyledHeroBanner = styled.div`
     position: relative;
@@ -13,18 +15,13 @@ const StyledHeroBanner = styled.div`
     width: 100%;
     
     height: 100vh;
-    max-height: ${props => props.theme.desktopVW(1080)};
-
-    ${props => props.theme.below.maxWidth`
-        padding: 0 ${props => props.theme.sizes.desktop};
-    `}
+    max-height: 2000px;
 `
 
-const StyledTitle = styled(Title)`
+const Content = styled.div`
     position: absolute;
     
     top: 50%;
-    left: 0;
 
     transform: translateY(-50%);
 `
@@ -48,50 +45,63 @@ const StyledImage = styled(Image)`
 
 const HeroBanner = ({
     lang,
+    inView,
     className,
     category,
-    data: {
+    data
+}) => {
+
+    const {
         bannerType,
-        tags, 
+        tags,
         images,
-        headerTitle, 
+        headerTitle,
         headerDescription,
         testimonial,
         internalLinks,
         externalLink,
-        externalLinkLabel
-    }
-}) => {
+        externalLinkLabel,
+        contact
+    } = data
     
     const titleSize = (bannerType == 'Home') ? 'extra-large' : (bannerType == 'Page') ? 'large' : 'small'
 
     return (
         <StyledHeroBanner className={className} type={bannerType}>
-            {images && (
-                <ImageWrapper>
-                    {images.map(({ fluid, title }, i) => (
-                        <StyledImage key={i} fluid={fluid} alt={title} />
-                    ))}
-                </ImageWrapper>
-            )}
-            <Container>
-                <StyledTitle 
-                    lang={lang}
-                    size={titleSize}
-                    tags={tags}
-                    title={headerTitle} 
-                    description={headerDescription}
-                    testimonial={testimonial}
-                    category={category}
-                    links={internalLinks || externalLink && {
-                        internal: internalLinks,
-                        external: {
-                            link: externalLink,
-                            label: externalLinkLabel
-                        }
-                    }}
-                />
-            </Container>
+            {bannerType != 'Home' ? (
+                <>
+                    {images && (
+                        <ImageWrapper>
+                            {images.map(({ fluid, title }, i) => (
+                                <StyledImage key={i} fluid={fluid} alt={title} />
+                            ))}
+                        </ImageWrapper>
+                    )}
+                    <Container>
+                        <Content>
+                            <Title
+                                lang={lang}
+                                size={titleSize}
+                                tags={tags}
+                                title={headerTitle}
+                                description={headerDescription}
+                                testimonial={testimonial}
+                                category={category}
+                                links={internalLinks || externalLink && {
+                                    internal: internalLinks,
+                                    external: {
+                                        link: externalLink,
+                                        label: externalLinkLabel
+                                    }
+                                }}
+                            />
+                            {contact && (
+                                <Locations lang={lang} inView={inView} data={contact}/>
+                            )}
+                        </Content>
+                    </Container>
+                </>
+            ) : <HomeBanner inView={inView} lang={lang} className={className} data={data} category={category} />}
         </StyledHeroBanner>
     )
 }

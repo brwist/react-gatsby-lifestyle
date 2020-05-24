@@ -82,13 +82,13 @@ const StyledLink = styled(Link)`
 
         position: absolute;
 
-        bottom: -2px;
+        bottom: -5px;
         left: 0;
 
         width: 0;
         height: 1px;
 
-        background-color: ${props => props.theme.colors.white};
+        background-color: ${props => props.theme.colors.light};
     }
 `
 

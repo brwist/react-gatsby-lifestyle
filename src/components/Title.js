@@ -169,6 +169,7 @@ const getLinkComponent = (links, lang) => {
 
 const Title = ({
     lang,
+    inView,
     category,
     size,
     title,

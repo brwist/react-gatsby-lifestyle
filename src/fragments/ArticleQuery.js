@@ -23,7 +23,7 @@ export const ArticleQuery = graphql`
         }
         name
         author
-        date
+        date(formatString: "DD / MM / YYYY")
         link
     }
 `

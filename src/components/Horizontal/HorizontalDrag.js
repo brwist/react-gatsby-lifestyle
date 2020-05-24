@@ -2,17 +2,15 @@ import React from 'react'
 import styled from 'styled-components'
 import theme from './../../styles/theme'
 
-import Swiper from 'react-id-swiper'
-import 'swiper/css/swiper.css'
-
 import Card from './Card'
 import HorizontalTitle from './HorizontalTitle'
+import Carousel from './../Carousel'
 
 const Wrapper = styled.div`
-    padding: ${props => props.theme.desktopVW(240)} 0;
+    padding: ${props => props.theme.desktopVW(120)} 0;
 
     .swiper-wrapper {
-        padding: ${props => props.theme.desktopVW(120)} 0 ${props => props.theme.desktopVW(160)} 0;
+        padding: ${props => props.theme.desktopVW(120)} 0;
     }
 
     .swiper-scrollbar {
@@ -31,7 +29,7 @@ const Wrapper = styled.div`
 	}
 `
 
-const Carousel = ({
+const HorizontalDrag = ({
     lang,
     inView,
     items,
@@ -39,11 +37,12 @@ const Carousel = ({
     description,
     component,
     type,
+    slug,
     information,
     backgroundColor
 }) => {
 
-    const offset = 160
+    const offset = 80
 
     const params = {
         spaceBetween: offset,
@@ -86,20 +85,23 @@ const Carousel = ({
                 size='normal'
                 useInlineLink={true}
             />
-            {/* <Swiper {...params}>
-                {items.map((item, i) => (
-                    <Card
-                        key={i}
-                        lang={lang}
-                        data={item}
-                        component={component}
-                        information={information}
-                        type={type}
-                    />
-                ))}
-            </Swiper> */}
+            <Carousel params={params}>
+                {items.map((item, i) => {
+                    return (
+                        <Card
+                            key={i}
+                            lang={lang}
+                            data={item}
+                            component={component}
+                            information={information}
+                            type={type}
+                            active={item.slug != slug || component == 'InstagramFeed'}
+                        />
+                    )
+                })}
+            </Carousel>
         </Wrapper>
     )
 }
 
-export default Carousel
+export default HorizontalDrag

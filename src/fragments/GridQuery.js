@@ -5,15 +5,24 @@ export const GridQuery = graphql`
         __typename
         componentTitle
         category
+        filterable
         items {
             ...on ContentfulArticle {
                 name
                 category
                 slug
+                excerpt {
+                    json
+                }
                 featuredImage {
                     title
                     fluid(maxWidth: 480, quality: 100) {
                         ...GatsbyContentfulFluid_withWebp
+                    }
+                }
+                components {
+                    ... on ContentfulComponentHeroBanner {
+                        ...HeroBannerQuery
                     }
                 }
             }
@@ -21,6 +30,21 @@ export const GridQuery = graphql`
                 name
                 category
                 slug
+                excerpt {
+                    json
+                }
+                buttonLabel
+                featuredImage {
+                    title
+                    fluid(maxWidth: 480, quality: 100) {
+                        ...GatsbyContentfulFluid_withWebp
+                    }
+                }
+                components {
+                    ... on ContentfulComponentHeroBanner {
+                        ...HeroBannerQuery
+                    }
+                }
             }
         }
     }

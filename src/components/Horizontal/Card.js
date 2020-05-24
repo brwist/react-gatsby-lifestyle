@@ -1,6 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 import Image from 'gatsby-image'
+import { Link } from 'gatsby'
 
 import InstagramSvg from './../../images/graphics/instagram.svg'
 
@@ -11,18 +12,30 @@ import { generatePath } from './../../utils/helpers'
 import Tags from '../Tags'
 import Testimonial from '../Testimonial'
 
-const StyledCard = styled.div`
+const CardStyles = css`
     position: relative;
 
     flex-shrink: 0;
 
     width: ${props => props.theme.desktopVW(560)};
 
-    // padding-bottom: calc(${props => props.theme.sizes.desktop} + ${props => props.theme.desktopVW(40)});
+    ${props => props.active == 'false' && `
+        pointer-events: none;
+
+        &:after {
+            content: '';
+
+            ${props.theme.styles.element.fill};
+
+            background-color: ${props.theme.colors.dark};
+
+            opacity: 0.65;
+        }
+    `}
 
     &:hover {
         .button-wrapper {
-            display: block;
+            opacity: 1;
         }
     }
 
@@ -39,6 +52,14 @@ const StyledCard = styled.div`
             box-shadow: 0 0 80px 20px ${props.theme.colors.dark};
         }
     `}
+`
+
+const NormalCard = styled.div`
+    ${CardStyles}
+`
+
+const LinkedCard = styled(Link)`
+    ${CardStyles}
 `
 
 const SmallDescription = styled.p`
@@ -119,12 +140,12 @@ const Title = styled.span`
 `
 
 const ButtonWrapper = styled.div`
-    display: none;
+    opacity: 0;
 
-    position: absolute;
+    // position: absolute;
 
-    left: 0;
-    bottom: 0;
+    // left: 0;
+    // bottom: 0;
 `
 
 const ImageComponent = ({ image, alt, instagram }) => {
@@ -146,11 +167,12 @@ const Card = ({
     className,
     component,
     information,
-    type
+    type,
+    active
 }) => {
     if (component == 'InstagramFeed') {
         return (
-            <StyledCard className={className}>
+            <NormalCard className={className}>
                 <ImageComponent
                     image={data.localFile.childImageSharp.fluid}
                     alt={data.username}
@@ -159,34 +181,41 @@ const Card = ({
                 <SmallDescription>
                     <Title>@{data.username} — </Title>{data.caption != null && data.caption.substring(0, 150)}...
                 </SmallDescription>
-            </StyledCard>
+            </NormalCard>
         )
     } else {
         if (information == 'Excerpt only') {
-            <StyledCard className={className} type={type}>
-                {data.featuredImage.fluid != null && (
-                    <ImageComponent
-                        image={data.featuredImage.fluid}
-                        alt={data.featuredImage.title}
-                    />
-                )}
-                <LargeDescription>
-                    <Caption data={data.excerpt} />
-                </LargeDescription>
-                {data.buttonLabel && (
-                    <ButtonWrapper className='button-wrapper'>
-                        <ButtonPrimary
-                            label={data.buttonLabel}
-                            to={generatePath(lang, data.buttonLink || data.slug)}
-                            inverted={true}
-                        />
-                    </ButtonWrapper>
-                )}
-            </StyledCard>
-        } else if (information == 'Extended') {
-            const { tags, testimonial, headerDescription } = data.components[0]
             return (
-                <StyledCard className={className} type={type}>
+                <NormalCard className={className} type={type} active={active.toString()}>
+                    {data.featuredImage.fluid != null && (
+                        <Link to={generatePath(lang, data.buttonLink || data.slug)}>
+                            <ImageComponent
+                                image={data.featuredImage.fluid}
+                                alt={data.featuredImage.title}
+                            />
+                        </Link>
+                    )}
+                    <LargeDescription>
+                        <Caption data={data.excerpt} />
+                    </LargeDescription>
+                    {data.buttonLabel && (
+                        <ButtonWrapper className='button-wrapper'>
+                            <ButtonPrimary
+                                label={data.buttonLabel}
+                                to={generatePath(lang, data.buttonLink || data.slug)}
+                                inverted={true}
+                            />
+                        </ButtonWrapper>
+                    )}
+                </NormalCard>
+            )
+        } else if (information == 'Extended') {
+            
+            const { category, slug } = data
+            const { tags, testimonial, headerDescription } = data.components[0]
+            
+            return (
+                <LinkedCard className={className} type={type} to={generatePath(lang, `${category.toLowerCase()}/${slug}`)} active={active.toString()}>
                     {data.featuredImage.fluid != null && (
                         <ImageComponent
                             image={data.featuredImage.fluid}
@@ -205,16 +234,18 @@ const Card = ({
                             <StyledTestimonial data={testimonial} />
                         )}
                     </LargeDescription>
-                </StyledCard>
+                </LinkedCard>
             )
         } else {
             return (
-                <StyledCard className={className} type={type}>
+                <NormalCard className={className} type={type} active={active.toString()}>
                     {data.featuredImage.fluid != null && (
-                        <ImageComponent
-                            image={data.featuredImage.fluid}
-                            alt={data.featuredImage.title}
-                        />
+                        <Link to={generatePath(lang, data.buttonLink || data.slug)}>
+                            <ImageComponent
+                                image={data.featuredImage.fluid}
+                                alt={data.featuredImage.title}
+                            />
+                        </Link>
                     )}
                     <Header>
                         <Heading>{data.name}</Heading>
@@ -222,16 +253,13 @@ const Card = ({
                     <LargeDescription>
                         <Caption data={data.excerpt} />
                     </LargeDescription>
-                    {data.buttonLabel && (
-                        <ButtonWrapper className='button-wrapper'>
-                            <ButtonPrimary
-                                label={data.buttonLabel}
-                                to={generatePath(lang, data.buttonLink || data.slug)}
-                                inverted={true}
-                            />
-                        </ButtonWrapper>
-                    )}
-                </StyledCard>
+                    <ButtonWrapper className='button-wrapper'>
+                        <ButtonPrimary
+                            label={data.buttonLabel || `Discover our ${data.name}`}
+                            to={generatePath(lang, data.buttonLink || data.slug)}
+                        />
+                    </ButtonWrapper>
+                </NormalCard>
             )
         }
     }

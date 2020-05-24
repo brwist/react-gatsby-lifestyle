@@ -21,6 +21,20 @@ module.exports = {
 				path: `${__dirname}/src/images`
 			}
 		},
+		{
+			resolve: `gatsby-plugin-modal-routing`,
+			options: {
+				// A selector to set react-modal's app root to, default is `#___gatsby`
+				// See http://reactcommunity.org/react-modal/accessibility/#app-element
+				appElement: '#___gatsby',
+
+				// Object of props that will be passed to the react-modal container
+				// See http://reactcommunity.org/react-modal/#usage
+				modalProps: {
+					className: `popup-modal`,
+				}
+			}
+		},
 		`gatsby-transformer-sharp`,
 		{
 			resolve: `gatsby-plugin-sharp`,
@@ -64,21 +78,49 @@ module.exports = {
 				username: `rockstarlifestyleamsterdam`,
 				access_token: `8506566196.1677ed0.b80d4fd018ee426f8c002198c1d74a1a`,
 				instagram_id: `1481082465`,
-				maxPosts: 30
+				maxPosts: 12
 			}
 		},
 		{
 			resolve: `gatsby-source-instagram`,
 			options: {
 				type: `hashtag`,
-				hashtag: `rockstarlifestyle`
+				hashtag: `performancerladam`
 			}
 		},
 		{
 			resolve: `gatsby-source-instagram`,
 			options: {
 				type: `hashtag`,
-				hashtag: `amsterdam`
+				hashtag: `kitchenrladam`
+			}
+		},
+		{
+			resolve: `gatsby-source-instagram`,
+			options: {
+				type: `hashtag`,
+				hashtag: `eventsrladam`
+			}
+		},
+		{
+			resolve: `gatsby-source-instagram`,
+			options: {
+				type: `hashtag`,
+				hashtag: `tripsrladam`
+			}
+		},
+		{
+			resolve: `gatsby-source-instagram`,
+			options: {
+				type: `hashtag`,
+				hashtag: `instituterladam`
+			}
+		},
+		{
+			resolve: `gatsby-source-instagram`,
+			options: {
+				type: `hashtag`,
+				hashtag: `spiritrladam`
 			}
 		}
 	]

@@ -44,7 +44,7 @@ const handleDynamicHeight = (ref, setDynamicHeight) => {
     setDynamicHeight(dynamicHeight)
 }
 
-const Scroller = ({ lang, title, description, children }) => {
+const Scroller = ({ children }) => {
 
     const [dynamicHeight, setDynamicHeight] = useState(null)
     const [translateX, setTranslateX] = useState(0)

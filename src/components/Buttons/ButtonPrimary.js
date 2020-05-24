@@ -21,13 +21,14 @@ const ButtonStyles = css`
     ${props => props.inverted == 'true' && `
         background-color: ${props.theme.colors.light};
         
-        border: ${props.theme.desktopVW(2)} solid ${props.theme.colors.dark};
+        border: ${props.theme.desktopVW(2)} solid ${props.theme.colors.light};
         
         color: ${props.theme.colors.dark};
     `}
 
     ${props => props.colored == 'true' && `
         border: ${props.theme.desktopVW(2)} solid currentColor;
+        
         background-color: currentColor;
 
         .label {
@@ -53,7 +54,7 @@ const Label = styled.span`
 
     position: relative;
 
-    top: 1.5px;
+    top: 1px;
 
     font-family: ${props => props.theme.fontFamilies.nbRegular};
     font-size: ${props => props.theme.desktopVW(16)};
@@ -78,12 +79,13 @@ const ButtonPrimary = ({
     href,
     label,
     inverted,
-    colored
+    colored,
+    modal
 }) => {
     if (onClick) {
         return (
             <StyledButton 
-                className={className} 
+                className={`button ${className || ''}`} 
                 onClick={onClick} 
                 inverted={inverted ? 'true' : 'false'}
                 colored={colored ? 'true' : 'false'}
@@ -94,10 +96,13 @@ const ButtonPrimary = ({
     } else if (to) {
         return (
             <StyledInternal 
-                className={className} 
+                className={`button ${className || ''}`} 
                 to={to} 
                 inverted={inverted ? 'true' : 'false'}
                 colored={colored ? 'true' : 'false'}
+                state={{
+                    modal: modal
+                }}
             >
                 {buttonInside(label)}
             </StyledInternal>
@@ -106,7 +111,7 @@ const ButtonPrimary = ({
         const url = href.includes('@') && !href.includes('mailto') ? 'mailto:' + href : href
         return (
             <StyledExternal 
-                className={className} 
+                className={`button ${className || ''}`} 
                 href={url} 
                 target={url.includes('mailto') ? '' : '_blank'} 
                 inverted={inverted ? 'true' : 'false'}

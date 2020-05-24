@@ -20,12 +20,12 @@ export const ContentBlockQuery = graphql`
         video { 
             videoUrl
             videoSubtitle
-            placeholder {
-                title
-                fluid(maxWidth: 720, quality: 100) {
-                    ...GatsbyContentfulFluid_withWebp
-                }
-            }
+            # placeholder {
+            #     title
+            #     fluid(maxWidth: 720, quality: 100) {
+            #         ...GatsbyContentfulFluid_withWebp
+            #     }
+            # }
         }
         flowLine
     }

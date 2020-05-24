@@ -5,14 +5,14 @@ const StyledContainer = styled.div`
     position: relative;
     
     width: 100%;
-    max-width: ${props => props.theme.maxWidth.desktop}px;
+    max-width: ${props => props.theme.breakpoints.maxWidth}px;
     
     height: 100%;
 
     margin: 0 auto;
 
     ${props => props.theme.below.maxWidth`
-        padding: 0 calc(${props => props.theme.sizes.desktop} * 2);
+        padding: 0 calc(${props => props.theme.sizes.desktop} * 3);
     `}
 `
 

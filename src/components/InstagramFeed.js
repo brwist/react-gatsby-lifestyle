@@ -1,15 +1,19 @@
 import React from 'react'
 
-import HorizontalScroll from './Horizontal/HorizontalScroll'
+import HorizontalSection from './Horizontal/HorizontalSection'
 
 const InstagramFeed = ({
     lang,
     inView,
     items,
-    backgroundColor
+    backgroundColor,
+    data: {
+        contentTitle,
+        contentDescription
+    },
 }) => {
     return (
-        <HorizontalScroll
+        <HorizontalSection
             lang={lang} 
             inView={inView} 
             data={{
@@ -17,7 +21,9 @@ const InstagramFeed = ({
                 items: items.nodes,
                 style: 'Straight',
                 itemsInformation: 'Excerpt only',
-                gesture: 'Draggable'
+                gesture: 'Draggable',
+                contentTitle: contentTitle,
+                contentDescription: contentDescription
             }}
             category='Instagram'
             backgroundColor={backgroundColor}

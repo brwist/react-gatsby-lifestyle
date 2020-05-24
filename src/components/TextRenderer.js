@@ -6,6 +6,7 @@ import { BLOCKS, INLINES } from '@contentful/rich-text-types'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 
 import ButtonPrimary from './Buttons/ButtonPrimary'
+import Video from './Video'
 
 import { generatePath } from './../utils/helpers'
 
@@ -17,16 +18,55 @@ const TextStyles = css`
 
 const Heading4 = styled.h4`
     ${TextStyles}
+
+    font-family: ${props => props.theme.fontFamilies.plainRegular};
+    font-size: ${props => props.theme.fontSizes.desktop.h5};
+    line-height: 1.2;
+`
+
+const Heading5 = styled.h5`
+    ${TextStyles}
+
+    font-family: ${props => props.theme.fontFamilies.plainLight};
+    font-size: ${props => props.theme.fontSizes.desktop.h6};
+    line-height: 1.4;
 `
 
 const Paragraph = styled.p`
     ${TextStyles}
+
+    font-family: ${props => props.theme.fontFamilies.plainLight};
+    font-size: ${props => props.theme.fontSizes.desktop.p};
+    line-height: 1.4;
 `
 
 const StyledButtonPrimary = styled(ButtonPrimary)`
     color: currentColor;
 
     border-color: currentColor;
+`
+
+const Media = styled.div`
+    position: relative;
+    
+    margin: calc(${props => props.theme.sizes.desktop} * 4) 0;
+    padding-top: 56% /* Player ratio: 100 / (1280 / 720) */
+`
+
+const StyledVideo = styled(Video)`
+    ${props => props.theme.styles.element.fill};
+
+    .video {
+        position: relative;
+
+        top: initial;
+        left: initial;
+
+        transform: none;
+
+        width: 100%;
+        height: 100%;
+    }
 `
 
 const TextRenderer = ({
@@ -41,9 +81,30 @@ const TextRenderer = ({
                 renderNode: {
                     [BLOCKS.HEADING_1]: (node, children) => <h1 className={className}>{children}</h1>,
                     [BLOCKS.HEADING_4]: (node, children) => <Heading4 className={className}>{children}</Heading4>,
+                    [BLOCKS.HEADING_5]: (node, children) => <Heading5 className={className}>{children}</Heading5>,
                     [BLOCKS.PARAGRAPH]: (node, children) => <Paragraph className={className}>{children}</Paragraph>,
+                    [BLOCKS.EMBEDDED_ENTRY]: (node, children) => {
+                        const { data: { target: { fields } } } = node
+                        if (fields) {
+                            return (
+                                <Media>
+                                    <StyledVideo
+                                        className={className}
+                                        url={fields.videoUrl['en-US']}
+                                        title={fields.name['en-US']}
+                                        inline={true}
+                                        inView={true}
+                                    />
+                                </Media>
+                            )
+                        } else {
+                            return null
+                        }
+                    },
                     [INLINES.HYPERLINK]: (node, children) => {
                         const { data: { uri } } = node
+
+                        console.log(node)
 
                         if (uri.includes('mailto') || uri.includes('http')) {
                             if (!useInlineLink) {

@@ -34,11 +34,7 @@ const StyledMenu = styled.aside`
 const StyledContainer = styled(Container)`
     height: 100%;
 
-    padding: calc(${props => props.theme.sizes.desktop} * 3.75) 0;
-
-    ${props => props.theme.below.maxWidth`
-        padding: ${props => props.theme.sizes.desktop};
-    `}
+    padding: calc(${props => props.theme.sizes.desktop} * 8);
 `
 
 const NavigationWrapper = styled.div`
@@ -63,7 +59,7 @@ const ImageWrapper = styled.div`
     background-color: ${props => props.theme.colors.darkGrey};
 
     ${props => props.theme.below.maxWidth`
-        right: ${props => props.theme.sizes.desktop};
+        right: calc(${props.theme.sizes.desktop} * 8);
     `}
 `
 

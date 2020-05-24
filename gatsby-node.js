@@ -105,8 +105,10 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
         allContentfulPage {
             nodes {
                 ${pageNodes}
+                hidden
                 components {
                     ... on ContentfulComponentInstagramFeed {
+                        __typename
                         instagramHashtag
                     }
                 }
@@ -115,6 +117,15 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
         allContentfulArticle {
             nodes {
                 ${pageNodes}
+            }
+        }
+        allContentfulPopup {
+            nodes {
+                id
+                contentful_id
+                __typename
+                node_locale
+                slug
             }
         }
     }`)
@@ -134,13 +145,34 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
     )(pageQuery)
 
     langSettings.forEach(({ locale, langSlug }) => {    
-        pages.forEach(({ id, category, __typename, node_locale, slug, type, components }) => {
+        pages.forEach(({ id, category, __typename, node_locale, slug, type, hidden, components }) => {
             
-            const hashtag = components && components[0].instagramHashtag != undefined ? components[0].instagramHashtag : 'rockstarlifestyleamsterdam'
+            let hashtag
+            let prefix
             const template = __typename.replace('Contentful', '')
-            const prefix = category == 'Normal' || category == 'World' ? slug : `${category.toLowerCase()}/${slug}`
 
-            if (node_locale === locale) {
+            // Get Instagram hashtag
+            if (components) {
+                components.forEach((item) => {
+                    if (item.__typename == 'ContentfulComponentInstagramFeed') {
+                        hashtag = item.instagramHashtag.replace('#', '')
+                    }
+                })
+            }
+
+            // If no hashtag set to fallback
+            if (hashtag == null) {
+                hashtag = 'rockstarlifestyleamsterdam'
+            }
+
+            // Get page category slug prefix
+            if (category) {
+                prefix = category == 'Normal' || category == 'Worlds' || category == 'Trainers' ? slug : `${category.toLowerCase()}/${slug}`
+            } else {
+                prefix = slug
+            }
+
+            if (node_locale === locale && !hidden) {
                 createPage({
                     path: generatePath(langSlug, prefix),
                     component: path.resolve(`./src/templates/${slug === '404' ? 'NotFound' : template}Template.js`),
@@ -149,6 +181,7 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
                         layout: {
                             langSlug,
                             langSettings,
+                            slug,
                             type,
                             template
                         },

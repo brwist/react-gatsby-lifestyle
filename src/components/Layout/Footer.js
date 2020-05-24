@@ -12,7 +12,7 @@ import Container from './Container'
 
 const StyledFooter = styled.div`
     position: relative;
-    
+
     width: 100%;
 
     ${props => props.type == 'menu' ? `
@@ -25,7 +25,7 @@ const StyledFooter = styled.div`
     `}
 
     ${props => props.theme.below.maxWidth`
-        padding: 0 ${props.theme.sizes.desktop};
+        padding: calc(${props.theme.sizes.desktop} * 2) 0;
     `}
 `
 

@@ -108,7 +108,7 @@ const Header = ({
                             onClick={setMenuOpen}
                         >Close</MenuClose>
                     )}
-                    <ButtonPrimary label='Join Us' to={generatePath(lang, 'join-us')} />
+                    <ButtonPrimary label='Join Us' to={generatePath(lang, 'join-us')} modal/>
                 </InnerRight>
             </StyledContainer>
         </StyledHeader>

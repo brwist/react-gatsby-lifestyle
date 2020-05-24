@@ -8,10 +8,12 @@ import Footer from './Footer'
 const Layout = ({ 
 	children,
 	lang,
+	location,
 	contentTheme
 }) => {
 	
 	const [menuOpen, setMenuOpen] = useState(false)
+	const showFooter = location.pathname.includes('contact') ? false : true
 
   	return (
 		<>
@@ -33,10 +35,12 @@ const Layout = ({
 			<main>
 				{children}
 			</main>
-			<Footer
-				lang={lang}
-				contentTheme={contentTheme}
-			/>
+			{showFooter && (
+				<Footer
+					lang={lang}
+					contentTheme={contentTheme}
+				/>
+			)}
 		</>
 	)
 }

@@ -8,6 +8,7 @@ export const HorizontalScrollQuery = graphql`
         itemsInformation
         componentTitle
         backgroundColor
+        flowLine
         contentTitle {
             json
         }
