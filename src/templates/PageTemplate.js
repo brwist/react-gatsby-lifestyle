@@ -21,7 +21,7 @@ const PageTemplate = ({
 }) => {
     return (
         <>
-            <Seo />
+            {/* <Seo /> */}
             <Constructor 
                 lang={langSlug}
                 slug={slug}
