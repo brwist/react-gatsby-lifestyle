@@ -3,6 +3,7 @@ import { graphql } from 'gatsby'
 import styled from 'styled-components'
 import stickybits from 'stickybits'
 
+import Seo from './../components/Layout/Seo'
 import Constructor from './../components/Layout/Constructor'
 import TextRenderer from '../components/TextRenderer'
 import Container from './../components/Layout/Container'
@@ -217,6 +218,7 @@ const ArticleTemplate = ({
 
     return (
         <>
+            <Seo />
             <Constructor
                 lang={langSlug}
                 category={category}

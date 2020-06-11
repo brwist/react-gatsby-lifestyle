@@ -1,6 +1,7 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 
+import Seo from './../components/Layout/Seo'
 import Constructor from './../components/Layout/Constructor'
 
 const NotFoundTemplate = ({
@@ -19,6 +20,7 @@ const NotFoundTemplate = ({
 }) => {
     return (
         <>
+            <Seo title='404' />
             <Constructor
                 lang={langSlug}
                 slug={slug}

@@ -1,8 +1,8 @@
 import React from 'react'
-import { graphql, Link } from 'gatsby'
+import { graphql } from 'gatsby'
 import { ModalRoutingContext } from 'gatsby-plugin-modal-routing'
-import styled from 'styled-components'
 
+import Seo from './../components/Layout/Seo'
 import PopupPage from './../components/Popup/Page'
 import PopupModal from './../components/Popup/Modal'
 
@@ -18,26 +18,29 @@ const PopupTemplate = ({
     }
 }) => {
     return (
-        <ModalRoutingContext.Consumer>
-            {({ modal, closeTo }) => (
-                <>
-                    {modal ? (
-                        <PopupModal 
-                            lang={langSlug}
-                            data={contentfulPopup}
-                            closeTo={closeTo}
-                            slug={slug}
-                        />
-                    ) : (
-                        <PopupPage 
-                            lang={langSlug}
-                            data={contentfulPopup}
-                            slug={slug}
-                        />
-                    )}
-                </>
-            )}
-        </ModalRoutingContext.Consumer>
+        <>
+        <Seo />
+            <ModalRoutingContext.Consumer>
+                {({ modal, closeTo }) => (
+                    <>
+                        {modal ? (
+                            <PopupModal 
+                                lang={langSlug}
+                                data={contentfulPopup}
+                                closeTo={closeTo}
+                                slug={slug}
+                            />
+                        ) : (
+                            <PopupPage 
+                                lang={langSlug}
+                                data={contentfulPopup}
+                                slug={slug}
+                            />
+                        )}
+                    </>
+                )}
+            </ModalRoutingContext.Consumer>
+        </>
     )
 }
 

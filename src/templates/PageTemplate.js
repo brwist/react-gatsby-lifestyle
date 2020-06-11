@@ -1,8 +1,8 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 
-import Constructor from './../components/Layout/Constructor'
 import Seo from './../components/Layout/Seo'
+import Constructor from './../components/Layout/Constructor'
 
 const PageTemplate = ({
     pageContext: {
