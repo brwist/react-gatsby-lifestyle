@@ -38,6 +38,7 @@ const Line = styled.span`
 
     width: 100%;
     height: ${props => props.theme.desktopVW(1)};
+    min-height: 1px;
 
     background-color: ${props => props.theme.colors.white};
 
@@ -55,6 +56,7 @@ const Line = styled.span`
             transform-origin: left;
 
             width: calc(${props.theme.sizes.mobile} / 2);
+            min-width: 20px;
         }
         
         &:nth-of-type(2) {
@@ -65,6 +67,7 @@ const Line = styled.span`
             transform-origin: left;
 
             width: calc(${props.theme.sizes.mobile} / 2);
+            min-width: 20px;
         }
     `}
 
