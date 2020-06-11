@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import Image from 'gatsby-image'
 import styled from 'styled-components'
 
@@ -99,25 +99,17 @@ const HeroBanner = ({
         contact
     } = data
     
+    const bannerRef = useRef(null)
+
     const titleSize = (bannerType == 'Home') ? 'extra-large' : (bannerType == 'Page') ? 'large' : 'small'
 
     useEffect(() => {
-
         let vh = window.innerHeight * 0.01
-        document.documentElement.style.setProperty('--vh', `${vh}px`)
-
-        window.addEventListener('resize', () => {
-            let vh = window.innerHeight * 0.01
-            document.documentElement.style.setProperty('--vh', `${vh}px`)
-        })
-        
-        return () => {
-            window.removeEventListener('resize')
-        }
+        bannerRef.current.style.setProperty('--vh', `${vh}px`)
     }, [])
 
     return (
-        <StyledHeroBanner className={className} type={bannerType}>
+        <StyledHeroBanner className={className} type={bannerType} ref={bannerRef}>
             {bannerType != 'Home' ? (
                 <>
                     {images && (
