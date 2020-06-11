@@ -12,39 +12,33 @@ const StyledNavigation = styled.nav`
     width: 100%;
 
     ${props => props.type == 'main' && `
-        margin-bottom: ${props.theme.desktopVW(80)};
+        margin-bottom: calc(${props.theme.sizes.mobile} * 1.5);
     
         .item {
             display: block;
 
             &:not(:last-of-type) {
-                margin-bottom: ${props.theme.desktopVW(24)};
+                margin-bottom: calc(${props.theme.sizes.mobile} / 3);
             }
         }
 
         .label {
             font-family: ${props.theme.fontFamilies.nbBold};
-            font-size: ${props.theme.fontSizes.desktop.h4};
+            font-size: ${props.theme.fontSizes.mobile.h4};
 
             text-transform: uppercase;
-        }
-
-        .link {
-            &:not(.active) {
-                opacity: 0.25;
-            }
         }
     `}
 
     ${props => props.type == 'sub' && `
         .list {
             display: grid;
-            grid-template-columns: repeat(2, ${props.theme.desktopVW(350)});
-            grid-gap: calc(${props.theme.sizes.desktop} / 2) 0;
+            grid-template-columns: 1fr;
+            grid-gap: calc(${props.theme.sizes.mobile} / 2) 0;
         }
 
         .label {
-            font-size: ${props.theme.desktopVW(24)};
+            font-size: ${props.theme.mobileVW(20)};
         }
     `}
 
@@ -52,6 +46,43 @@ const StyledNavigation = styled.nav`
         .item {
             opacity: 0.5;
         }
+    `}
+
+    ${props => props.theme.above.desktop`
+        .link {
+            &:not(.active) {
+                opacity: 0.25;
+            }
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+
+        ${props.type == 'main' && `
+            margin-bottom: ${props.theme.desktopVW(80)};
+        
+            .item {
+                &:not(:last-of-type) {
+                    margin-bottom: ${props.theme.desktopVW(24)};
+                }
+            }
+
+            .label {
+                font-size: ${props.theme.fontSizes.desktop.h4};
+            }
+        `}
+
+        ${props.type == 'sub' && `
+            .list {
+                grid-template-columns: repeat(2, ${props.theme.desktopVW(350)});
+                grid-gap: calc(${props.theme.sizes.desktop} / 2) 0;
+            }
+
+            .label {
+                font-size: ${props.theme.desktopVW(24)};
+            }
+        `}
     `}
 `
 
@@ -69,6 +100,8 @@ const Item = styled.li`
 `
 
 const StyledLink = styled(Link)`
+    display: inline-block;
+
     position: relative;
 
     &.active {
@@ -82,7 +115,7 @@ const StyledLink = styled(Link)`
 
         position: absolute;
 
-        bottom: -5px;
+        bottom: -${props => props.theme.mobileVW(3)};
         left: 0;
 
         width: 0;
@@ -90,6 +123,12 @@ const StyledLink = styled(Link)`
 
         background-color: ${props => props.theme.colors.light};
     }
+
+    ${props => props.theme.above.desktop`
+        &:after {
+            bottom: -${props.theme.desktopVW(5)};
+        }
+    `}
 `
 
 const Label = styled.span`

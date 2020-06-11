@@ -19,7 +19,7 @@ const InstagramFeed = ({
             data={{
                 __typename: 'ContentfulComponentInstagramFeed',
                 items: items.nodes,
-                style: 'Straight',
+                type: 'Straight',
                 itemsInformation: 'Excerpt only',
                 gesture: 'Draggable',
                 contentTitle: contentTitle,

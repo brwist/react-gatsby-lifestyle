@@ -1,6 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 import { Link } from 'gatsby'
+import { useWindowSize } from 'react-use'
 
 import { BLOCKS, INLINES } from '@contentful/rich-text-types'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
@@ -11,33 +12,51 @@ import Video from './Video'
 import { generatePath } from './../utils/helpers'
 
 const TextStyles = css`
-    &:not(last-of-type) {
-        margin-bottom: calc(${props => props.theme.sizes.desktop} / 1.5);
+    &:not(:last-of-type) {
+        margin-bottom: calc(${props => props.theme.sizes.mobile} / 1.5);
     }
+
+    ${props => props.theme.above.desktop`
+        &:not(:last-of-type) {
+            margin-bottom: calc(${props.theme.sizes.desktop} / 1.5);
+        }
+    `}
 `
 
 const Heading4 = styled.h4`
     ${TextStyles}
 
     font-family: ${props => props.theme.fontFamilies.plainRegular};
-    font-size: ${props => props.theme.fontSizes.desktop.h5};
+    font-size: ${props => props.theme.fontSizes.mobile.p};
     line-height: 1.2;
+
+    ${props => props.theme.above.desktop`
+        font-size: ${props.theme.fontSizes.desktop.h5};
+    `}
 `
 
 const Heading5 = styled.h5`
     ${TextStyles}
 
     font-family: ${props => props.theme.fontFamilies.plainLight};
-    font-size: ${props => props.theme.fontSizes.desktop.h6};
+    font-size: ${props => props.theme.fontSizes.mobile.p};
     line-height: 1.4;
+
+    ${props => props.theme.above.desktop`
+        font-size: ${props.theme.fontSizes.desktop.h6};
+    `}
 `
 
 const Paragraph = styled.p`
     ${TextStyles}
 
     font-family: ${props => props.theme.fontFamilies.plainLight};
-    font-size: ${props => props.theme.fontSizes.desktop.p};
+    font-size: ${props => props.theme.fontSizes.mobile.p};
     line-height: 1.4;
+
+    ${props => props.theme.above.desktop`
+        font-size: ${props.theme.fontSizes.desktop.p};
+    `}
 `
 
 const StyledButtonPrimary = styled(ButtonPrimary)`
@@ -49,8 +68,12 @@ const StyledButtonPrimary = styled(ButtonPrimary)`
 const Media = styled.div`
     position: relative;
     
-    margin: calc(${props => props.theme.sizes.desktop} * 4) 0;
-    padding-top: 56% /* Player ratio: 100 / (1280 / 720) */
+    margin-top: ${props => props.theme.sizes.mobile};
+    padding-top: 56%;
+
+    ${props => props.theme.above.desktop`
+        margin-top: calc(${props.theme.sizes.desktop} * 4);
+    `}
 `
 
 const StyledVideo = styled(Video)`
@@ -69,12 +92,42 @@ const StyledVideo = styled(Video)`
     }
 `
 
+const VideoTitle = styled.span`
+    display: block;
+
+    margin: calc(${props => props.theme.sizes.mobile} / 3) 0 ${props => props.theme.sizes.mobile} 0;
+
+    font-family: ${props => props.theme.fontFamilies.plainLight};
+    font-size: ${props => props.theme.fontSizes.mobile.xxs};
+
+    text-align: right;
+
+    opacity: 0.5;
+
+    ${props => props.theme.above.desktop`
+        margin: ${props.theme.sizes.desktop} 0 calc(${props.theme.sizes.desktop} * 4) 0;
+
+        font-size: ${props.theme.fontSizes.desktop.p};
+    `}
+`
+
 const TextRenderer = ({
     lang,
     data,
     className,
     useInlineLink,
 }) => {
+
+    const { width: windowWidth } = useWindowSize()
+
+    const checkModal = uri => {
+        if (uri.includes('join-us') || uri.includes('self-test')) {
+            return windowWidth < 1023 ? false : true 
+        } else {
+            return false
+        }
+    }
+
     return (
         <>
             {data && documentToReactComponents(data.json, {
@@ -87,15 +140,18 @@ const TextRenderer = ({
                         const { data: { target: { fields } } } = node
                         if (fields) {
                             return (
-                                <Media>
-                                    <StyledVideo
-                                        className={className}
-                                        url={fields.videoUrl['en-US']}
-                                        title={fields.name['en-US']}
-                                        inline={true}
-                                        inView={true}
-                                    />
-                                </Media>
+                                <>
+                                    <Media>
+                                        <StyledVideo
+                                            className={className}
+                                            url={fields.videoUrl['en-US']}
+                                            title={fields.name['en-US']}
+                                            inline={true}
+                                            inView={true}
+                                        />
+                                    </Media>
+                                    <VideoTitle>{fields.videoSubtitle['en-US']}</VideoTitle>
+                                </>
                             )
                         } else {
                             return null
@@ -103,8 +159,6 @@ const TextRenderer = ({
                     },
                     [INLINES.HYPERLINK]: (node, children) => {
                         const { data: { uri } } = node
-
-                        console.log(node)
 
                         if (uri.includes('mailto') || uri.includes('http')) {
                             if (!useInlineLink) {
@@ -117,10 +171,7 @@ const TextRenderer = ({
                                 )
                             } else {
                                 return (
-                                    <a
-                                        href={uri}
-                                        target={uri.includes('http') ? '_target' : ''}
-                                    >{children}</a>
+                                    <a href={uri} target={uri.includes('http') ? '_target' : ''}>{children}</a>
                                 )
                             }
                         } else {
@@ -130,6 +181,7 @@ const TextRenderer = ({
                                         to={generatePath(lang, uri.replace('/', ''))}
                                         label={children}
                                         colored={true}
+                                        modal={checkModal(uri)}
                                     />
                                 )
                             } else {

@@ -24,18 +24,51 @@ const Content = styled.div`
     top: 50%;
 
     transform: translateY(-50%);
+
+    ${props => props.theme.below.desktop`
+        left: 0;
+        
+        width: 100%;
+
+        padding: 0 ${props.theme.sizes.mobile};
+    `}
+`
+
+const StyledTitle = styled(Title)`
+    ${props => props.theme.below.desktop`
+        .description {
+            font-size: ${props.theme.fontSizes.mobile.s};
+        }
+
+        .testimonials {
+            display: none;
+        }
+    `}
 `
 
 const ImageWrapper = styled.div`
     position: absolute;
 
+    // top: 50%;
     top: 0;
     right: 0;
 
-    width: 50vw;
+    // transform: translateY(-50%);
+
+    width: ${props => props.theme.mobileVW(188)};
+    // height: ${props => props.theme.mobileVW(432)};
     height: 100%;
 
     background-color: ${props => props.theme.colors.darkGrey};
+
+    ${props => props.theme.above.desktop`
+        top: 0;
+        
+        transform: none;
+        
+        width: 50vw;
+        height: 100%;
+    `}
 `
 
 const StyledImage = styled(Image)`
@@ -79,7 +112,7 @@ const HeroBanner = ({
                     )}
                     <Container>
                         <Content>
-                            <Title
+                            <StyledTitle
                                 lang={lang}
                                 size={titleSize}
                                 tags={tags}

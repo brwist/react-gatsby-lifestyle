@@ -5,29 +5,50 @@ const CheckboxField = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: center;
 
-    margin-bottom: ${props => props.theme.sizes.desktop};
-    padding-bottom: ${props => props.theme.desktopVW(20)};
+    margin-bottom: calc(${props => props.theme.sizes.mobile} / 2);
+    padding-bottom: calc(${props => props.theme.sizes.mobile} / 2);
     
     border-bottom: 1px solid rgba(224, 226, 228, 0.2);
+
+    &:last-of-type {
+        margin-bottom: ${props => props.theme.sizes.mobile};
+    }
+
+    ${props => props.theme.above.desktop`
+        align-items: flex-end;
+
+        margin-bottom: ${props.theme.sizes.desktop};
+        padding-bottom: ${props.theme.sizes.desktop};
+
+        &:last-of-type {
+            margin-bottom: calc(${props.theme.sizes.desktop} * 2);
+        }
+    `}
 `
 
-const QuestionWrapper = styled.div`
+const QuestionWrapper = styled.div`    
     width: 70%;
 `
 
 const Title = styled.p`
     display: block;
     
-    margin-bottom: ${props => props.theme.desktopVW(10)};
+    margin-bottom: ${props => props.theme.mobileVW(10)};
 
     font-family: ${props => props.theme.fontFamilies.plainLight};
-    font-size: ${props => props.theme.fontSizes.desktop.s};
+    font-size: ${props => props.theme.fontSizes.mobile.s};
 
     color: ${props => props.theme.colors.light};
 
     opacity: 0.5;
+
+    ${props => props.theme.above.desktop`
+        margin-bottom: ${props.theme.desktopVW(10)};
+
+        font-size: ${props.theme.fontSizes.desktop.s};
+    `}
 `
 
 const AnswerWrapper = styled.div`
@@ -40,10 +61,17 @@ const AnswerWrapper = styled.div`
 `
 
 const Answer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
     cursor: pointer;
 
+    text-align: center;
+
     &:not(:last-of-type) {
-        margin-right: ${props => props.theme.sizes.desktop};
+        margin-right: calc(${props => props.theme.sizes.mobile} / 3);
     }
 
     ${props => props.active == 'true' ? `
@@ -51,21 +79,31 @@ const Answer = styled.div`
     ` : `
         opacity: 0.5;
     `}
+
+    ${props => props.theme.above.desktop`
+        flex-direction: row;
+
+        &:not(:last-of-type) {
+            margin-right: ${props.theme.sizes.desktop};
+        }
+    `}
 `
 
 const CheckboxWrapper = styled.div`
-    display: inline-block;
-    vertical-align: middle;
-    
     position: relative;
     
     width: 1.5rem;
     height: 1.5rem;
 
-    margin-right: ${props => props.theme.desktopVW(10)};
+    margin-bottom: ${props => props.theme.mobileVW(10)};
     
     border: 0.1rem solid white;
     border-radius: 1rem;
+
+    ${props => props.theme.above.desktop`
+        margin-bottom: 0;
+        margin-right: ${props.theme.desktopVW(10)};
+    `}
 `
 
 const Checkbox = styled.input`
@@ -111,19 +149,34 @@ const StyledQuestion = styled.label`
 	display: block;
 
     font-family: ${props => props.theme.fontFamilies.plainLight};
-    font-size: ${props => props.theme.fontSizes.desktop.p};
+    font-size: ${props => props.theme.fontSizes.mobile.s};
     line-height: 1.5;
 
     color: ${props => props.theme.colors.light};
     
     cursor: pointer;
+
+    ${props => props.theme.above.desktop`
+        font-size: ${props.theme.fontSizes.desktop.p};
+    `}
 `
 
 const Label = styled.span`
-    font-family: ${props => props.theme.fontFamilies.plainLight};
-    font-size: ${props => props.theme.fontSizes.desktop.p};
+    display: block;
 
-    color: ${props => props.theme.colors.light};
+    font-family: ${props => props.theme.fontFamilies.plainLight};
+    font-size: ${props => props.theme.fontSizes.mobile.xs};
+
+    color: ${props => props.theme.colors.white};
+
+    ${props => props.theme.above.desktop`
+        display: inline-block;
+        vertical-align: middle;
+
+        font-size: ${props.theme.fontSizes.desktop.p};
+
+        color: ${props.theme.colors.light};
+    `}
 `
 
 const Question = ({

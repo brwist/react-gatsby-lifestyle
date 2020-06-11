@@ -12,12 +12,18 @@ const Wrapper = styled.div``
 const Title = styled.h4`
     display: block;
 
-    margin-bottom: ${props => props.theme.sizes.desktop};
+    margin-bottom: ${props => props.theme.sizes.mobile};
 
     font-family: ${props => props.theme.fontFamilies.nbBold};
-    font-size: ${props => props.theme.fontSizes.desktop.h5};
+    font-size: ${props => props.theme.fontSizes.mobile.h5};
 
     text-transform: uppercase;
+
+    ${props => props.theme.above.desktop`
+        margin-bottom: ${props.theme.sizes.desktop};
+
+        font-size: ${props.theme.fontSizes.desktop.h5};
+    `}
 `
 
 const Description = styled.p``
@@ -25,7 +31,11 @@ const Description = styled.p``
 const Questions = styled.div``
 
 const Form = styled.form`
-    margin-top: ${props => props.theme.desktopVW(80)};
+    margin-top: ${props => props.theme.mobileVW(80)};
+    
+    ${props => props.theme.above.desktop`
+        margin-top: ${props.theme.desktopVW(80)};
+    `}
 `
 
 const ResultWrapper = styled.div``
@@ -33,10 +43,7 @@ const ResultWrapper = styled.div``
 const SelfTest = ({
     lang,
     className,
-    data: {
-        contentTitle,
-        contentDescription
-    }
+    data
 }) => {
 
     const [answers, setAnswers] = useState([])
@@ -80,16 +87,21 @@ const SelfTest = ({
     }
 
     return (
-        <Wrapper>
+        <Wrapper className={className}>
             {formSubmitted ? (
                 <ResultWrapper>
                     <Title>{results[formResult].title}</Title>
                     <Description>{results[formResult].description}</Description>
+                    <ButtonPrimary label='More information' to='' />
                 </ResultWrapper>
             ) : (
                 <Questions>
-                    <Title>{contentTitle}</Title>
-                    <TextRenderer data={contentDescription} />
+                    {data && (
+                        <>
+                            <Title>{data.contentTitle}</Title>
+                            <TextRenderer data={data.contentDescription} />
+                        </>
+                    )}
                     <Form>
                         {questions.map((question, i) => {
                             return (
@@ -104,7 +116,7 @@ const SelfTest = ({
                         <ButtonSubmit
                             inactive={submitActive ? 'true' : 'false'}
                             onClick={(e) => checkResult(e)}
-                            value='View my testresults'
+                                value={submitActive ? 'View my testresults' : 'Answer all questions'}
                         />
                     </Form>
                 </Questions>

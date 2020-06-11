@@ -20,7 +20,6 @@ const Constructor = ({
 }) => {
     
     const renderComponent = (typename, component, inView, slug, backgroundColor) => {
-        // console.log(typename)
         switch (typename) {
             case 'ContentfulComponentHeroBanner': return (
                 <HeroBanner 
@@ -41,16 +40,32 @@ const Constructor = ({
                 />
             )
             case 'ContentfulComponentFaq': return (
-                <Faq lang={lang} inView={inView} data={component} />
+                <Faq 
+                    lang={lang} 
+                    inView={inView} 
+                    data={component} 
+                />
             )
             case 'ContentfulComponentGrid': return (
-                <Grid lang={lang} inView={inView} data={component} />
+                <Grid 
+                    lang={lang} 
+                    inView={inView} 
+                    data={component} 
+                />
             )
             case 'ContentfulComponentUpcoming': return (
-                <Upcoming lang={lang} inView={inView} data={component} />
+                <Upcoming 
+                    lang={lang} 
+                    inView={inView} 
+                    data={component} 
+                />
             )
             case 'ContentfulComponentJoinUs': return (
-                <JoinUs lang={lang} inView={inView} data={component} />
+                <JoinUs 
+                    lang={lang} 
+                    inView={inView} 
+                    data={component} 
+                />
             )
             case 'ContentfulComponentContentBlock': return (
                 <ContentBlock 
@@ -79,31 +94,52 @@ const Constructor = ({
         }
     }
 
-    return (
-        <>
-            {data.map((component, i) => {
-                
-                const { 
-                    __typename, 
-                    backgroundColor, 
-                    flowLine 
-                } = component
+    if (data.length) {
+        return (
+            <>
+                {data.map((component, i) => {
 
-                return (
-                    <Section
-                        key={i}
-                        name={__typename}
-                        layout={{
-                            backgroundColor,
-                            flowLine
-                        }}
-                    >
-                        {inView => renderComponent(__typename, component, inView, slug, backgroundColor)}
-                    </Section>
-                )
-            })}    
-        </>
-    )
+                    const {
+                        __typename,
+                        backgroundColor,
+                        flowLine
+                    } = component
+
+                    return (
+                        <Section
+                            key={i}
+                            name={__typename}
+                            layout={{
+                                backgroundColor,
+                                flowLine
+                            }}
+                        >
+                            {inView => renderComponent(__typename, component, inView, slug, backgroundColor)}
+                        </Section>
+                    )
+                })}
+            </>
+        )
+    } else {
+
+        const {
+            __typename,
+            backgroundColor,
+            flowLine
+        } = data
+
+        return (
+            <Section
+                name={__typename}
+                layout={{
+                    backgroundColor,
+                    flowLine
+                }}
+            >
+                {inView => renderComponent(__typename, data, inView, slug, backgroundColor)}
+            </Section>
+        )
+    }
 }
 
 export default Constructor

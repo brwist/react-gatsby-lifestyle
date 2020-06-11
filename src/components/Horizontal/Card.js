@@ -17,11 +17,9 @@ const CardStyles = css`
 
     flex-shrink: 0;
 
-    width: ${props => props.theme.desktopVW(560)};
+    width: ${props => props.theme.mobileVW(450)};
 
     ${props => props.active == 'false' && `
-        pointer-events: none;
-
         &:after {
             content: '';
 
@@ -33,23 +31,23 @@ const CardStyles = css`
         }
     `}
 
-    &:hover {
-        .button-wrapper {
-            opacity: 1;
-        }
-    }
-
     ${props => props.type == 'Wave' && `
-        // &:not(:last-of-type) {
-        //     margin-right: ${props.theme.desktopVW(160)};
-        // }
-        
-        // &:nth-of-type(even) {
-        //     margin-top: -${props.theme.desktopVW(300)};
-        // }
+        &:nth-of-type(odd) {
+            margin-top: ${props.theme.desktopVW(160)};
+        }
 
         .image-wrapper {
             box-shadow: 0 0 80px 20px ${props.theme.colors.dark};
+        }
+    `}
+
+    ${props => props.theme.above.desktop`
+        width: ${props.theme.desktopVW(450)};
+
+        &:hover {
+            .button-wrapper {
+                opacity: 1;
+            }
         }
     `}
 `
@@ -64,12 +62,22 @@ const LinkedCard = styled(Link)`
 
 const SmallDescription = styled.p`
     position: relative;
+    
+    font-size: ${props => props.theme.fontSizes.mobile.m};
 
-    padding-right: calc(${props => props.theme.sizes.desktop} * 3);
+    ${props => props.theme.above.desktop`
+        padding-right: ${props.theme.sizes.desktop};
+
+        font-size: ${props => props.theme.fontSizes.desktop.p};
+    `}
 `
 
 const LargeDescription = styled.div`
     position: relative;
+`
+
+const LinkWrapper = styled(Link)`
+    display: block;
 `
 
 const ImageWrapper = styled.div`
@@ -77,8 +85,12 @@ const ImageWrapper = styled.div`
 
     width: 100%;
 
-    margin-bottom: ${props => props.theme.desktopVW(40)};
+    margin-bottom: ${props => props.theme.sizes.mobile};
     padding-bottom: 114%;
+
+    ${props => props.theme.above.desktop`
+        margin-bottom: ${props.theme.desktopVW(40)};
+    `}
 `
 
 const StyledImage = styled(Image)`
@@ -100,11 +112,19 @@ const StyledImage = styled(Image)`
 const InstagramIcon = styled(InstagramSvg)`
     position: absolute;
 
-    top: ${props => props.theme.desktopVW(40)};
-    left: ${props => props.theme.desktopVW(40)};
+    top: calc(${props => props.theme.sizes.mobile} / 2);
+    left: calc(${props => props.theme.sizes.mobile} / 2);
     
-    width: ${props => props.theme.desktopVW(24)};
-    height: ${props => props.theme.desktopVW(24)};
+    width: ${props => props.theme.mobileVW(15)};
+    height: ${props => props.theme.mobileVW(15)};
+
+    ${props => props.theme.above.desktop`
+        top: ${props.theme.desktopVW(40)};
+        left: ${props.theme.desktopVW(40)};
+        
+        width: ${props.theme.desktopVW(24)};
+        height: ${props.theme.desktopVW(24)};
+    `}
 `
 
 const Header = styled.div`
@@ -112,27 +132,48 @@ const Header = styled.div`
 
     ${props => props.theme.styles.flexBox.horCen};
 
-    margin-bottom: ${props => props.theme.desktopVW(24)};
+    margin-bottom: calc(${props => props.theme.sizes.mobile} / 1.5);
+
+    ${props => props.theme.above.desktop`
+        margin-bottom: ${props.theme.desktopVW(24)};
+    `}
 `
 
 const Heading = styled.h4`
     display: block;
     
     font-family: ${props => props.theme.fontFamilies.nbBold};
-    font-size: ${props => props.theme.fontSizes.desktop.h5};
+    font-size: ${props => props.theme.fontSizes.mobile.h6};
     line-height: 1;
 
     text-transform: uppercase;
+
+    ${props => props.theme.above.desktop`
+        font-size: ${props.theme.fontSizes.desktop.h5};
+    `}
 `
 
 const Caption = styled(TextRenderer)`
     b  {
         font-family: ${props => props.theme.fontFamilies.plainRegular};
     }
+
+    ${props => props.theme.below.desktop`
+        font-size: ${props.theme.fontSizes.mobile.m};
+    `}
 `
 
 const StyledTestimonial = styled(Testimonial)`
-    margin-top: ${props => props.theme.sizes.desktop};
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: ${props => props.theme.sizes.mobile};
+
+    ${props => props.theme.above.desktop`
+        margin-top: ${props.theme.sizes.desktop};
+    `}
 `
 
 const Title = styled.span`
@@ -140,12 +181,15 @@ const Title = styled.span`
 `
 
 const ButtonWrapper = styled.div`
-    opacity: 0;
+    margin-top: calc(${props => props.theme.sizes.mobile} / 1.5);
 
-    // position: absolute;
+    opacity: 1;
 
-    // left: 0;
-    // bottom: 0;
+    ${props => props.theme.above.desktop`
+        margin-top: ${props.theme.sizes.desktop};
+
+        opacity: 0;
+    `}
 `
 
 const ImageComponent = ({ image, alt, instagram }) => {
@@ -179,7 +223,7 @@ const Card = ({
                     instagram
                 />
                 <SmallDescription>
-                    <Title>@{data.username} — </Title>{data.caption != null && data.caption.substring(0, 150)}...
+                    <Title>@rockstarlifestyleamsterdam — </Title>{data.caption != null && data.caption.substring(0, 150)}...
                 </SmallDescription>
             </NormalCard>
         )
@@ -188,12 +232,12 @@ const Card = ({
             return (
                 <NormalCard className={className} type={type} active={active.toString()}>
                     {data.featuredImage.fluid != null && (
-                        <Link to={generatePath(lang, data.buttonLink || data.slug)}>
+                        <LinkWrapper to={generatePath(lang, data.buttonLink || data.slug)}>
                             <ImageComponent
                                 image={data.featuredImage.fluid}
                                 alt={data.featuredImage.title}
                             />
-                        </Link>
+                        </LinkWrapper>
                     )}
                     <LargeDescription>
                         <Caption data={data.excerpt} />
@@ -240,12 +284,12 @@ const Card = ({
             return (
                 <NormalCard className={className} type={type} active={active.toString()}>
                     {data.featuredImage.fluid != null && (
-                        <Link to={generatePath(lang, data.buttonLink || data.slug)}>
+                        <LinkWrapper to={generatePath(lang, data.buttonLink || data.slug)}>
                             <ImageComponent
                                 image={data.featuredImage.fluid}
                                 alt={data.featuredImage.title}
                             />
-                        </Link>
+                        </LinkWrapper>
                     )}
                     <Header>
                         <Heading>{data.name}</Heading>

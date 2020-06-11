@@ -12,7 +12,7 @@ const StyledContainer = styled.div`
     margin: 0 auto;
 
     ${props => props.theme.below.maxWidth`
-        padding: 0 calc(${props => props.theme.sizes.desktop} * 3);
+        padding: 0 ${props.theme.sizes.mobile};
     `}
 `
 

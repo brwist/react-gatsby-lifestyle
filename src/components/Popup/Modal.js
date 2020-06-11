@@ -5,12 +5,19 @@ import styled from 'styled-components'
 
 import TextRenderer from './../TextRenderer'
 import JoinUsForm from './../Forms/JoinUs'
+import SelfTestForm from './../Forms/SelfTest'
 
 const Header = styled.header`
     position: relative;
 
     width: 100%;
-    height: ${props => props.theme.desktopVW(500)};
+    height: ${props => props.theme.mobileVW(350)};
+
+    background-color: ${props => props.theme.colors.dark};
+    
+    ${props => props.theme.above.desktop`
+        height: ${props.theme.desktopVW(500)};
+    `}
 `
 
 const StyledImage = styled(Image)`
@@ -26,35 +33,28 @@ const StyledLink = styled(Link)`
     color: ${props => props.theme.colors.light};
 `
 
-const Content = styled.div`
-    padding: ${props => props.theme.desktopVW(80)};
-`
-
-const Title = styled.h4`
-    display: block;
-    
-    margin-bottom: ${props => props.theme.sizes.desktop};
-
-    font-family: ${props => props.theme.fontFamilies.nbBold};
-    font-size: ${props => props.theme.fontSizes.desktop.h4};
-
-    text-transform: uppercase;
-`
-
-const Body = styled(TextRenderer)`
-    width: 100%;
-    max-width: ${props => props.theme.desktopVW(600)};
-
-    h4 {
-        font-size: ${props => props.theme.fontSizes.desktop.h6};
-    }
-`
-
 const FormWrapper = styled.div`
-    width: 100%;
-    max-width: ${props => props.theme.desktopVW(600)};
+    padding: ${props => props.theme.mobileVW(80)};
+    
+    ${props => props.theme.above.desktop`
+        padding: ${props.theme.desktopVW(80)};
+    `}
+`
 
-    padding: 0 ${props => props.theme.desktopVW(80)};
+const StyledJoinUsForm = styled(JoinUsForm)`
+    width: 100%;
+    
+    ${props => props.theme.above.desktop`
+        max-width: ${props.theme.desktopVW(600)};
+    `}
+`
+
+const StyledSelfTestForm = styled(SelfTestForm)`
+    width: 100%;
+    
+    ${props => props.theme.above.desktop`
+        max-width: ${props.theme.desktopVW(800)};
+    `}
 `
 
 const PopupModal = ({
@@ -65,8 +65,6 @@ const PopupModal = ({
 }) => {
 
     const {
-        contentTitle,
-        contentDescription,
         image
     } = data
 
@@ -76,12 +74,9 @@ const PopupModal = ({
                 <StyledImage fluid={image.fluid} alt={image.title} />
                 <StyledLink to={closeTo}>Close</StyledLink>
             </Header>
-            <Content>
-                <Title>{contentTitle}</Title>
-                <Body data={contentDescription} />
-            </Content>
             <FormWrapper>
-                {slug == 'join-us' && <JoinUsForm />}
+                {slug == 'join-us' && <StyledJoinUsForm data={data} />}
+                {slug == 'self-test' && <StyledSelfTestForm data={data} />}
             </FormWrapper>
         </>
     )

@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 import theme from './../../styles/theme'
 import FlowLine from './../FlowLine'
+import Grain from './Grain'
 
 const StyledSection = styled.section`
     position: relative;
@@ -41,13 +42,23 @@ const Section = ({
         }
     }
 
+    const getGrain = () => {
+        if (layout.backgroundColor == 'undefined' || layout.backgroundColor == undefined || layout.backgroundColor == 'Black') {
+            return <Grain />
+        }
+    }
+
+    let template = name.replace('ContentfulComponent', '')
+    let backgroundColor = template == 'HeroBanner' ? 'transparent' : getBackgroundColor(layout.backgroundColor)
+
     return (
         <StyledSection 
             ref={ref} 
-            name={name.replace('ContentfulComponent', '')}
-            backgroundColor={getBackgroundColor(layout.backgroundColor)}
+            name={template}
+            backgroundColor={backgroundColor}
             color={getColor(layout.backgroundColor)}
         >
+            {getGrain()}
             {layout.flowLine == 'Visible' && <FlowLine />}
             {children(inView)}
         </StyledSection>

@@ -2,14 +2,17 @@ import React, { useState } from 'react'
 import ReactPlayer from 'react-player'
 import Image from 'gatsby-image'
 import styled, { css } from 'styled-components'
+import { useWindowSize } from 'react-use'
 
 import PlayPauseSvg from './../images/graphics/play-pause.svg'
 
 const Wrapper = styled.div`
     position: relative;
 
-    width: 100%;
-    height: 100%;
+    ${props => props.theme.above.desktop`
+        width: 100%;
+        height: 100%;
+    `}
 `
 
 const Overlay = styled.button`
@@ -19,18 +22,35 @@ const Overlay = styled.button`
 `
 
 const StyledVideo = styled.div`
-    position: absolute;
-    
-    top: 50%;
-    left: 50%;
+    ${props => props.theme.below.desktop`
+        position: relative;
 
-    transform: translate(-50%, -50%);
+        padding-top: 56.25%;
+    `}
 
-    width: calc(${props => props.theme.desktopVW(720)} * 2);
-    height: 100%;
+    ${props => props.theme.above.desktop`
+        position: absolute;
+
+        top: 50%;
+        left: 50%;
+
+        transform: translate(-50%, -50%);
+
+        width: calc(${props.theme.desktopVW(720)} * 2);
+        height: 100%;
+    `}
 `
 
-const Player = styled(ReactPlayer)``
+const Player = styled(ReactPlayer)`
+    ${props => props.theme.below.desktop`
+        position: absolute;
+        
+        top: 0;
+        left: 0;
+
+        width: 100%;
+    `}
+`
 
 const ImageStyles = css`
     ${props => props.theme.styles.element.fill};
@@ -51,12 +71,18 @@ const StaticImage = styled.img`
 const Controls = styled.div`
     position: absolute;
 
-    bottom: ${props => props.theme.sizes.desktop};
+    bottom: calc(${props => props.theme.sizes.mobile} / 2);
     left: 0;
 
     width: 100%;
 
-    padding: 0 ${props => props.theme.sizes.desktop};
+    padding: 0 calc(${props => props.theme.sizes.mobile} / 1.5);
+    
+    ${props => props.theme.above.desktop`
+        bottom: ${props.theme.sizes.desktop};
+
+        padding: 0 ${props.theme.sizes.desktop};
+    `}
 `
 
 const PlayPause = styled.button`
@@ -64,8 +90,8 @@ const PlayPause = styled.button`
 `
 
 const Icon = styled(PlayPauseSvg)`
-    width: ${props => props.theme.desktopVW(25)};
-    height: ${props => props.theme.desktopVW(20)};
+    width: ${props => props.theme.mobileVW(15)};
+    height: ${props => props.theme.mobileVW(20)};
 
     rect, polygon {
         fill: ${props => props.theme.colors.light};
@@ -87,6 +113,11 @@ const Icon = styled(PlayPauseSvg)`
         .play {
             display: block;
         }
+    `}
+
+    ${props => props.theme.above.desktop`
+        width: ${props.theme.desktopVW(25)};
+        height: ${props.theme.desktopVW(20)};
     `}
 `
 
@@ -115,18 +146,6 @@ const Video = ({
                     onReady={toggleVideoReady}
                     muted={true}
                 />
-                {/* {inline ? (
-                    <StaticImage
-                        src={placeholder}
-                        alt={title}
-                    />
-                ) : (
-                    <FluidImage
-                        visible={videoReady ? 'false' : 'true'}
-                        fluid={placeholder.fluid}
-                        alt={placeholder.title}
-                    />
-                )} */}
             </StyledVideo>
             <Overlay onClick={() => setVideoPlaying(!videoPlaying)}></Overlay>
             <Controls>

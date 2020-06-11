@@ -17,83 +17,154 @@ const TitleWrapper = styled.div`
 const Category = styled.span`
     display: block;
 
-    margin-bottom: ${props => props.theme.sizes.desktop};
+    margin-bottom: ${props => props.theme.sizes.mobile};
     
     font-family: ${props => props.theme.fontFamilies.nbRegular};
-    font-size: ${props => props.theme.fontSizes.desktop.m};
+    font-size: ${props => props.theme.fontSizes.mobile.m};
 
     text-transform: uppercase;
+
+    ${props => props.theme.above.desktop`
+        font-size: ${props.theme.fontSizes.desktop.m};
+    `}
 `
 
 const StyledTitle = styled.h1`
     display: block;
 
-    margin-bottom: ${props => props.theme.sizes.desktop};
+    margin-bottom: calc(${props => props.theme.sizes.mobile} / 2);
 
     font-family: ${props => props.theme.fontFamilies.nbBold};
-    font-size: ${props => props.theme.fontSizes.desktop.h2};
+    font-size: ${props => props.theme.fontSizes.mobile.h3};
     line-height: 0.9;
 
     text-transform: uppercase;
 
     ${props => props.size == 'extra-large' && `
-        font-size: ${props.theme.fontSizes.desktop.h1};
+        font-size: ${props.theme.fontSizes.mobile.h1};
 
         .line-wrapper {
             &:nth-of-type(2) {
-                margin-left: ${props.theme.desktopVW(60)};
+                margin-left: ${props.theme.mobileVW(20)};
             }
 
             &:nth-of-type(3) {
-                margin-left: ${props.theme.desktopVW(120)};
+                margin-left: ${props.theme.mobileVW(40)};
             }   
         }
     `}
 
     ${props => props.size == 'medium' && `
-        font-size: ${props.theme.fontSizes.desktop.h3};
+        font-size: ${props.theme.fontSizes.mobile.h3};
 
         .line-wrapper {
             &:nth-of-type(2) {
-                margin-left: ${props.theme.desktopVW(60)};
+                margin-left: ${props.theme.mobileVW(15)};
             }
 
             &:nth-of-type(3) {
-                margin-left: ${props.theme.desktopVW(120)};
+                margin-left: ${props.theme.mobileVW(30)};
             }   
         }
     `}
 
     ${props => props.size == 'normal' && `
-        margin-left: calc(${props.theme.sizes.desktop} * 2);
+        margin-left: calc(${props.theme.sizes.mobile} * 2);
         
-        font-size: ${props.theme.fontSizes.desktop.h4};
+        font-size: ${props.theme.fontSizes.mobile.h4};
         line-height: 1;
 
         .line-wrapper {
             &:nth-of-type(2) {
-                margin-left: ${props.theme.desktopVW(40)};
+                margin-left: ${props.theme.mobileVW(10)};
             }
 
             &:nth-of-type(3) {
-                margin-left: ${props.theme.desktopVW(80)};
+                margin-left: ${props.theme.mobileVW(20)};
             }   
         }
     `}
 
     ${props => props.size == 'small' && `
         font-family: ${props.theme.fontFamilies.plainLight};
-        font-size: calc(${props.theme.fontSizes.desktop.h5} * 2);
+        font-size: ${props.theme.fontSizes.mobile.h5};
         line-height: 1.2;
 
         text-transform: initial;
 
         .line-wrapper {
+            display: inline;
+
             &:nth-of-type(2), 
             &:nth-of-type(3) {
                 margin-left: 0;
             }
         }
+    `}
+
+    ${props => props.theme.above.desktop`
+        margin-bottom: ${props => props.theme.sizes.desktop};
+
+        font-family: ${props => props.theme.fontFamilies.nbBold};
+        font-size: ${props => props.theme.fontSizes.desktop.h2};
+
+        ${props.size == 'extra-large' && `
+            font-size: ${props.theme.fontSizes.desktop.h1};
+
+            .line-wrapper {
+                &:nth-of-type(2) {
+                    margin-left: ${props.theme.desktopVW(60)};
+                }
+
+                &:nth-of-type(3) {
+                    margin-left: ${props.theme.desktopVW(120)};
+                }   
+            }
+        `}
+
+        ${props.size == 'medium' && `
+            font-size: ${props.theme.fontSizes.desktop.h3};
+
+            .line-wrapper {
+                &:nth-of-type(2) {
+                    margin-left: ${props.theme.desktopVW(60)};
+                }
+
+                &:nth-of-type(3) {
+                    margin-left: ${props.theme.desktopVW(120)};
+                }   
+            }
+        `}
+
+        ${props.size == 'normal' && `
+            margin-left: calc(${props.theme.sizes.desktop} * 2);
+            
+            font-size: ${props.theme.fontSizes.desktop.h4};
+
+            .line-wrapper {
+                display: block;
+
+                &:nth-of-type(2) {
+                    margin-left: ${props.theme.desktopVW(40)};
+                }
+
+                &:nth-of-type(3) {
+                    margin-left: ${props.theme.desktopVW(80)};
+                }   
+            }
+        `}
+
+        ${props.size == 'small' && `
+            font-family: ${props.theme.fontFamilies.plainLight};
+            font-size: calc(${props.theme.fontSizes.desktop.h5} * 2);
+
+            .line-wrapper {
+                &:nth-of-type(2), 
+                &:nth-of-type(3) {
+                    margin-left: 0;
+                }
+            }
+        `}
     `}
 `
 
@@ -101,39 +172,52 @@ const LineWrapper = styled.span`
     display: block;
 
     &:nth-of-type(2) {
-        margin-left: calc(${props => props.theme.sizes.desktop} * 3);
+        margin-left: calc(${props => props.theme.sizes.mobile} / 2);
     }
 
     &:nth-of-type(3) {
-        margin-left: calc(${props => props.theme.sizes.desktop} * 5);
+        margin-left: ${props => props.theme.sizes.mobile};
     }
+
+    ${props => props.theme.above.desktop`
+        &:nth-of-type(2) {
+            margin-left: calc(${props.theme.sizes.desktop} * 3);
+        }
+
+        &:nth-of-type(3) {
+            margin-left: calc(${props.theme.sizes.desktop} * 5);
+        }   
+    `}
 `
 
 const Words = styled.span``
 
 const DescriptionWrapper = styled.div`
     width: 100%;
-    max-width: ${props => props.theme.desktopVW(500)};
 
-    margin-left: calc(${props => props.theme.sizes.desktop} * 5);
+    ${props => props.theme.above.desktop`
+        max-width: ${props.theme.desktopVW(500)};
 
-    ${props => props.size == 'medium' && `
-        margin-left: ${props.theme.desktopVW(120)};
-    `}
+        margin-left: calc(${props.theme.sizes.desktop} * 5);
 
-    ${props => props.size == 'normal' && `
-        max-width: ${props.theme.desktopVW(560)};
+        ${props.size == 'medium' && `
+            margin-left: ${props.theme.desktopVW(120)};
+        `}
 
-        margin-left: ${props.theme.desktopVW(80)};
-    `}
+        ${props.size == 'normal' && `
+            max-width: ${props.theme.desktopVW(560)};
 
-    ${props => props.size == 'small' && `
-        margin-left: 0;
+            margin-left: ${props.theme.desktopVW(80)};
+        `}
     `}
 `
 
 const StyledTags = styled(Tags)`
-    margin-bottom: ${props => props.theme.sizes.desktop};
+    margin-bottom: calc(${props => props.theme.sizes.mobile} / 3);
+    
+    ${props => props.theme.above.desktop`
+        margin-bottom: ${props.theme.sizes.desktop};
+    `}
 `
 
 const StyledDescription = styled(TextRenderer)`
@@ -141,27 +225,64 @@ const StyledDescription = styled(TextRenderer)`
 `
 
 const StyledTestimonial = styled(Testimonial)`
-    margin: ${props => props.theme.sizes.desktop} 0;
+    margin: ${props => props.theme.sizes.mobile} 0;
+    
+    ${props => props.theme.above.desktop`
+        margin: ${props.theme.sizes.mobile} 0;
+    `}
 `
 
 const LinksWrapper = styled.div`
-    margin-top: ${props => props.theme.sizes.desktop};
+    margin-top: calc(${props => props.theme.sizes.mobile} / 2);
+    
+    ${props => props.theme.above.desktop`
+        margin-top: ${props.theme.sizes.desktop};
+    `}
 `
 
 const StyledButtonPrimary = styled(ButtonPrimary)`
-    &:not(:first-of-type) {
-        margin-left: calc(${props => props.theme.sizes.desktop} / 2);
-    }
+    ${props => props.theme.below.desktop`
+        &:first-of-type {
+            margin-bottom: calc(${props.theme.sizes.mobile} / 3);
+        }
+    `}
+
+    ${props => props.theme.above.desktop`
+        &:not(:first-of-type) {
+            margin-left: calc(${props.theme.sizes.desktop} / 2);
+        }
+    `}
 `
 
 const getLinkComponent = (links, lang) => {
     return (
         <LinksWrapper>
-            {links.internal && links.internal.map(({ title, internalLink: { __typename, slug }}, i) => (
-                <StyledButtonPrimary key={i} lang={lang} to={generatePath(lang, slug)} label={title} inverted={i == 0} />
-            ))}
-            {links.external && (
+            {links.external ? (
                 <StyledButtonPrimary href={links.external.link} label={links.external.label} inverted />
+            ) : (
+                <>
+                    {links.map(({ title, internalLink: { __typename, slug } }, i) => {
+                        
+                        let modal
+
+                        if (slug == null) {
+                            modal = false
+                        } else {
+                            modal = slug.includes('join-us') || slug.includes('self-test') ? true : false
+                        }
+                        
+                        return (
+                            <StyledButtonPrimary 
+                                key={i} 
+                                lang={lang} 
+                                to={generatePath(lang, slug)} 
+                                label={title} 
+                                inverted={i == 0} 
+                                modal={modal}
+                            />
+                        )
+                    })}
+                </>
             )}
         </LinksWrapper>
     )

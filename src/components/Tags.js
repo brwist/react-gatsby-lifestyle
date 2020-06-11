@@ -10,25 +10,42 @@ const Tag = styled.li`
     display: inline-block;
     vertical-align: middle;
 
-    height: ${props => props.theme.desktopVW(40)};
+    height: ${props => props.theme.mobileVW(25)};
 
-    margin-bottom: calc(${props => props.theme.sizes.desktop} / 4);
-    padding: 0 ${props => props.theme.desktopVW(20)};
+    padding: 0 ${props => props.theme.mobileVW(10)};
 
-    background-color: rgba(255, 255, 255, 0.05);
-    border-radius: ${props => props.theme.desktopVW(4)};
+    background-color: #1a1b1d;
+    border-radius: ${props => props.theme.mobileVW(4)};
 
     &:not(:last-of-type) {
-        margin-right: calc(${props => props.theme.sizes.desktop} / 4);
+        margin-right: calc(${props => props.theme.sizes.mobile} / 4);
     }
+
+    ${props => props.theme.above.desktop`
+        height: ${props.theme.desktopVW(40)};
+
+        margin-bottom: calc(${props.theme.sizes.desktop} / 4);
+        padding: 0 ${props.theme.desktopVW(20)};
+
+        border-radius: ${props.theme.desktopVW(4)};
+
+        &:not(:last-of-type) {
+            margin-right: calc(${props.theme.sizes.desktop} / 4);
+        }
+    `}
 `
 
 const Label = styled.span`
     font-family: ${props => props.theme.fontFamilies.plainLight};
-    font-size: ${props => props.theme.fontSizes.desktop.s};
-    line-height: ${props => props.theme.desktopVW(38)};
+    font-size: ${props => props.theme.fontSizes.mobile.xxs};
+    line-height: ${props => props.theme.mobileVW(25)};
 
     color: ${props => props.theme.colors.light};
+
+    ${props => props.theme.above.desktop`
+        font-size: ${props.theme.fontSizes.desktop.xs};
+        line-height: ${props.theme.desktopVW(38)};
+    `}
 `
 
 const Tags = ({

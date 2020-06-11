@@ -6,16 +6,16 @@ const StyledButton = styled.input`
     justify-content: center;
     align-items: center;
 
-    height: ${props => props.theme.desktopVW(40)};
+    height: ${props => props.theme.mobileVW(40)};
 
-    padding: 0 ${props => props.theme.desktopVW(12)};
+    padding: 0 ${props => props.theme.mobileVW(12)};
 
     background-color: ${props => props.theme.colors.light};
-    border: ${props => props.theme.desktopVW(2)} solid ${props => props.theme.colors.light};
-    border-radius: ${props => props.theme.desktopVW(24)};
+    border: ${props => props.theme.mobileVW(2)} solid ${props => props.theme.colors.light};
+    border-radius: ${props => props.theme.mobileVW(24)};
 
     font-family: ${props => props.theme.fontFamilies.nbRegular};
-    font-size: ${props => props.theme.desktopVW(16)};
+    font-size: ${props => props.theme.fontSizes.mobile.s};
     line-height: 1;
 
     text-transform: uppercase;
@@ -29,6 +29,19 @@ const StyledButton = styled.input`
 
         pointer-events: none;
     `} 
+
+    ${props => props.theme.above.desktop`
+        height: ${props.theme.desktopVW(40)};
+
+        padding: 0 ${props.theme.desktopVW(12)};
+
+        background-color: ${props.theme.colors.light};
+        border: ${props.theme.desktopVW(2)} solid ${props.theme.colors.light};
+        border-radius: ${props.theme.desktopVW(24)};
+
+        font-family: ${props.theme.fontFamilies.nbRegular};
+        font-size: ${props.theme.fontSizes.desktop.m};
+    `}
 `
 
 const ButtonSubmit = ({

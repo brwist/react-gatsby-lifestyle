@@ -4,45 +4,68 @@ import styled from 'styled-components'
 import ButtonSubmit from './../Buttons/ButtonSubmit'
 import TextRenderer from './../TextRenderer'
 
-const Wrapper = styled.div`
-    
-`
+const Wrapper = styled.div``
 
 const Title = styled.h4`
     display: block;
 
-    margin-bottom: ${props => props.theme.sizes.desktop};
+    margin-bottom: ${props => props.theme.sizes.mobile};
 
     font-family: ${props => props.theme.fontFamilies.nbBold};
-    font-size: ${props => props.theme.fontSizes.desktop.h5};
+    font-size: ${props => props.theme.fontSizes.mobile.h5};
 
     text-transform: uppercase;
+
+    ${props => props.theme.above.desktop`
+        margin-bottom: ${props.theme.sizes.desktop};
+
+        font-family: ${props.theme.fontFamilies.nbBold};
+        font-size: ${props.theme.fontSizes.desktop.h5};
+    `}
 `
 
 const Form = styled.form`
+    width: 100%;
+
+    padding: ${props => props.theme.sizes.mobile} 0 0 0;
+    
     color: ${props => props.theme.colors.light};
 
-    padding: ${props => props.theme.desktopVW(80)} 0;
+    ${props => props.theme.above.desktop`
+        max-width: ${props.theme.desktopVW(500)};
+    
+        padding: ${props.theme.desktopVW(80)} 0 0 0;
+    `}
 `
 
 const Field = styled.div`
 	&:not(:first-child) {
-		margin-top: ${props => props.theme.sizes.desktop};
-	}
+		margin-top: ${props => props.theme.sizes.mobile};
+    }
+    
+    ${props => props.theme.above.desktop`
+        &:not(:first-child) {
+            margin-top: ${props.theme.sizes.desktop};
+        }
+    `}
 `
 
 const Label = styled.label`
     font-family: ${props => props.theme.fontFamilies.plainLight};
-    font-size: ${props => props.theme.fontSizes.desktop.s};
+    font-size: ${props => props.theme.fontSizes.mobile.s};
 
     opacity: 0.5;
+
+    ${props => props.theme.above.desktop`
+        font-size: ${props.theme.fontSizes.desktop.s};
+    `}
 `
 
 const Input = styled.input`
 	display: block;
     
     width: 100%;
-	height: calc(${props => props.theme.sizes.desktop} * 1.5);
+	height: calc(${props => props.theme.sizes.mobile} * 1.5);
     
     margin-top: 0.1rem;
     padding: 0 0.8rem 0 0;
@@ -53,17 +76,27 @@ const Input = styled.input`
     border-radius: 0;
     
     font-family: ${props => props.theme.fontFamilies.plainLight};
-    font-size: ${props => props.theme.fontSizes.desktop.p};
+    font-size: ${props => props.theme.fontSizes.mobile.s};
 
     color: ${props => props.theme.colors.light};
 
     &::placeholder {
         color: ${props => props.theme.colors.light};
     }
+
+    ${props => props.theme.above.desktop`
+        height: calc(${props.theme.sizes.desktop} * 1.5);
+
+        font-size: ${props.theme.fontSizes.desktop.p};
+    `}
 `
 
 const GDPR = styled.div`
-  	margin: ${props => props.theme.sizes.desktop} 0;
+    margin: ${props => props.theme.sizes.mobile} 0;
+    
+    ${props => props.theme.above.desktop`
+        margin: ${props.theme.sizes.desktop} 0;
+    `}
 `
 
 const CheckboxField = styled.div`
@@ -72,11 +105,10 @@ const CheckboxField = styled.div`
 `
 
 const CheckboxWrapper = styled.div`
-    flex: 0 0 2rem;
-    
     position: relative;
     
-    height: 2rem;
+    width: 1.5rem;
+    height: 1.5rem;
     
     border: 0.1rem solid white;
     border-radius: 1rem;
@@ -108,15 +140,15 @@ const CheckboxFacade = styled.div`
     
 	transform: translate(-50%, -50%);
     
-    width: 1rem;
-	height: 1rem;
+    width: 0.75rem;
+	height: 0.75rem;
     
     border-radius: 0.6rem;
     background: white;
     
     pointer-events: none;
     
-	${/* sc-selector */ Checkbox}:checked + & {
+	${Checkbox}:checked + & {
 		display: block;
 	}
 `
@@ -124,23 +156,35 @@ const CheckboxFacade = styled.div`
 const CheckboxLabel = styled.label`
 	display: block;
     
-    margin-left: calc(${props => props.theme.sizes.desktop} / 2);
+    margin-left: calc(${props => props.theme.sizes.mobile} / 2);
 
     font-family: ${props => props.theme.fontFamilies.plainLight};
-    font-size: ${props => props.theme.fontSizes.desktop.m};
+    font-size: ${props => props.theme.fontSizes.mobile.s};
 
     color: ${props => props.theme.colors.light};
     
     cursor: pointer;
+
+    ${props => props.theme.above.desktop`
+        margin-left: calc(${props.theme.sizes.desktop} / 2);
+
+        font-size: ${props.theme.fontSizes.desktop.m};
+    `}
 `
 
 const Note = styled.p`
-    margin-top: ${props => props.theme.sizes.desktop};
+    margin-top: ${props => props.theme.sizes.mobile};
     
     font-family: ${props => props.theme.fontFamilies.plainLight};
-    font-size: ${props => props.theme.fontSizes.desktop.s};
+    font-size: ${props => props.theme.fontSizes.mobile.xs};
 
     opacity: 0.5;
+
+    ${props => props.theme.above.desktop`
+        margin-top: ${props.theme.sizes.desktop};
+        
+        font-size: ${props.theme.fontSizes.desktop.s};
+    `}
 `
 
 const Anchor = styled.a`
@@ -165,7 +209,7 @@ const JoinUs = ({
                 </>
             )}
             <Form
-                action='https://cth-events.us4.list-manage.com/subscribe/post?u=f6104507653206db0b0ff6596&amp;id=01c466415e'
+                action='https://rockstarlifestyle.us8.list-manage.com/subscribe/post?u=86397600011aa7ae66131d8b8&amp;id=5c30063382'
                 method='post'
                 name='mc-embedded-subscribe-form'
                 target='_blank'
@@ -173,22 +217,22 @@ const JoinUs = ({
                 className={className}
             >
                 <Field>
-                    <Label htmlFor='mce-LNAME'>Your first name</Label>
-                    <Input
-                        type='text'
-                        name='LNAME'
-                        className='required'
-                        id='mce-LNAME'
-                        placeholder='Fill in your first name'
-                    />
-                </Field>
-                <Field>
-                    <Label htmlFor='mce-FNAME'>Your last name</Label>
+                    <Label htmlFor='mce-FNAME'>Your first name</Label>
                     <Input
                         type='text'
                         name='FNAME'
                         className='required'
                         id='mce-FNAME'
+                        placeholder='Fill in your first name'
+                    />
+                </Field>
+                <Field>
+                    <Label htmlFor='mce-LNAME'>Your last name</Label>
+                    <Input
+                        type='text'
+                        name='LNAME'
+                        className='required'
+                        id='mce-LNAME'
                         placeholder='Fill in your last name'
                     />
                 </Field>
@@ -228,25 +272,25 @@ const JoinUs = ({
                         <CheckboxWrapper>
                             <Checkbox
                                 type='checkbox'
-                                id='gdpr_205'
-                                name='gdpr[205]'
+                                id='gdpr_22926'
+                                name='gdpr[22926]'
                                 defaultValue='Y'
                             />
                             <CheckboxFacade />
                         </CheckboxWrapper>
-                        <CheckboxLabel htmlFor='gdpr_205'>
-                            Vink dit vakje aan als we je e-mails mogen sturen
+                        <CheckboxLabel htmlFor='gdpr_22926'>
+                            Check this box if we can send you emails
                         </CheckboxLabel>
                     </CheckboxField>
                     <Note>
-                        We gebruiken Mailchimp voor onze e-mail marketing. Door op aanmelden te klikken geef je toestemming aan Mailchimp om je informatie te verwerken.
-                        <Anchor href='https://mailchimp.com/legal/' target='_blank'>Lees meer over Mailchimp's privacy beleid hier.</Anchor>
+                        We use Mailchimp for our email marketing. By clicking on sign up you give Mailchimp permission to process your information.
+                        <Anchor href='https://mailchimp.com/legal/' target='_blank'>Read more about Mailchimp's privacy policy here.</Anchor>
                     </Note>
                 </GDPR>
                 <div style={{ position: 'absolute', left: '-5000px' }} aria-hidden='true'>
                     <input
                         type='text'
-                        name='b_f6104507653206db0b0ff6596_01c466415e'
+                        name='b_86397600011aa7ae66131d8b8_5c30063382'
                         tabIndex='-1'
                         defaultValue=''
                     />

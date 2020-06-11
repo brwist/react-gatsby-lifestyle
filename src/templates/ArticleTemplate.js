@@ -7,83 +7,196 @@ import Constructor from './../components/Layout/Constructor'
 import TextRenderer from '../components/TextRenderer'
 import Container from './../components/Layout/Container'
 import ButtonPrimary from '../components/Buttons/ButtonPrimary'
+import Grain from './../components/Layout/Grain'
 
-const Wrapper = styled.div`
-    margin: ${props => props.theme.desktopVW(280)} 0;
+const Wrapper = styled.section`
+    position: relative;
+
+    padding: calc(${props => props.theme.sizes.mobile} * 5) 0;
+    
+    ${props => props.theme.above.desktop`
+        padding: calc(${props.theme.sizes.desktop} * 10) 0;
+    `}
 `
 
 const StyledContainer = styled(Container)`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    ${props => props.theme.above.desktop`
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    `}
 `
 
 const Information = styled.ul`
-    display: block;
-    height: 0;
+    ${props => props.theme.below.desktop`
+        ${props.mobile == 'true' && `
+            display: block;
+        `} 
+
+        ${props.mobile == 'false' && `
+            display: none;
+        `} 
+    `}
+
+    ${props => props.theme.above.desktop`
+        ${props.mobile == 'true' && `
+            display: none;
+        `} 
+
+        ${props.mobile == 'false' && `
+            display: block;
+            
+            height: 0;
+        `} 
+    `}
 `
 
 const InfoItem = styled.li`
-    margin-bottom: ${props => props.theme.desktopVW(48)};
+    margin-bottom: calc(${props => props.theme.sizes.mobile} / 1.5);
 
     ${props => props.flex && `
         display: flex;
         flex-direction: column;
+        align-items: flex-start;
 
         .button {
             &:first-of-type {
-                margin-bottom: calc(${props.theme.sizes.desktop} / 2);
+                margin-bottom: calc(${props.theme.sizes.mobile} / 3);
             }
         }
+    `}
+
+    ${props => props.theme.above.desktop`
+        margin-bottom: calc(${props.theme.sizes.desktop} * 1.5);
+
+        ${props.flex && `
+            .button {
+                &:first-of-type {
+                    margin-bottom: calc(${props.theme.sizes.desktop} / 2);
+                }
+            }
+        `}
     `}
 `
 
 const InfoTitle = styled.span`
     display: block;
 
-    margin-bottom: ${props => props.theme.desktopVW(15)};
+    margin-bottom: calc(${props => props.theme.sizes.mobile} / 3);
 
     font-family: ${props => props.theme.fontFamilies.plainLight};
-    font-size: ${props => props.theme.fontSizes.desktop.h6};
+    font-size: ${props => props.theme.fontSizes.mobile.p};
     line-height: 1;
+
+    ${props => props.theme.above.desktop`
+        margin-bottom: ${props.theme.desktopVW(15)};
+
+        font-size: ${props.theme.fontSizes.desktop.h6};
+    `}
 `
 
 const InfoValue = styled.span`
     display: block;
 
     font-family: ${props => props.theme.fontFamilies.plainLight};
-    font-size: ${props => props.theme.fontSizes.desktop.p};
+    font-size: ${props => props.theme.fontSizes.mobile.s};
     line-height: 1;
+
+    ${props => props.theme.above.desktop`
+        font-size: ${props.theme.fontSizes.desktop.p};
+    `}
 `
 
 const Content = styled.div`
     width: 100%;
-    max-width: ${props => props.theme.desktopVW(720)};
 
-    margin-right: calc(${props => props.theme.sizes.desktop} * 4);
+    margin-bottom: calc(${props => props.theme.sizes.mobile} * 3);
 
     h4 {
-        margin-bottom: calc(${props => props.theme.sizes.desktop} * 1.5);
+        margin-bottom: ${props => props.theme.sizes.mobile};
     }
 
     li {
         position: relative;
 
-        padding-left: ${props => props.theme.desktopVW(25)};
+        padding-left: ${props => props.theme.mobileVW(25)};
 
         &:before {
             content: '—';
             position: absolute;
 
-            margin-top: 3px;
-            margin-left: -${props => props.theme.desktopVW(25)};
+            margin-top: ${props => props.theme.mobileVW(8)};
+            margin-left: -${props => props.theme.mobileVW(20)};
+
+            font-size: ${props => props.theme.mobileVW(12)};
         }
 
         p {
             margin-bottom: 0;
         }
     }
+
+    ${props => props.theme.above.desktop`
+        max-width: ${props.theme.desktopVW(720)};
+
+        margin-bottom: 0;
+        margin-right: calc(${props.theme.sizes.desktop} * 4);
+
+        h4 {
+            margin-bottom: calc(${props.theme.sizes.desktop} * 1.5);
+        }
+
+        li {
+            padding-left: ${props.theme.desktopVW(25)};
+
+            &:before {
+                margin-left: -${props.theme.desktopVW(25)};
+            }
+        }
+    `}
 `
+
+const InfoBlock = ({
+    className,
+    mobile,
+    data: {
+        author,
+        date
+    }
+}) => {
+    
+    const informationRef = useRef(null)
+
+    useEffect(() => {
+        if (mobile == 'false') {
+            stickybits(informationRef.current, {
+                verticalPosition: 'top',
+                stickyBitStickyOffset: 150
+            })
+        }
+    }, [])
+
+    return (
+        <Information 
+            className={className} 
+            ref={informationRef}
+            mobile={mobile}
+        >
+            <InfoItem>
+                <InfoTitle>Author</InfoTitle>
+                <InfoValue>{author}</InfoValue>
+            </InfoItem>
+            <InfoItem>
+                <InfoTitle>Posted</InfoTitle>
+                <InfoValue>{date}</InfoValue>
+            </InfoItem>
+            <InfoItem flex={true}>
+                <ButtonPrimary label='Apply for this job' href='https://google.com' inverted />
+                <ButtonPrimary label='Share this page' href='https://facebook.com/' />
+            </InfoItem>
+        </Information>
+    )
+}
 
 const ArticleTemplate = ({
     pageContext: {
@@ -92,24 +205,15 @@ const ArticleTemplate = ({
         }
     },
     data: {
-        contentfulArticle: {
-            category,
-            content,
-            author,
-            date,
-            components
-        }
+        contentfulArticle
     }
 }) => {
-
-    const informationRef = useRef(null)
-
-    useEffect(() => {
-        stickybits(informationRef.current, { 
-            verticalPosition: 'top',
-            stickyBitStickyOffset: 150
-        })
-    }, [])
+    
+    const {
+        category,
+        content,
+        components
+    } = contentfulArticle
 
     return (
         <>
@@ -120,24 +224,13 @@ const ArticleTemplate = ({
             />
             <Wrapper>
                 <StyledContainer>
-                    <Information ref={informationRef}>
-                        <InfoItem>
-                            <InfoTitle>Author</InfoTitle>
-                            <InfoValue>{author}</InfoValue>
-                        </InfoItem>
-                        <InfoItem>
-                            <InfoTitle>Posted</InfoTitle>
-                            <InfoValue>{date}</InfoValue>
-                        </InfoItem>
-                        <InfoItem flex={true}>
-                            <ButtonPrimary label='Apply for this job' href='https://google.com' inverted />
-                            <ButtonPrimary label='Share this page' href='https://facebook.com/' />
-                        </InfoItem>
-                    </Information>
+                    <InfoBlock mobile='false' data={contentfulArticle} />
                     <Content>
                         <TextRenderer data={content} />
                     </Content>
+                    <InfoBlock mobile='true' data={contentfulArticle} />
                 </StyledContainer>
+                <Grain />
             </Wrapper>
         </>
     )

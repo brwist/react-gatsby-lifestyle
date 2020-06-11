@@ -1,15 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'gatsby'
 
 import Navigation from './Navigation'
 import TextRenderer from '../TextRenderer'
+import Container from './Container'
+import Footer from './Footer'
+import Grain from './Grain'
 
 import LogoShortSvg from './../../images/graphics/rl.svg'
 import InstagramSvg from './../../images/graphics/instagram.svg'
-import Container from './Container'
-import { Link } from 'gatsby'
+
 import { generatePath } from '../../utils/helpers'
-import Footer from './Footer'
 
 const StyledMenu = styled.aside`
     position: fixed;
@@ -17,7 +19,7 @@ const StyledMenu = styled.aside`
     top: 0;
     left: 0;
 
-    z-index: 1;
+    z-index: 3;
 
     width: 100%;
     height: 100%;
@@ -32,34 +34,48 @@ const StyledMenu = styled.aside`
 `
 
 const StyledContainer = styled(Container)`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
     height: 100%;
 
-    padding: calc(${props => props.theme.sizes.desktop} * 8);
+    padding: ${props => props.theme.sizes.mobile};
+
+    ${props => props.theme.above.desktop`
+        padding: calc(${props.theme.sizes.desktop} * 8);
+    `}
 `
 
 const NavigationWrapper = styled.div`
-    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-    top: 50%;
-
-    transform: translateY(-50%);
+    height: 100%;
 `
 
 const ImageWrapper = styled.div`
-    position: absolute;
+    position: relative;
 
-    top: 50%;
-    right: 0;
+    // top: 50%;
+    // right: 0;
 
-    transform: translateY(-50%);
+    // transform: translateY(-50%);
 
     width: ${props => props.theme.desktopVW(480)};
     height: ${props => props.theme.desktopVW(600)};
     
     background-color: ${props => props.theme.colors.darkGrey};
 
-    ${props => props.theme.below.maxWidth`
-        right: calc(${props.theme.sizes.desktop} * 8);
+    // ${props => props.theme.below.maxWidth`
+    //     right: calc(${props.theme.sizes.desktop} * 8);
+    // `}
+
+    ${props => props.theme.below.desktop`
+        display: none;
     `}
 `
 
@@ -98,6 +114,7 @@ const Menu = ({
                     type='menu' 
                 />
             </StyledContainer>
+            <Grain />
         </StyledMenu>
     )
 }

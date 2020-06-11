@@ -3,21 +3,24 @@ import Image from 'gatsby-image'
 import styled from 'styled-components'
 
 const StyledTestimonial = styled.div`
-    
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
 `
 
 const ImageWrapper = styled.div`
-    display: inline-block;
-    vertical-align: top;
-    
-    width: ${props => props.theme.desktopVW(64)};
-    height: ${props => props.theme.desktopVW(64)};
-
-    margin-right: ${props => props.theme.sizes.desktop};
+    width: ${props => props.theme.mobileVW(50)};
+    height: ${props => props.theme.mobileVW(50)};
 
     border-radius: 100%;
 
     overflow: hidden;
+
+    ${props => props.theme.above.desktop`
+        width: ${props.theme.desktopVW(64)};
+        height: ${props.theme.desktopVW(64)};
+    `}
 `
 
 const StyledImage = styled(Image)`
@@ -26,25 +29,34 @@ const StyledImage = styled(Image)`
 `
 
 const DescriptionWrapper = styled.div`
-    display: inline-block;
-    vertical-align: top;
+    width: 75%;
 
-    width: 100%;
-    max-width: ${props => props.theme.desktopVW(368)};
+    ${props => props.theme.above.desktop`
+        width: 100%;
+        max-width: ${props.theme.desktopVW(368)};
+    `}
 `
 
 const Description = styled.p`
     font-family: ${props => props.theme.fontFamilies.plainLight};
-    font-size: ${props => props.theme.fontSizes.desktop.s};
+    font-size: ${props => props.theme.fontSizes.mobile.xs};
     line-height: 1.43;
+
+    ${props => props.theme.above.desktop`
+        font-size: ${props.theme.fontSizes.desktop.s};
+    `}
 `
 
 const Name = styled.h4`
     font-family: ${props => props.theme.fontFamilies.plainLight};
-    font-size: ${props => props.theme.fontSizes.desktop.s};
+    font-size: ${props => props.theme.fontSizes.mobile.xs};
     line-height: 1.43;
 
     opacity: 0.6;
+
+    ${props => props.theme.above.desktop`
+        font-size: ${props.theme.fontSizes.desktop.s};
+    `}
 `
 
 const Testimonial = ({

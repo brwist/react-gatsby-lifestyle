@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useWindowSize } from 'react-use'
+
 import theme from './../../styles/theme'
 
 import Card from './Card'
@@ -7,11 +9,19 @@ import HorizontalTitle from './HorizontalTitle'
 import Carousel from './../Carousel'
 
 const Wrapper = styled.div`
-    padding: ${props => props.theme.desktopVW(120)} 0;
+    padding: calc(${props => props.theme.sizes.mobile} * 3) 0;
 
-    .swiper-wrapper {
-        padding: ${props => props.theme.desktopVW(120)} 0;
-    }
+    ${props => props.type == 'Straight' && `
+        .swiper-wrapper {
+            padding: calc(${props.theme.sizes.mobile} * 3) 0;
+        }
+    `}
+
+    ${props => props.type == 'Wave' && `
+        .swiper-wrapper {
+            padding-bottom: calc(${props.theme.sizes.mobile} * 3);
+        }
+    `}
 
     .swiper-scrollbar {
         left: 50%;
@@ -19,14 +29,52 @@ const Wrapper = styled.div`
 
         transform: translateX(-50%);
 
-        width: ${props => props.theme.desktopVW(160)};
+        width: 60%;
+        min-width: ${props => props.theme.mobileVW(200)};
         
         background-color: ${props => props.colors.bar};
 
         .swiper-scrollbar-drag {
             background-color: ${props => props.colors.drag};
         }
-	}
+    }
+    
+    ${props => props.theme.above.desktop`
+        padding: ${props.theme.desktopVW(120)} 0;
+
+        ${props.type == 'Straight' && `
+            .swiper-wrapper {
+                padding: ${props.theme.desktopVW(120)} 0;
+            }
+        `}
+
+        ${props.type == 'Wave' && `
+            .swiper-wrapper {
+                padding-bottom: ${props.theme.desktopVW(120)};
+            }
+        `}
+
+        .swiper-container {
+            overflow: visible;
+        }
+
+        .swiper-scrollbar {
+            min-width: ${props.theme.desktopVW(160)};
+            width: ${props.theme.desktopVW(160)};
+        }
+    `}
+`
+
+const StyledTitle = styled(HorizontalTitle)`
+    ${props => props.type == 'Wave' && `
+        margin-bottom: calc(${props.theme.sizes.mobile} * 2);
+    `}
+
+    ${props => props.theme.above.desktop`
+        ${props.type == 'Wave' && `
+            margin-bottom: -${props.theme.desktopVW(50)};
+        `}
+    `}
 `
 
 const HorizontalDrag = ({
@@ -42,17 +90,25 @@ const HorizontalDrag = ({
     backgroundColor
 }) => {
 
-    const offset = 80
+    const { width: windowWidth } = useWindowSize()
+
+    const offset = windowWidth < 1023 ? 32 : 80
 
     const params = {
-        spaceBetween: offset,
+        spaceBetween: 32,
         slidesOffsetBefore: offset,
         slidesOffsetAfter: offset,
-        slidesPerView: 'auto',
+        slidesPerView: 1.25,
         grabCursor: true,
         scrollbar: {
             el: '.swiper-scrollbar',
             hide: false
+        },
+        breakpoints: {
+            1023: {
+                spaceBetween: 80,
+                slidesPerView: 'auto',
+            }
         }
     }
 
@@ -77,9 +133,10 @@ const HorizontalDrag = ({
     }
 
     return (
-        <Wrapper colors={getColors(backgroundColor)}>
-            <HorizontalTitle 
+        <Wrapper colors={getColors(backgroundColor)} type={type}>
+            <StyledTitle 
                 lang={lang}
+                type={type}
                 title={title} 
                 description={description} 
                 size='normal'

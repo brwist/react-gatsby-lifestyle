@@ -5,14 +5,29 @@ import Image from 'gatsby-image'
 import TextRenderer from './TextRenderer'
 import Container from './Layout/Container'
 import Title from './Title'
+import Carousel from './Carousel'
+
+const Wrapper = styled.div`
+    padding-bottom: calc(${props => props.theme.sizes.mobile} * 3);
+    
+    ${props => props.theme.above.desktop`
+        padding-bottom: calc(${props.theme.sizes.desktop} * 10);
+    `}
+`
 
 const Header = styled(Container)`
-    position: absolute;
+    margin-bottom: calc(${props => props.theme.sizes.mobile} * 3);
 
-    top: calc(${props => props.theme.sizes.desktop} * 2);
-    left: 50%;
+    ${props => props.theme.above.desktop`
+        position: absolute;
 
-    transform: translateX(-50%);
+        top: calc(${props.theme.sizes.desktop} * 2);
+        left: 50%;
+
+        transform: translateX(-50%);
+
+        margin-bottom: 0;
+    `}
 `
 
 const StyledTitle = styled(Title)`
@@ -21,96 +36,139 @@ const StyledTitle = styled(Title)`
     }
 `
 
+const CarouselWrapper = styled.div`
+    ${props => props.theme.above.desktop`
+        display: none;
+    `}
+`
+
+const StyledCarousel = styled(Carousel)`
+    &:not(:last-of-type) {
+        margin-bottom: 32px;
+    }
+`
+
 const Grid = styled.ul`
     display: grid;
     grid-template-columns: repeat(2, 1fr);
 
-    margin-bottom: calc(${props => props.theme.sizes.desktop} * 10);
+    ${props => props.theme.below.desktop`
+        display: none;
+    `}
 `
 
-const Item = styled.li`
+const Item = styled.div`
     position: relative;
 
-    padding-bottom: 50%;
+    width: 100%;
 
-    &:nth-of-type(1) {
-        grid-column: 2;
+    ${props => props.theme.above.desktop`
+        padding-bottom: 50%;
 
-        .inner {
-            left: initial;
-            right: 0;
-        }
-    }
+        &:nth-of-type(1) {
+            grid-column: 2;
 
-    &:nth-of-type(4),
-    &:nth-of-type(5) {
-        .inner {
-            left: initial;
-            right: 0;
-        }
-    }
-
-    &:hover {
-        .inner {
-            width: 100%;
+            .inner {
+                left: initial;
+                right: 0;
+            }
         }
 
-        .back {
-            display: block;
+        &:nth-of-type(4),
+        &:nth-of-type(5) {
+            .inner {
+                left: initial;
+                right: 0;
+            }
         }
-    }
+
+        &:hover {
+            .inner {
+                width: 100%;
+            }
+
+            .back {
+                display: block;
+            }
+        }
+    `}
 `
 
 const Inner = styled.div`
-    position: absolute;
+    position: relative;
 
-    top: 0;
-    left: 0;
-
-    width: 50%;
+    width: 100%;
     height: 100%;
     
     text-align: left;
+
+    ${props => props.theme.above.desktop`
+        position: absolute;
+
+        top: 0;
+        left: 0;
+
+        width: 50%;
+    `}
 `
 
 const Category = styled.span`
     display: block;
     
-    margin-bottom: calc(${props => props.theme.sizes.desktop} / 2);
+    margin-bottom: calc(${props => props.theme.sizes.mobile} / 3);
 
     font-family: ${props => props.theme.fontFamilies.plainLight};
-    font-size: ${props => props.theme.fontSizes.desktop.s};
+    font-size: ${props => props.theme.fontSizes.mobile.s};
     line-height: 1.5;
 
     color: currentColor;
 
     opacity: 0.6;
+
+    ${props => props.theme.above.desktop`
+        margin-bottom: calc(${props.theme.sizes.desktop} / 2);
+        font-size: ${props.theme.fontSizes.desktop.s};
+    `}
 `
 
 const Front = styled.div`
-    position: absolute;
-    
-    top: 0;
-    left: 0;
+    position: relative;
 
     width: 100%;
     height: 100%;
 
-    padding: ${props => props.theme.desktopVW(80)};
+    padding: ${props => props.theme.sizes.mobile};
 
     background-color: ${props => props.theme.colors.darkGrey};
 
     color: ${props => props.theme.colors.light};
+
+    ${props => props.theme.above.desktop`
+        position: absolute;
+        
+        top: 0;
+        left: 0;
+        
+        padding: ${props.theme.desktopVW(80)};
+    `}
 `
 
 const Question = styled.p`
     position: relative;
 
+    margin-bottom: calc(${props => props.theme.sizes.mobile} / 3);
+
     font-family: ${props => props.theme.fontFamilies.plainRegular};
-    font-size: ${props => props.theme.fontSizes.desktop.h6};
+    font-size: ${props => props.theme.fontSizes.mobile.p};
     line-height: 1.3;
 
     color: currentColor;
+
+    ${props => props.theme.above.desktop`
+        margin-bottom: 0;
+        
+        font-size: ${props.theme.fontSizes.desktop.h6};
+    `}
 `
 
 const Back = styled.div`
@@ -124,22 +182,38 @@ const Back = styled.div`
     width: 100%;
     height: 100%;
 
-    padding: ${props => props.theme.desktopVW(80)};
+    padding: ${props => props.theme.sizes.mobile};
 
     background-color: ${props => props.theme.colors.white};
 
     color: ${props => props.theme.colors.light};
+
+    ${props => props.theme.above.desktop`
+        padding: ${props.theme.desktopVW(80)};
+    `}
 `
 
 const Answer = styled(TextRenderer)`
     position: relative;
 
-    width: 75%;
+    width: 100%;
 
-    font-size: ${props => props.theme.fontSizes.desktop.h6};
+    font-size: ${props => props.theme.fontSizes.mobile.s};
     line-height: 1.3;
 
     color: currentColor;
+
+    ${props => props.theme.above.desktop`
+        ${props.mobile == 'true' && `
+            display: none;
+        `}
+    `}
+
+    ${props => props.theme.above.desktop`
+        width: 75%;
+
+        font-size: ${props.theme.fontSizes.desktop.h6};
+    `}
 `
 
 const Background = styled(Image)`
@@ -159,6 +233,35 @@ const Background = styled(Image)`
     }
 `
 
+const GridItem = ({ 
+    className,
+    data: {
+        question, 
+        answer, 
+        category, 
+        image
+    }
+}) => (
+    <Item className={className}>
+        <Inner className='inner'>
+            <Front className='front'>
+                {category && (
+                    <Category>{category}</Category>
+                )}
+                <Question>{question}</Question>
+                <Answer data={answer} mobile='true' />
+            </Front>
+            <Back className='back'>
+                <Background fluid={image.fluid} alt={image.alt} />
+                {category && (
+                    <Category className='category'>{category}</Category>
+                )}
+                <Answer data={answer} />
+            </Back>
+        </Inner>
+    </Item>
+)
+
 const Faq = ({
     lang, 
     inView,
@@ -167,33 +270,36 @@ const Faq = ({
         items
     }
 }) => {
+
+    const params = {
+        spaceBetween: 32,
+        slidesPerView: 1.25,
+        grabCursor: true
+    }
+
     return (
-        <>
+        <Wrapper>
             <Header>
                 <StyledTitle title={contentTitle} size='normal' />
             </Header>
             <Grid>
-                {items.map(({ question, answer, category, image }, i) => (
-                    <Item key={i}>
-                        <Inner className='inner'>
-                            <Front className='front'>
-                                {category && (
-                                    <Category>{category}</Category>
-                                )}
-                                <Question>{question}</Question>
-                            </Front>
-                            <Back className='back'>
-                                <Background fluid={image.fluid} alt={image.alt} />
-                                {category && (
-                                    <Category className='category'>{category}</Category>
-                                )}
-                                <Answer data={answer} />
-                            </Back>
-                        </Inner>
-                    </Item>
+                {items.map((item, i) => (
+                    <GridItem key={i} data={item} />
                 ))}
             </Grid>
-        </>
+            <CarouselWrapper>
+                <StyledCarousel params={params}>
+                    {items.slice(0, 3).map((item, i) => (
+                        <GridItem key={i} data={item} />
+                    ))}
+                </StyledCarousel>
+                <StyledCarousel params={{ ...params, initialSlide: 1 }}>
+                    {items.slice(-2).map((item, i) => (
+                        <GridItem key={i} data={item} />
+                    ))}
+                </StyledCarousel>
+            </CarouselWrapper>
+        </Wrapper>
     )
 }
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import GlobalStyle from './GlobalStyle'
 
 import Menu from './Menu'
@@ -13,7 +13,7 @@ const Layout = ({
 }) => {
 	
 	const [menuOpen, setMenuOpen] = useState(false)
-	const showFooter = location.pathname.includes('contact') ? false : true
+	const showFooter = location.pathname.includes('contact') || location.pathname.includes('404') ? false : true
 
   	return (
 		<>

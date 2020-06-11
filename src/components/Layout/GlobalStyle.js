@@ -55,6 +55,10 @@ const GlobalStyle = createGlobalStyle`
 		&.ReactModal__Body--open {
 			overflow: hidden;
 		}
+
+		// ${props => props.theme.below.desktop`
+		// 	font-size: ${props => props.theme.desktopVW(20)};
+    	// `}
     }
 
     *, *:before, *:after {
@@ -96,7 +100,7 @@ const GlobalStyle = createGlobalStyle`
 	}
 
 	.ReactModal__Overlay {
-		padding: ${props => props.theme.desktopVW(120)} 0;
+		padding: ${props => props.theme.mobileVW(120)} 0;
 
 		background-color: rgba(16, 16, 16, 0.8) !important;
 
@@ -107,10 +111,21 @@ const GlobalStyle = createGlobalStyle`
 
 	.popup-modal {
 		width: 100%;
-		max-width: ${props => props.theme.desktopVW(1200)};
 
-		margin: 0 auto ${props => props.theme.desktopVW(120)} auto;
+		margin: 0 auto ${props => props.theme.mobileVW(120)} auto;
 	}
+
+	${props => props.theme.above.desktop`
+		.ReactModal__Overlay {
+			padding: ${props.theme.desktopVW(120)} 0;
+		}
+
+		.popup-modal {
+			max-width: ${props.theme.desktopVW(1200)};
+
+			margin: 0 auto ${props.theme.desktopVW(120)} auto;
+		}
+	`}
 `
 
 export default GlobalStyle

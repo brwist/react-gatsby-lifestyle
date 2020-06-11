@@ -5,15 +5,22 @@ import TextRenderer from './TextRenderer'
 
 const StyledLocations = styled.div`
     width: 100%;
-    max-width: ${props => props.theme.desktopVW(500)};
 
-    margin-left: calc(${props => props.theme.sizes.desktop} * 5);
+    ${props => props.theme.above.desktop`
+        max-width: ${props.theme.desktopVW(500)};
+
+        margin-left: calc(${props.theme.sizes.desktop} * 5);
+    `}
 `
 
 const NavList = styled.ul`
     display: block;
 
-    margin-bottom: calc(${props => props.theme.sizes.desktop} * 2);
+    margin-bottom: ${props => props.theme.sizes.mobile};
+    
+    ${props => props.theme.above.desktop`
+        margin-bottom: calc(${props.theme.sizes.desktop} * 2);
+    `}
 `
 
 const NavItem = styled.li`
@@ -41,7 +48,7 @@ const NavItem = styled.li`
     }
 
     &:not(:last-of-type) {
-        margin-right: ${props => props.theme.sizes.desktop};
+        margin-right: calc(${props => props.theme.sizes.mobile} / 2);
     }
 
     ${props => props.active && `
@@ -49,21 +56,41 @@ const NavItem = styled.li`
             width: 100%;
         }
     `}
+
+    ${props => props.theme.above.desktop`
+        &:not(:last-of-type) {
+            margin-right: ${props.theme.sizes.desktop};
+        }
+    `}
 `
 
 const Title = styled.h4`
     font-family: ${props => props.theme.fontFamilies.plainRegular};
-    font-size: ${props => props.theme.fontSizes.desktop.h6};
+    font-size: ${props => props.theme.fontSizes.mobile.m};
+    
+    ${props => props.theme.above.desktop`
+        font-size: ${props.theme.fontSizes.desktop.h6};
+    `}
 `
 
 const Address = styled(TextRenderer)`
-    &:not(last-of-type) {
+    font-size: ${props => props.theme.fontSizes.mobile.s};
+
+    &:not(:last-of-type) {
         margin-bottom: 0;
     }
 
     &:first-of-type {
-        margin-bottom: calc(${props => props.theme.sizes.desktop} / 1.5);
+        margin-bottom: calc(${props => props.theme.sizes.mobile} / 1.5);
     }
+
+    ${props => props.theme.above.desktop`
+        font-size: ${props.theme.fontSizes.desktop.p};
+
+        &:first-of-type {
+            margin-bottom: calc(${props.theme.sizes.desktop} / 1.5);
+        }
+    `}
 `
 
 const ContentList = styled.ul`

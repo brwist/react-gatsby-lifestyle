@@ -6,10 +6,6 @@ import styled from 'styled-components'
 import PopupPage from './../components/Popup/Page'
 import PopupModal from './../components/Popup/Modal'
 
-const StyledModal = styled.div`
-    background-color: ${props => props.theme.colors.dark};
-`
-
 const PopupTemplate = ({
     pageContext: {
         layout: {
@@ -24,7 +20,7 @@ const PopupTemplate = ({
     return (
         <ModalRoutingContext.Consumer>
             {({ modal, closeTo }) => (
-                <StyledModal>
+                <>
                     {modal ? (
                         <PopupModal 
                             lang={langSlug}
@@ -39,7 +35,7 @@ const PopupTemplate = ({
                             slug={slug}
                         />
                     )}
-                </StyledModal>
+                </>
             )}
         </ModalRoutingContext.Consumer>
     )

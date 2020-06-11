@@ -37,6 +37,19 @@ const fontFamilies = {
 }
 
 const fontSizes = {
+    mobile: {
+        h1: mobileVW(75),
+        h2: mobileVW(60),
+        h3: mobileVW(50),
+        h4: mobileVW(40),
+        h5: mobileVW(30),
+        h6: mobileVW(24),
+        p: mobileVW(18),
+        m: mobileVW(16),
+        s: mobileVW(14),
+        xs: mobileVW(12),
+        xxs: mobileVW(10)
+    },
     desktop: {
         h1: desktopVW(200),
         h2: desktopVW(144),
@@ -46,11 +59,14 @@ const fontSizes = {
         h6: desktopVW(24),
         p: desktopVW(18),
         m: desktopVW(16),
-        s: desktopVW(14)
+        s: desktopVW(14),
+        xs: desktopVW(12),
+        xxs: desktopVW(10)
     }
 }
 
 const sizes = {
+    mobile: mobileVW(32),
     desktop: desktopVW(32)
 }
 
