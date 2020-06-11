@@ -94,7 +94,7 @@ const Constructor = ({
         }
     }
 
-    if (data.length) {
+    if (data && data.length) {
         return (
             <>
                 {data.map((component, i) => {
@@ -120,7 +120,7 @@ const Constructor = ({
                 })}
             </>
         )
-    } else {
+    } else if (data) {
 
         const {
             __typename,
@@ -139,6 +139,8 @@ const Constructor = ({
                 {inView => renderComponent(__typename, data, inView, slug, backgroundColor)}
             </Section>
         )
+    } else {
+        return null
     }
 }
 
