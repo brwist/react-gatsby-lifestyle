@@ -34,16 +34,18 @@ const StyledMenu = styled.aside`
 `
 
 const StyledContainer = styled(Container)`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    position: relative;
 
     height: 100%;
 
     padding: ${props => props.theme.sizes.mobile};
 
     ${props => props.theme.above.desktop`
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
         padding: calc(${props.theme.sizes.desktop} * 8);
     `}
 `
@@ -52,9 +54,13 @@ const NavigationWrapper = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 
     height: 100%;
+
+    ${props => props.theme.above.desktop`
+        align-items: center;
+    `}
 `
 
 const ImageWrapper = styled.div`

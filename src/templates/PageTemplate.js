@@ -2,6 +2,7 @@ import React from 'react'
 import { graphql } from 'gatsby'
 
 import Constructor from './../components/Layout/Constructor'
+import Seo from '../components/Seo'
 
 const PageTemplate = ({
     pageContext: {
@@ -20,6 +21,7 @@ const PageTemplate = ({
 }) => {
     return (
         <>
+            <Seo />
             <Constructor 
                 lang={langSlug}
                 slug={slug}

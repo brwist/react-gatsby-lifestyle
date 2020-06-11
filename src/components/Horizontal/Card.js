@@ -63,12 +63,12 @@ const LinkedCard = styled(Link)`
 const SmallDescription = styled.p`
     position: relative;
     
-    font-size: ${props => props.theme.fontSizes.mobile.m};
+    font-size: ${props => props.theme.fontSizes.mobile.s};
 
     ${props => props.theme.above.desktop`
         padding-right: ${props.theme.sizes.desktop};
 
-        font-size: ${props => props.theme.fontSizes.desktop.p};
+        font-size: ${props.theme.fontSizes.desktop.p};
     `}
 `
 

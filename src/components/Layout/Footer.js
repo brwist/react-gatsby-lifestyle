@@ -1,6 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
-import { Link } from 'gatsby'
+import { Link, useStaticQuery, graphql } from 'gatsby'
 
 import Navigation from './Navigation'
 import TextRenderer from '../TextRenderer'
@@ -55,7 +55,7 @@ const LogoWrapper = styled(Link)`
     `}
 `
 
-const StyledLogo = styled(LogoShortSvg)`
+const StyledLogo = styled.img`
     width: 100%;
     height: 100%;
 `
@@ -134,12 +134,21 @@ const Footer = ({
         footerText
     }
 }) => {
+
+    const { logoImage } = useStaticQuery(graphql`{
+        logoImage: allFile(filter: {relativePath: {eq: "rl.png"}}) {
+            nodes {
+               publicURL
+            }
+        }
+    }`)
+
     return (
         <StyledFooter type={type}>
             <Inner>
                 <FooterLeft>
                     <LogoWrapper to={generatePath(lang, '')}>
-                        <StyledLogo />
+                        <StyledLogo src={logoImage.nodes[0].publicURL} alt='Rockstar Lifestyle - Short logo'/>
                     </LogoWrapper>
                     <InstagramWrapper href={instagram} target='_blank'>
                         <StyledInstagram />

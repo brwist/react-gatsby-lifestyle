@@ -2,12 +2,13 @@ import React from 'react'
 import Image from 'gatsby-image'
 import styled from 'styled-components'
 
+import Container from './Layout/Container'
 import Title from './Title'
 import Video from './Video'
 import Carousel from './Carousel'
 import TextRenderer from './TextRenderer'
 
-const Wrapper = styled.div`
+const Wrapper = styled(Container)`
     display: flex;
     flex-direction: column;
 
@@ -17,7 +18,7 @@ const Wrapper = styled.div`
 
     ${props => props.theme.above.desktop`
         flex-direction: ${props.type == 'Media Left' ? 'row' : 'row-reverse'};
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
 
         padding: calc(${props.theme.sizes.desktop} * 10) 0;
@@ -76,7 +77,7 @@ const Content = styled.div`
         ${props.order == 'left' ? `
             padding: 0 ${props.theme.desktopVW(160)} 0 0;
         ` : `
-            padding: 0 0 0 ${props.theme.desktopVW(80)};
+            padding: 0 ${props.theme.desktopVW(80)} 0 0;
         `}
     `}
 `

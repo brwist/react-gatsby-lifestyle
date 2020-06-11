@@ -6,8 +6,7 @@ import styled from 'styled-components'
 import { generatePath } from './../../utils/helpers'
 
 const StyledNavigation = styled.nav`
-    display: inline-block;
-    vertical-align: middle;
+    display: block;
 
     width: 100%;
 
@@ -50,10 +49,6 @@ const StyledNavigation = styled.nav`
 
     ${props => props.theme.above.desktop`
         .link {
-            &:not(.active) {
-                opacity: 0.25;
-            }
-
             &:hover {
                 opacity: 1;
             }
@@ -90,7 +85,6 @@ const List = styled.ul``
 
 const Item = styled.li`
     display: inline-block;
-    vertical-align: middle;
 
     color: ${props => props.theme.colors.light};
 
@@ -103,12 +97,6 @@ const StyledLink = styled(Link)`
     display: inline-block;
 
     position: relative;
-
-    &.active {
-        &:after {
-            width: 100%;
-        }
-    }
 
     &:after {
         content: '';
@@ -124,14 +112,26 @@ const StyledLink = styled(Link)`
         background-color: ${props => props.theme.colors.light};
     }
 
+    &:not(.active) {
+        opacity: 0.25;
+    }
+
     ${props => props.theme.above.desktop`
         &:after {
             bottom: -${props.theme.desktopVW(5)};
+        }
+
+        &.active {
+            &:after {
+                width: 100%;
+            }
         }
     `}
 `
 
 const Label = styled.span`
+    display: block;
+
     font-family: ${props => props.theme.fontFamilies.plainLight};
     font-size: ${props => props.theme.fontSizes.desktop.p};
     font-weight: 100;

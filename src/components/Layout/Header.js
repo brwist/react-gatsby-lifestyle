@@ -1,9 +1,7 @@
 import React, { useContext } from 'react'
+import { useStaticQuery, graphql, Link } from 'gatsby'
 import styled from 'styled-components'
 import Img from 'gatsby-image'
-import { Link } from 'gatsby'
-
-import { DictionaryContext } from './../../contexts/dictionary'
 
 import Container from './../Layout/Container'
 import Navigation from './Navigation'
@@ -12,6 +10,8 @@ import ButtonPrimary from './../Buttons/ButtonPrimary'
 
 import LogoFullSvg from './../../images/graphics/rockstar-lifestyle.svg'
 import LogoShortSvg from './../../images/graphics/rl.svg'
+
+import { DictionaryContext } from './../../contexts/dictionary'
 import { generatePath } from '../../utils/helpers'
 
 const StyledHeader = styled.header`
@@ -42,19 +42,12 @@ const StyledContainer = styled(Container)`
 `
 
 const Logo = styled(Link)`
-    display: inline-block;
-    vertical-align: middle;
-
-    width: ${props => props.theme.mobileVW(200)};
-    height: ${props => props.theme.mobileVW(15)};
+    display: block;
 
     margin-right: calc(${props => props.theme.sizes.mobile} * 2);
 
     ${props => props.theme.above.desktop`
-        width: ${props => props.theme.desktopVW(218)};
-        height: ${props => props.theme.sizes.desktop};
-
-        margin-right: calc(${props => props.theme.sizes.desktop} * 2);
+        margin-right: calc(${props.theme.sizes.desktop} * 2);
     `}
 `
 
@@ -72,9 +65,12 @@ const StyledNavigation = styled(Navigation)`
     `}
 `
 
-const LogoIcon = styled(LogoFullSvg)`
-    width: 100%;
-    height: 100%;
+const LogoImage = styled.img`
+    width: ${props => props.theme.mobileVW(200)};
+
+    ${props => props.theme.above.desktop`
+        width: ${props.theme.desktopVW(218)};
+    `}
 `
 
 const InnerLeft = styled.div`
@@ -118,12 +114,22 @@ const Header = ({
     setMenuOpen,
     menuOpen
 }) => {
+
+    const { logoImage } = useStaticQuery(graphql`{
+        logoImage: allFile(filter: {relativePath: {eq: "rockstar-lifestyle.png"}}) {
+            nodes {
+               publicURL
+            }
+        }
+    }`)
+
     return (
         <StyledHeader>
             <StyledContainer>
                 <InnerLeft>
                     <Logo to={generatePath(lang, '')}>
-                        <LogoIcon />
+                        {/* <LogoIcon /> */}
+                        <LogoImage src={logoImage.nodes[0].publicURL} alt='Rockstar Lifestyle - Logo'/>
                     </Logo>
                     <StyledNavigation 
                         lang={lang}
