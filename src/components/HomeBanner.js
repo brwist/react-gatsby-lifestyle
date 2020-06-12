@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
 import Image from 'gatsby-image'
 import styled from 'styled-components'
 
@@ -11,6 +11,8 @@ const StyledHeroBanner = styled.div`
     width: 100%;
     
     height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
+
     max-height: 2000px;
 `
 
@@ -125,8 +127,19 @@ const HomeBanner = ({
         externalLinkLabel
     } = data
 
+    const bannerRef = useRef(null)
+
+    useEffect(() => {
+        let vh = window.innerHeight * 0.01
+        bannerRef.current.style.setProperty('--vh', `${vh}px`)
+    }, [])
+
     return (
-        <StyledHeroBanner className={className} type={bannerType}>
+        <StyledHeroBanner 
+            ref={bannerRef}
+            className={className} 
+            type={bannerType}
+        >
             {images && (
                 <>
                     <ImageLeft>

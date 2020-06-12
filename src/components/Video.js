@@ -71,12 +71,12 @@ const StaticImage = styled.img`
 const Controls = styled.div`
     position: absolute;
 
-    bottom: calc(${props => props.theme.sizes.mobile} / 2);
+    bottom: ${props => props.theme.sizes.mobile};
     left: 0;
 
     width: 100%;
 
-    padding: 0 calc(${props => props.theme.sizes.mobile} / 1.5);
+    padding: 0 ${props => props.theme.sizes.mobile};
     
     ${props => props.theme.above.desktop`
         bottom: ${props.theme.sizes.desktop};
@@ -90,8 +90,8 @@ const PlayPause = styled.button`
 `
 
 const Icon = styled(PlayPauseSvg)`
-    width: ${props => props.theme.mobileVW(15)};
-    height: ${props => props.theme.mobileVW(20)};
+    width: ${props => props.theme.mobileVW(20)};
+    height: ${props => props.theme.mobileVW(25)};
 
     rect, polygon {
         fill: ${props => props.theme.colors.light};

@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useWindowSize } from 'react-use'
 
 import theme from './../../styles/theme'
 
+import DragIcon from './DragIcon'
 import Card from './Card'
 import HorizontalTitle from './HorizontalTitle'
 import Carousel from './../Carousel'
@@ -77,6 +78,20 @@ const StyledTitle = styled(HorizontalTitle)`
     `}
 `
 
+const StyledDragIcon = styled(DragIcon)`
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: ${props => props.theme.desktopVW(50)};
+    height: ${props => props.theme.desktopVW(50)};
+
+    border-radius: 100%;
+
+    background-color: #fff;
+`
+
 const HorizontalDrag = ({
     lang,
     inView,
@@ -90,8 +105,9 @@ const HorizontalDrag = ({
     backgroundColor
 }) => {
 
+    const [isHovering, setIsHovering] = useState(false)
+    const [coordinates, setCoordinates] = useState({x: 0, y: 0})
     const { width: windowWidth } = useWindowSize()
-
     const offset = windowWidth < 1023 ? 32 : 80
 
     const params = {
@@ -132,8 +148,25 @@ const HorizontalDrag = ({
         }
     }
 
+    const toggleMouseEvent = () => {
+        setIsHovering(!isHovering)
+    }
+    
+    const handleMouseMove = e => {
+        setCoordinates({
+            x: e.nativeEvent.offsetX,
+            y: e.nativeEvent.offsetY
+        })
+    }
+
     return (
-        <Wrapper colors={getColors(backgroundColor)} type={type}>
+        <Wrapper 
+            colors={getColors(backgroundColor)} 
+            type={type}
+            onMouseEnter={toggleMouseEvent}
+            onMouseMove={(e) => handleMouseMove(e)}
+            onMouseLeave={toggleMouseEvent}
+        >
             <StyledTitle 
                 lang={lang}
                 type={type}
@@ -142,6 +175,7 @@ const HorizontalDrag = ({
                 size='normal'
                 useInlineLink={true}
             />
+            <StyledDragIcon style={{ top: coordinates.y, left: coordinates.x }} />
             <Carousel params={params}>
                 {items.map((item, i) => {
                     return (
