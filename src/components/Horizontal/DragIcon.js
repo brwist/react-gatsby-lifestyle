@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
@@ -6,6 +6,15 @@ const Wrapper = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    width: ${props => props.theme.desktopVW(150)};
+    height: ${props => props.theme.desktopVW(150)};
+
+    border-radius: 100%;
+
+    background-color: #fff;
+
+    pointer-events: none;
 `
 
 const Label = styled.span`
@@ -14,12 +23,12 @@ const Label = styled.span`
 
 const DragIcon = ({
     className
-}) => {
+}, ref) => {
     return (
-        <Wrapper className={className}>
+        <Wrapper ref={ref} className={className}>
             <Label>Drag me</Label>
         </Wrapper>
     )
 }
 
-export default DragIcon
+export default forwardRef(DragIcon)

@@ -7,6 +7,10 @@ const StyledTestimonial = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
+
+    ${props => props.theme.above.desktop`
+        justify-content: flex-start;
+    `}
 `
 
 const ImageWrapper = styled.div`
@@ -20,6 +24,8 @@ const ImageWrapper = styled.div`
     ${props => props.theme.above.desktop`
         width: ${props.theme.desktopVW(64)};
         height: ${props.theme.desktopVW(64)};
+
+        margin-right: ${props.theme.sizes.desktop};
     `}
 `
 

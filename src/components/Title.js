@@ -228,7 +228,7 @@ const StyledTestimonial = styled(Testimonial)`
     margin: ${props => props.theme.sizes.mobile} 0;
     
     ${props => props.theme.above.desktop`
-        margin: ${props.theme.sizes.mobile} 0;
+        margin: ${props.theme.sizes.desktop} 0;
     `}
 `
 

@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import styled from 'styled-components'
 import { useWindowSize } from 'react-use'
+import MouseTooltip from 'react-sticky-mouse-tooltip'
 
 import theme from './../../styles/theme'
 
@@ -10,6 +11,8 @@ import HorizontalTitle from './HorizontalTitle'
 import Carousel from './../Carousel'
 
 const Wrapper = styled.div`
+    position: relative;
+
     padding: calc(${props => props.theme.sizes.mobile} * 3) 0;
 
     ${props => props.type == 'Straight' && `
@@ -55,10 +58,6 @@ const Wrapper = styled.div`
             }
         `}
 
-        .swiper-container {
-            overflow: visible;
-        }
-
         .swiper-scrollbar {
             min-width: ${props.theme.desktopVW(160)};
             width: ${props.theme.desktopVW(160)};
@@ -78,18 +77,18 @@ const StyledTitle = styled(HorizontalTitle)`
     `}
 `
 
-const StyledDragIcon = styled(DragIcon)`
-    position: absolute;
+const StyledMousetip = styled(MouseTooltip)`
+    display: block !important;
+    
+    transform: scale(${props => props.visible ? 1 : 0.5});
 
-    top: 0;
-    left: 0;
+    z-index: 2;
+    
+    opacity: ${props => props.visible ? 1 : 0};
 
-    width: ${props => props.theme.desktopVW(50)};
-    height: ${props => props.theme.desktopVW(50)};
+    transition: transform 0.15s ease-out, opacity 0.15s ease-out;
 
-    border-radius: 100%;
-
-    background-color: #fff;
+    pointer-events: none;
 `
 
 const HorizontalDrag = ({
@@ -104,9 +103,13 @@ const HorizontalDrag = ({
     information,
     backgroundColor
 }) => {
-
+    
+    const dragRef = useRef(null)
     const [isHovering, setIsHovering] = useState(false)
-    const [coordinates, setCoordinates] = useState({x: 0, y: 0})
+    const [dragSize, setDragSize] = useState({
+        width: 50,
+        height: 50
+    })
     const { width: windowWidth } = useWindowSize()
     const offset = windowWidth < 1023 ? 32 : 80
 
@@ -148,25 +151,27 @@ const HorizontalDrag = ({
         }
     }
 
-    const toggleMouseEvent = () => {
-        setIsHovering(!isHovering)
-    }
-    
-    const handleMouseMove = e => {
-        setCoordinates({
-            x: e.nativeEvent.offsetX,
-            y: e.nativeEvent.offsetY
+    useEffect(() => {
+        setDragSize({
+            width: dragRef.current.clientWidth,
+            height: dragRef.current.clientHeight
         })
-    }
+    }, [])
 
     return (
         <Wrapper 
             colors={getColors(backgroundColor)} 
             type={type}
-            onMouseEnter={toggleMouseEvent}
-            onMouseMove={(e) => handleMouseMove(e)}
-            onMouseLeave={toggleMouseEvent}
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
         >
+            <StyledMousetip
+                visible={isHovering}
+                offsetX={-dragSize.width / 2}
+                offsetY={-dragSize.height / 2}
+            >
+                <DragIcon ref={dragRef}/>
+            </StyledMousetip>
             <StyledTitle 
                 lang={lang}
                 type={type}
@@ -175,7 +180,6 @@ const HorizontalDrag = ({
                 size='normal'
                 useInlineLink={true}
             />
-            <StyledDragIcon style={{ top: coordinates.y, left: coordinates.x }} />
             <Carousel params={params}>
                 {items.map((item, i) => {
                     return (
