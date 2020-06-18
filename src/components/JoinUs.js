@@ -27,7 +27,9 @@ const Content = styled(Title)`
     }
 
     ${props => props.theme.above.desktop`
-         .description-wrapper {
+        margin-right: calc(${props.theme.sizes.desktop} * 4);
+        
+        .description-wrapper {
             max-width: ${props.theme.desktopVW(480)};
         }
 

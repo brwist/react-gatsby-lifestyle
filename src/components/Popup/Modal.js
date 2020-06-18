@@ -3,6 +3,7 @@ import { Link } from 'gatsby'
 import Image from 'gatsby-image'
 import styled from 'styled-components'
 
+import Grain from './../Layout/Grain'
 import TextRenderer from './../TextRenderer'
 import JoinUsForm from './../Forms/JoinUs'
 import SelfTestForm from './../Forms/SelfTest'
@@ -34,7 +35,11 @@ const StyledLink = styled(Link)`
 `
 
 const FormWrapper = styled.div`
+    position: relative;
+
     padding: ${props => props.theme.mobileVW(80)};
+
+    background-color: ${props => props.theme.colors.dark};
     
     ${props => props.theme.above.desktop`
         padding: ${props.theme.desktopVW(80)};
@@ -78,6 +83,7 @@ const PopupModal = ({
                 {slug == 'join-us' && <StyledJoinUsForm data={data} />}
                 {slug == 'self-test' && <StyledSelfTestForm data={data} />}
             </FormWrapper>
+            <Grain />
         </>
     )
 }

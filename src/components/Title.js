@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useRef, useState, useEffect, forwardRef } from 'react'
 import styled from 'styled-components'
+import gsap from 'gsap'
 import { BLOCKS } from '@contentful/rich-text-types'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 
@@ -12,6 +13,8 @@ import { generatePath } from './../utils/helpers'
 
 const TitleWrapper = styled.div`
     position: relative;
+
+    overflow: hidden;
 `
 
 const Category = styled.span`
@@ -170,6 +173,10 @@ const StyledTitle = styled.h1`
 
 const LineWrapper = styled.span`
     display: block;
+    
+    position: relative;
+
+    overflow: hidden;
 
     &:nth-of-type(2) {
         margin-left: calc(${props => props.theme.sizes.mobile} / 2);
@@ -188,6 +195,12 @@ const LineWrapper = styled.span`
             margin-left: calc(${props.theme.sizes.desktop} * 5);
         }   
     `}
+`
+
+const TitleOverlay = styled.div`
+    ${props => props.theme.styles.element.fill}
+
+    background-color: ${props => props.theme.colors.dark};
 `
 
 const Words = styled.span``
@@ -300,9 +313,13 @@ const Title = ({
     links,
     className,
     useInlineLink
-}) => {
+}, ref) => {
     return (
-        <TitleWrapper size={size} className={`title-wrapper ${className && className}`}>
+        <TitleWrapper 
+            size={size} 
+            className={`title-wrapper ${className && className}`}
+            ref={ref && ref}
+        >
             {category == 'Event' && (
                 <Category>{category}</Category>
             )}
@@ -310,11 +327,13 @@ const Title = ({
                 <StyledTitle className='heading' size={size}>
                     {title && documentToReactComponents(title.json, {
                         renderNode: {
-                            [BLOCKS.HEADING_1]: (node, children) => (
-                                <LineWrapper className='line-wrapper'>
-                                    <Words>{children}</Words>
-                                </LineWrapper>
-                            ),
+                            [BLOCKS.HEADING_1]: (node, children) => {
+                                return (
+                                    <LineWrapper className='line-wrapper'>
+                                        <Words>{children}</Words>
+                                    </LineWrapper>
+                                )
+                            },
                             [BLOCKS.PARAGRAPH]: (node, children) => (
                                 <LineWrapper className='line-wrapper'>
                                     <Words>{children}</Words>
@@ -322,6 +341,7 @@ const Title = ({
                             )
                         }
                     })}
+                    {/* <TitleOverlay /> */}
                 </StyledTitle>
             )}
             {description && (
@@ -353,4 +373,4 @@ const Title = ({
     )
 }
 
-export default Title
+export default forwardRef(Title)

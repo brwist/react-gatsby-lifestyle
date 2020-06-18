@@ -1,6 +1,7 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import Image from 'gatsby-image'
 import styled from 'styled-components'
+import gsap from 'gsap'
 
 import Container from './Layout/Container'
 import Title from './Title'
@@ -55,6 +56,13 @@ const StyledDescription = styled(Title)`
     `}
 `
 
+const AnimatedImage = styled.div`
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+`
+
 const ImageLeft = styled.div`
     position: absolute;
 
@@ -67,6 +75,8 @@ const ImageLeft = styled.div`
     height: ${props => props.theme.mobileVW(240)};
 
     background-color: ${props => props.theme.colors.darkGrey};
+
+    overflow: hidden;
 
     ${props => props.theme.above.desktop`
         top: ${props.theme.desktopVW(240)};
@@ -92,6 +102,8 @@ const ImageRight = styled.div`
 
     background-color: ${props => props.theme.colors.darkGrey};
 
+    overflow: hidden;
+
     ${props => props.theme.above.desktop`
         top: 0;
         
@@ -100,6 +112,12 @@ const ImageRight = styled.div`
         width: 50vw;
         height: 100%;
     `}
+`
+
+const ImageOverlay = styled.div`
+    ${props => props.theme.styles.element.fill}
+
+    background-color: ${props => props.theme.colors.dark};
 `
 
 const StyledImage = styled(Image)`
@@ -112,10 +130,7 @@ const HomeBanner = ({
     inView,
     className,
     category,
-    data
-}) => {
-
-    const {
+    data: {
         bannerType,
         tags,
         images,
@@ -125,14 +140,29 @@ const HomeBanner = ({
         internalLinks,
         externalLink,
         externalLinkLabel
-    } = data
+    }
+}) => {
 
     const bannerRef = useRef(null)
+    const imageLeftRef = useRef(null)
+    const imageLeftOverlayRef = useRef(null)
+    const imageRightRef = useRef(null)
+    const imageRightOverlayRef = useRef(null)
+    const titleRef = useRef(null)
 
     useEffect(() => {
         let vh = window.innerHeight * 0.01
         bannerRef.current.style.setProperty('--vh', `${vh}px`)
+        
+        transitionIn()
     }, [])
+
+    const transitionIn = () => {
+        const timeline = new gsap.timeline({ delay: 1 })
+        timeline.fromTo(titleRef.current, { height: '0%' }, { height: '100%', duration: 1.25, ease: 'none' }, 0)
+        timeline.fromTo([imageLeftOverlayRef.current, imageRightOverlayRef.current], { scaleY: 1, transformOrigin: 'top' }, { scaleY: 0, duration: 1, ease: 'power3.out' }, 1)
+        timeline.fromTo([imageLeftRef.current, imageRightRef.current], { scale: 1.5 }, { scale: 1, duration: 1, ease: 'power3.out' }, 1)
+    }
 
     return (
         <StyledHeroBanner 
@@ -143,10 +173,16 @@ const HomeBanner = ({
             {images && (
                 <>
                     <ImageLeft>
-                        <StyledImage fluid={images[0].fluid} alt={images[0].title} />
+                        <AnimatedImage ref={imageLeftRef}>
+                            <StyledImage fluid={images[0].fluid} alt={images[0].title} />
+                        </AnimatedImage>
+                        <ImageOverlay ref={imageLeftOverlayRef} />
                     </ImageLeft>
                     <ImageRight>
-                        <StyledImage fluid={images[1].fluid} alt={images[1].title} />
+                        <AnimatedImage ref={imageRightRef}>
+                            <StyledImage fluid={images[1].fluid} alt={images[1].title} />
+                        </AnimatedImage>
+                        <ImageOverlay ref={imageRightOverlayRef} />
                     </ImageRight>
                 </>
             )}
@@ -156,6 +192,7 @@ const HomeBanner = ({
                         lang={lang}
                         size='extra-large'
                         title={headerTitle}
+                        ref={titleRef}
                     />
                     <StyledDescription 
                         lang={lang}

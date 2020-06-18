@@ -15,6 +15,8 @@ const Wrapper = styled.div`
 
     padding: calc(${props => props.theme.sizes.mobile} * 3) 0;
 
+    overflow: hidden;
+
     ${props => props.type == 'Straight' && `
         .swiper-wrapper {
             padding: calc(${props.theme.sizes.mobile} * 3) 0;
@@ -58,11 +60,19 @@ const Wrapper = styled.div`
             }
         `}
 
+        .swiper-container {
+            overflow: visible;
+        }
+
         .swiper-scrollbar {
             min-width: ${props.theme.desktopVW(160)};
             width: ${props.theme.desktopVW(160)};
         }
     `}
+`
+
+const CarouselWrapper = styled.div`
+    position: relative;
 `
 
 const StyledTitle = styled(HorizontalTitle)`
@@ -162,16 +172,7 @@ const HorizontalDrag = ({
         <Wrapper 
             colors={getColors(backgroundColor)} 
             type={type}
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
         >
-            <StyledMousetip
-                visible={isHovering}
-                offsetX={-dragSize.width / 2}
-                offsetY={-dragSize.height / 2}
-            >
-                <DragIcon ref={dragRef}/>
-            </StyledMousetip>
             <StyledTitle 
                 lang={lang}
                 type={type}
@@ -180,21 +181,35 @@ const HorizontalDrag = ({
                 size='normal'
                 useInlineLink={true}
             />
-            <Carousel params={params}>
-                {items.map((item, i) => {
-                    return (
-                        <Card
-                            key={i}
-                            lang={lang}
-                            data={item}
-                            component={component}
-                            information={information}
-                            type={type}
-                            active={item.slug != slug || component == 'InstagramFeed'}
-                        />
-                    )
-                })}
-            </Carousel>
+            <StyledMousetip
+                visible={isHovering}
+                offsetX={-dragSize.width / 2}
+                offsetY={-dragSize.height / 2}
+            >
+                <DragIcon ref={dragRef} />
+            </StyledMousetip>
+            <CarouselWrapper
+                onMouseEnter={() => setIsHovering(true)}
+                onMouseLeave={() => setIsHovering(false)}
+            >
+                <Carousel 
+                    params={params}
+                >
+                    {items.map((item, i) => {
+                        return (
+                            <Card
+                                key={i}
+                                lang={lang}
+                                data={item}
+                                component={component}
+                                information={information}
+                                type={type}
+                                active={item.slug != slug || component == 'InstagramFeed'}
+                            />
+                        )
+                    })}
+                </Carousel>
+            </CarouselWrapper>
         </Wrapper>
     )
 }

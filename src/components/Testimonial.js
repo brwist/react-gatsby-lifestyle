@@ -30,8 +30,20 @@ const ImageWrapper = styled.div`
 `
 
 const StyledImage = styled(Image)`
-    width: 100%;
-    height: 100%;
+    object-fit: cover;
+
+    width: ${props => props.theme.mobileVW(50)};
+    height: ${props => props.theme.mobileVW(50)};
+
+    img {
+        width: 100%;
+        height: 100%;
+    }
+
+    ${props => props.theme.above.desktop`
+        width: ${props.theme.desktopVW(64)};
+        height: ${props.theme.desktopVW(64)};
+    `}
 `
 
 const DescriptionWrapper = styled.div`

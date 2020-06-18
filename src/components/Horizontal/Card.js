@@ -297,7 +297,9 @@ const Card = ({
                     <LargeDescription>
                         <Caption data={data.excerpt} />
                     </LargeDescription>
-                    <ButtonWrapper className='button-wrapper'>
+                    <ButtonWrapper 
+                        className='button-wrapper'
+                    >
                         <ButtonPrimary
                             label={data.buttonLabel || `Discover our ${data.name}`}
                             to={generatePath(lang, data.buttonLink || data.slug)}

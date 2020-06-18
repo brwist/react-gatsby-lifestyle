@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import Image from 'gatsby-image'
 import styled from 'styled-components'
+import gsap from 'gsap'
 
 import Container from './Layout/Container'
 import Title from './Title'
@@ -63,6 +64,8 @@ const ImageWrapper = styled.div`
 
     background-color: ${props => props.theme.colors.darkGrey};
 
+    overflow: hidden;
+
     ${props => props.theme.above.desktop`
         top: 0;
         
@@ -71,6 +74,17 @@ const ImageWrapper = styled.div`
         width: 50vw;
         height: 100%;
     `}
+`
+
+const AnimatedImage = styled.div`
+    width: 100%;
+    height: 100%;
+`
+
+const ImageOverlay = styled.div`
+    ${props => props.theme.styles.element.fill}
+
+    background-color: ${props => props.theme.colors.dark};
 `
 
 const StyledImage = styled(Image)`
@@ -100,6 +114,8 @@ const HeroBanner = ({
     } = data
     
     const bannerRef = useRef(null)
+    const imageOverlayRef = useRef(null)
+    const imageRef = useRef(null)
 
     const titleSize = (bannerType == 'Home') ? 'extra-large' : (bannerType == 'Page') ? 'large' : 'small'
 
@@ -108,15 +124,24 @@ const HeroBanner = ({
         bannerRef.current.style.setProperty('--vh', `${vh}px`)
     }, [])
 
+    const transitionIn = () => {
+        const timeline = new gsap.timeline()
+        timeline.fromTo(imageOverlayRef.current, { scaleY: 1, transformOrigin: 'top' }, { scaleY: 0, duration: 2, ease: 'power3.out' }, 0)
+        timeline.fromTo(imageRef.current, { scale: 1.5 }, { scale: 1, duration: 2, ease: 'power3.out' }, 0)
+    }
+
     return (
         <StyledHeroBanner className={className} type={bannerType} ref={bannerRef}>
             {bannerType != 'Home' ? (
                 <>
                     {images && (
                         <ImageWrapper>
-                            {images.map(({ fluid, title }, i) => (
-                                <StyledImage key={i} fluid={fluid} alt={title} />
-                            ))}
+                            <AnimatedImage ref={imageRef}>
+                                {images.map(({ fluid, title }, i) => (
+                                    <StyledImage key={i} fluid={fluid} alt={title} />
+                                ))}
+                            </AnimatedImage>
+                            <ImageOverlay ref={imageOverlayRef} />
                         </ImageWrapper>
                     )}
                     <Container>

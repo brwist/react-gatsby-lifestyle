@@ -14,14 +14,15 @@ const Wrapper = styled(Container)`
 
     position: relative;
 
-    padding: 0 0 calc(${props => props.theme.sizes.mobile} * 5) 0;
+    padding-bottom: calc(${props => props.theme.sizes.mobile} * 5);
 
     ${props => props.theme.above.desktop`
         flex-direction: ${props.type == 'Media Left' ? 'row' : 'row-reverse'};
         justify-content: space-between;
         align-items: center;
 
-        padding: calc(${props.theme.sizes.desktop} * 10) 0;
+        padding-top: calc(${props.theme.sizes.desktop} * 10);
+        padding-bottom: calc(${props.theme.sizes.desktop} * 10);
     `}
 `
 
@@ -68,16 +69,21 @@ const Media = styled.div`
     `}
 `
 
-const StyledImage = styled(Image)``
+const StyledImage = styled(Image)`
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+`
 
 const Content = styled.div`
     padding: 0 ${props => props.theme.sizes.mobile};
 
     ${props => props.theme.above.desktop`
         ${props.order == 'left' ? `
-            padding: 0 ${props.theme.desktopVW(160)} 0 0;
+            padding: 0 ${props.theme.desktopVW(160)} 0 ${props.theme.desktopVW(80)};
         ` : `
-            padding: 0 ${props.theme.desktopVW(80)} 0 0;
+            padding: 0 ${props.theme.desktopVW(80)} 0 ${props.theme.desktopVW(80)};
         `}
     `}
 `

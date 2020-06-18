@@ -11,6 +11,8 @@ const StyledSection = styled.div`
     width: 100%;
     min-height: 100vh;
 
+    overflow: hidden;
+
     padding: ${props => props.theme.desktopVW(350)} 0;
 `
 

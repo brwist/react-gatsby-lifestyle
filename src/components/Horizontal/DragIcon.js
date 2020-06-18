@@ -18,7 +18,7 @@ const Wrapper = styled.div`
 `
 
 const Label = styled.span`
-
+    color: ${props => props.theme.colors.dark};
 `
 
 const DragIcon = ({

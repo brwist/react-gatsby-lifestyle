@@ -110,6 +110,8 @@ const GlobalStyle = createGlobalStyle`
 	}
 
 	.popup-modal {
+		position: relative;
+		
 		width: 100%;
 
 		margin: 0 auto ${props => props.theme.mobileVW(120)} auto;
