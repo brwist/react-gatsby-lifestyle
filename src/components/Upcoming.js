@@ -1,6 +1,7 @@
-import React, { useContext } from 'react'
+import React, { useEffect, useContext, useRef } from 'react'
 import styled from 'styled-components'
 import Img from 'gatsby-image'
+import gsap from 'gsap'
 
 import Title from './Title'
 import Container from './Layout/Container'
@@ -38,7 +39,7 @@ const Grid = styled.ul`
 `
 
 const Header = styled(Title)`
-    .heading {
+    .title-wrapper {
         margin-left: 0;
     }
 
@@ -220,7 +221,7 @@ const Upcoming = ({
                 <Header 
                     lang={lang} 
                     title={contentTitle} 
-                    size='normal' 
+                    size='normal'
                 />
                 <Grid>
                     {items.map((item, index) => (

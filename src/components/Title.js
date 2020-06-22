@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, forwardRef } from 'react'
+import React, { useRef, useImperativeHandle, useState, useEffect, forwardRef } from 'react'
 import styled from 'styled-components'
 import gsap from 'gsap'
 import { BLOCKS } from '@contentful/rich-text-types'
@@ -8,10 +8,15 @@ import TextRenderer from './TextRenderer'
 import Tags from './Tags'
 import ButtonPrimary from './Buttons/ButtonPrimary'
 import Testimonial from './Testimonial'
+// import AnimationOverlay from './AnimationOverlay'
 
 import { generatePath } from './../utils/helpers'
 
 const TitleWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
     position: relative;
 
     overflow: hidden;
@@ -34,6 +39,10 @@ const Category = styled.span`
 
 const StyledTitle = styled.h1`
     display: block;
+
+    position: relative;
+
+    overflow: hidden;
 
     margin-bottom: calc(${props => props.theme.sizes.mobile} / 2);
 
@@ -203,7 +212,9 @@ const TitleOverlay = styled.div`
     background-color: ${props => props.theme.colors.dark};
 `
 
-const Words = styled.span``
+const Words = styled.span`
+    
+`
 
 const DescriptionWrapper = styled.div`
     width: 100%;
@@ -314,17 +325,33 @@ const Title = ({
     className,
     useInlineLink
 }, ref) => {
+
+    const titleRef = useRef(null)
+    const descriptionRef = useRef(null)
+
+    useImperativeHandle(ref, () => {
+        return {
+            transitionIn() {
+                const timeline = new gsap.timeline()
+                
+                title && timeline.fromTo(titleRef.current, { scaleY: 1, transformOrigin: 'bottom' }, { scaleY: 0, duration: 0.8, ease: 'none' }, 0)
+                description && timeline.fromTo(descriptionRef.current, { alpha: 0 }, { alpha: 1, duration: 1, ease: 'power1.out' }, 0.8)
+                
+                return timeline
+            }
+        }
+    })
+
     return (
         <TitleWrapper 
             size={size} 
-            className={`title-wrapper ${className && className}`}
-            ref={ref && ref}
+            className={className && className}
         >
             {category == 'Event' && (
                 <Category>{category}</Category>
             )}
             {title && (
-                <StyledTitle className='heading' size={size}>
+                <StyledTitle className='title-wrapper' size={size}>
                     {title && documentToReactComponents(title.json, {
                         renderNode: {
                             [BLOCKS.HEADING_1]: (node, children) => {
@@ -341,11 +368,15 @@ const Title = ({
                             )
                         }
                     })}
-                    {/* <TitleOverlay /> */}
+                    <TitleOverlay ref={titleRef} />
                 </StyledTitle>
             )}
             {description && (
-                <DescriptionWrapper className='description-wrapper' size={size}>
+                <DescriptionWrapper 
+                    className='description-wrapper' 
+                    size={size}
+                    ref={descriptionRef}
+                >
                     {tags && (
                         <StyledTags 
                             className='tags'

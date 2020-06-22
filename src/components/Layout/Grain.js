@@ -43,7 +43,7 @@ const StyledGrain = styled(Grain)`
     background-repeat: repeat;
     background-size: auto;
 
-    opacity: 0.2 !important;
+    opacity: 0.1 !important;
     
     mix-blend-mode: difference;
 

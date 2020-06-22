@@ -79,8 +79,9 @@ const ImageLeft = styled.div`
     overflow: hidden;
 
     ${props => props.theme.above.desktop`
-        top: ${props.theme.desktopVW(240)};
+        top: initial;
         left: ${props.theme.desktopVW(240)};
+        bottom: ${props.theme.desktopVW(350)};
 
         transform: none;
 
@@ -149,19 +150,26 @@ const HomeBanner = ({
     const imageRightRef = useRef(null)
     const imageRightOverlayRef = useRef(null)
     const titleRef = useRef(null)
+    const descriptionRef = useRef(null)
 
     useEffect(() => {
+
         let vh = window.innerHeight * 0.01
         bannerRef.current.style.setProperty('--vh', `${vh}px`)
         
         transitionIn()
+
     }, [])
 
     const transitionIn = () => {
+        
         const timeline = new gsap.timeline({ delay: 1 })
-        timeline.fromTo(titleRef.current, { height: '0%' }, { height: '100%', duration: 1.25, ease: 'none' }, 0)
-        timeline.fromTo([imageLeftOverlayRef.current, imageRightOverlayRef.current], { scaleY: 1, transformOrigin: 'top' }, { scaleY: 0, duration: 1, ease: 'power3.out' }, 1)
-        timeline.fromTo([imageLeftRef.current, imageRightRef.current], { scale: 1.5 }, { scale: 1, duration: 1, ease: 'power3.out' }, 1)
+        
+        timeline.add(titleRef.current.transitionIn(), 0)
+        timeline.add(descriptionRef.current.transitionIn(), 0)
+        timeline.fromTo([imageLeftOverlayRef.current, imageRightOverlayRef.current], { scaleY: 1, transformOrigin: 'top' }, { scaleY: 0, duration: 1, ease: 'power3.out' }, 0.9)
+        timeline.fromTo([imageLeftRef.current, imageRightRef.current], { scale: 1.75 }, { scale: 1, duration: 1, ease: 'power3.out' }, 0.9)
+        
     }
 
     return (
@@ -189,17 +197,16 @@ const HomeBanner = ({
             <StyledContainer>
                 <TitleWrapper>
                     <StyledTitle
+                        ref={titleRef}
                         lang={lang}
                         size='extra-large'
                         title={headerTitle}
-                        ref={titleRef}
+                        category={category}
                     />
                     <StyledDescription 
                         lang={lang}
-                        tags={tags}
+                        ref={descriptionRef}
                         description={headerDescription}
-                        testimonial={testimonial}
-                        category={category}
                         links={internalLinks || externalLink && {
                             internal: internalLinks,
                             external: {

@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import styled from 'styled-components'
 import { useWindowSize } from 'react-use'
 import MouseTooltip from 'react-sticky-mouse-tooltip'
+import gsap from 'gsap'
 
 import theme from './../../styles/theme'
 
@@ -93,12 +94,21 @@ const StyledMousetip = styled(MouseTooltip)`
     transform: scale(${props => props.visible ? 1 : 0.5});
 
     z-index: 2;
+
+    width: ${props => props.theme.desktopVW(150)};
+    height: ${props => props.theme.desktopVW(150)};
+
+    border-radius: 100%;
+
+    background-color: #fff;
     
     opacity: ${props => props.visible ? 1 : 0};
 
     transition: transform 0.15s ease-out, opacity 0.15s ease-out;
 
     pointer-events: none;
+
+    overflow: visible;
 `
 
 const HorizontalDrag = ({
@@ -113,13 +123,16 @@ const HorizontalDrag = ({
     information,
     backgroundColor
 }) => {
-    
+
+    const titleRef = useRef(null)
     const dragRef = useRef(null)
+
     const [isHovering, setIsHovering] = useState(false)
     const [dragSize, setDragSize] = useState({
         width: 50,
         height: 50
     })
+
     const { width: windowWidth } = useWindowSize()
     const offset = windowWidth < 1023 ? 32 : 80
 
@@ -168,12 +181,22 @@ const HorizontalDrag = ({
         })
     }, [])
 
+    useEffect(() => {
+        inView && transitionIn()
+    }, [inView])
+
+    const transitionIn = () => {
+        const timeline = new gsap.timeline()
+        timeline.add(titleRef.current.transitionIn(), 0)
+    }
+
     return (
         <Wrapper 
             colors={getColors(backgroundColor)} 
             type={type}
         >
             <StyledTitle 
+                ref={titleRef}
                 lang={lang}
                 type={type}
                 title={title} 

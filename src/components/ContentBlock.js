@@ -18,7 +18,7 @@ const Wrapper = styled(Container)`
 
     ${props => props.theme.above.desktop`
         flex-direction: ${props.type == 'Media Left' ? 'row' : 'row-reverse'};
-        justify-content: space-between;
+        justify-content: space-around;
         align-items: center;
 
         padding-top: calc(${props.theme.sizes.desktop} * 10);
@@ -91,7 +91,7 @@ const Content = styled.div`
 const StyledTitle = styled(Title)`
     // overflow: hidden;
 
-    .heading {
+    .title-wrapper {
         margin-left: 0;
 
         // white-space: nowrap;

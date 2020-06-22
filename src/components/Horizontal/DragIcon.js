@@ -7,12 +7,8 @@ const Wrapper = styled.div`
     justify-content: center;
     align-items: center;
 
-    width: ${props => props.theme.desktopVW(150)};
-    height: ${props => props.theme.desktopVW(150)};
-
-    border-radius: 100%;
-
-    background-color: #fff;
+    width: 100%;
+    height: 100%;
 
     pointer-events: none;
 `

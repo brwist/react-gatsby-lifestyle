@@ -21,7 +21,8 @@ const Section = ({
 }) => {
     
     const [ref, inView] = useInView({
-        threshold: treshold || 0.5
+        threshold: treshold || 0.15,
+        triggerOnce: true
     })
 
     const getBackgroundColor = (color) => {
@@ -59,7 +60,7 @@ const Section = ({
             color={getColor(layout.backgroundColor)}
         >
             {getGrain()}
-            {layout.flowLine == 'Visible' && <FlowLine />}
+            {layout.flowLine == 'Visible' && <FlowLine inView={inView}/>}
             {children(inView)}
         </StyledSection>
     )

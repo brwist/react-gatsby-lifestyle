@@ -31,7 +31,7 @@ const Header = styled(Container)`
 `
 
 const StyledTitle = styled(Title)`
-    .heading {
+    .title-wrapper {
         margin-left: 0;
     }
 `

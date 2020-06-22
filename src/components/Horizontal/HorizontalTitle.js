@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import styled from 'styled-components'
 
 import Container from './../Layout/Container'
@@ -33,13 +33,13 @@ const StyledContainer = styled(Container)`
 `
 
 const StyledTitle = styled(Title)`
-    .heading {
+    .title-wrapper {
         margin-left: 0;
         margin-bottom: ${props => props.theme.sizes.mobile};
     }
 
     ${props => props.theme.above.desktop`
-        .heading {
+        .title-wrapper {
             margin-bottom: 0;
         }
     `}
@@ -71,17 +71,17 @@ const HorizontalTitle = ({
     description,
     size,
     useInlineLink
-}) => {
+}, ref) => {
     return (
         <StyledContainer className={className}>
             {title && (
-                <StyledTitle title={title} size={size}/>
+                <StyledTitle ref={ref} title={title} size={size}/>
             )}
             {description && (
-                <Description lang={lang} description={description} useInlineLink={useInlineLink} />
+                <Description ref={ref} lang={lang} description={description} useInlineLink={useInlineLink} />
             )}
         </StyledContainer>
     )
 }
 
-export default HorizontalTitle
+export default forwardRef(HorizontalTitle)

@@ -15,10 +15,21 @@ const StyledFlow = styled(FlowSvg)`
 `
 
 const FlowLine = ({
-    className
+    className,
+    inView
 }) => {
+
+    const flowRef = useRef(null)
+
+    useEffect(() => {
+        let tween = inView ? gsap.fromTo(this._tweenObj, { reveal: 1.0 }, { reveal: 0.0, duration: 0.8, ease: 'power3.inOut' }) : null
+        return () => {
+            tween && tween.kill()
+        }
+    }, [inView])
+
     return (
-        <StyledFlow className={className} />
+        <StyledFlow ref={flowRef} className={className} />
     )
 }
 
