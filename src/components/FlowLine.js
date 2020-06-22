@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useRef, useEffect, forwardRef } from 'react'
 import styled from 'styled-components'
+import gsap from 'gsap'
 
 import FlowSvg from './../images/graphics/flow.svg'
 
-const StyledFlow = styled(FlowSvg)`
+const StyledFlow = styled.div`
     position: absolute;
 
     top: 0;
@@ -12,6 +13,12 @@ const StyledFlow = styled(FlowSvg)`
     width: 100%;
 
     pointer-events: none;
+
+    overflow: hidden;
+`
+
+const FlowImage = styled(FlowSvg)`
+    width: 100vw;
 `
 
 const FlowLine = ({
@@ -22,14 +29,16 @@ const FlowLine = ({
     const flowRef = useRef(null)
 
     useEffect(() => {
-        let tween = inView ? gsap.fromTo(this._tweenObj, { reveal: 1.0 }, { reveal: 0.0, duration: 0.8, ease: 'power3.inOut' }) : null
+        let tween = inView ? gsap.fromTo(flowRef.current, { width: '0%' }, { width: '100%', duration: 2, ease: 'power3.out' }) : null
         return () => {
             tween && tween.kill()
         }
     }, [inView])
 
     return (
-        <StyledFlow ref={flowRef} className={className} />
+        <StyledFlow ref={flowRef} className={className}>
+            <FlowImage />
+        </StyledFlow>
     )
 }
 
