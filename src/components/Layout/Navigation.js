@@ -11,7 +11,7 @@ const StyledNavigation = styled.nav`
     width: 100%;
 
     ${props => props.type == 'main' && `
-        margin-bottom: calc(${props.theme.sizes.mobile} * 1.5);
+        margin-bottom: ${props.theme.sizes.mobile};
     
         .item {
             display: block;
@@ -41,11 +41,11 @@ const StyledNavigation = styled.nav`
         }
     `}
 
-    ${props => props.type == 'small' && `
+    /* ${props => props.type == 'small' && `
         .item {
             opacity: 0.5;
         }
-    `}
+    `} */
 
     ${props => props.theme.above.desktop`
         .link {

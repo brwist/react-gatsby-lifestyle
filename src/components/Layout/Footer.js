@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 import styled, { css } from 'styled-components'
+import { useInView } from 'react-intersection-observer'
 import { Link, useStaticQuery, graphql } from 'gatsby'
 
 import Navigation from './Navigation'
@@ -10,6 +11,7 @@ import Container from './Container'
 import Grain from './../Layout/Grain'
 
 import { generatePath } from '../../utils/helpers'
+import gsap from 'gsap/gsap-core'
 
 const StyledFooter = styled.footer`
     position: relative;
@@ -67,18 +69,44 @@ const InstagramWrapper = styled.a`
     width: ${props => props.theme.mobileVW(20)};
     height: ${props => props.theme.mobileVW(20)};
 
+    overflow: hidden;
+
     ${props => props.theme.above.desktop`
-        width: ${props => props.theme.desktopVW(24)};
-        height: ${props => props.theme.desktopVW(24)};
+        width: ${props.theme.desktopVW(24)};
+        height: ${props.theme.desktopVW(24)};
+
+        &:hover {
+            .instagram-inner {
+                transform: translateY(-${props.theme.desktopVW(40)});
+            }
+        }
     `}
+`
+
+const InstagramInner = styled.div`
+    display: block;
+
+    position: relative;
+
+    transition: transform 0.25s ease-out;
 `
 
 const StyledInstagram = styled(InstagramSvg)`
     width: 100%;
     height: 100%;
+
+    &:first-of-type {
+        margin-bottom: ${props => props.theme.desktopVW(15)};
+    }
 `
 
 const Address = styled(TextRenderer)`
+    position: absolute;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
     &:not(:last-of-type) {
         margin-bottom: 0;
     }
@@ -123,6 +151,7 @@ const Footer = ({
     lang, 
     type,
     setMenuOpen,
+    className,
     contentTheme: {
         menu: {
             mainItems,
@@ -135,6 +164,9 @@ const Footer = ({
     }
 }) => {
 
+    const footerRef = useRef(null)
+    const [ inViewRef, inView ] = useInView()
+
     const { logoImage } = useStaticQuery(graphql`{
         logoImage: allFile(filter: {relativePath: {eq: "rl.png"}}) {
             nodes {
@@ -143,15 +175,37 @@ const Footer = ({
         }
     }`)
 
+    const setRefs = useCallback((node) => {
+        footerRef.current = node
+        inViewRef(node)
+    }, [inViewRef])
+    
+
+    useEffect(() => {
+
+        gsap.set(footerRef.current, { alpha: 0.0 })
+        
+        if (!inView) return
+
+        const tween = gsap.to(footerRef.current, { alpha: 1.0, y: 0.0, duration: 0.35, ease: 'sine.inOut' })
+
+        return () => {
+            tween && tween.kill()
+        }
+    }, [inView])
+
     return (
-        <StyledFooter type={type}>
+        <StyledFooter ref={setRefs} className={className} type={type}>
             <Inner>
                 <FooterLeft>
                     <LogoWrapper to={generatePath(lang, '')}>
                         <StyledLogo src={logoImage.nodes[0].publicURL} alt='Rockstar Lifestyle - Short logo'/>
                     </LogoWrapper>
                     <InstagramWrapper href={instagram} target='_blank'>
-                        <StyledInstagram />
+                        <InstagramInner className='instagram-inner'>
+                            <StyledInstagram />
+                            <StyledInstagram />
+                        </InstagramInner>
                     </InstagramWrapper>
                 </FooterLeft>
                 <Address data={footerText} useInlineLink={true} />
@@ -171,7 +225,6 @@ const Footer = ({
                     )}
                 </FooterRight>
             </Inner>
-            <Grain />
         </StyledFooter>
     )
 }

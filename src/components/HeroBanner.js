@@ -28,7 +28,7 @@ const HeroBanner = ({
 
     useEffect(() => {
 
-        let vh = window.innerHeight * 0.01
+        let vh = typeof window !== 'undefined' ? window.innerHeight * 0.01 : 1000
         bannerRef.current.style.setProperty('--vh', `${vh}px`)
     
     }, [])

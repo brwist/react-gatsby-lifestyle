@@ -18,6 +18,8 @@ const ButtonStyles = css`
 
     color: ${props => props.theme.colors.light};
 
+    transition: background-color 0.5s cubic-bezier(.16,1.08,.38,.98), filter 0.5s cubic-bezier(.16,1.08,.38,.98);
+
     ${props => props.inverted == 'true' && `
         background-color: ${props.theme.colors.light};
         
@@ -51,6 +53,34 @@ const ButtonStyles = css`
         ${props.colored == 'true' && `
             border: ${props.theme.desktopVW(2)} solid currentColor;
         `}
+
+        &:hover {
+            color: ${props.theme.colors.dark};
+
+            background-color: ${props.theme.colors.white};
+            border-color: ${props.theme.colors.white};
+        }
+
+        ${props.inverted == 'true' && `            
+            &:hover {
+                color: ${props.theme.colors.white};
+
+                background-color: ${props.theme.colors.dark};
+                border-color: ${props.theme.colors.white};
+            }
+        `}
+
+        ${props.colored == 'true' && `            
+            &:hover {
+                color: ${props.theme.colors.white};
+
+                background-color: ${props.theme.colors.dark};
+
+                .label {
+                    filter: none;
+                }
+            }
+        `}
     `}
 `
 
@@ -80,6 +110,8 @@ const Label = styled.span`
     text-transform: uppercase;
 
     color: currentColor;
+
+    transition: color 0.5s cubic-bezier(.16,1.08,.38,.98);
 
     ${props => props.theme.above.desktop`
         font-size: ${props.theme.fontSizes.desktop.m};

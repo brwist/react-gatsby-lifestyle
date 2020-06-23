@@ -154,23 +154,25 @@ const HomeBanner = ({
 
     useEffect(() => {
 
-        let vh = window.innerHeight * 0.01
+        let vh = typeof window !== 'undefined' ? window.innerHeight * 0.01 : 1000
         bannerRef.current.style.setProperty('--vh', `${vh}px`)
         
-        transitionIn()
-
     }, [])
 
-    const transitionIn = () => {
-        
-        const timeline = new gsap.timeline({ delay: 1 })
+    useEffect(() => {
+
+        const timeline = new gsap.timeline({ delay: 0.5 })
         
         timeline.add(titleRef.current.transitionIn(), 0)
         timeline.add(descriptionRef.current.transitionIn(), 0)
-        timeline.fromTo([imageLeftOverlayRef.current, imageRightOverlayRef.current], { scaleY: 1, transformOrigin: 'top' }, { scaleY: 0, duration: 1, ease: 'power3.out' }, 0.9)
-        timeline.fromTo([imageLeftRef.current, imageRightRef.current], { scale: 1.75 }, { scale: 1, duration: 1, ease: 'power3.out' }, 0.9)
+        timeline.fromTo([imageLeftOverlayRef.current, imageRightOverlayRef.current], { scaleY: 1, transformOrigin: 'top' }, { scaleY: 0, duration: 1, ease: 'power3.out' }, 1.25)
+        timeline.fromTo([imageLeftRef.current, imageRightRef.current], { scale: 1.75 }, { scale: 1, duration: 1, ease: 'power3.out' }, 1.25)
+
+        return () => {
+            timeline && timeline.kill()
+        }
         
-    }
+    }, [])
 
     return (
         <StyledHeroBanner 
@@ -206,6 +208,7 @@ const HomeBanner = ({
                     <StyledDescription 
                         lang={lang}
                         ref={descriptionRef}
+                        size='extra-large'
                         description={headerDescription}
                         links={internalLinks || externalLink && {
                             internal: internalLinks,

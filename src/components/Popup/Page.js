@@ -135,7 +135,7 @@ const PopupPage = ({
                     </Content>
                     <TestimonialComponent mobile='true' data={data} />
                 </StyledContainer>
-                <Grain />
+                {/* <Grain /> */}
             </Wrapper>
         </>
     )

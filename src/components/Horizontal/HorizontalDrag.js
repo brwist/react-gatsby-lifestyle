@@ -128,6 +128,8 @@ const HorizontalDrag = ({
     const dragRef = useRef(null)
 
     const [isHovering, setIsHovering] = useState(false)
+    const [isMouseMoving, setIsMouseMoving] = useState(false)
+
     const [dragSize, setDragSize] = useState({
         width: 50,
         height: 50
@@ -137,14 +139,18 @@ const HorizontalDrag = ({
     const offset = windowWidth < 1023 ? 32 : 80
 
     const params = {
+        freeMode: true,
+        initialSlide: items.length == 3 ? 1 : 0,
         spaceBetween: 32,
-        slidesOffsetBefore: offset,
-        slidesOffsetAfter: offset,
-        slidesPerView: 1.25,
+        slidesOffsetBefore: items.length == 3 ? 0 : offset,
+        slidesOffsetAfter: items.length == 3 ? 0 : offset,
+        slidesPerView: items.length == 3 ? 3 : 1.25,
+        centeredSlides: items.length == 3 ? true : false,
         grabCursor: true,
+        touchRatio: items.length == 3 ? 0 : 1,
         scrollbar: {
             el: '.swiper-scrollbar',
-            hide: false
+            hide: items.length == 3 ? true : false
         },
         breakpoints: {
             1023: {
@@ -182,13 +188,18 @@ const HorizontalDrag = ({
     }, [])
 
     useEffect(() => {
-        inView && transitionIn()
-    }, [inView])
+        
+        if (!inView) return 
 
-    const transitionIn = () => {
         const timeline = new gsap.timeline()
+
         timeline.add(titleRef.current.transitionIn(), 0)
-    }
+
+        return () => {
+            timeline && timeline.kill()
+        }
+
+    }, [inView])
 
     return (
         <Wrapper 
@@ -201,6 +212,7 @@ const HorizontalDrag = ({
                 type={type}
                 title={title} 
                 description={description} 
+                overlayColor={backgroundColor}
                 size='normal'
                 useInlineLink={true}
             />
@@ -212,8 +224,8 @@ const HorizontalDrag = ({
                 <DragIcon ref={dragRef} />
             </StyledMousetip>
             <CarouselWrapper
-                onMouseEnter={() => setIsHovering(true)}
                 onMouseLeave={() => setIsHovering(false)}
+                onMouseMove={()  => setIsHovering(true)}
             >
                 <Carousel 
                     params={params}
@@ -224,9 +236,11 @@ const HorizontalDrag = ({
                                 key={i}
                                 lang={lang}
                                 data={item}
+                                inView={inView}
                                 component={component}
                                 information={information}
                                 type={type}
+                                overlayColor={backgroundColor}
                                 active={item.slug != slug || component == 'InstagramFeed'}
                             />
                         )

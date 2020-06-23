@@ -18,11 +18,13 @@ const StyledMenu = styled.aside`
     
     top: 0;
     left: 0;
+    right: 0;
+    bottom: 0;
 
     z-index: 3;
 
     width: 100%;
-    height: 100%;
+    height: 100vh;
 
     background-color: ${props => props.theme.colors.dark};
 
@@ -46,7 +48,7 @@ const StyledContainer = styled(Container)`
         justify-content: center;
         align-items: center;
 
-        padding: calc(${props.theme.sizes.desktop} * 8);
+        padding: calc(${props.theme.sizes.desktop} * 8) 0;
     `}
 `
 
@@ -66,23 +68,22 @@ const NavigationWrapper = styled.div`
 const ImageWrapper = styled.div`
     position: relative;
 
-    // top: 50%;
-    // right: 0;
-
-    // transform: translateY(-50%);
-
     width: ${props => props.theme.desktopVW(480)};
     height: ${props => props.theme.desktopVW(600)};
     
     background-color: ${props => props.theme.colors.darkGrey};
 
-    // ${props => props.theme.below.maxWidth`
-    //     right: calc(${props.theme.sizes.desktop} * 8);
-    // `}
-
     ${props => props.theme.below.desktop`
         display: none;
     `}
+`
+
+const StyledFooter = styled(Footer)`
+    .link {
+        &:not(.active) {
+            opacity: 1;
+        }
+    }
 `
 
 const Menu = ({
@@ -113,7 +114,7 @@ const Menu = ({
                     />
                 </NavigationWrapper>
                 <ImageWrapper></ImageWrapper>
-                <Footer 
+                <StyledFooter 
                     lang={lang}
                     contentTheme={contentTheme}
                     setMenuOpen={setMenuOpen}

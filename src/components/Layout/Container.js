@@ -1,4 +1,4 @@
-import React from 'react'
+import React , { forwardRef } from 'react'
 import styled from 'styled-components'
 
 const StyledContainer = styled.div`
@@ -16,12 +16,12 @@ const StyledContainer = styled.div`
     `}
 `
 
-const Container = ({ children, className }) => {
+const Container = ({ children, className }, ref) => {
     return (
-        <StyledContainer className={className}>
+        <StyledContainer ref={ref} className={className}>
             {children}
         </StyledContainer>
     )
 }
 
-export default Container
+export default forwardRef(Container)

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, forwardRef } from 'react'
 import { useStaticQuery, graphql, Link } from 'gatsby'
 import styled from 'styled-components'
 import Img from 'gatsby-image'
@@ -84,7 +84,7 @@ const InnerRight = styled.div`
 `
 
 const MenuClose = styled.button`
-    margin-right: ${props => props.theme.sizes.desktop};
+    margin-right: calc(${props => props.theme.sizes.desktop} / 2);
     
     font-family: ${props => props.theme.fontFamilies.plainLight};
     font-size: ${props => props.theme.fontSizes.desktop.p};
@@ -93,9 +93,29 @@ const MenuClose = styled.button`
 
     cursor: pointer;
 
+    overflow: hidden;
+
+    pointer-events: none;
+
+    ${props => props.visible && `
+        pointer-events: all;
+
+        .close-label {
+            left: 0;
+        }
+    `}
+
     ${props => props.theme.below.desktop`
         display: none;
     `}
+`
+
+const MenuCloseLabel = styled.span`
+    position: relative;
+
+    left: 100%;
+
+    transition: left 0.25s ease-out;
 `
 
 const ButtonJoinUs = styled(ButtonPrimary)`
@@ -113,7 +133,7 @@ const Header = ({
     },
     setMenuOpen,
     menuOpen
-}) => {
+}, ref) => {
 
     const { logoImage } = useStaticQuery(graphql`{
         logoImage: allFile(filter: {relativePath: {eq: "rockstar-lifestyle.png"}}) {
@@ -124,7 +144,7 @@ const Header = ({
     }`)
 
     return (
-        <StyledHeader>
+        <StyledHeader ref={ref}>
             <StyledContainer>
                 <InnerLeft>
                     <Logo to={generatePath(lang, '')}>
@@ -138,16 +158,16 @@ const Header = ({
                     />
                 </InnerLeft>
                 <InnerRight>
+                    <MenuClose 
+                        visible={menuOpen}
+                        onClick={setMenuOpen}
+                    >
+                        <MenuCloseLabel className='close-label'>Close</MenuCloseLabel>
+                    </MenuClose>
                     <ButtonMenu 
                         menuOpen={menuOpen}
                         setMenuOpen={setMenuOpen}
                     />
-                    {menuOpen && (
-                        <MenuClose 
-                            visible={menuOpen}
-                            onClick={setMenuOpen}
-                        >Close</MenuClose>
-                    )}
                     <ButtonJoinUs label='Join Us' to={generatePath(lang, 'join-us')} modal/>
                 </InnerRight>
             </StyledContainer>
@@ -155,4 +175,4 @@ const Header = ({
     )
 }
 
-export default Header
+export default forwardRef(Header)

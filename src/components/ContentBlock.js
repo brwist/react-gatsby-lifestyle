@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
 import Image from 'gatsby-image'
 import styled from 'styled-components'
 
@@ -7,6 +7,7 @@ import Title from './Title'
 import Video from './Video'
 import Carousel from './Carousel'
 import TextRenderer from './TextRenderer'
+import gsap from 'gsap/gsap-core'
 
 const Wrapper = styled(Container)`
     display: flex;
@@ -14,6 +15,7 @@ const Wrapper = styled(Container)`
 
     position: relative;
 
+    padding-top: ${props => props.theme.sizes.mobile};
     padding-bottom: calc(${props => props.theme.sizes.mobile} * 5);
 
     ${props => props.theme.above.desktop`
@@ -35,7 +37,7 @@ const Media = styled.div`
 
     margin-bottom: calc(${props => props.theme.sizes.mobile} * 1.5);
 
-    background-color: ${props => props.theme.colors.darkGrey};
+    background-color: ${props => props.theme.colors.dark};
 
     overflow: hidden;
 
@@ -69,6 +71,17 @@ const Media = styled.div`
     `}
 `
 
+const AnimatedMedia = styled.div`
+    width: 100%;
+    height: 100%;
+`
+
+const MediaOverlay = styled.div`
+    ${props => props.theme.styles.element.fill}
+
+    background-color: ${props => props.theme.colors.dark};
+`
+
 const StyledImage = styled(Image)`
     width: 100%;
     height: 100%;
@@ -77,7 +90,7 @@ const StyledImage = styled(Image)`
 `
 
 const Content = styled.div`
-    padding: 0 ${props => props.theme.sizes.mobile};
+    padding: 0;
 
     ${props => props.theme.above.desktop`
         ${props.order == 'left' ? `
@@ -89,12 +102,8 @@ const Content = styled.div`
 `
 
 const StyledTitle = styled(Title)`
-    // overflow: hidden;
-
     .title-wrapper {
         margin-left: 0;
-
-        // white-space: nowrap;
     }
 
     h4 {
@@ -107,7 +116,7 @@ const StyledTitle = styled(Title)`
     
     ${props => props.theme.above.desktop`
         h4 {
-            margin-bottom: ${props.theme.sizes.desktop};
+            margin-bottom: calc(${props.theme.sizes.desktop} / 1.5);
 
             font-size: ${props.theme.fontSizes.desktop.h6};
         }
@@ -127,6 +136,10 @@ const ContentBlock = ({
     }
 }) => {
 
+    const titleRef = useRef(null)
+    const mediaOverlayRef = useRef(null)
+    const mediaRef = useRef(null)
+
     const params = {
         slidesPerView: 1,
         grabCursor: true,
@@ -136,38 +149,55 @@ const ContentBlock = ({
         }
     }
 
+    useEffect(() => {
+
+        gsap.set(mediaRef.current, { scale: 1.75, alpha: 0.0 })
+        gsap.set(mediaOverlayRef.current, { scaleY: 1.0 })
+        
+        if (!inView) return
+
+        const timeline = new gsap.timeline()
+
+        timeline.add(titleRef.current.transitionIn(), 0)
+        timeline.to(mediaOverlayRef.current, { scaleY: 0.0, transformOrigin: 'top', duration: 0.5, ease: 'power3.out' }, 0)
+        timeline.to(mediaRef.current, { scale: 1.0, alpha: 1.0, duration: 0.5, ease: 'power3.out' }, 0)
+
+        return () => {
+            timeline && timeline.kill()
+        }
+    }, [inView])
+
     return (
         <Wrapper type={type}>
             <Media>
-                {images && !video && images.length > 1 && (
-                    <Carousel params={params}>
-                        {images.map((image, i) => (
-                            <StyledImage
-                                key={i}
-                                fluid={image.fluid}
-                                alt={image.title}
-                            />
-                        ))}
-                    </Carousel>
-                )}
-                {images && !video && images.length == 1 && (
-                    <>
-                        {images.map((image, i) => (
-                            <StyledImage
-                                key={i}
-                                fluid={image.fluid}
-                                alt={image.title}
-                            />
-                        ))}
-                    </>
-                )}
-                {video && !images && (
-                    <Video
-                        url={video.videoUrl}
-                        placeholder={video.placeholder}
-                        inView={inView}
-                    />
-                )}
+                <AnimatedMedia ref={mediaRef}>
+                    {images && !video && images.length > 1 && (
+                        <Carousel params={params}>
+                            {images.map((image, i) => (
+                                <StyledImage
+                                    key={i}
+                                    fluid={image.fluid}
+                                    alt={image.title}
+                                />
+                            ))}
+                        </Carousel>
+                    )}
+                    {images && !video && images.length == 1 && images.map((image, i) => (
+                        <StyledImage
+                            key={i}
+                            fluid={image.fluid}
+                            alt={image.title}
+                        />
+                    ))}
+                    {video && !images && (
+                        <Video
+                            url={video.videoUrl}
+                            placeholder={video.placeholder}
+                            inView={inView}
+                        />
+                    )}
+                </AnimatedMedia>
+                <MediaOverlay ref={mediaOverlayRef} />
             </Media>
             <Content order={type == 'Media Left' ? 'right' : 'left'}>
                 <StyledTitle 
@@ -175,6 +205,7 @@ const ContentBlock = ({
                     title={contentTitle}
                     description={contentDescription}
                     size='normal'
+                    ref={titleRef}
                 />  
             </Content>
         </Wrapper>

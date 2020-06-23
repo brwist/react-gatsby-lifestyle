@@ -70,12 +70,13 @@ const HorizontalTitle = ({
     title, 
     description,
     size,
-    useInlineLink
+    useInlineLink,
+    overlayColor
 }, ref) => {
     return (
         <StyledContainer className={className}>
             {title && (
-                <StyledTitle ref={ref} title={title} size={size}/>
+                <StyledTitle overlayColor={overlayColor} ref={ref} title={title} size={size}/>
             )}
             {description && (
                 <Description ref={ref} lang={lang} description={description} useInlineLink={useInlineLink} />

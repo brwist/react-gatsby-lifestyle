@@ -232,7 +232,7 @@ const ArticleTemplate = ({
                     </Content>
                     <InfoBlock mobile='true' data={contentfulArticle} />
                 </StyledContainer>
-                <Grain />
+                {/* <Grain /> */}
             </Wrapper>
         </>
     )

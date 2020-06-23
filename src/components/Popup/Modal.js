@@ -83,7 +83,7 @@ const PopupModal = ({
                 {slug == 'join-us' && <StyledJoinUsForm data={data} />}
                 {slug == 'self-test' && <StyledSelfTestForm data={data} />}
             </FormWrapper>
-            <Grain />
+            {/* <Grain /> */}
         </>
     )
 }

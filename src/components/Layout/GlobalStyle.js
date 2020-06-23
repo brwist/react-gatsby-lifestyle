@@ -40,6 +40,8 @@ const GlobalStyle = createGlobalStyle`
 	}
 
 	body {
+		position: relative;
+		
 		background-color: ${props => props.theme.colors.dark};
 
 		font-family: ${props => props.theme.fontFamilies.plainLight}, 'Arial', sans-serif;
@@ -47,19 +49,34 @@ const GlobalStyle = createGlobalStyle`
 		
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
+		-ms-overflow-style: none;
 
 		overflow: ${props => props.shouldDisableScroll ? 'hidden' : 'auto'};
 		
 		color: ${props => props.theme.colors.light};
 
+		&::-webkit-scrollbar {
+  			display: none;
+		}
+
 		&.ReactModal__Body--open {
 			overflow: hidden;
 		}
-
-		// ${props => props.theme.below.desktop`
-		// 	font-size: ${props => props.theme.desktopVW(20)};
-    	// `}
     }
+
+	.viewport {
+		position: fixed;
+		
+		width: 100vw;
+		
+		overflow-x: hidden;
+
+		margin: 0 0 0 0;
+	}
+
+	main {
+		position: relative;
+	}
 
     *, *:before, *:after {
         box-sizing: border-box;

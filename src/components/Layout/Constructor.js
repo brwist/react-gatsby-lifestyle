@@ -58,6 +58,7 @@ const Constructor = ({
                     lang={lang} 
                     inView={inView} 
                     data={component} 
+                    backgroundColor={backgroundColor} 
                 />
             )
             case 'ContentfulComponentJoinUs': return (

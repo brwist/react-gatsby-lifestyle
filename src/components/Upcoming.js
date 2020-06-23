@@ -1,11 +1,14 @@
 import React, { useEffect, useContext, useRef } from 'react'
 import styled from 'styled-components'
 import Img from 'gatsby-image'
-import gsap from 'gsap'
+import gsap, { timeline } from 'gsap'
 
 import Title from './Title'
 import Container from './Layout/Container'
 import ButtonArrow from './Buttons/ButtonArrow'
+import UpcomingItem from './UpcominigItem'
+
+import theme from './../styles/theme.js'
 
 import { generatePath } from '../utils/helpers'
 
@@ -73,163 +76,65 @@ const Description = styled(Title)`
     `}
 `
 
-const StyledItem = styled.li`
-    width: 100%;
-
-    ${props => props.theme.above.desktop`
-        width: 50%;
-
-        &:nth-of-type(2),
-        &:nth-of-type(3) {
-            margin-top: ${props.theme.desktopVW(500)};
-
-            .inner {
-                width: ${props.theme.desktopVW(400)};
-            }
-
-            .image-wrapper {
-                height: ${props.theme.desktopVW(560)};
-            }
-        }
-
-        &:nth-of-type(3) {
-            margin-top: -${props.theme.desktopVW(100)};
-        }
-
-        &:nth-of-type(4) {
-            margin-top: ${props.theme.desktopVW(200)};
-            margin-bottom: calc(${props.theme.sizes.desktop} * 5);
-
-            .inner {
-                width: ${props.theme.desktopVW(720)};
-            }
-
-            .image-wrapper {
-                height: ${props.theme.desktopVW(640)};
-            }
-        }
-    `}
-`
-
-const Inner = styled.div`
-    width: 100%;
-    
-    ${props => props.theme.above.desktop`
-        width: ${props.theme.desktopVW(560)};
-    `}
-`
-
-const ImageWrapper = styled.div`
-    display: block;
-
-    position: relative;
-
-    width: 100%;
-
-    ${props => props.theme.below.desktop`
-        margin-bottom: calc(${props.theme.sizes.mobile} / 2);
-        padding-bottom: 145.34%;
-    `}
-
-    ${props => props.theme.above.desktop`
-        height: ${props.theme.desktopVW(640)};
-
-        margin-bottom: ${props.theme.sizes.desktop};
-    `}
-`
-
-const StyledImage = styled(Img)`
-    ${props => props.theme.styles.image.objectCover};
-
-    ${props => props.theme.below.desktop`
-        position: absolute !important;
-
-        top: 0;
-        left: 0;
-    `}
-`
-
-const Name = styled.h4`
-    display: block;
-    
-    margin-bottom: calc(${props => props.theme.sizes.mobile} / 2);
-
-    font-family: ${props => props.theme.fontFamilies.plainRegular};
-    font-size: ${props => props.theme.fontSizes.mobile.h6};
-    line-height: 1.2;
-
-    ${props => props.theme.above.desktop`
-        margin-bottom: ${props => props.theme.sizes.desktop};
-        
-        font-size: ${props.theme.fontSizes.desktop.h5};
-    `}
-`
-
-const Info = styled.div`
-    ${props => props.theme.styles.flexBox.horCen};
-`
-
-const Category = styled.span`
-    font-family: ${props => props.theme.fontFamilies.nbRegular};
-    font-size: ${props => props.theme.fontSizes.mobile.xs};
-    line-height: 1.5;
-
-    text-transform: uppercase;
-
-    ${props => props.theme.above.desktop`
-        font-size: ${props.theme.fontSizes.desktop.m};
-    `}
-`
-
-const Item = ({
-    lang,
-    data: {
-        name,
-        slug, 
-        category,
-        featuredImage
-    }
-}) => {
-    return (
-        <StyledItem>
-            <Inner className='inner'>
-                <ImageWrapper className='image-wrapper'>
-                    {featuredImage && <StyledImage fluid={featuredImage.fluid} alt={featuredImage.title} objectFit='cover'/>}
-                </ImageWrapper>
-                <Name>{name}</Name>
-                <Info>
-                    <ButtonArrow label='Read more' to={generatePath(lang, slug)}/>
-                    <Category>{category}</Category>
-                </Info>
-            </Inner>
-        </StyledItem>
-    )
-}
-
 const Upcoming = ({
     lang, 
     inView, 
+    backgroundColor,
     data: {
         contentTitle,
         contentDescription,
         items
     }
 }) => {
+
+    const titleRef = useRef(null)
+    const descriptionRef = useRef(null)
+
+    const getOverlayColor = () => {
+        switch (backgroundColor) {
+            case 'Grey': return theme.colors['light']
+            case 'White': return theme.colors['white']
+        }
+    }
+
+    useEffect(() => {
+        
+        if (!inView) return
+
+        const timeline = new gsap.timeline()
+        
+        timeline.add(titleRef.current.transitionIn(), 0)
+        timeline.add(descriptionRef.current.transitionIn(), 0)
+        
+        return () => {
+            timeline && timeline.kill()
+        }
+
+    }, [inView])
+    
     return (
         <Wrapper>
             <StyledContainer>
                 <Header 
+                    ref={titleRef}
                     lang={lang} 
                     title={contentTitle} 
                     size='normal'
+                    overlayColor={getOverlayColor()}
                 />
                 <Grid>
                     {items.map((item, index) => (
-                        <Item key={index} data={item} lang={lang} />
+                        <UpcomingItem
+                            key={index} 
+                            data={item} 
+                            lang={lang} 
+                            color={getOverlayColor()}
+                        />
                     ))}
                 </Grid>
                 <Description 
                     lang={lang} 
+                    ref={descriptionRef}
                     description={contentDescription}
                 />
             </StyledContainer>

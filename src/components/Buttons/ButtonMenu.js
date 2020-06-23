@@ -11,16 +11,20 @@ const StyledButton = styled.button`
 
     cursor: pointer;
 
-    ${props => props.theme.below.desktop`
-        &:after {
-            content: '';
-            position: absolute;
-            top: -20px;
-            right: -10px;
-            bottom: -20px;
-            left: -10px;
-        }
-    `}
+    transition: transform 0.5s cubic-bezier(.16,1.08,.38,.98);
+
+    &:after {
+        content: '';
+        position: absolute;
+        top: -20px;
+        right: -10px;
+        bottom: -20px;
+        left: -10px;
+    }
+
+    &:hover {
+        transform: scale(0.9);
+    }
     
     ${props => props.theme.above.desktop`
         width: ${props.theme.sizes.desktop};
@@ -37,10 +41,11 @@ const Line = styled.span`
     left: 0;
 
     width: 100%;
-    height: ${props => props.theme.desktopVW(1)};
-    min-height: 1px;
+    height: 1px;
 
     background-color: ${props => props.theme.colors.white};
+
+    transition: all 0.25s ease-out;
 
     &:nth-of-type(2) {
         top: initial;
@@ -95,8 +100,8 @@ const MenuToggle = ({
             onClick={setMenuOpen}
             open={menuOpen}
         >
-            <Line open={menuOpen} />
-            <Line open={menuOpen} />
+            <Line className='line' open={menuOpen} />
+            <Line className='line' open={menuOpen} />
         </StyledButton>
     )
 }

@@ -9,7 +9,7 @@ const StyledTestimonial = styled.div`
     align-items: flex-start;
 
     ${props => props.theme.above.desktop`
-        justify-content: flex-start;
+        justify-content: space-between;
     `}
 `
 
@@ -24,8 +24,6 @@ const ImageWrapper = styled.div`
     ${props => props.theme.above.desktop`
         width: ${props.theme.desktopVW(64)};
         height: ${props.theme.desktopVW(64)};
-
-        margin-right: ${props.theme.sizes.desktop};
     `}
 `
 
@@ -50,8 +48,7 @@ const DescriptionWrapper = styled.div`
     width: 75%;
 
     ${props => props.theme.above.desktop`
-        width: 100%;
-        max-width: ${props.theme.desktopVW(368)};
+        width: 80%;
     `}
 `
 
@@ -62,6 +59,8 @@ const Description = styled.p`
 
     ${props => props.theme.above.desktop`
         font-size: ${props.theme.fontSizes.desktop.s};
+
+        margin-bottom: calc(${props.theme.sizes.desktop} / 6);
     `}
 `
 

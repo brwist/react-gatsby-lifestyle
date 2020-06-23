@@ -2,7 +2,24 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'gatsby'
 
-const Button = styled(Link)``
+const Button = styled(Link)`
+    ${props => props.theme.above.desktop`
+        transition: all .5s cubic-bezier(.16,1.08,.38,.98);
+
+        &:hover {
+            opacity: 0.25;
+
+            .arrow {
+                margin-left: ${props.theme.desktopVW(25)};
+
+                &:before {
+                    transform: translateY(-50%) translateX(-${props.theme.desktopVW(24)});
+                    width: ${props.theme.desktopVW(23)};
+                }
+            }
+        }
+    `}
+`
 
 const Label = styled.span`
     display: inline-block;
@@ -55,11 +72,15 @@ const Arrow = styled.div`
         border-bottom: ${props.theme.desktopVW(5)} solid transparent;
         border-left: ${props.theme.desktopVW(5)} solid currentColor;
 
+        transition: all .5s cubic-bezier(.16,1.08,.38,.98);
+
         &:before {
             transform: translateY(-50%) translateX(-${props.theme.desktopVW(13)});
             
             width: ${props.theme.desktopVW(13)};
-            height: ${props.theme.desktopVW(2)};
+            height: 1px;
+
+            transition: all .5s cubic-bezier(.16,1.08,.38,.98);
         }
     `}
 `
@@ -74,8 +95,8 @@ const ButtonArrow = ({
             className={className}
             to={to}
         >
-            <Label>{label}</Label>
-            <Arrow direction='right' />
+            <Label className='label'>{label}</Label>
+            <Arrow direction='right' className='arrow' />
         </Button>
     )
 }

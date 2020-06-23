@@ -41,12 +41,15 @@ const ImageWrapper = styled.div`
     top: 0;
     right: 0;
 
-    width: ${props => props.theme.mobileVW(188)};
+    /* width: ${props => props.theme.mobileVW(188)}; */
+    width: 100%;
     height: 100%;
 
     background-color: ${props => props.theme.colors.darkGrey};
 
     overflow: hidden;
+
+    opacity: 0.25;
 
     ${props => props.theme.above.desktop`
         top: 0;
@@ -55,6 +58,8 @@ const ImageWrapper = styled.div`
         
         width: 50vw;
         height: 100%;
+
+        opacity: 1;
     `}
 `
 
@@ -102,19 +107,17 @@ const NormalBanner = ({
 
     useEffect(() => {
 
-        transitionIn()
-
-    }, [])
-
-    const transitionIn = () => {
-        
-        const timeline = new gsap.timeline({ delay: 1 })
+        const timeline = new gsap.timeline({ delay: 0.5 })
 
         timeline.add(titleRef.current.transitionIn(), 0)
-        timeline.fromTo(imageOverlayRef.current, { scaleY: 1, transformOrigin: 'top' }, { scaleY: 0, duration: 1, ease: 'power3.out' }, 0.9)
-        timeline.fromTo(imageRef.current, { scale: 1.75 }, { scale: 1, duration: 1, ease: 'power3.out' }, 0.9)
+        timeline.fromTo(imageOverlayRef.current, { scaleY: 1, transformOrigin: 'top' }, { scaleY: 0, duration: 1, ease: 'power3.out' }, 0.6)
+        timeline.fromTo(imageRef.current, { scale: 1.75 }, { scale: 1, duration: 1, ease: 'power3.out' }, 0.6)
+        
+        return () => {
+            timeline && timeline.kill()
+        }
 
-    }
+    }, [])
 
     return (
         <>

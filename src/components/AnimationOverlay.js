@@ -14,7 +14,7 @@ const AnimationOverlay = ({
 }, ref) => {
     return (
         <Wrapper className={className} ref={ref}>
-            <Grain />
+            {/* <Grain /> */}
         </Wrapper>
     )
 }

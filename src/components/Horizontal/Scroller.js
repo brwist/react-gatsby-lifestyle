@@ -33,8 +33,8 @@ const HorizontalTranslateContainer = styled.div.attrs(({ translateX }) => ({
 `
 
 const calcDynamicHeight = objectWidth => {
-    const vw = window.innerWidth
-    const vh = window.innerHeight
+    const vw = typeof window !== 'undefined' && window.innerWidth
+    const vh = typeof window !== 'undefined' && window.innerHeight
     return objectWidth - vw + vh + 150
 }
 

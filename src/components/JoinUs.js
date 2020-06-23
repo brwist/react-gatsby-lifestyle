@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
 import styled from 'styled-components'
 import Image from 'gatsby-image'
+import gsap from 'gsap'
 
 import Container from './Layout/Container'
 import Title from './Title'
@@ -68,6 +69,22 @@ const JoinUs = ({
         image
     }
 }) => {
+
+    const titleRef = useRef(null)
+
+    useEffect(() => {
+        
+        if (!inView) return
+
+        const timeline = new gsap.timeline()
+        timeline.add(titleRef.current.transitionIn(), 0)
+        
+        return () => {
+            timeline && timeline.kill()
+        }
+
+    }, [inView])
+
     return (
         <Wrapper>
             <Content
@@ -75,6 +92,7 @@ const JoinUs = ({
                 title={contentTitle}
                 description={contentDescription}
                 size='medium'
+                ref={titleRef}
             />
             <ImageWrapper>
                 <StyledImage fluid={image.fluid} alt={image.alt} />

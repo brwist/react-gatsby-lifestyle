@@ -1,6 +1,11 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useInView } from 'react-intersection-observer'
 import styled from 'styled-components'
+import * as ScrollMagic from 'scrollmagic'
+import gsap from 'gsap'
+import { ScrollMagicPluginGsap } from 'scrollmagic-plugin-gsap'
+
+ScrollMagicPluginGsap(ScrollMagic, gsap)
 
 import theme from './../../styles/theme'
 import FlowLine from './../FlowLine'
@@ -19,18 +24,19 @@ const Section = ({
     name,
     layout
 }) => {
-    
+
+    const flowRef = useRef(null)    
     const [ref, inView] = useInView({
-        threshold: treshold || 0.15,
+        threshold: treshold || 0.5,
         triggerOnce: true
     })
 
     const getBackgroundColor = (color) => {
         switch (color) {
             case 'Grey': return theme.colors['light']
-            case 'Black': return theme.colors['dark']
             case 'White': return theme.colors['white']
-            default: return theme.colors['dark']
+            case 'Black': return 'transparent'
+            default: return 'transparent'
         }
     }
 
@@ -52,6 +58,23 @@ const Section = ({
     let template = name.replace('ContentfulComponent', '')
     let backgroundColor = template == 'HeroBanner' ? 'transparent' : getBackgroundColor(layout.backgroundColor)
 
+    useEffect(() => {
+
+        if (layout.flowLine == 'Visible') {
+            const controller = new ScrollMagic.Controller()
+            
+            const scene = new ScrollMagic.Scene({
+                triggerElement: ref.current,
+                duration: 2000,
+                offset: 900
+            })
+            .setTween(gsap.to(flowRef.current, { width: '100%' }))
+            .addTo(controller)
+        }
+
+        
+    }, [])
+
     return (
         <StyledSection 
             ref={ref} 
@@ -59,8 +82,7 @@ const Section = ({
             backgroundColor={backgroundColor}
             color={getColor(layout.backgroundColor)}
         >
-            {getGrain()}
-            {layout.flowLine == 'Visible' && <FlowLine inView={inView}/>}
+            {layout.flowLine == 'Visible' && <FlowLine ref={flowRef}/>}
             {children(inView)}
         </StyledSection>
     )

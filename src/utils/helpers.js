@@ -17,3 +17,10 @@ export const scrollPosition = () => {
 export const lerp = (current, target, multiplier) => {
     return (1 - multiplier) * current + multiplier * target;
 }
+
+export const getOverlayColor = backgroundColor => {
+    switch (backgroundColor) {
+        case 'Grey': return theme.colors['light']
+        case 'White': return theme.colors['white']
+    }
+}

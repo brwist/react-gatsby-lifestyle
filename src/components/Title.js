@@ -55,29 +55,29 @@ const StyledTitle = styled.h1`
     ${props => props.size == 'extra-large' && `
         font-size: ${props.theme.fontSizes.mobile.h1};
 
-        .line-wrapper {
-            &:nth-of-type(2) {
-                margin-left: ${props.theme.mobileVW(20)};
-            }
+        // .line-wrapper {
+        //     &:nth-of-type(2) {
+        //         margin-left: ${props.theme.mobileVW(20)};
+        //     }
 
-            &:nth-of-type(3) {
-                margin-left: ${props.theme.mobileVW(40)};
-            }   
-        }
+        //     &:nth-of-type(3) {
+        //         margin-left: ${props.theme.mobileVW(40)};
+        //     }   
+        // }
     `}
 
     ${props => props.size == 'medium' && `
         font-size: ${props.theme.fontSizes.mobile.h3};
 
-        .line-wrapper {
-            &:nth-of-type(2) {
-                margin-left: ${props.theme.mobileVW(15)};
-            }
+        // .line-wrapper {
+        //     &:nth-of-type(2) {
+        //         margin-left: ${props.theme.mobileVW(15)};
+        //     }
 
-            &:nth-of-type(3) {
-                margin-left: ${props.theme.mobileVW(30)};
-            }   
-        }
+        //     &:nth-of-type(3) {
+        //         margin-left: ${props.theme.mobileVW(30)};
+        //     }   
+        // }
     `}
 
     ${props => props.size == 'normal' && `
@@ -86,15 +86,15 @@ const StyledTitle = styled.h1`
         font-size: ${props.theme.fontSizes.mobile.h4};
         line-height: 1;
 
-        .line-wrapper {
-            &:nth-of-type(2) {
-                margin-left: ${props.theme.mobileVW(10)};
-            }
+        // .line-wrapper {
+        //     &:nth-of-type(2) {
+        //         margin-left: ${props.theme.mobileVW(10)};
+        //     }
 
-            &:nth-of-type(3) {
-                margin-left: ${props.theme.mobileVW(20)};
-            }   
-        }
+        //     &:nth-of-type(3) {
+        //         margin-left: ${props.theme.mobileVW(20)};
+        //     }   
+        // }
     `}
 
     ${props => props.size == 'small' && `
@@ -105,7 +105,7 @@ const StyledTitle = styled.h1`
         text-transform: initial;
 
         .line-wrapper {
-            display: inline;
+            // display: inline;
 
             &:nth-of-type(2), 
             &:nth-of-type(3) {
@@ -187,13 +187,13 @@ const LineWrapper = styled.span`
 
     overflow: hidden;
 
-    &:nth-of-type(2) {
+    /* &:nth-of-type(2) {
         margin-left: calc(${props => props.theme.sizes.mobile} / 2);
     }
 
     &:nth-of-type(3) {
         margin-left: ${props => props.theme.sizes.mobile};
-    }
+    } */
 
     ${props => props.theme.above.desktop`
         &:nth-of-type(2) {
@@ -209,7 +209,13 @@ const LineWrapper = styled.span`
 const TitleOverlay = styled.div`
     ${props => props.theme.styles.element.fill}
 
-    background-color: ${props => props.theme.colors.dark};
+    ${props => props.overlayColor == 'White' ? `
+        background-color: ${props.theme.colors.white};
+    ` : props.overlayColor == 'Grey' ? `    
+        background-color: ${props.theme.colors.light};
+    ` : `
+        background-color: ${props.theme.colors.dark};
+    `}
 `
 
 const Words = styled.span`
@@ -301,7 +307,7 @@ const getLinkComponent = (links, lang) => {
                                 lang={lang} 
                                 to={generatePath(lang, slug)} 
                                 label={title} 
-                                inverted={i == 0} 
+                                inverted={i == 0}
                                 modal={modal}
                             />
                         )
@@ -323,21 +329,32 @@ const Title = ({
     description,
     links,
     className,
-    useInlineLink
+    useInlineLink,
+    overlayColor
 }, ref) => {
 
     const titleRef = useRef(null)
     const descriptionRef = useRef(null)
 
+    const duration = size == 'extra-large' ? 1.25 : size == 'large' ? 0.65 : 0.35
+    const delay = size == 'extra-large' ? 1.5 : size == 'large' ? 0.8 : 0.5
+
+    useEffect(() => {
+        title && gsap.set(titleRef.current, { scaleY: 1.0 })
+        description && gsap.set(descriptionRef.current, { alpha: 0.0 })
+    }, [])
+
     useImperativeHandle(ref, () => {
         return {
             transitionIn() {
+
                 const timeline = new gsap.timeline()
                 
-                title && timeline.fromTo(titleRef.current, { scaleY: 1, transformOrigin: 'bottom' }, { scaleY: 0, duration: 0.8, ease: 'none' }, 0)
-                description && timeline.fromTo(descriptionRef.current, { alpha: 0 }, { alpha: 1, duration: 1, ease: 'power1.out' }, 0.8)
+                title && timeline.to(titleRef.current, { scaleY: 0.0, duration: duration, transformOrigin: 'bottom', ease: 'power1.out' }, 0.0)
+                description && timeline.to(descriptionRef.current, { alpha: 1.0, duration: 0.7, ease: 'sine.out' }, delay)
                 
                 return timeline
+
             }
         }
     })
@@ -368,7 +385,7 @@ const Title = ({
                             )
                         }
                     })}
-                    <TitleOverlay ref={titleRef} />
+                    <TitleOverlay ref={titleRef} overlayColor={overlayColor && overlayColor} />
                 </StyledTitle>
             )}
             {description && (

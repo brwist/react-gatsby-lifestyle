@@ -5,6 +5,8 @@ import Menu from './Menu'
 import Header from './Header'
 import Footer from './Footer'
 import Preloader from './Preloader'
+import SmoothScroll from '../SmoothScroll'
+import Grain from './Grain'
 
 const Layout = ({ 
 	children,
@@ -14,15 +16,16 @@ const Layout = ({
 }) => {
 	
 	const [menuOpen, setMenuOpen] = useState(false)
-	const [showPreloader, setShowPreloader] = useState(false)
+	const [showPreloader, setShowPreloader] = useState(true)
 	const showFooter = location.pathname.includes('contact') || location.pathname.includes('404') ? false : true
 
   	return (
-		<>
+		<SmoothScroll>
 			<GlobalStyle
 				shouldDisableScroll={menuOpen ? true : false}
 			/>
-			{showPreloader && <Preloader showPreloader={e => setShowPreloader(e)} />}
+			{/* <Grain /> */}
+			{/* {showPreloader && <Preloader showPreloader={e => setShowPreloader(e)} />} */}
 			<Header
 				lang={lang}
 				contentTheme={contentTheme}
@@ -44,7 +47,7 @@ const Layout = ({
 					contentTheme={contentTheme}
 				/>
 			)}
-		</>
+		</SmoothScroll>
 	)
 }
 

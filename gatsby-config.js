@@ -21,15 +21,6 @@ module.exports = {
 				path: `${__dirname}/src/images`
 			}
 		},
-		{
-			resolve: `gatsby-plugin-modal-routing`,
-			options: {
-				appElement: '#___gatsby',
-				modalProps: {
-					className: `popup-modal`,
-				}
-			}
-		},
 		`gatsby-transformer-sharp`,
 		{
 			resolve: `gatsby-plugin-sharp`,

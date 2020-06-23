@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useRef, useEffect, forwardRef, useImperativeHandle } from 'react'
 import styled, { css } from 'styled-components'
 import Image from 'gatsby-image'
 import { Link } from 'gatsby'
+import gsap from 'gsap'
 
 import InstagramSvg from './../../images/graphics/instagram.svg'
 
@@ -33,7 +34,7 @@ const CardStyles = css`
 
     ${props => props.type == 'Wave' && `
         &:nth-of-type(odd) {
-            margin-top: ${props.theme.desktopVW(160)};
+            margin-top: ${props.theme.desktopVW(100)};
         }
 
         .image-wrapper {
@@ -45,8 +46,8 @@ const CardStyles = css`
         width: ${props.theme.desktopVW(450)};
 
         &:hover {
-            .button-wrapper {
-                opacity: 1;
+            .button {
+                transform: translateY(0);
             }
         }
     `}
@@ -88,8 +89,42 @@ const ImageWrapper = styled.div`
     margin-bottom: ${props => props.theme.sizes.mobile};
     padding-bottom: 114%;
 
+    transition: transform 0.25s ease-out;
+
+    overflow: hidden;
+
+    &:hover {
+        .image {
+            img {
+                transform: scale(1.1);
+            }
+        }
+    }
+
     ${props => props.theme.above.desktop`
         margin-bottom: ${props.theme.desktopVW(40)};
+    `}
+`
+
+const AnimatedImage = styled.div`
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+`
+
+const ImageOverlay = styled.div`
+    ${props => props.theme.styles.element.fill};
+
+    ${props => props.overlayColor == 'White' ? `
+        background-color: ${props.theme.colors.white};
+    ` : props.overlayColor == 'Grey' ? `    
+        background-color: ${props.theme.colors.light};
+    ` : `
+        background-color: ${props.theme.colors.dark};
     `}
 `
 
@@ -105,6 +140,7 @@ const StyledImage = styled(Image)`
     object-fit: cover;
 
     img {
+        transition: transform 1.0s ease-out !important;
         opacity: 1 !important;
     }
 `
@@ -185,25 +221,56 @@ const ButtonWrapper = styled.div`
 
     opacity: 1;
 
+    overflow: hidden;
+
     ${props => props.theme.above.desktop`
         margin-top: ${props.theme.sizes.desktop};
 
-        opacity: 0;
+        .button {
+            transform: translateY(-105%);
+
+            transition: transform 0.15s ease-out;
+        }
     `}
 `
 
-const ImageComponent = ({ image, alt, instagram }) => {
+const ImageComponent = React.forwardRef(({ image, alt, instagram, overlayColor }, ref) => {
+
+    const imageRef = useRef(null)
+    const imageOverlayRef = useRef(null)
+
+    useImperativeHandle(ref, () => {
+        return {
+            transitionIn() {
+
+                gsap.set(imageRef.current, { scale: 1.75, alpha: 0.0 })
+                gsap.set(imageOverlayRef.current, { scaleY: 1.0 })
+
+                const timeline = new gsap.timeline()
+                
+                timeline.to(imageOverlayRef.current, { scaleY: 0.0, transformOrigin: 'top', duration: 0.5, ease: 'power3.out' }, 0)
+                timeline.to(imageRef.current, { scale: 1.0, alpha: 1.0, duration: 0.5, ease: 'power3.out' }, 0)
+                
+                return timeline
+
+            }
+        }
+    })
+
     return (
         <ImageWrapper className='image-wrapper'>
-            {image != null && (
-                <StyledImage fluid={image} alt={alt}  />
-            )}
-            {instagram && (
-                <InstagramIcon />
-            )}
+            <AnimatedImage ref={imageRef}>
+                {image != null && (
+                    <StyledImage className='image' fluid={image} alt={alt}  />
+                )}
+                {instagram && (
+                    <InstagramIcon />
+                )}
+            </AnimatedImage>  
+            <ImageOverlay overlayColor={overlayColor} ref={imageOverlayRef} />
         </ImageWrapper>
     )
-}
+})
 
 const Card = ({
     lang,
@@ -212,17 +279,46 @@ const Card = ({
     component,
     information,
     type,
-    active
+    active,
+    inView,
+    overlayColor
 }) => {
+
+    const imageRef = useRef(null)
+    const headerRef = useRef(null)
+    const descriptionRef = useRef(null)
+
+    useEffect(() => {
+
+        data.name && gsap.set(headerRef.current, { y: 5, alpha: 0.0 })
+        gsap.set(descriptionRef.current, { y: -5, alpha: 0.0 })
+
+        if (!inView) return
+
+        const timeline = new gsap.timeline()
+
+        timeline.add(imageRef.current.transitionIn(), 0)
+        data.name && timeline.to(headerRef.current, { y: 0.0, alpha: 1.0, duration: 0.35, ease: 'sine.out' }, 0.0)
+        timeline.to(descriptionRef.current, { y: 0.0, alpha: 1.0, duration: 0.35, ease: 'sine.out' }, 0.0)
+
+        return () => {
+            timeline && timeline.kill()
+        }
+    }, [inView])
+
     if (component == 'InstagramFeed') {
         return (
-            <NormalCard className={className}>
+            <NormalCard 
+                className={className}
+            >
                 <ImageComponent
                     image={data.localFile.childImageSharp.fluid}
                     alt={data.username}
                     instagram
+                    ref={imageRef}
+                    overlayColor={overlayColor}
                 />
-                <SmallDescription>
+                <SmallDescription ref={descriptionRef}>
                     <Title>@rockstarlifestyleamsterdam — </Title>{data.caption != null && data.caption.substring(0, 150)}...
                 </SmallDescription>
             </NormalCard>
@@ -230,16 +326,22 @@ const Card = ({
     } else {
         if (information == 'Excerpt only') {
             return (
-                <NormalCard className={className} type={type} active={active.toString()}>
+                <NormalCard 
+                    className={className} 
+                    type={type} 
+                    active={active.toString()}
+                >
                     {data.featuredImage.fluid != null && (
                         <LinkWrapper to={generatePath(lang, data.buttonLink || data.slug)}>
                             <ImageComponent
                                 image={data.featuredImage.fluid}
                                 alt={data.featuredImage.title}
+                                ref={imageRef}
+                                overlayColor={overlayColor}
                             />
                         </LinkWrapper>
                     )}
-                    <LargeDescription>
+                    <LargeDescription ref={descriptionRef}>
                         <Caption data={data.excerpt} />
                     </LargeDescription>
                     {data.buttonLabel && (
@@ -259,15 +361,22 @@ const Card = ({
             const { tags, testimonial, headerDescription } = data.components[0]
             
             return (
-                <LinkedCard className={className} type={type} to={generatePath(lang, `${category.toLowerCase()}/${slug}`)} active={active.toString()}>
+                <LinkedCard 
+                    className={className} 
+                    type={type} 
+                    to={generatePath(lang, `${category.toLowerCase()}/${slug}`)} 
+                    active={active.toString()}
+                >
                     {data.featuredImage.fluid != null && (
                         <ImageComponent
                             image={data.featuredImage.fluid}
                             alt={data.featuredImage.title}
+                            ref={imageRef}
+                            overlayColor={overlayColor}
                         />
                     )}
-                    <LargeDescription>
-                        <Header>
+                    <LargeDescription ref={descriptionRef}>
+                        <Header ref={headerRef}>
                             <Heading>{data.name}</Heading>
                             {tags && (
                                 <Tags data={tags} slice={2}></Tags>
@@ -282,19 +391,25 @@ const Card = ({
             )
         } else {
             return (
-                <NormalCard className={className} type={type} active={active.toString()}>
+                <NormalCard 
+                    className={className} 
+                    type={type} 
+                    active={active.toString()}
+                >
                     {data.featuredImage.fluid != null && (
                         <LinkWrapper to={generatePath(lang, data.buttonLink || data.slug)}>
                             <ImageComponent
                                 image={data.featuredImage.fluid}
                                 alt={data.featuredImage.title}
+                                ref={imageRef}
+                                overlayColor={overlayColor}
                             />
                         </LinkWrapper>
                     )}
-                    <Header>
+                    <Header ref={headerRef}>
                         <Heading>{data.name}</Heading>
                     </Header>
-                    <LargeDescription>
+                    <LargeDescription ref={descriptionRef}>
                         <Caption data={data.excerpt} />
                     </LargeDescription>
                     <ButtonWrapper 
