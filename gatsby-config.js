@@ -61,10 +61,8 @@ module.exports = {
 		{
 			resolve: `gatsby-source-instagram`,
 			options: {
-				username: `rockstarlifestyleamsterdam`,
-				access_token: `8506566196.1677ed0.b80d4fd018ee426f8c002198c1d74a1a`,
-				instagram_id: `1481082465`,
-				maxPosts: 12
+				username: `1481082465`,
+				access_token: `8506566196.1677ed0.b80d4fd018ee426f8c002198c1d74a1a`
 			}
 		},
 		{
