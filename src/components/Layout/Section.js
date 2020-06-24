@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from 'react'
 import { useInView } from 'react-intersection-observer'
 import styled from 'styled-components'
-import * as ScrollMagic from 'scrollmagic'
+// import * as ScrollMagic from 'scrollmagic'
 import gsap from 'gsap'
-import { ScrollMagicPluginGsap } from 'scrollmagic-plugin-gsap'
+// import { ScrollMagicPluginGsap } from 'scrollmagic-plugin-gsap'
 
-ScrollMagicPluginGsap(ScrollMagic, gsap)
+// ScrollMagicPluginGsap(ScrollMagic, gsap)
 
 import theme from './../../styles/theme'
 import FlowLine from './../FlowLine'
@@ -60,18 +60,17 @@ const Section = ({
 
     useEffect(() => {
 
-        if (layout.flowLine == 'Visible') {
-            const controller = new ScrollMagic.Controller()
+        // if (typeof window !== 'undefined' && layout.flowLine == 'Visible') {
+        //     const controller = new ScrollMagic.Controller()
             
-            const scene = new ScrollMagic.Scene({
-                triggerElement: ref.current,
-                duration: 2000,
-                offset: 900
-            })
-            .setTween(gsap.to(flowRef.current, { width: '100%' }))
-            .addTo(controller)
-        }
-
+        //     const scene = new ScrollMagic.Scene({
+        //         triggerElement: ref.current,
+        //         duration: 2000,
+        //         offset: 900
+        //     })
+        //     .setTween(gsap.to(flowRef.current, { width: '100%' }))
+        //     .addTo(controller)
+        // }
         
     }, [])
 

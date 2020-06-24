@@ -7,18 +7,19 @@ export default class SmoothScroll extends React.Component {
         height: typeof window !== 'undefined' ? window.innerHeight : 1000
     }
 
-    ro = new ResizeObserver(elements => {
-        for (let elem of elements) {
-            const crx = elem.contentRect
-            this.setState({
-                height: crx.height
-            })
-        }
-    })
-
     componentDidMount() {
         typeof window !== 'undefined' && window.addEventListener('scroll', this.onScroll)
-        this.ro.observe(this.viewport)
+
+        const ro = new ResizeObserver(elements => {
+            for (let elem of elements) {
+                const crx = elem.contentRect
+                this.setState({
+                    height: crx.height
+                })
+            }
+        })
+        
+        ro.observe(this.viewport)
     }
 
     onScroll = () => {

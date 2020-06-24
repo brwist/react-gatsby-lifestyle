@@ -209,7 +209,7 @@ const FaqDesktopItem = ({
         <Item className={className} onMouseEnter={mouseEnterHandler} onMouseLeave={mouseLeaveHandler}>
             <Back ref={backRef} className='back'>
                 <BackgroundWrapper ref={backgroundRef}>
-                    <Background fluid={image.fluid} alt={image.alt} />
+                    {image && <Background fluid={image.fluid} alt={image.alt} />}
                 </BackgroundWrapper>
                 <div ref={answerRef}>
                     <Answer data={answer} />

@@ -208,7 +208,7 @@ const FaqMobileItem = ({
                 </Front>
                 <Back className='back'>
                     <BackgroundWrapper>
-                        <Background fluid={image.fluid} alt={image.alt} />
+                        {image && <Background fluid={image.fluid} alt={image.alt} />}
                     </BackgroundWrapper>
                     <Answer data={answer} />
                 </Back>
