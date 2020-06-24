@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { useInView } from 'react-intersection-observer'
 import styled from 'styled-components'
+import { useWindowSize } from 'react-use'
 // import * as ScrollMagic from 'scrollmagic'
 import gsap from 'gsap'
 // import { ScrollMagicPluginGsap } from 'scrollmagic-plugin-gsap'
@@ -25,9 +26,10 @@ const Section = ({
     layout
 }) => {
 
+    const { width: windowWidth } = useWindowSize()
     const flowRef = useRef(null)    
     const [ref, inView] = useInView({
-        threshold: treshold || 0.5,
+        threshold: windowWidth < 1023 ? 0.15 : 0.5,
         triggerOnce: true
     })
 

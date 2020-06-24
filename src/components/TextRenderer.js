@@ -51,7 +51,7 @@ const Paragraph = styled.p`
     ${TextStyles}
 
     font-family: ${props => props.theme.fontFamilies.plainLight};
-    font-size: ${props => props.theme.fontSizes.mobile.p};
+    font-size: ${props => props.theme.fontSizes.mobile.m};
     line-height: 1.4;
 
     ${props => props.theme.above.desktop`

@@ -45,11 +45,13 @@ const CardStyles = css`
     ${props => props.theme.above.desktop`
         width: ${props.theme.desktopVW(450)};
 
-        &:hover {
-            .button {
-                transform: translateY(0);
+        ${props.active == 'true' && `
+            &:hover {
+                .button {
+                    transform: translateY(0);
+                }
             }
-        }
+        `}
     `}
 `
 
@@ -195,7 +197,7 @@ const Caption = styled(TextRenderer)`
     }
 
     ${props => props.theme.below.desktop`
-        font-size: ${props.theme.fontSizes.mobile.m};
+        font-size: ${props.theme.fontSizes.mobile.s};
     `}
 `
 
@@ -284,20 +286,23 @@ const Card = ({
     overlayColor
 }) => {
 
+    const itemRef = useRef(null)
     const imageRef = useRef(null)
     const headerRef = useRef(null)
     const descriptionRef = useRef(null)
 
     useEffect(() => {
 
-        data.name && gsap.set(headerRef.current, { y: 5, alpha: 0.0 })
-        gsap.set(descriptionRef.current, { y: -5, alpha: 0.0 })
+        gsap.set(itemRef.current, { y: 15.0 })
+        data.name && gsap.set(headerRef.current, { y: 5.0, alpha: 0.0 })
+        data.excerpt || data.caption && gsap.set(descriptionRef.current, { y: -5.0, alpha: 0.0 })
 
         if (!inView) return
 
         const timeline = new gsap.timeline()
 
-        timeline.add(imageRef.current.transitionIn(), 0)
+        timeline.to(itemRef.current, { y: 0.0, duration: 0.5, ease: 'sine.out' }, 0.0)
+        timeline.add(imageRef.current.transitionIn(), 0.0)
         data.name && timeline.to(headerRef.current, { y: 0.0, alpha: 1.0, duration: 0.35, ease: 'sine.out' }, 0.0)
         timeline.to(descriptionRef.current, { y: 0.0, alpha: 1.0, duration: 0.35, ease: 'sine.out' }, 0.0)
 
@@ -309,6 +314,7 @@ const Card = ({
     if (component == 'InstagramFeed') {
         return (
             <NormalCard 
+                ref={itemRef}
                 className={className}
             >
                 <ImageComponent
@@ -327,6 +333,7 @@ const Card = ({
         if (information == 'Excerpt only') {
             return (
                 <NormalCard 
+                    ref={itemRef} 
                     className={className} 
                     type={type} 
                     active={active.toString()}
@@ -362,6 +369,7 @@ const Card = ({
             
             return (
                 <LinkedCard 
+                    ref={itemRef}
                     className={className} 
                     type={type} 
                     to={generatePath(lang, `${category.toLowerCase()}/${slug}`)} 
@@ -392,6 +400,7 @@ const Card = ({
         } else {
             return (
                 <NormalCard 
+                    ref={itemRef}
                     className={className} 
                     type={type} 
                     active={active.toString()}

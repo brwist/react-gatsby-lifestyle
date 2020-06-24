@@ -5,6 +5,7 @@ import gsap from 'gsap'
 
 import Container from './Layout/Container'
 import Title from './Title'
+import AnimatedImage from './AnimatedImage'
 
 const Wrapper = styled(Container)`
     display: flex;
@@ -40,14 +41,24 @@ const Content = styled(Title)`
     `}
 `
 
-const ImageWrapper = styled.div`
+const StyledAnimatedImage = styled(AnimatedImage)`
     width: ${props => props.theme.mobileVW(500)};
     height: ${props => props.theme.mobileVW(500)};
 
     background-color: ${props => props.theme.colors.darkGrey};
 
     ${props => props.theme.below.desktop`
-        display: none;
+        position: absolute;
+
+        top: 0;
+        left: 0;
+
+        z-index: -1;
+
+        width: 100%;
+        height: 100%;
+
+        opacity: 0.25;
     `}
 
     ${props => props.theme.above.desktop`
@@ -56,9 +67,9 @@ const ImageWrapper = styled.div`
     `}
 `
 
-const StyledImage = styled(Image)`
-    ${props => props.theme.styles.image.objectCover};
-`
+// const StyledImage = styled(Image)`
+//     ${props => props.theme.styles.image.objectCover};
+// `
 
 const JoinUs = ({
     lang,
@@ -71,13 +82,16 @@ const JoinUs = ({
 }) => {
 
     const titleRef = useRef(null)
+    const imageRef = useRef(null)
 
     useEffect(() => {
         
         if (!inView) return
 
         const timeline = new gsap.timeline()
+        
         timeline.add(titleRef.current.transitionIn(), 0)
+        timeline.add(imageRef.current.transitionIn(), 0)
         
         return () => {
             timeline && timeline.kill()
@@ -94,9 +108,7 @@ const JoinUs = ({
                 size='medium'
                 ref={titleRef}
             />
-            <ImageWrapper>
-                <StyledImage fluid={image.fluid} alt={image.alt} />
-            </ImageWrapper>
+            <StyledAnimatedImage ref={imageRef} data={image} />
         </Wrapper>
     )
 }

@@ -136,21 +136,23 @@ const HorizontalDrag = ({
     })
 
     const { width: windowWidth } = useWindowSize()
-    const offset = windowWidth < 1023 ? 32 : 80
+    const isMobile = windowWidth < theme.breakpoints.desktop
+    const offset = isMobile ? 32 : 80
+    const isDisabled = !isMobile && items.length == 3
 
     const params = {
-        freeMode: true,
-        initialSlide: items.length == 3 ? 1 : 0,
+        freeMode: isMobile ? false : true,
+        initialSlide: isDisabled ? 1 : 0,
         spaceBetween: 32,
-        slidesOffsetBefore: items.length == 3 ? 0 : offset,
-        slidesOffsetAfter: items.length == 3 ? 0 : offset,
-        slidesPerView: items.length == 3 ? 3 : 1.25,
-        centeredSlides: items.length == 3 ? true : false,
-        grabCursor: true,
-        touchRatio: items.length == 3 ? 0 : 1,
+        slidesOffsetBefore: isDisabled ? 0 : offset,
+        slidesOffsetAfter: isDisabled ? 0 : offset,
+        slidesPerView: isDisabled ? 3 : 1.25,
+        centeredSlides: isDisabled ? true : false,
+        grabCursor: isMobile ? false : true,
+        touchRatio: !isMobile && isDisabled ? 0 : 1,
         scrollbar: {
             el: '.swiper-scrollbar',
-            hide: items.length == 3 ? true : false
+            hide: isDisabled ? true : false
         },
         breakpoints: {
             1023: {

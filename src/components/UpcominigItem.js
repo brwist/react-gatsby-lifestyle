@@ -1,11 +1,12 @@
-import React, { useImperativeHandle, forwardRef, useEffect, useContext, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useInView } from 'react-intersection-observer'
 import styled from 'styled-components'
 import Img from 'gatsby-image'
-import gsap, { timeline } from 'gsap'
+import gsap from 'gsap'
+import { useWindowSize } from 'react-use'
 
-import Title from './Title'
-import Container from './Layout/Container'
+import theme from './../styles/theme'
+
 import ButtonArrow from './Buttons/ButtonArrow'
 
 import { generatePath } from '../utils/helpers'
@@ -142,15 +143,17 @@ const UpcomingItem = ({
     }
 }) => {
 
-    const [ref, inView] = useInView({
-        threshold: 0.5,
-        triggerOnce: true
-    })
+    const { width: windowWidth } = useWindowSize()
 
     const imageRef = useRef(null)
     const imageOverlayRef = useRef(null)
     const nameRef = useRef(null)
     const infoRef = useRef(null)
+
+    const [ref, inView] = useInView({
+        threshold: windowWidth < theme.breakpoints.regular ? 0 : 0.5,
+        triggerOnce: true
+    })
 
     useEffect(() => {
 

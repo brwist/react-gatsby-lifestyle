@@ -47,7 +47,7 @@ const StyledTitle = styled.h1`
     margin-bottom: calc(${props => props.theme.sizes.mobile} / 2);
 
     font-family: ${props => props.theme.fontFamilies.nbBold};
-    font-size: ${props => props.theme.fontSizes.mobile.h3};
+    font-size: ${props => props.theme.fontSizes.mobile.h4};
     line-height: 0.9;
 
     text-transform: uppercase;
@@ -83,7 +83,7 @@ const StyledTitle = styled.h1`
     ${props => props.size == 'normal' && `
         margin-left: calc(${props.theme.sizes.mobile} * 2);
         
-        font-size: ${props.theme.fontSizes.mobile.h4};
+        font-size: ${props.theme.fontSizes.mobile.h5};
         line-height: 1;
 
         // .line-wrapper {
@@ -99,7 +99,7 @@ const StyledTitle = styled.h1`
 
     ${props => props.size == 'small' && `
         font-family: ${props.theme.fontFamilies.plainLight};
-        font-size: ${props.theme.fontSizes.mobile.h5};
+        font-size: ${props.theme.fontSizes.mobile.h6};
         line-height: 1.2;
 
         text-transform: initial;
@@ -378,11 +378,13 @@ const Title = ({
                                     </LineWrapper>
                                 )
                             },
-                            [BLOCKS.PARAGRAPH]: (node, children) => (
-                                <LineWrapper className='line-wrapper'>
-                                    <Words>{children}</Words>
-                                </LineWrapper>
-                            )
+                            [BLOCKS.PARAGRAPH]: (node, children) => {
+                                return (
+                                    <LineWrapper className='line-wrapper'>
+                                        <Words>{children}</Words>
+                                    </LineWrapper>
+                                )
+                            }
                         }
                     })}
                     <TitleOverlay ref={titleRef} overlayColor={overlayColor && overlayColor} />
