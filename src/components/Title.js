@@ -225,6 +225,8 @@ const Words = styled.span`
 const DescriptionWrapper = styled.div`
     width: 100%;
 
+    opacity: 0;
+
     ${props => props.theme.above.desktop`
         max-width: ${props.theme.desktopVW(500)};
 
