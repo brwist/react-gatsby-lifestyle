@@ -42,7 +42,7 @@ const StyledTitle = styled.h1`
 
     position: relative;
 
-    overflow: hidden;
+    /* overflow: hidden; */
 
     margin-bottom: calc(${props => props.theme.sizes.mobile} / 2);
 
@@ -185,7 +185,7 @@ const LineWrapper = styled.span`
     
     position: relative;
 
-    overflow: hidden;
+    /* overflow: hidden; */
 
     /* &:nth-of-type(2) {
         margin-left: calc(${props => props.theme.sizes.mobile} / 2);

@@ -68,8 +68,9 @@ const StyledImage = styled(Image)`
 `
 
 const AnimatedImage = ({ 
-    className, 
-    data: image 
+    className,
+    overlayColor,
+    data: image
 }, ref) => {
 
     const imageRef = useRef(null)
@@ -99,7 +100,7 @@ const AnimatedImage = ({
             <Animated ref={imageRef}>
                 <StyledImage fluid={image.fluid} alt={image.alt} />
             </Animated>
-            <Overlay ref={imageOverlayRef} />
+            <Overlay ref={imageOverlayRef} overlayColor={overlayColor} />
         </Wrapper>
     )
 }

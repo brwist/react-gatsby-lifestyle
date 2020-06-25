@@ -189,20 +189,6 @@ const HorizontalDrag = ({
         })
     }, [])
 
-    useEffect(() => {
-        
-        if (!inView) return 
-
-        const timeline = new gsap.timeline()
-
-        timeline.add(titleRef.current.transitionIn(), 0)
-
-        return () => {
-            timeline && timeline.kill()
-        }
-
-    }, [inView])
-
     return (
         <Wrapper 
             colors={getColors(backgroundColor)} 
@@ -211,6 +197,7 @@ const HorizontalDrag = ({
             <StyledTitle 
                 ref={titleRef}
                 lang={lang}
+                inView={inView}
                 type={type}
                 title={title} 
                 description={description} 

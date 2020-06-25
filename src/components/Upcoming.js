@@ -90,13 +90,6 @@ const Upcoming = ({
     const titleRef = useRef(null)
     const descriptionRef = useRef(null)
 
-    const getOverlayColor = () => {
-        switch (backgroundColor) {
-            case 'Grey': return theme.colors['light']
-            case 'White': return theme.colors['white']
-        }
-    }
-
     useEffect(() => {
         
         if (!inView) return
@@ -120,7 +113,7 @@ const Upcoming = ({
                     lang={lang} 
                     title={contentTitle} 
                     size='normal'
-                    overlayColor={getOverlayColor()}
+                    overlayColor={backgroundColor}
                 />
                 <Grid>
                     {items.map((item, index) => (
@@ -128,7 +121,7 @@ const Upcoming = ({
                             key={index} 
                             data={item} 
                             lang={lang} 
-                            color={getOverlayColor()}
+                            overlayColor={backgroundColor}
                         />
                     ))}
                 </Grid>

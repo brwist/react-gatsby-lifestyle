@@ -71,12 +71,12 @@ const StaticImage = styled.img`
 const Controls = styled.div`
     position: absolute;
 
-    bottom: ${props => props.theme.sizes.mobile};
+    bottom: calc(${props => props.theme.sizes.mobile} / 2);
     left: 0;
 
     width: 100%;
 
-    padding: 0 ${props => props.theme.sizes.mobile};
+    padding: 0 calc(${props => props.theme.sizes.mobile} / 2);
     
     ${props => props.theme.above.desktop`
         bottom: ${props.theme.sizes.desktop};

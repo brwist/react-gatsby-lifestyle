@@ -20,15 +20,12 @@ const StyledHeroBanner = styled.div`
 const StyledContainer = styled(Container)`
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-
-    padding-top: ${props => props.theme.mobileVW(150)};
+    justify-content: center;
+    align-items: flex-start;
     
     ${props => props.theme.above.desktop`
         justify-content: center;
-
-        padding-top: 0;
+        align-items: center;
     `}
 `
 
@@ -37,22 +34,19 @@ const TitleWrapper = styled.div``
 const StyledTitle = styled(Title)`
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-start;
+
+    ${props => props.theme.above.desktop`
+        justify-content: center;
+    `}
 `
 
 const StyledDescription = styled(Title)`
-    position: absolute;
-
-    left: 0;
-    bottom: ${props => props.theme.sizes.mobile};
-
-    padding: 0 ${props => props.theme.sizes.mobile};
-
     ${props => props.theme.above.desktop`
+        position: absolute;
+
         left: ${props.theme.desktopVW(120)};
         bottom: ${props.theme.desktopVW(120)};
-
-        padding: 0;
     `}
 `
 
@@ -77,6 +71,10 @@ const ImageLeft = styled.div`
     background-color: ${props => props.theme.colors.darkGrey};
 
     overflow: hidden;
+
+    ${props => props.theme.below.desktop`
+        display: none;
+    `}
 
     ${props => props.theme.above.desktop`
         top: initial;
@@ -104,6 +102,19 @@ const ImageRight = styled.div`
     background-color: ${props => props.theme.colors.darkGrey};
 
     overflow: hidden;
+
+    ${props => props.theme.below.desktop`
+        top: 0;
+        left: 0;
+        bottom: 0;
+        
+        transform: none;
+
+        width: 100%;
+        height: 100%;
+
+        opacity: 0.25;
+    `}
 
     ${props => props.theme.above.desktop`
         top: 0;

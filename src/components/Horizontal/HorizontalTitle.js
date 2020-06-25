@@ -1,5 +1,6 @@
-import React, { forwardRef } from 'react'
+import React, { useRef, useEffect, forwardRef } from 'react'
 import styled from 'styled-components'
+import gsap from 'gsap'
 
 import Container from './../Layout/Container'
 import Title from './../Title'
@@ -67,19 +68,49 @@ const Description = styled(Title)`
 const HorizontalTitle = ({
     lang,
     className,
+    inView,
     title, 
     description,
     size,
     useInlineLink,
     overlayColor
 }, ref) => {
+
+    const titleRef = useRef(null)
+    const descriptionRef = useRef(null)
+
+    useEffect(() => {
+        
+        if (!inView) return 
+
+        const timeline = new gsap.timeline()
+
+        title && timeline.add(titleRef.current.transitionIn(), 0)
+        description && timeline.add(descriptionRef.current.transitionIn(), 0)
+
+        return () => {
+            timeline && timeline.kill()
+        }
+
+    }, [inView])
+
     return (
         <StyledContainer className={className}>
             {title && (
-                <StyledTitle overlayColor={overlayColor} ref={ref} title={title} size={size}/>
+                <StyledTitle 
+                    ref={titleRef} 
+                    title={title} 
+                    size={size}
+                    overlayColor={overlayColor}
+                />
             )}
             {description && (
-                <Description ref={ref} lang={lang} description={description} useInlineLink={useInlineLink} />
+                <Description 
+                    ref={descriptionRef} 
+                    lang={lang} 
+                    description={description} 
+                    useInlineLink={useInlineLink} 
+                />
             )}
         </StyledContainer>
     )

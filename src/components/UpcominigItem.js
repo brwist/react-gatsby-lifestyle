@@ -8,6 +8,7 @@ import { useWindowSize } from 'react-use'
 import theme from './../styles/theme'
 
 import ButtonArrow from './Buttons/ButtonArrow'
+import AnimatedImage from './AnimatedImage'
 
 import { generatePath } from '../utils/helpers'
 
@@ -57,14 +58,8 @@ const Inner = styled.div`
     `}
 `
 
-const ImageWrapper = styled.div`
-    display: block;
-
-    position: relative;
-
+const StyledAnimatedImage = styled(AnimatedImage)`
     width: 100%;
-
-    overflow: hidden;
 
     ${props => props.theme.below.desktop`
         margin-bottom: calc(${props.theme.sizes.mobile} / 2);
@@ -75,28 +70,6 @@ const ImageWrapper = styled.div`
         height: ${props.theme.desktopVW(640)};
 
         margin-bottom: ${props.theme.sizes.desktop};
-    `}
-`
-
-const AnimatedImage = styled.div`
-    width: 100%;
-    height: 100%;
-`
-
-const ImageOverlay = styled.div`
-    ${props => props.theme.styles.element.fill};
-
-    background-color: ${props => props.color};
-`
-
-const StyledImage = styled(Img)`
-    ${props => props.theme.styles.image.objectCover};
-
-    ${props => props.theme.below.desktop`
-        position: absolute !important;
-
-        top: 0;
-        left: 0;
     `}
 `
 
@@ -134,7 +107,7 @@ const Category = styled.span`
 
 const UpcomingItem = ({
     lang,
-    color,
+    overlayColor,
     data: {
         name,
         slug, 
@@ -160,9 +133,8 @@ const UpcomingItem = ({
         if (!inView) return
 
         const timeline = new gsap.timeline()
-                
-        timeline.fromTo(imageOverlayRef.current, { height: '100%' }, { height: 0.0, transformOrigin: 'bottom', duration: 0.75, ease: 'sine.inOut' }, 0)
-        timeline.from(imageRef.current, { alpha: 0.0, scale: 1.2, duration: 0.75, ease: 'sine.inOut' }, 0.2)
+
+        timeline.add(imageRef.current.transitionIn(), 0.2)
         timeline.fromTo(nameRef.current, { alpha: 0.0, y: -50 }, { alpha: 1.0, y: 0, duration: 0.35, ease: 'power1.out' }, 0.2)
         timeline.fromTo(infoRef.current, { alpha: 0.0 }, { alpha: 1.0, duration: 0.5, ease: 'power1.out' }, 0.5)
 
@@ -175,15 +147,17 @@ const UpcomingItem = ({
     return (
         <StyledItem ref={ref}>
             <Inner className='inner'>
-                <ImageWrapper className='image-wrapper'>
-                    <AnimatedImage ref={imageRef}>
-                        {featuredImage && <StyledImage fluid={featuredImage.fluid} alt={featuredImage.title} objectFit='cover'/>}
-                    </AnimatedImage>
-                    <ImageOverlay ref={imageOverlayRef} color={color}/>
-                </ImageWrapper>
+                <StyledAnimatedImage 
+                    ref={imageRef} 
+                    data={featuredImage} 
+                    overlayColor={overlayColor} 
+                />
                 <Name ref={nameRef}>{name}</Name>
                 <Info ref={infoRef}>
-                    <ButtonArrow label='Read more' to={generatePath(lang, `${category.toLowerCase()}/${slug}`)}/>
+                    <ButtonArrow 
+                        label='Read more' 
+                        to={generatePath(lang, `${category.toLowerCase()}/${slug}`)}
+                    />
                     <Category>{category}</Category>
                 </Info>
             </Inner>
