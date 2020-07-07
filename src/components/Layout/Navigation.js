@@ -1,5 +1,4 @@
-import React from 'react'
-import Img from 'gatsby-image'
+import React, { useRef, useEffect } from 'react'
 import { Link } from 'gatsby'
 import styled from 'styled-components'
 
@@ -40,12 +39,6 @@ const StyledNavigation = styled.nav`
             font-size: ${props.theme.mobileVW(20)};
         }
     `}
-
-    /* ${props => props.type == 'small' && `
-        .item {
-            opacity: 0.5;
-        }
-    `} */
 
     ${props => props.theme.above.desktop`
         .link {
@@ -112,7 +105,7 @@ const StyledLink = styled(Link)`
         background-color: ${props => props.theme.colors.light};
     }
 
-    &:not(.active) {
+    &.in-active {
         opacity: 0.25;
     }
 
@@ -141,11 +134,35 @@ const Label = styled.span`
 
 const Navigation = ({
     lang, 
+    className,
     data,
     setMenuOpen,
-    className,
+    setActiveMenuItem,
     type
 }) => {
+
+    const linksRef = useRef([])
+
+    useEffect(() => {
+
+        linksRef.current.forEach((link, i) => {
+            if (link.classList.contains('in-active')) {
+                link.classList.remove('in-active')
+            }
+        })
+        
+        linksRef.current.forEach((link, i) => {
+            if (link.classList.contains('active')) {
+                linksRef.current.forEach((link, i) => {
+                    if (!link.classList.contains('active')) {
+                        link.classList.add('in-active')
+                    }
+                })
+            }
+        })
+
+    })
+
     return (
         <StyledNavigation className={className} type={type}>
             <List className='list'>
@@ -156,11 +173,13 @@ const Navigation = ({
                             className='item'
                         >
                             <StyledLink 
-                                className='link'
-                                activeClassName='active'
-                                onClick={setMenuOpen && setMenuOpen}
-                                partiallyActive={true}
+                                className={`link js-link-${type}`}
+                                ref={el => linksRef.current[index] = el}
                                 to={generatePath(lang, slug)}
+                                activeClassName='active'
+                                partiallyActive={true}
+                                onClick={setMenuOpen && setMenuOpen}
+                                onMouseEnter={() => setActiveMenuItem && setActiveMenuItem(index)}
                             >
                                 <Label className='label'>{name}</Label>
                             </StyledLink>

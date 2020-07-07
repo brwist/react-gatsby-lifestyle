@@ -11,6 +11,7 @@ import ButtonArrow from './Buttons/ButtonArrow'
 import AnimatedImage from './AnimatedImage'
 
 import { generatePath } from '../utils/helpers'
+import { Link } from 'gatsby'
 
 const StyledItem = styled.li`
     width: 100%;
@@ -51,6 +52,8 @@ const StyledItem = styled.li`
 `
 
 const Inner = styled.div`
+    display: block;
+
     width: 100%;
     
     ${props => props.theme.above.desktop`
@@ -58,8 +61,16 @@ const Inner = styled.div`
     `}
 `
 
+const ImageWrapper = styled(Link)``
+
 const StyledAnimatedImage = styled(AnimatedImage)`
     width: 100%;
+
+    &:hover {
+        img {
+            transform: scale(1.1);
+        }
+    }
 
     ${props => props.theme.below.desktop`
         margin-bottom: calc(${props.theme.sizes.mobile} / 2);
@@ -124,34 +135,39 @@ const UpcomingItem = ({
     const infoRef = useRef(null)
 
     const [ref, inView] = useInView({
-        threshold: windowWidth < theme.breakpoints.regular ? 0 : 0.5,
+        threshold: 0,
         triggerOnce: true
     })
 
     useEffect(() => {
+
+        gsap.set(nameRef.current, { alpha: 0.0, y: -50 })
+        gsap.set(infoRef.current, { alpha: 0.0 })
 
         if (!inView) return
 
         const timeline = new gsap.timeline()
 
         timeline.add(imageRef.current.transitionIn(), 0.2)
-        timeline.fromTo(nameRef.current, { alpha: 0.0, y: -50 }, { alpha: 1.0, y: 0, duration: 0.35, ease: 'power1.out' }, 0.2)
-        timeline.fromTo(infoRef.current, { alpha: 0.0 }, { alpha: 1.0, duration: 0.5, ease: 'power1.out' }, 0.5)
+        timeline.to(nameRef.current, { alpha: 1.0, y: 0, duration: 0.35, ease: 'power1.out' }, 0.2)
+        timeline.to(infoRef.current, { alpha: 1.0, duration: 0.5, ease: 'power1.out' }, 0.5)
 
         return () => {
             timeline && timeline.kill()
         }
 
     }, [inView])
-
+    
     return (
         <StyledItem ref={ref}>
             <Inner className='inner'>
-                <StyledAnimatedImage 
-                    ref={imageRef} 
-                    data={featuredImage} 
-                    overlayColor={overlayColor} 
-                />
+                <ImageWrapper to={generatePath(lang, `${category.toLowerCase()}/${slug}`)}>
+                    <StyledAnimatedImage 
+                        ref={imageRef} 
+                        data={featuredImage} 
+                        overlayColor={overlayColor} 
+                    />
+                </ImageWrapper>
                 <Name ref={nameRef}>{name}</Name>
                 <Info ref={infoRef}>
                     <ButtonArrow 

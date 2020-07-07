@@ -21,10 +21,6 @@ const StyledButton = styled.button`
         bottom: -20px;
         left: -10px;
     }
-
-    &:hover {
-        transform: scale(0.9);
-    }
     
     ${props => props.theme.above.desktop`
         width: ${props.theme.sizes.desktop};
@@ -62,8 +58,8 @@ const Line = styled.span`
             transform: rotate(45deg) translate(-50%, -50%);
             transform-origin: left;
 
-            width: calc(${props.theme.sizes.mobile} / 2);
-            min-width: 20px;
+            // width: calc(${props.theme.sizes.mobile} / 2);
+            // min-width: 20px;
         }
         
         &:nth-of-type(2) {
@@ -73,19 +69,19 @@ const Line = styled.span`
             transform: rotate(-45deg) translate(-50%, -50%);
             transform-origin: left;
 
-            width: calc(${props.theme.sizes.mobile} / 2);
-            min-width: 20px;
+            // width: calc(${props.theme.sizes.mobile} / 2);
+            // min-width: 20px;
         }
     `}
 
     ${props => props.theme.above.desktop`
         ${props => props.open && `
             &:nth-of-type(1) {
-                width: calc(${props.theme.sizes.desktop} / 2);
+                // width: calc(${props.theme.sizes.desktop} / 2);
             }
             
             &:nth-of-type(2) {
-                width: calc(${props.theme.sizes.desktop} / 2);
+                // width: calc(${props.theme.sizes.desktop} / 2);
             }
         `}
     `}

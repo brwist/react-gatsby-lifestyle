@@ -2,6 +2,7 @@ import React, { useEffect, useContext, useRef } from 'react'
 import styled from 'styled-components'
 import Img from 'gatsby-image'
 import gsap, { timeline } from 'gsap'
+import { useInView } from 'react-intersection-observer'
 
 import Title from './Title'
 import Container from './Layout/Container'
@@ -90,6 +91,11 @@ const Upcoming = ({
     const titleRef = useRef(null)
     const descriptionRef = useRef(null)
 
+    const [descriptionWrapperRef, descriptionWrapperInView] = useInView({
+        threshold: 0,
+        triggerOnce: true
+    })
+
     useEffect(() => {
         
         if (!inView) return
@@ -97,13 +103,25 @@ const Upcoming = ({
         const timeline = new gsap.timeline()
         
         timeline.add(titleRef.current.transitionIn(), 0)
-        timeline.add(descriptionRef.current.transitionIn(), 0)
         
         return () => {
             timeline && timeline.kill()
         }
 
     }, [inView])
+
+    useEffect(() => {
+
+        if (!descriptionWrapperInView) return
+        
+        const timeline = new gsap.timeline()
+
+        timeline.add(descriptionRef.current.transitionIn(), 0)
+        
+        return () => {
+            timeline && timeline.kill()
+        }
+    }, [descriptionWrapperInView])
     
     return (
         <Wrapper>
@@ -125,11 +143,13 @@ const Upcoming = ({
                         />
                     ))}
                 </Grid>
-                <Description 
-                    lang={lang} 
-                    ref={descriptionRef}
-                    description={contentDescription}
-                />
+                <div ref={descriptionWrapperRef}>
+                    <Description 
+                        lang={lang} 
+                        ref={descriptionRef}
+                        description={contentDescription}
+                    />
+                </div>
             </StyledContainer>
         </Wrapper>
     )

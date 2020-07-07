@@ -1,17 +1,19 @@
-import React from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { Link } from 'gatsby'
+import { Link, useStaticQuery, graphql } from 'gatsby'
+import Img from 'gatsby-image'
 
 import Navigation from './Navigation'
 import TextRenderer from '../TextRenderer'
 import Container from './Container'
 import Footer from './Footer'
 import Grain from './Grain'
+import TiltImage from './../TiltImage'
 
 import LogoShortSvg from './../../images/graphics/rl.svg'
 import InstagramSvg from './../../images/graphics/instagram.svg'
 
-import { generatePath } from '../../utils/helpers'
+import { generatePath, removeLeadingSlashes } from '../../utils/helpers'
 
 const StyledMenu = styled.aside`
     position: fixed;
@@ -89,10 +91,55 @@ const StyledFooter = styled(Footer)`
 const Menu = ({
     lang, 
     className,
+    currentLocation,
     menuOpen,
     setMenuOpen,
     contentTheme
 }) => {
+
+    const [activeMenuItem, setActiveMenuItem] = useState(Math.floor(Math.random() * contentTheme.menu.mainItems.length))
+
+    const {
+        contentfulTheme: {
+            menu: {
+                mainItems
+            }
+        }
+    } = useStaticQuery(graphql`
+        query MenuImagesQuery {
+            contentfulTheme {
+                menu {
+                    mainItems {
+                        name
+                        slug
+                        featuredImage {
+                            title
+                            fluid(maxWidth: 480, quality: 100) {
+                                ...GatsbyContentfulFluid_withWebp
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    `)
+
+    useEffect(() => {
+        
+        let slug = removeLeadingSlashes(currentLocation.pathname)
+
+        if (slug == '') {
+            setActiveMenuItem(Math.floor(Math.random() * contentTheme.menu.mainItems.length))
+        } else {
+            mainItems.forEach((item, i) => {
+                if (slug == item.slug) {
+                    setActiveMenuItem(i)
+                }
+            })
+        }
+
+    }, [currentLocation])
+
     return (
         <StyledMenu 
             className={className} 
@@ -104,6 +151,7 @@ const Menu = ({
                         lang={lang}
                         data={contentTheme.menu.mainItems}
                         setMenuOpen={setMenuOpen}
+                        setActiveMenuItem={i => setActiveMenuItem(i)}
                         type='main'
                     />
                     <Navigation
@@ -113,7 +161,14 @@ const Menu = ({
                         type='sub'
                     />
                 </NavigationWrapper>
-                <ImageWrapper></ImageWrapper>
+                <ImageWrapper>
+                    {mainItems[activeMenuItem].featuredImage != null && (
+                        <Img 
+                            fluid={mainItems[activeMenuItem].featuredImage.fluid} 
+                            alt={mainItems[activeMenuItem].featuredImage.title} 
+                        />
+                    )}
+                </ImageWrapper>
                 <StyledFooter 
                     lang={lang}
                     contentTheme={contentTheme}

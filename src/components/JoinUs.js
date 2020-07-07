@@ -92,10 +92,6 @@ const JoinUs = ({
         
         timeline.add(titleRef.current.transitionIn(), 0)
         timeline.add(imageRef.current.transitionIn(), 0)
-        
-        return () => {
-            timeline && timeline.kill()
-        }
 
     }, [inView])
 
@@ -108,7 +104,10 @@ const JoinUs = ({
                 size='medium'
                 ref={titleRef}
             />
-            <StyledAnimatedImage ref={imageRef} data={image} />
+            <StyledAnimatedImage
+                ref={imageRef} 
+                data={image} 
+            />
         </Wrapper>
     )
 }

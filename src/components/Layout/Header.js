@@ -155,6 +155,7 @@ const Header = ({
                         lang={lang}
                         data={mainItems}
                         visible={!menuOpen}
+                        type='header'
                     />
                 </InnerLeft>
                 <InnerRight>

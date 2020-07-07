@@ -25,7 +25,7 @@ export default class SmoothScroll extends React.Component {
     onScroll = () => {
         gsap.to(this.viewport, 1, {
             y: typeof window !== 'undefined' && -window.pageYOffset,
-            ease: 'power4.easeOut'
+            ease: 'power1.out'
         })
     }
 

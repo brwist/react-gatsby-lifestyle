@@ -20,7 +20,7 @@ const Layout = ({
 	const showFooter = location.pathname.includes('contact') || location.pathname.includes('404') ? false : true
 
   	return (
-		<SmoothScroll>
+		<>
 			<GlobalStyle
 				shouldDisableScroll={menuOpen ? true : false}
 			/>
@@ -36,6 +36,7 @@ const Layout = ({
 				lang={lang}
 				contentTheme={contentTheme}
 				menuOpen={menuOpen}
+				currentLocation={location}
 				setMenuOpen={() => setMenuOpen(!menuOpen)}
 			/>
 			<main>
@@ -47,7 +48,7 @@ const Layout = ({
 					contentTheme={contentTheme}
 				/>
 			)}
-		</SmoothScroll>
+		</>
 	)
 }
 

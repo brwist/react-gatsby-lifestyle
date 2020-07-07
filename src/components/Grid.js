@@ -30,7 +30,7 @@ const Filter = styled.span`
     `}
 `
 
-const List = styled.div`
+const List = styled.ul`
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: ${props => props.theme.sizes.mobile};
@@ -41,9 +41,9 @@ const List = styled.div`
     `}
 `
 
-const StyledItem = styled(Link)``
+const StyledItem = styled.li``
 
-const ImageWrapper = styled.div`
+const ImageWrapper = styled(Link)`
     display: block;
     
     position: relative;
@@ -130,8 +130,8 @@ const Item = ({
     } 
 }) => {
     return (
-        <StyledItem to={generatePath(lang, `${category.toLowerCase()}/${slug}`)}>
-            <ImageWrapper>
+        <StyledItem>
+            <ImageWrapper to={generatePath(lang, `${category.toLowerCase()}/${slug}`)}>
                 <StyledImage fluid={featuredImage.fluid} alt={featuredImage.title} />
             </ImageWrapper>
             <Header>
