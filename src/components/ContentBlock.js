@@ -25,6 +25,10 @@ const Wrapper = styled(Container)`
 `
 
 const Inner = styled.div`
+    position: relative;
+`
+
+const ContentWrapper = styled.div`
     display: flex;
     flex-direction: column;
 
@@ -34,13 +38,14 @@ const Inner = styled.div`
         flex-direction: ${props.type == 'Media Left' ? 'row' : 'row-reverse'};
         justify-content: space-around;
         align-items: center;
+
+        height: 100vh;
     `}
 `
 
 const Media = styled.div`
     position: relative;
     
-    // width: calc(100% - calc(${props => props.theme.sizes.mobile} * 3));
     width: 100%;
     height: auto;
 
@@ -178,14 +183,16 @@ const ContentBlock = ({
     }, [inView])
 
     useEffect(() => {
+        console.log(window.innerHeight, innerRef.current.clientHeight)
         stickybits(innerRef.current, {
-            stickyBitStickyOffset: 250
+            verticalPosition: 'top'
         })
     }, [])
 
     return (
         <Wrapper>
-            <Inner ref={innerRef} type={type}>
+            <Inner ref={innerRef}>
+            <ContentWrapper type={type}>
                 <Media>
                     <AnimatedMedia ref={mediaRef}>
                         {images && !video && images.length > 1 && (
@@ -225,6 +232,7 @@ const ContentBlock = ({
                         ref={titleRef}
                     />  
                 </Content>
+                </ContentWrapper>
             </Inner>
         </Wrapper>
     )
