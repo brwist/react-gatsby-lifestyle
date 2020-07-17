@@ -30,6 +30,8 @@ const StyledMenu = styled.aside`
     width: 100%;
     height: 100vh;
 
+    opacity: 0;
+
     background-color: ${props => props.theme.colors.dark};
 
     ${props => props.menuOpen ? `
@@ -154,8 +156,6 @@ const Menu = ({
     }, [currentLocation])
 
     useEffect(() => {
-        
-        gsap.set(menuRef.current, { alpha: 0.0 })
 
         timeline.to(menuRef.current, { alpha: 1.0, duration: 0.35 }, 0.0)
         timeline.add(mainNavRef.current.mainTransitionIn(), 0.35)

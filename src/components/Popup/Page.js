@@ -52,6 +52,10 @@ const TestimonialWrapper = styled.div`
     `}
 
     ${props => props.theme.above.desktop`
+        width: 100%;
+
+        max-width: ${props => props.theme.desktopVW(500)};
+
         ${props.mobile == 'true' && `
             display: none;
         `} 

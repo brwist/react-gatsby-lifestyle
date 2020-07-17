@@ -1,6 +1,6 @@
 import React from 'react'
 import { graphql } from 'gatsby'
-// import { ModalRoutingContext } from 'gatsby-plugin-modal-routing'
+import { ModalRoutingContext } from 'gatsby-plugin-modal-routing'
 
 import Seo from './../components/Layout/Seo'
 import PopupPage from './../components/Popup/Page'
@@ -18,9 +18,7 @@ const PopupTemplate = ({
     }
 }) => {
     return (
-        <>
-        <Seo />
-        {/* <ModalRoutingContext.Consumer>
+        <ModalRoutingContext.Consumer>
             {({ modal, closeTo }) => (
                 <>
                     {modal ? (
@@ -39,8 +37,7 @@ const PopupTemplate = ({
                     )}
                 </>
             )}
-        </ModalRoutingContext.Consumer> */}
-        </>
+        </ModalRoutingContext.Consumer>
     )
 }
 

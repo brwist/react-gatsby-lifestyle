@@ -49,6 +49,15 @@ module.exports = {
 				icon: `src/images/favicon.png`
 			}
 		},
+		{
+			resolve: `gatsby-plugin-modal-routing`,
+			options: {
+				appElement: '#___gatsby',
+				modalProps: {
+					className: `popup-modal`
+				}
+			}
+		},
 		`gatsby-plugin-netlify`,
 		{
 			resolve: 'gatsby-plugin-react-svg',

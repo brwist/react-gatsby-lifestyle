@@ -144,7 +144,7 @@ const Locations = ({
 
         locationRefs.current.forEach((item, i) => {
             if (i == activeItem) {
-                gsap.to(item, { alpha: 1.0, y: 0.0, duration: 1.0, ease: 'power3.out' })
+                gsap.to(item, { alpha: 1.0, y: 0.0, duration: 1.0, delay: 0.25, ease: 'power3.out' })
             } else {
                 gsap.to(item, { alpha: 0.0, y: 25.0, duration: 0.5, ease: 'power3.out' })
             }

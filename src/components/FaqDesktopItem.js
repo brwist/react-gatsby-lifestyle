@@ -111,7 +111,7 @@ const Question = styled.p`
 
     margin-bottom: calc(${props => props.theme.sizes.mobile} / 3);
 
-    font-family: ${props => props.theme.fontFamilies.plainLight};
+    font-family: ${props => props.theme.fontFamilies.plainRegular};
     font-size: ${props => props.theme.fontSizes.mobile.p};
     line-height: 1.3;
 

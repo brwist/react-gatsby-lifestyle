@@ -17,7 +17,7 @@ const Wrapper = styled(Container)`
     padding-bottom: calc(${props => props.theme.sizes.mobile} * 5);
 
     ${props => props.theme.above.desktop`
-        height: 200vh;
+        height: 300vh;
 
         padding-top: calc(${props.theme.sizes.desktop} * 10);
         padding-bottom: calc(${props.theme.sizes.desktop} * 10);
