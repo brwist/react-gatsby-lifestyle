@@ -2,6 +2,7 @@ import React, { useContext, forwardRef } from 'react'
 import { useStaticQuery, graphql, Link } from 'gatsby'
 import styled from 'styled-components'
 import Img from 'gatsby-image'
+import Headroom from 'react-headroom'
 
 import Container from './../Layout/Container'
 import Navigation from './Navigation'
@@ -15,12 +16,7 @@ import { DictionaryContext } from './../../contexts/dictionary'
 import { generatePath } from '../../utils/helpers'
 
 const StyledHeader = styled.header`
-    position: fixed;
-
-    top: 0;
-    left: 0;
-
-    z-index: 4;
+    position: relative;
     
     width: 100%;
 
@@ -144,35 +140,37 @@ const Header = ({
     }`)
 
     return (
-        <StyledHeader ref={ref}>
-            <StyledContainer>
-                <InnerLeft>
-                    <Logo to={generatePath(lang, '')}>
-                        {/* <LogoIcon /> */}
-                        <LogoImage src={logoImage.nodes[0].publicURL} alt='Rockstar Lifestyle - Logo'/>
-                    </Logo>
-                    <StyledNavigation 
-                        lang={lang}
-                        data={mainItems}
-                        visible={!menuOpen}
-                        type='header'
-                    />
-                </InnerLeft>
-                <InnerRight>
-                    <MenuClose 
-                        visible={menuOpen}
-                        onClick={setMenuOpen}
-                    >
-                        <MenuCloseLabel className='close-label'>Close</MenuCloseLabel>
-                    </MenuClose>
-                    <ButtonMenu 
-                        menuOpen={menuOpen}
-                        setMenuOpen={setMenuOpen}
-                    />
-                    <ButtonJoinUs label='Join Us' to={generatePath(lang, 'join-us')} modal/>
-                </InnerRight>
-            </StyledContainer>
-        </StyledHeader>
+        <Headroom>
+            <StyledHeader ref={ref}>
+                <StyledContainer>
+                    <InnerLeft>
+                        <Logo to={generatePath(lang, '')}>
+                            {/* <LogoIcon /> */}
+                            <LogoImage src={logoImage.nodes[0].publicURL} alt='Rockstar Lifestyle - Logo'/>
+                        </Logo>
+                        <StyledNavigation 
+                            lang={lang}
+                            data={mainItems}
+                            visible={!menuOpen}
+                            type='header'
+                        />
+                    </InnerLeft>
+                    <InnerRight>
+                        <MenuClose 
+                            visible={menuOpen}
+                            onClick={setMenuOpen}
+                        >
+                            <MenuCloseLabel className='close-label'>Close</MenuCloseLabel>
+                        </MenuClose>
+                        <ButtonMenu 
+                            menuOpen={menuOpen}
+                            setMenuOpen={setMenuOpen}
+                        />
+                        <ButtonJoinUs label='Join Us' to={generatePath(lang, 'join-us')} modal/>
+                    </InnerRight>
+                </StyledContainer>
+            </StyledHeader>
+        </Headroom>
     )
 }
 

@@ -26,7 +26,8 @@ const colors = {
     dark: '#101010',
     black: '#000',
     green: '#697366',
-    yellow: '#ef993b'
+    yellow: '#ef993b',
+    orange: '#ed9d31'
 }
 
 const fontFamilies = {

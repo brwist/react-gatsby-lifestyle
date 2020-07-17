@@ -119,7 +119,13 @@ const AnimatedImage = styled.div`
 `
 
 const ImageOverlay = styled.div`
-    ${props => props.theme.styles.element.fill};
+    position: absolute;
+    
+    top: -10px;
+    left: -10px;
+
+    width: calc(100% + 20px);
+    height: calc(100% + 20px);
 
     ${props => props.overlayColor == 'White' ? `
         background-color: ${props.theme.colors.white};
@@ -142,7 +148,7 @@ const StyledImage = styled(Image)`
     object-fit: cover;
 
     img {
-        transition: transform 1.0s ease-out !important;
+        transition: transform 5.0s ease-out !important;
         opacity: 1 !important;
     }
 `
@@ -248,10 +254,10 @@ const ImageComponent = React.forwardRef(({ image, alt, instagram, overlayColor }
                 gsap.set(imageRef.current, { scale: 1.75, alpha: 0.0 })
                 gsap.set(imageOverlayRef.current, { scaleY: 1.0 })
 
-                const timeline = new gsap.timeline()
+                const timeline = new gsap.timeline({ delay: 0.5 })
                 
-                timeline.to(imageOverlayRef.current, { scaleY: 0.0, transformOrigin: 'top', duration: 0.5, ease: 'power3.out' }, 0)
-                timeline.to(imageRef.current, { scale: 1.0, alpha: 1.0, duration: 0.5, ease: 'power3.out' }, 0)
+                timeline.to(imageOverlayRef.current, { scaleY: 0.0, transformOrigin: 'top', duration: 1.5, ease: 'power3.out' }, 0)
+                timeline.to(imageRef.current, { scale: 1.0, alpha: 1.0, duration: 1.5, ease: 'power3.out' }, 0)
                 
                 return timeline
 
@@ -295,7 +301,7 @@ const Card = ({
 
         gsap.set(itemRef.current, { y: 15.0 })
         data.name && gsap.set(headerRef.current, { y: 5.0, alpha: 0.0 })
-        data.excerpt || data.caption && gsap.set(descriptionRef.current, { y: -5.0, alpha: 0.0 })
+        gsap.set(descriptionRef.current, { y: -15.0, alpha: 0.0 })
 
         if (!inView) return
 
@@ -303,8 +309,8 @@ const Card = ({
 
         timeline.to(itemRef.current, { y: 0.0, duration: 0.5, ease: 'sine.out' }, 0.0)
         timeline.add(imageRef.current.transitionIn(), 0.0)
-        data.name && timeline.to(headerRef.current, { y: 0.0, alpha: 1.0, duration: 0.35, ease: 'sine.out' }, 0.0)
-        timeline.to(descriptionRef.current, { y: 0.0, alpha: 1.0, duration: 0.35, ease: 'sine.out' }, 0.0)
+        data.name && timeline.to(headerRef.current, { y: 0.0, alpha: 1.0, duration: 0.5, ease: 'sine.out' }, 1)
+        timeline.to(descriptionRef.current, { y: 0.0, alpha: 1.0, duration: 0.5, ease: 'sine.out' }, 1)
 
         return () => {
             timeline && timeline.kill()

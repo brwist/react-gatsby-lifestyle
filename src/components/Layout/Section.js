@@ -62,18 +62,30 @@ const Section = ({
 
     useEffect(() => {
 
-        // if (typeof window !== 'undefined' && layout.flowLine == 'Visible') {
-        //     const controller = new ScrollMagic.Controller()
+        if (layout.flowLine == 'Visible') {
             
-        //     const scene = new ScrollMagic.Scene({
-        //         triggerElement: ref.current,
-        //         duration: 2000,
-        //         offset: 900
-        //     })
-        //     .setTween(gsap.to(flowRef.current, { width: '100%' }))
-        //     .addTo(controller)
-        // }
-        
+            const tl = gsap.timeline({ paused: true })
+            tl.from(flowRef.current, { width: 0 })
+    
+            let requestId
+            const startY = flowRef.current.clientHeight / 4
+            const finishDistance = flowRef.current.clientHeight
+
+            const update = () => {
+                tl.progress((scrollY - startY) / finishDistance)
+                requestId = null
+            }
+
+            const scrollHandler = () => {
+                if (!requestId) {
+                    requestId = requestAnimationFrame(update)
+                }
+            }
+
+            document.addEventListener('scroll', scrollHandler)
+
+        }
+
     }, [])
 
     return (

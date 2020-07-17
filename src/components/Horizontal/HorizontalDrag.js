@@ -130,10 +130,10 @@ const HorizontalDrag = ({
     const [isHovering, setIsHovering] = useState(false)
     const [isMouseMoving, setIsMouseMoving] = useState(false)
 
-    const [dragSize, setDragSize] = useState({
-        width: 50,
-        height: 50
-    })
+    // const [dragSize, setDragSize] = useState({
+    //     width: 50,
+    //     height: 50
+    // })
 
     const { width: windowWidth } = useWindowSize()
     const isMobile = windowWidth < theme.breakpoints.desktop
@@ -141,7 +141,6 @@ const HorizontalDrag = ({
     const isDisabled = !isMobile && items.length == 3
 
     const params = {
-        freeMode: isMobile ? false : true,
         initialSlide: isDisabled ? 1 : 0,
         spaceBetween: 32,
         slidesOffsetBefore: isDisabled ? 0 : offset,
@@ -182,12 +181,12 @@ const HorizontalDrag = ({
         }
     }
 
-    useEffect(() => {
-        setDragSize({
-            width: dragRef.current.clientWidth,
-            height: dragRef.current.clientHeight
-        })
-    }, [])
+    // useEffect(() => {
+    //     setDragSize({
+    //         width: dragRef.current.clientWidth,
+    //         height: dragRef.current.clientHeight
+    //     })
+    // }, [])
 
     return (
         <Wrapper 
@@ -205,13 +204,13 @@ const HorizontalDrag = ({
                 size='normal'
                 useInlineLink={true}
             />
-            <StyledMousetip
+            {/* <StyledMousetip
                 visible={isHovering}
                 offsetX={-dragSize.width / 2}
                 offsetY={-dragSize.height / 2}
             >
                 <DragIcon ref={dragRef} />
-            </StyledMousetip>
+            </StyledMousetip> */}
             <CarouselWrapper
                 onMouseLeave={() => setIsHovering(false)}
                 onMouseMove={()  => setIsHovering(true)}

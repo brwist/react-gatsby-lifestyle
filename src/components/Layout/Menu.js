@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Link, useStaticQuery, graphql } from 'gatsby'
 import Img from 'gatsby-image'
+import gsap from 'gsap'
 
 import Navigation from './Navigation'
 import TextRenderer from '../TextRenderer'
@@ -9,6 +10,7 @@ import Container from './Container'
 import Footer from './Footer'
 import Grain from './Grain'
 import TiltImage from './../TiltImage'
+import AnimatedImage from './../AnimatedImage'
 
 import LogoShortSvg from './../../images/graphics/rl.svg'
 import InstagramSvg from './../../images/graphics/instagram.svg'
@@ -30,10 +32,10 @@ const StyledMenu = styled.aside`
 
     background-color: ${props => props.theme.colors.dark};
 
-    ${props => props.visible ? `
-        display: block;
+    ${props => props.menuOpen ? `
+        pointer-events: all;
     ` : `
-        display: none;
+        pointer-events: none;
     `}
 `
 
@@ -80,6 +82,11 @@ const ImageWrapper = styled.div`
     `}
 `
 
+const StyledAnimatedImage = styled(AnimatedImage)`
+    width: 100%;
+    height: 100%;
+`
+
 const StyledFooter = styled(Footer)`
     .link {
         &:not(.active) {
@@ -97,6 +104,12 @@ const Menu = ({
     contentTheme
 }) => {
 
+    const menuRef = useRef(null)
+    const mainNavRef = useRef(null)
+    const subNavRef = useRef(null)
+    const imageRef = useRef(null)
+
+    const [timeline] = useState(new gsap.timeline({ paused: true }))
     const [activeMenuItem, setActiveMenuItem] = useState(Math.floor(Math.random() * contentTheme.menu.mainItems.length))
 
     const {
@@ -140,14 +153,37 @@ const Menu = ({
 
     }, [currentLocation])
 
+    useEffect(() => {
+        
+        gsap.set(menuRef.current, { alpha: 0.0 })
+
+        timeline.to(menuRef.current, { alpha: 1.0, duration: 0.35 }, 0.0)
+        timeline.add(mainNavRef.current.mainTransitionIn(), 0.35)
+        timeline.add(subNavRef.current.subTransitionIn(), 0.35)
+        timeline.add(imageRef.current.transitionIn(), 0.35)
+
+    }, [])
+
+    useEffect(() => {
+        
+        if (menuOpen) {
+            timeline.play().timeScale(1)
+        } else {
+            timeline.reverse().timeScale(-3)
+        }
+        
+    }, [menuOpen])
+
     return (
         <StyledMenu 
+            ref={menuRef}
             className={className} 
-            visible={menuOpen}
+            menuOpen={menuOpen}
         >
             <StyledContainer>
                 <NavigationWrapper>
                     <Navigation
+                        ref={mainNavRef}
                         lang={lang}
                         data={contentTheme.menu.mainItems}
                         setMenuOpen={setMenuOpen}
@@ -155,6 +191,7 @@ const Menu = ({
                         type='main'
                     />
                     <Navigation
+                        ref={subNavRef}
                         lang={lang}
                         data={contentTheme.menu.subItems}
                         setMenuOpen={setMenuOpen}
@@ -163,9 +200,12 @@ const Menu = ({
                 </NavigationWrapper>
                 <ImageWrapper>
                     {mainItems[activeMenuItem].featuredImage != null && (
-                        <Img 
-                            fluid={mainItems[activeMenuItem].featuredImage.fluid} 
-                            alt={mainItems[activeMenuItem].featuredImage.title} 
+                        <StyledAnimatedImage 
+                            ref={imageRef}
+                            data={mainItems[activeMenuItem].featuredImage}
+                            animation={{
+                                duration: 0.5
+                            }}
                         />
                     )}
                 </ImageWrapper>

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import styled from 'styled-components'
 import Image from 'gatsby-image'
 import gsap from 'gsap'
@@ -7,7 +7,11 @@ import Container from './Layout/Container'
 import Title from './Title'
 import AnimatedImage from './AnimatedImage'
 
-const Wrapper = styled(Container)`
+const Wrapper = styled.div`
+    perspective: 20px;
+`
+
+const StyledContainer = styled(Container)`
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -41,11 +45,15 @@ const Content = styled(Title)`
     `}
 `
 
-const StyledAnimatedImage = styled(AnimatedImage)`
+const ImageWrapper = styled.div`
+    position: relative;
+
     width: ${props => props.theme.mobileVW(500)};
     height: ${props => props.theme.mobileVW(500)};
 
     background-color: ${props => props.theme.colors.darkGrey};
+
+    transition: transform 0.5s ease-out;
 
     ${props => props.theme.below.desktop`
         position: absolute;
@@ -64,12 +72,15 @@ const StyledAnimatedImage = styled(AnimatedImage)`
     ${props => props.theme.above.desktop`
         width: ${props.theme.desktopVW(500)};
         height: ${props.theme.desktopVW(500)};
+
+        /* box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5); */
     `}
 `
 
-// const StyledImage = styled(Image)`
-//     ${props => props.theme.styles.image.objectCover};
-// `
+const StyledAnimatedImage = styled(AnimatedImage)`
+    width: 100%;
+    height: 100%;
+`
 
 const JoinUs = ({
     lang,
@@ -81,8 +92,29 @@ const JoinUs = ({
     }
 }) => {
 
+    const mainRef = useRef(null)
     const titleRef = useRef(null)
+    const imageWrapperRef = useRef(null)
     const imageRef = useRef(null)
+    
+    const [mouse] = useState({
+        _x: 0,
+        _y: 0,
+        x: 0,
+        y: 0,
+        updatePosition: function(event) {
+            var e = event || window.event
+            this.x = e.clientX - this._x
+            this.y = (e.clientY - this._y) * -1
+        },
+        setOrigin: function(e) {
+            this._x = e.offsetLeft + Math.floor(e.offsetWidth / 2)
+            this._y = e.offsetTop + Math.floor(e.offsetHeight / 2)
+        },
+        show: function() {
+            return '(' + this.x + ', ' + this.y + ')'
+        }
+    })
 
     useEffect(() => {
         
@@ -95,19 +127,71 @@ const JoinUs = ({
 
     }, [inView])
 
+    let counter = 0
+    let refreshRate = 10
+    
+    const isTimeToUpdate = () => {
+        return counter++ % refreshRate === 0
+    }
+
+    const onMouseEnterHandler = (event) => {
+        update(event)
+    }
+
+    const onMouseLeaveHandler = () => {
+        imageWrapperRef.current.style = ''
+    }
+
+    const onMouseMoveHandler = (event) => {
+        if (isTimeToUpdate()) {
+            update(event)
+        }
+    }
+
+    const update = (event) => {
+        mouse.updatePosition(event)
+        updateTransformStyle(
+            (mouse.y / mainRef.current.offsetHeight / 2).toFixed(2),
+            (mouse.x / mainRef.current.offsetWidth / 2).toFixed(2)
+        )
+    }
+    
+    const updateTransformStyle = (x, y) => {
+        const style = 'rotateX(' + x + 'deg) rotateY(' + y + 'deg)'
+        imageWrapperRef.current.style.transform = style
+    }
+
+    useEffect(() => {
+        mouse.setOrigin(mainRef.current)
+
+        mainRef.current.addEventListener('mouseenter', onMouseEnterHandler)
+        mainRef.current.addEventListener('mousemove', onMouseMoveHandler)
+        mainRef.current.addEventListener('mouseleave', onMouseLeaveHandler)
+
+        return () => {
+            mainRef.current.removeEventListener('mouseenter', onMouseEnterHandler)
+            mainRef.current.removeEventListener('mousemove', onMouseMoveHandler)
+            mainRef.current.removeEventListener('mouseleave', onMouseLeaveHandler)
+        }
+    }, [])
+
     return (
-        <Wrapper>
-            <Content
-                lang={lang}
-                title={contentTitle}
-                description={contentDescription}
-                size='medium'
-                ref={titleRef}
-            />
-            <StyledAnimatedImage
-                ref={imageRef} 
-                data={image} 
-            />
+        <Wrapper ref={mainRef}>
+            <StyledContainer>
+                <Content
+                    lang={lang}
+                    title={contentTitle}
+                    description={contentDescription}
+                    size='medium'
+                    ref={titleRef}
+                />
+                <ImageWrapper ref={imageWrapperRef}>
+                    <StyledAnimatedImage
+                        ref={imageRef} 
+                        data={image} 
+                    />
+                </ImageWrapper>
+            </StyledContainer>
         </Wrapper>
     )
 }

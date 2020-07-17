@@ -1,6 +1,7 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, forwardRef, useImperativeHandle } from 'react'
 import { Link } from 'gatsby'
 import styled from 'styled-components'
+import gsap from 'gsap'
 
 import { generatePath } from './../../utils/helpers'
 
@@ -56,6 +57,14 @@ const StyledNavigation = styled.nav`
                 }
             }
 
+            .link {
+                overflow: hidden;
+
+                &:after {
+                    display: none;
+                }
+            }
+
             .label {
                 font-size: ${props.theme.fontSizes.desktop.h4};
             }
@@ -67,8 +76,13 @@ const StyledNavigation = styled.nav`
                 grid-gap: calc(${props.theme.sizes.desktop} / 2) 0;
             }
 
+            .link {
+                overflow: hidden;
+            }
+
             .label {
                 font-size: ${props.theme.desktopVW(24)};
+                line-height: 1.5;
             }
         `}
     `}
@@ -91,6 +105,8 @@ const StyledLink = styled(Link)`
 
     position: relative;
 
+    transition: opacity .5s cubic-bezier(.16,1.08,.38,.98);
+
     &:after {
         content: '';
 
@@ -103,6 +119,8 @@ const StyledLink = styled(Link)`
         height: 1px;
 
         background-color: ${props => props.theme.colors.light};
+
+        transition: width 0.25s cubic-bezier(.16,1.08,.38,.98);
     }
 
     &.in-active {
@@ -114,7 +132,7 @@ const StyledLink = styled(Link)`
             bottom: -${props.theme.desktopVW(5)};
         }
 
-        &.active {
+        &.active, &:hover {
             &:after {
                 width: 100%;
             }
@@ -139,9 +157,37 @@ const Navigation = ({
     setMenuOpen,
     setActiveMenuItem,
     type
-}) => {
+}, ref) => {
 
     const linksRef = useRef([])
+    const labelsRef = useRef([])
+
+    useImperativeHandle(ref, () => {
+        return {
+            mainTransitionIn() {
+
+                const timeline = new gsap.timeline()
+                
+                labelsRef.current.forEach((link, i) => {
+                    timeline.to(link, { y: '0%', transformOrigin: 'top', duration: 0.45, ease: 'power2.out' }, i * 0.025)
+                })
+                
+                return timeline
+
+            },
+            subTransitionIn() {
+
+                const timeline = new gsap.timeline()
+                
+                labelsRef.current.forEach((link, i) => {
+                    timeline.to(link, { alpha: 1.0, x: 0.0, duration: 0.35, ease: 'power2.out' }, i * 0.1)
+                })
+                
+                return timeline
+
+            }
+        }
+    })
 
     useEffect(() => {
 
@@ -163,6 +209,18 @@ const Navigation = ({
 
     })
 
+    useEffect(() => {
+        if (type == 'main') {
+            labelsRef.current.forEach((label) => {
+                gsap.set(label, { y: '-100%' })
+            })
+        } else if (type == 'sub') {
+            labelsRef.current.forEach((label) => {
+                gsap.set(label, { alpha: 0.0, x: -15.0 })
+            })
+        }
+    }, [])
+
     return (
         <StyledNavigation className={className} type={type}>
             <List className='list'>
@@ -181,7 +239,10 @@ const Navigation = ({
                                 onClick={setMenuOpen && setMenuOpen}
                                 onMouseEnter={() => setActiveMenuItem && setActiveMenuItem(index)}
                             >
-                                <Label className='label'>{name}</Label>
+                                <Label 
+                                    className='label'
+                                    ref={el => labelsRef.current[index] = el}
+                                >{name}</Label>
                             </StyledLink>
                         </Item>
                     )
@@ -191,4 +252,4 @@ const Navigation = ({
     )
 }
 
-export default Navigation
+export default forwardRef(Navigation)

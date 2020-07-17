@@ -134,6 +134,17 @@ const GlobalStyle = createGlobalStyle`
 		margin: 0 auto ${props => props.theme.mobileVW(120)} auto;
 	}
 
+	.headroom-wrapper {
+		position: absolute;
+	
+		top: 0;
+		left: 0;
+
+		z-index: 4;
+
+		width: 100%;
+	}
+
 	${props => props.theme.above.desktop`
 		.ReactModal__Overlay {
 			padding: ${props.theme.desktopVW(120)} 0;

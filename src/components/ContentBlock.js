@@ -1,30 +1,39 @@
 import React, { useRef, useEffect } from 'react'
 import Image from 'gatsby-image'
 import styled from 'styled-components'
+import gsap from 'gsap'
+import stickybits from 'stickybits'
 
 import Container from './Layout/Container'
 import Title from './Title'
 import Video from './Video'
 import Carousel from './Carousel'
 import TextRenderer from './TextRenderer'
-import gsap from 'gsap/gsap-core'
 
 const Wrapper = styled(Container)`
-    display: flex;
-    flex-direction: column;
-
     position: relative;
 
     padding-top: ${props => props.theme.sizes.mobile};
     padding-bottom: calc(${props => props.theme.sizes.mobile} * 5);
 
     ${props => props.theme.above.desktop`
-        flex-direction: ${props.type == 'Media Left' ? 'row' : 'row-reverse'};
-        justify-content: space-around;
-        align-items: center;
+        height: 200vh;
 
         padding-top: calc(${props.theme.sizes.desktop} * 10);
         padding-bottom: calc(${props.theme.sizes.desktop} * 10);
+    `}
+`
+
+const Inner = styled.div`
+    display: flex;
+    flex-direction: column;
+
+    position: relative;
+
+    ${props => props.theme.above.desktop`
+        flex-direction: ${props.type == 'Media Left' ? 'row' : 'row-reverse'};
+        justify-content: space-around;
+        align-items: center;
     `}
 `
 
@@ -139,6 +148,7 @@ const ContentBlock = ({
     const titleRef = useRef(null)
     const mediaOverlayRef = useRef(null)
     const mediaRef = useRef(null)
+    const innerRef = useRef(null)
 
     const params = {
         slidesPerView: 1,
@@ -167,47 +177,55 @@ const ContentBlock = ({
         }
     }, [inView])
 
+    useEffect(() => {
+        stickybits(innerRef.current, {
+            stickyBitStickyOffset: 250
+        })
+    }, [])
+
     return (
-        <Wrapper type={type}>
-            <Media>
-                <AnimatedMedia ref={mediaRef}>
-                    {images && !video && images.length > 1 && (
-                        <Carousel params={params}>
-                            {images.map((image, i) => (
-                                <StyledImage
-                                    key={i}
-                                    fluid={image.fluid}
-                                    alt={image.title}
-                                />
-                            ))}
-                        </Carousel>
-                    )}
-                    {images && !video && images.length == 1 && images.map((image, i) => (
-                        <StyledImage
-                            key={i}
-                            fluid={image.fluid}
-                            alt={image.title}
-                        />
-                    ))}
-                    {video && !images && (
-                        <Video
-                            url={video.videoUrl}
-                            placeholder={video.placeholder}
-                            inView={inView}
-                        />
-                    )}
-                </AnimatedMedia>
-                <MediaOverlay ref={mediaOverlayRef} />
-            </Media>
-            <Content order={type == 'Media Left' ? 'right' : 'left'}>
-                <StyledTitle 
-                    lang={lang}
-                    title={contentTitle}
-                    description={contentDescription}
-                    size='normal'
-                    ref={titleRef}
-                />  
-            </Content>
+        <Wrapper>
+            <Inner ref={innerRef} type={type}>
+                <Media>
+                    <AnimatedMedia ref={mediaRef}>
+                        {images && !video && images.length > 1 && (
+                            <Carousel params={params}>
+                                {images.map((image, i) => (
+                                    <StyledImage
+                                        key={i}
+                                        fluid={image.fluid}
+                                        alt={image.title}
+                                    />
+                                ))}
+                            </Carousel>
+                        )}
+                        {images && !video && images.length == 1 && images.map((image, i) => (
+                            <StyledImage
+                                key={i}
+                                fluid={image.fluid}
+                                alt={image.title}
+                            />
+                        ))}
+                        {video && !images && (
+                            <Video
+                                url={video.videoUrl}
+                                placeholder={video.placeholder}
+                                inView={inView}
+                            />
+                        )}
+                    </AnimatedMedia>
+                    <MediaOverlay ref={mediaOverlayRef} />
+                </Media>
+                <Content order={type == 'Media Left' ? 'right' : 'left'}>
+                    <StyledTitle 
+                        lang={lang}
+                        title={contentTitle}
+                        description={contentDescription}
+                        size='normal'
+                        ref={titleRef}
+                    />  
+                </Content>
+            </Inner>
         </Wrapper>
     )
 }

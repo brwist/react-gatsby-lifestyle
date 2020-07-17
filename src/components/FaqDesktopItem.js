@@ -20,6 +20,26 @@ const Item = styled.div`
                 left: initial;
                 right: 0;
             }
+
+            .front {
+                background-color: ${props.theme.colors.orange};
+                color: ${props.theme.colors.dark};
+            }
+
+            .back {
+                background-color: ${props.theme.colors.orange};
+            }
+        }
+
+        &:nth-of-type(2), &:nth-of-type(5) {
+            .front {
+                background-color: ${props.theme.colors.orange};
+                color: ${props.theme.colors.dark};
+            }
+
+            .back {
+                background-color: ${props.theme.colors.orange};
+            }
         }
 
         &:nth-of-type(4),
@@ -47,7 +67,8 @@ const Category = styled.span`
 
     ${props => props.theme.above.desktop`
         margin-bottom: calc(${props.theme.sizes.desktop} / 2);
-        font-size: ${props.theme.fontSizes.desktop.s};
+        
+        font-size: ${props.theme.fontSizes.desktop.p};
     `}
 `
 
@@ -90,7 +111,7 @@ const Question = styled.p`
 
     margin-bottom: calc(${props => props.theme.sizes.mobile} / 3);
 
-    font-family: ${props => props.theme.fontFamilies.plainRegular};
+    font-family: ${props => props.theme.fontFamilies.plainLight};
     font-size: ${props => props.theme.fontSizes.mobile.p};
     line-height: 1.3;
 
@@ -99,7 +120,7 @@ const Question = styled.p`
     ${props => props.theme.above.desktop`
         margin-bottom: 0;
         
-        font-size: ${props.theme.fontSizes.desktop.h6};
+        font-size: ${props.theme.desktopVW(30)};
     `}
 `
 

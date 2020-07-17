@@ -6,9 +6,9 @@ import { Link, useStaticQuery, graphql } from 'gatsby'
 import Navigation from './Navigation'
 import TextRenderer from '../TextRenderer'
 import LogoShortSvg from './../../images/graphics/rl.svg'
-import InstagramSvg from './../../images/graphics/instagram.svg'
 import Container from './Container'
 import Grain from './../Layout/Grain'
+import AnimatedIcon from './../AnimatedIcon'
 
 import { generatePath } from '../../utils/helpers'
 import gsap from 'gsap/gsap-core'
@@ -60,44 +60,6 @@ const LogoWrapper = styled(Link)`
 const StyledLogo = styled.img`
     width: 100%;
     height: 100%;
-`
-
-const InstagramWrapper = styled.a`
-    display: inline-block;
-    vertical-align: middle;
-
-    width: ${props => props.theme.mobileVW(20)};
-    height: ${props => props.theme.mobileVW(20)};
-
-    overflow: hidden;
-
-    ${props => props.theme.above.desktop`
-        width: ${props.theme.desktopVW(24)};
-        height: ${props.theme.desktopVW(24)};
-
-        &:hover {
-            .instagram-inner {
-                transform: translateY(-${props.theme.desktopVW(40)});
-            }
-        }
-    `}
-`
-
-const InstagramInner = styled.div`
-    display: block;
-
-    position: relative;
-
-    transition: transform 0.25s ease-out;
-`
-
-const StyledInstagram = styled(InstagramSvg)`
-    width: 100%;
-    height: 100%;
-
-    &:first-of-type {
-        margin-bottom: ${props => props.theme.desktopVW(15)};
-    }
 `
 
 const Address = styled(TextRenderer)`
@@ -201,12 +163,7 @@ const Footer = ({
                     <LogoWrapper to={generatePath(lang, '')}>
                         <StyledLogo src={logoImage.nodes[0].publicURL} alt='Rockstar Lifestyle - Short logo'/>
                     </LogoWrapper>
-                    <InstagramWrapper href={instagram} target='_blank'>
-                        <InstagramInner className='instagram-inner'>
-                            <StyledInstagram />
-                            <StyledInstagram />
-                        </InstagramInner>
-                    </InstagramWrapper>
+                    <AnimatedIcon instagram={instagram} /> 
                 </FooterLeft>
                 <Address data={footerText} useInlineLink={true} />
                 <FooterRight>

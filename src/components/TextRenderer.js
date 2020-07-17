@@ -65,6 +65,16 @@ const StyledButtonPrimary = styled(ButtonPrimary)`
     border-color: currentColor;
 `
 
+const StyledLink = styled.a`
+    color: currentColor;
+
+    transition: color 0.5s cubic-bezier(.16,1.08,.38,.98);
+
+    &:hover {
+        color: ${props => props.theme.colors.orange};
+    }
+`
+
 const Media = styled.div`
     position: relative;
     
@@ -171,7 +181,7 @@ const TextRenderer = ({
                                 )
                             } else {
                                 return (
-                                    <a href={uri} target={uri.includes('http') ? '_target' : ''}>{children}</a>
+                                    <StyledLink href={uri} target={uri.includes('http') ? '_target' : ''}>{children}</StyledLink>
                                 )
                             }
                         } else {
