@@ -12,3 +12,7 @@ export const getOverlayColor = backgroundColor => {
         case 'White': return theme.colors['white']
     }
 }
+
+export const isPreloaderActive = () => {
+    return localStorage.getItem('preloaderActive')
+}

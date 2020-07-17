@@ -54,6 +54,7 @@ module.exports = {
 			options: {
 				appElement: '#___gatsby',
 				modalProps: {
+					closeTimeoutMS: 500,
 					className: `popup-modal`
 				}
 			}

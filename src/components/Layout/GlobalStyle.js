@@ -117,13 +117,36 @@ const GlobalStyle = createGlobalStyle`
 	}
 
 	.ReactModal__Overlay {
-		padding: ${props => props.theme.mobileVW(120)} 0;
-
 		background-color: rgba(16, 16, 16, 0.8) !important;
 
 		overflow: scroll;
 
 		z-index: 2;
+
+		opacity: 0;
+
+		transition: opacity 500ms ease-out;
+
+		&--after-open {
+			opacity: 1;
+		}
+
+		&--before-close {
+			opacity: 0;
+		}
+	}
+
+	.ReactModal__Content {
+		transform: translateY(-50px);
+		transition: transform 500ms ease-out;
+
+		&--after-open {
+			transform: translateY(0);
+		}
+
+		&--before-close {
+			transform: translateY(50px);
+		}
 	}
 
 	.popup-modal {
@@ -132,6 +155,7 @@ const GlobalStyle = createGlobalStyle`
 		width: 100%;
 
 		margin: 0 auto ${props => props.theme.mobileVW(120)} auto;
+		padding: ${props => props.theme.mobileVW(120)} 0;
 	}
 
 	.headroom-wrapper {
@@ -146,14 +170,11 @@ const GlobalStyle = createGlobalStyle`
 	}
 
 	${props => props.theme.above.desktop`
-		.ReactModal__Overlay {
-			padding: ${props.theme.desktopVW(120)} 0;
-		}
-
 		.popup-modal {
-			max-width: ${props.theme.desktopVW(1200)};
+			max-width: ${props.theme.desktopVW(1000)};
 
 			margin: 0 auto ${props.theme.desktopVW(120)} auto;
+			padding: ${props.theme.desktopVW(120)} 0;
 		}
 	`}
 `

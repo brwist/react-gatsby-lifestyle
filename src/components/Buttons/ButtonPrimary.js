@@ -133,7 +133,8 @@ const ButtonPrimary = ({
     label,
     inverted,
     colored,
-    modal
+    modal,
+    share
 }) => {
     if (onClick) {
         return (
@@ -164,15 +165,40 @@ const ButtonPrimary = ({
         const url = href.includes('@') && !href.includes('mailto') ? 'mailto:' + href : href
         return (
             <StyledExternal 
-                className={`button ${className || ''}`} 
-                href={url} 
-                target={url.includes('mailto') ? '' : '_blank'} 
+                className={`button ${className || ''}`}
+                href={url}
+                target={url.includes('mailto') ? '' : '_blank'}
                 inverted={inverted ? 'true' : 'false'}
                 colored={colored ? 'true' : 'false'}
             >
                 {buttonInside(label)}
             </StyledExternal>
         )
+    } else if (share) {
+        if (typeof window !== 'undefined' && window.navigator.share) {
+            return (
+                <StyledButton 
+                    onClick={() => shareHandler(share.text, share.link)}
+                    className={`button ${className || ''}`}
+                    inverted={inverted ? 'true' : 'false'}
+                    colored={colored ? 'true' : 'false'}
+                >
+                    {buttonInside(label)}
+                </StyledButton>
+            )
+        } else {
+            return (
+                <StyledExternal 
+                    className={`button ${className || ''}`}
+                    inverted={inverted ? 'true' : 'false'}
+                    colored={colored ? 'true' : 'false'}
+                    href={`https://web.whatsapp.com/send?text=${share.text}. Read more about it on ${share.link}`} 
+                    target='_blank'
+                >
+                    {buttonInside(label)}
+                </StyledExternal>
+            )
+        }
     } else {
         return null
     }

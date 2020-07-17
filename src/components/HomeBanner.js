@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef, useEffect } from 'react'
 import Image from 'gatsby-image'
 import styled from 'styled-components'
 import gsap from 'gsap'
@@ -142,6 +142,7 @@ const HomeBanner = ({
     inView,
     className,
     category,
+    delay,
     data: {
         bannerType,
         tags,
@@ -155,6 +156,7 @@ const HomeBanner = ({
     }
 }) => {
 
+    // Refs
     const bannerRef = useRef(null)
     const imageLeftRef = useRef(null)
     const imageLeftOverlayRef = useRef(null)
@@ -172,7 +174,7 @@ const HomeBanner = ({
 
     useEffect(() => {
 
-        const timeline = new gsap.timeline({ delay: 0.5 })
+        const timeline = new gsap.timeline({ delay: delay })
         
         timeline.add(titleRef.current.transitionIn(), 0)
         timeline.add(descriptionRef.current.transitionIn(), 0)

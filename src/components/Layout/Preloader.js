@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import Grain from './Grain'
 
 const Wrapper = styled.div`
-    display: f;ex;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -41,7 +41,11 @@ const LogoOverlay = styled.div`
 `
 
 const Logo = styled.img`
-    width: ${props => props.theme.desktopVW(350)};
+    width: ${props => props.theme.mobileVW(200)};
+
+    ${props => props.theme.above.desktop`
+        width: ${props.theme.desktopVW(500)};
+    `}
 `
 
 const Preloader = ({
@@ -61,10 +65,10 @@ const Preloader = ({
     }`)
 
     useEffect(() => {
-        const timeline = new gsap.timeline({ onComplete: () => showPreloader(false) })
-        timeline.fromTo(logoOverlayRef.current, { scaleY: 1, transformOrigin: 'bottom' }, { scaleY: 0, duration: 3, ease: 'power3.out' }, 0)
-        timeline.to(logoWrapperRef.current, { opacity: 0, duration: 0.5, ease: 'power3.out' }, 3)
-        timeline.to(preloaderRef.current, { opacity: 0, duration: 0.25, ease: 'power3.out' }, 3.25)
+        const timeline = new gsap.timeline({ delay: 1.0, onComplete: () => showPreloader() })
+        timeline.fromTo(logoOverlayRef.current, { scaleY: 1.0, transformOrigin: 'bottom' }, { scaleY: 0.0, duration: 1.0, ease: 'power3.out' }, 0.0)
+        timeline.to(logoWrapperRef.current, { alpha: 0.0, duration: 0.35, ease: 'power3.out' }, 1.5)
+        timeline.to(preloaderRef.current, { alpha: 0.0, duration: 0.5, ease: 'sine.out' }, 1.5)
     }, [])
 
     return (

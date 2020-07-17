@@ -98,7 +98,7 @@ const TestimonialComponent = ({
     const testimonialsRef = useRef(null)
 
     useEffect(() => {
-        if (mobile == 'true') {
+        if (mobile == 'false') {
             stickybits(testimonialsRef.current, {
                 verticalPosition: 'top',
                 stickyBitStickyOffset: 150

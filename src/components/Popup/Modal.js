@@ -23,6 +23,14 @@ const Header = styled.header`
 
 const StyledImage = styled(Image)`
     ${props => props.theme.styles.element.fill};
+
+    &:after {
+        content: '';
+        
+        ${props => props.theme.styles.element.fill};
+        
+        background: linear-gradient(70deg, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.9));
+    }
 `
 
 const StyledLink = styled(Link)`
@@ -32,6 +40,14 @@ const StyledLink = styled(Link)`
     right: ${props => props.theme.sizes.desktop};
 
     color: ${props => props.theme.colors.light};
+`
+
+const CrossIcon = styled.span`
+    margin-right: ${props => props.theme.mobileVW(10)};
+
+    ${props => props.theme.above.desktop`
+        margin-right: ${props.theme.desktopVW(10)};
+    `}
 `
 
 const FormWrapper = styled.div`
@@ -76,8 +92,13 @@ const PopupModal = ({
     return (
         <>
             <Header>
-                <StyledImage fluid={image.fluid} alt={image.title} />
-                <StyledLink to={closeTo}>Close</StyledLink>
+                <StyledImage 
+                    fluid={image.fluid} 
+                    alt={image.title} 
+                />
+                <StyledLink to={closeTo}>
+                    <CrossIcon>&#10005;</CrossIcon> Close
+                </StyledLink>
             </Header>
             <FormWrapper>
                 {slug == 'join-us' && <StyledJoinUsForm data={data} />}

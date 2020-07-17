@@ -183,7 +183,6 @@ const ContentBlock = ({
     }, [inView])
 
     useEffect(() => {
-        console.log(window.innerHeight, innerRef.current.clientHeight)
         stickybits(innerRef.current, {
             verticalPosition: 'top'
         })

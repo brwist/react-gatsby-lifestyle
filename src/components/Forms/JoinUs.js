@@ -6,6 +6,14 @@ import TextRenderer from './../TextRenderer'
 
 const Wrapper = styled.div``
 
+const Copy = styled.div`
+    width: 100%;
+
+    ${props => props.theme.above.desktop`
+        max-width: ${props.theme.desktopVW(600)};
+    `}
+`
+
 const Title = styled.h4`
     display: block;
 
@@ -203,10 +211,10 @@ const JoinUs = ({
     return (
         <Wrapper>
             {data && (
-                <>
+                <Copy>
                     <Title>{data.contentTitle}</Title>
                     <TextRenderer data={data.contentDescription}/>
-                </>
+                </Copy>
             )}
             <Form
                 action='https://rockstarlifestyle.us8.list-manage.com/subscribe/post?u=86397600011aa7ae66131d8b8&amp;id=5c30063382'

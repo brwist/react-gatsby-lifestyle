@@ -1,12 +1,14 @@
-import React, { useState, useRef, useEffect } from 'react'
-import GlobalStyle from './GlobalStyle'
+import React, { useContext, useState, useRef, useEffect } from 'react'
 
+import GlobalStyle from './GlobalStyle'
 import Menu from './Menu'
 import Header from './Header'
 import Footer from './Footer'
 import Preloader from './Preloader'
 import SmoothScroll from '../SmoothScroll'
 import Grain from './Grain'
+
+import { PreloaderContext } from './../../contexts/preloader'
 
 const Layout = ({ 
 	children,
@@ -20,12 +22,12 @@ const Layout = ({
 	const showFooter = location.pathname.includes('contact') || location.pathname.includes('404') ? false : true
 
   	return (
-		<>
-			<GlobalStyle
-				shouldDisableScroll={menuOpen ? true : false}
-			/>
+		<PreloaderContext.Provider value={showPreloader ? 'preloader' : 'no-preloader'}>
+			<GlobalStyle shouldDisableScroll={menuOpen ? true : false} />
 			{/* <Grain /> */}
-			{/* {showPreloader && <Preloader showPreloader={e => setShowPreloader(e)} />} */}
+			{showPreloader && (
+				<Preloader showPreloader={e => setShowPreloader(e)} />
+			)}
 			<Header
 				lang={lang}
 				contentTheme={contentTheme}
@@ -48,7 +50,7 @@ const Layout = ({
 					contentTheme={contentTheme}
 				/>
 			)}
-		</>
+		</PreloaderContext.Provider>
 	)
 }
 

@@ -1,8 +1,10 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 
 import NormalBanner from './NormalBanner'
 import HomeBanner from './HomeBanner'
+
+import { PreloaderContext } from './../contexts/preloader'
 
 const StyledHeroBanner = styled.div`
     position: relative;
@@ -23,8 +25,12 @@ const HeroBanner = ({
     data
 }) => {
 
+    // Refs
     const bannerRef = useRef(null)
-    const { bannerType } = data
+
+    // Context
+    const preloaderState = useContext(PreloaderContext)
+    const delay = preloaderState == 'preloader' ? 3 : 0.5
 
     useEffect(() => {
 
@@ -36,16 +42,17 @@ const HeroBanner = ({
     return (
         <StyledHeroBanner 
             ref={bannerRef}
-            className={className} 
-            type={bannerType} 
+            className={className}
+            type={data.bannerType} 
         >
-            {bannerType == 'Home' ? (
+            {data.bannerType == 'Home' ? (
                 <HomeBanner 
                     inView={inView} 
                     lang={lang} 
                     className={className} 
                     data={data} 
-                    category={category} 
+                    category={category}
+                    delay={delay}
                 />
             ) : (
                 <NormalBanner 
@@ -53,7 +60,8 @@ const HeroBanner = ({
                     lang={lang} 
                     className={className} 
                     data={data} 
-                    category={category} 
+                    category={category}
+                    delay={delay}
                 />
             )}
         </StyledHeroBanner>

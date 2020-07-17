@@ -309,8 +309,8 @@ const Card = ({
 
         timeline.to(itemRef.current, { y: 0.0, duration: 0.5, ease: 'sine.out' }, 0.0)
         timeline.add(imageRef.current.transitionIn(), 0.0)
-        data.name && timeline.to(headerRef.current, { y: 0.0, alpha: 1.0, duration: 0.5, ease: 'sine.out' }, 1)
-        timeline.to(descriptionRef.current, { y: 0.0, alpha: 1.0, duration: 0.5, ease: 'sine.out' }, 1)
+        data.name && timeline.to(headerRef.current, { y: 0.0, alpha: 1.0, duration: 0.35, ease: 'sine.out' }, 1.0)
+        timeline.to(descriptionRef.current, { y: 0.0, alpha: 1.0, duration: 0.35, ease: 'sine.out' }, 1)
 
         return () => {
             timeline && timeline.kill()

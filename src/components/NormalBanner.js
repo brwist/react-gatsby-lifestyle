@@ -79,12 +79,12 @@ const StyledImage = styled(Image)`
     height: 100%;
 `
 
-
 const NormalBanner = ({
     lang,
     inView,
     className,
     category,
+    delay,
     data: {
         bannerType,
         tags,
@@ -99,6 +99,7 @@ const NormalBanner = ({
     }
 }) => {
     
+    // Refs
     const imageOverlayRef = useRef(null)
     const imageRef = useRef(null)
     const titleRef = useRef(null)
@@ -107,7 +108,7 @@ const NormalBanner = ({
 
     useEffect(() => {
 
-        const timeline = new gsap.timeline({ delay: 0.5 })
+        const timeline = new gsap.timeline({ delay: delay })
 
         timeline.add(titleRef.current.transitionIn(), 0)
         timeline.fromTo(imageOverlayRef.current, { scaleY: 1, transformOrigin: 'top' }, { scaleY: 0, duration: 1, ease: 'power3.out' }, 0.6)

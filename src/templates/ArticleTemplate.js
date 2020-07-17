@@ -161,8 +161,11 @@ const InfoBlock = ({
     className,
     mobile,
     data: {
+        name,
         author,
-        date
+        date,
+        link,
+        category
     }
 }) => {
     
@@ -176,6 +179,16 @@ const InfoBlock = ({
             })
         }
     }, [])
+
+    const getLinkLabel = () => {
+
+        switch (category) {
+            case 'Events': return 'Sign up for this event'
+            case 'Careers': return 'Apply for this job'
+            case 'News': return 'More information'
+        }
+
+    }
 
     return (
         <Information 
@@ -192,8 +205,20 @@ const InfoBlock = ({
                 <InfoValue>{date}</InfoValue>
             </InfoItem>
             <InfoItem flex={true}>
-                <ButtonPrimary label='Apply for this job' href='https://google.com' inverted />
-                <ButtonPrimary label='Share this page' href='https://facebook.com/' />
+                {link && (
+                    <ButtonPrimary 
+                        label={getLinkLabel()} 
+                        href={link} 
+                        inverted 
+                    />
+                )}
+                <ButtonPrimary 
+                    label='Share this page'
+                    share={{
+                        link: typeof window != 'undefined' && window.location.href,
+                        text: name
+                    }}
+                />
             </InfoItem>
         </Information>
     )
@@ -226,11 +251,17 @@ const ArticleTemplate = ({
             />
             <Wrapper>
                 <StyledContainer>
-                    <InfoBlock mobile='false' data={contentfulArticle} />
+                    <InfoBlock 
+                        mobile='false' 
+                        data={contentfulArticle} 
+                    />
                     <Content>
                         <TextRenderer data={content} />
                     </Content>
-                    <InfoBlock mobile='true' data={contentfulArticle} />
+                    <InfoBlock 
+                        mobile='true' 
+                        data={contentfulArticle} 
+                    />
                 </StyledContainer>
                 {/* <Grain /> */}
             </Wrapper>

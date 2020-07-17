@@ -12,14 +12,10 @@ import Video from './Video'
 import { generatePath } from './../utils/helpers'
 
 const TextStyles = css`
-    &:not(:last-of-type) {
-        margin-bottom: calc(${props => props.theme.sizes.mobile} / 1.5);
-    }
+    margin-bottom: calc(${props => props.theme.sizes.mobile} / 1.5);
 
     ${props => props.theme.above.desktop`
-        &:not(:last-of-type) {
-            margin-bottom: calc(${props.theme.sizes.desktop} / 1.5);
-        }
+        margin-bottom: calc(${props.theme.sizes.desktop} / 1.5);
     `}
 `
 
@@ -53,6 +49,14 @@ const Paragraph = styled.p`
     font-family: ${props => props.theme.fontFamilies.plainLight};
     font-size: ${props => props.theme.fontSizes.mobile.m};
     line-height: 1.4;
+
+    &:empty {
+        display: none;
+    }
+
+    &:last-of-type {
+        margin-bottom: 0;
+    }
 
     ${props => props.theme.above.desktop`
         font-size: ${props.theme.fontSizes.desktop.p};
