@@ -27,6 +27,13 @@ const StyledFooter = styled.footer`
         bottom: 0;
     `}
 
+    ${props => props.theme.below.desktop`
+        position: absolute;
+
+        bottom: 0;
+        left: 0;
+    `}
+
     ${props => props.theme.above.desktop`
         padding: 0 0 ${props.theme.sizes.desktop} 0;
     `}

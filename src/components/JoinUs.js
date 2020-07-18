@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
+import { useWindowSize } from 'react-use'
 import styled from 'styled-components'
 import Image from 'gatsby-image'
 import gsap from 'gsap'
@@ -8,7 +9,9 @@ import Title from './Title'
 import AnimatedImage from './AnimatedImage'
 
 const Wrapper = styled.div`
-    perspective: 20px;
+    ${props => props.theme.above.desktop`
+        perspective: 20px;
+    `}
 `
 
 const StyledContainer = styled(Container)`
@@ -17,7 +20,7 @@ const StyledContainer = styled(Container)`
     justify-content: center;
     align-items: center;
 
-    padding: calc(${props => props.theme.sizes.mobile} * 3) ${props => props.theme.sizes.mobile} calc(${props => props.theme.sizes.mobile} * 2);
+    padding: calc(${props => props.theme.sizes.mobile} * 5) ${props => props.theme.sizes.mobile} calc(${props => props.theme.sizes.mobile} * 6);
 
     ${props => props.theme.above.desktop`
         flex-direction: row;
@@ -92,10 +95,14 @@ const JoinUs = ({
     }
 }) => {
 
+    // Refs
     const mainRef = useRef(null)
     const titleRef = useRef(null)
     const imageWrapperRef = useRef(null)
     const imageRef = useRef(null)
+
+    // Window Size
+    const { width: windowWidth } = useWindowSize()
     
     const [mouse] = useState({
         _x: 0,
@@ -162,6 +169,9 @@ const JoinUs = ({
     }
 
     useEffect(() => {
+
+        if (windowWidth < 1023) return
+
         mouse.setOrigin(mainRef.current)
 
         mainRef.current.addEventListener('mouseenter', onMouseEnterHandler)

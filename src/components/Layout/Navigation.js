@@ -21,6 +21,10 @@ const StyledNavigation = styled.nav`
             }
         }
 
+        .link {
+            overflow: hidden;
+        }
+
         .label {
             font-family: ${props.theme.fontFamilies.nbBold};
             font-size: ${props.theme.fontSizes.mobile.h4};
@@ -34,6 +38,10 @@ const StyledNavigation = styled.nav`
             display: grid;
             grid-template-columns: 1fr;
             grid-gap: calc(${props.theme.sizes.mobile} / 2) 0;
+        }
+
+        .link {
+            overflow: hidden;
         }
 
         .label {
@@ -58,8 +66,6 @@ const StyledNavigation = styled.nav`
             }
 
             .link {
-                overflow: hidden;
-
                 &:after {
                     display: none;
                 }
@@ -74,10 +80,6 @@ const StyledNavigation = styled.nav`
             .list {
                 grid-template-columns: repeat(2, ${props.theme.desktopVW(350)});
                 grid-gap: calc(${props.theme.sizes.desktop} / 2) 0;
-            }
-
-            .link {
-                overflow: hidden;
             }
 
             .label {

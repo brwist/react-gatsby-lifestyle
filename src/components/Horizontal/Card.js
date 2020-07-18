@@ -300,7 +300,7 @@ const Card = ({
     useEffect(() => {
 
         gsap.set(itemRef.current, { y: 15.0 })
-        data.name && gsap.set(headerRef.current, { y: 5.0, alpha: 0.0 })
+        information != 'Excerpt only' && gsap.set(headerRef.current, { y: 5.0, alpha: 0.0 })
         gsap.set(descriptionRef.current, { y: -15.0, alpha: 0.0 })
 
         if (!inView) return
@@ -309,7 +309,7 @@ const Card = ({
 
         timeline.to(itemRef.current, { y: 0.0, duration: 0.5, ease: 'sine.out' }, 0.0)
         timeline.add(imageRef.current.transitionIn(), 0.0)
-        data.name && timeline.to(headerRef.current, { y: 0.0, alpha: 1.0, duration: 0.35, ease: 'sine.out' }, 1.0)
+        information != 'Excerpt only' && timeline.to(headerRef.current, { y: 0.0, alpha: 1.0, duration: 0.35, ease: 'sine.out' }, 1.0)
         timeline.to(descriptionRef.current, { y: 0.0, alpha: 1.0, duration: 0.35, ease: 'sine.out' }, 1)
 
         return () => {

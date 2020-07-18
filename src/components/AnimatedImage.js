@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useImperativeHandle, forwardRef } from 'react
 import Image from 'gatsby-image'
 import gsap from 'gsap'
 import styled from 'styled-components'
+import { useWindowSize } from 'react-use'
 
 const Wrapper = styled.div`
     position: relative;
@@ -80,25 +81,50 @@ const AnimatedImage = ({
     animation
 }, ref) => {
 
+    // Refs
     const imageRef = useRef(null)
     const imageOverlayRef = useRef(null)
+
+    // Window Size
+    const { width: windowWidth } = useWindowSize()
+
+    const mobileAnimation = () => {
+        
+        const duration = animation ? animation.duration : 1
+
+        gsap.set(imageOverlayRef.current, { scaleY: 0.0 })
+        gsap.set(imageRef.current, { y: 25.0, alpha: 0.0 })
+
+        const timeline = new gsap.timeline({ delay: 0.5 })
+        
+        timeline.to(imageRef.current, { y: 0.0, alpha: 1.0, duration: duration, ease: 'power3.out' }, 0.0)
+        
+        return timeline
+
+    }
+
+    const desktopAnimation = () => {
+        
+        const duration = animation ? animation.duration : 1.5
+
+        gsap.set(imageOverlayRef.current, { scaleY: 1.0 })
+        gsap.set(imageRef.current, { scale: 1.75, alpha: 0.0 })
+
+        const timeline = new gsap.timeline()
+        
+        timeline.to(imageOverlayRef.current, { scaleY: 0.0, transformOrigin: 'top', duration: duration, ease: 'sine.out' }, 0.0)
+        timeline.to(imageRef.current, { scale: 1.0, alpha: 1.0, duration: duration, ease: 'power3.out' }, 0.0)
+        
+        return timeline
+
+    }
 
     useImperativeHandle(ref, () => {
 
         return {
             transitionIn() {
 
-                const duration = animation ? animation.duration : 1.5
-
-                gsap.set(imageOverlayRef.current, { scaleY: 1.0 })
-                gsap.set(imageRef.current, { scale: 1.75, alpha: 0.0 })
-
-                const timeline = new gsap.timeline()
-                
-                timeline.to(imageOverlayRef.current, { scaleY: 0.0, transformOrigin: 'top', duration: duration, ease: 'sine.out' }, 0.0)
-                timeline.to(imageRef.current, { scale: 1.0, alpha: 1.0, duration: duration, ease: 'power3.out' }, 0.0)
-                
-                return timeline
+                windowWidth < 1023 ? mobileAnimation() : desktopAnimation()
 
             }
         }
