@@ -157,10 +157,10 @@ const Menu = ({
 
     useEffect(() => {
 
-        timeline.to(menuRef.current, { alpha: 1.0, duration: 0.35 }, 0.0)
-        timeline.add(mainNavRef.current.mainTransitionIn(), 0.35)
-        timeline.add(subNavRef.current.subTransitionIn(), 0.35)
-        timeline.add(imageRef.current.transitionIn(), 0.35)
+        timeline.to(menuRef.current, { alpha: 1.0, duration: 0.55, ease: 'sine.out' }, 0.0)
+        timeline.add(imageRef.current.transitionIn(), 0.25)
+        timeline.add(mainNavRef.current.mainTransitionIn(), 0.55)
+        timeline.add(subNavRef.current.subTransitionIn(), 0.55)
 
     }, [])
 
@@ -203,9 +203,6 @@ const Menu = ({
                         <StyledAnimatedImage 
                             ref={imageRef}
                             data={mainItems[activeMenuItem].featuredImage}
-                            animation={{
-                                duration: 0.5
-                            }}
                         />
                     )}
                 </ImageWrapper>

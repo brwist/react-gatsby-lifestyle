@@ -137,7 +137,7 @@ const HorizontalDrag = ({
 
     const { width: windowWidth } = useWindowSize()
     const isMobile = windowWidth < theme.breakpoints.desktop
-    const offset = isMobile ? 32 : 80
+    const offset = isMobile ? 32 : windowWidth * 0.1
     const isDisabled = !isMobile && items.length == 3
 
     const params = {

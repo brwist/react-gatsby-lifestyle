@@ -77,6 +77,27 @@ const SmallDescription = styled.p`
 
 const LargeDescription = styled.div`
     position: relative;
+
+    .embedded-asset {
+        display: inline-block;
+        vertical-align: middle;
+        
+        width: ${props => props.theme.mobileVW(125)};
+
+        &:not(:last-of-type) {
+            margin-right: ${props => props.theme.mobileVW(25)};
+        }
+    }
+
+    ${props => props.theme.above.desktop`
+        .embedded-asset {
+            width: ${props.theme.desktopVW(100)};
+
+            &:not(:last-of-type) {
+                margin-right: ${props.theme.desktopVW(25)};
+            }
+        }
+    `}
 `
 
 const LinkWrapper = styled(Link)`

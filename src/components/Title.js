@@ -19,7 +19,7 @@ const TitleWrapper = styled.div`
 
     position: relative;
 
-    overflow: hidden;
+    /* overflow: hidden; */
 `
 
 const Category = styled.span`
@@ -185,15 +185,27 @@ const LineWrapper = styled.span`
     
     position: relative;
 
+    transition: text-shadow 0.25s none;
+
+    &.shadow {
+        text-shadow: 10px 50px 30px rgba(0, 0, 0, 0.7);
+    }
+
     /* overflow: hidden; */
 
-    /* &:nth-of-type(2) {
-        margin-left: calc(${props => props.theme.sizes.mobile} / 2);
+    &:nth-of-type(1) {
+        z-index: 3;
+    }
+
+    &:nth-of-type(2) {
+        z-index: 2;
+        /* margin-left: calc(${props => props.theme.sizes.mobile} / 2); */
     }
 
     &:nth-of-type(3) {
-        margin-left: ${props => props.theme.sizes.mobile};
-    } */
+        z-index: 1;
+        /* margin-left: ${props => props.theme.sizes.mobile}; */
+    }
 
     ${props => props.theme.above.desktop`
         &:nth-of-type(2) {
@@ -208,6 +220,8 @@ const LineWrapper = styled.span`
 
 const TitleOverlay = styled.div`
     ${props => props.theme.styles.element.fill}
+
+    z-index: 4;
 
     ${props => props.overlayColor == 'White' ? `
         background-color: ${props.theme.colors.white};

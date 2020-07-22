@@ -47,6 +47,8 @@ const Logo = styled.img`
 
     ${props => props.theme.above.desktop`
         width: ${props.theme.desktopVW(500)};
+
+        max-width: 350px;
     `}
 `
 
@@ -57,6 +59,14 @@ const Preloader = ({
     const preloaderRef = useRef(null)
     const logoWrapperRef = useRef(null)
     const logoOverlayRef = useRef(null)
+
+    // const { logoImage } = useStaticQuery(graphql`{
+    //     logoImage: allFile(filter: {relativePath: {eq: "graphics/rockstar-lifestyle.svg"}}) {
+    //         nodes {
+    //            publicURL
+    //         }
+    //     }
+    // }`)
 
     const { logoImage } = useStaticQuery(graphql`{
         logoImage: allFile(filter: {relativePath: {eq: "rockstar-lifestyle.png"}}) {

@@ -151,9 +151,9 @@ const TextRenderer = ({
                     [BLOCKS.HEADING_5]: (node, children) => <Heading5 className={className}>{children}</Heading5>,
                     [BLOCKS.PARAGRAPH]: (node, children) => <Paragraph className={className}>{children}</Paragraph>,
                     [BLOCKS.EMBEDDED_ASSET]: (node, children) => {
-                        console.log(node, children)
+                        const { data: { target: { fields } } } = node
                         return (
-                            <p>{children}</p>
+                            <img className='embedded-asset' src={fields.file['en-US'].url} alt={fields.title['en-US']} />
                         )
                     },
                     [BLOCKS.EMBEDDED_ENTRY]: (node, children) => {

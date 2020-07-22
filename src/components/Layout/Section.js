@@ -68,7 +68,7 @@ const Section = ({
             tl.from(flowRef.current, { width: 0 })
     
             let requestId
-            const startY = flowRef.current.clientHeight / 4
+            const startY = flowRef.current.clientHeight / 3.5
             const finishDistance = flowRef.current.clientHeight
 
             const update = () => {
