@@ -19,7 +19,9 @@ const Wrapper = styled.div`
     z-index: 5;
 
     width: 100%;
-    height: 100%;
+    
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
 
     background-color: ${props => props.theme.colors.dark};
 `
@@ -65,10 +67,19 @@ const Preloader = ({
     }`)
 
     useEffect(() => {
+
+        let vh = typeof window !== 'undefined' ? window.innerHeight * 0.01 : 1000
+        preloaderRef.current.style.setProperty('--vh', `${vh}px`)
+        
+    }, [])
+
+    useEffect(() => {
+
         const timeline = new gsap.timeline({ delay: 1.0, onComplete: () => showPreloader() })
         timeline.fromTo(logoOverlayRef.current, { scaleY: 1.0, transformOrigin: 'bottom' }, { scaleY: 0.0, duration: 1.0, ease: 'power3.out' }, 0.0)
         timeline.to(logoWrapperRef.current, { alpha: 0.0, duration: 0.35, ease: 'power3.out' }, 1.5)
         timeline.to(preloaderRef.current, { alpha: 0.0, duration: 0.5, ease: 'sine.out' }, 1.5)
+
     }, [])
 
     return (

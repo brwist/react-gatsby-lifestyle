@@ -17,16 +17,16 @@ export const ContentBlockQuery = graphql`
                 ...GatsbyContentfulFluid_withWebp
             }
         }
-        video { 
-            videoUrl
-            videoSubtitle
+        # video { 
+            # videoUrl
+            # videoSubtitle
             # placeholder {
             #     title
             #     fluid(maxWidth: 720, quality: 100) {
             #         ...GatsbyContentfulFluid_withWebp
             #     }
             # }
-        }
+        # }
         flowLine
     }
 `

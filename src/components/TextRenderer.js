@@ -150,6 +150,12 @@ const TextRenderer = ({
                     [BLOCKS.HEADING_4]: (node, children) => <Heading4 className={className}>{children}</Heading4>,
                     [BLOCKS.HEADING_5]: (node, children) => <Heading5 className={className}>{children}</Heading5>,
                     [BLOCKS.PARAGRAPH]: (node, children) => <Paragraph className={className}>{children}</Paragraph>,
+                    [BLOCKS.EMBEDDED_ASSET]: (node, children) => {
+                        console.log(node, children)
+                        return (
+                            <p>{children}</p>
+                        )
+                    },
                     [BLOCKS.EMBEDDED_ENTRY]: (node, children) => {
                         const { data: { target: { fields } } } = node
                         if (fields) {

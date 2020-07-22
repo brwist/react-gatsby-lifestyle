@@ -36,8 +36,6 @@
     "react-player": "^2.0.1",
     "react-sticky-mouse-tooltip": "0.0.1",
     "react-use": "^15.1.1",
-    "scrollmagic": "^2.0.7",
-    "scrollmagic-plugin-gsap": "^1.0.4",
     "stickybits": "^3.7.7",
     "styled-components": "^5.1.0",
     "styled-reset": "^4.1.2",

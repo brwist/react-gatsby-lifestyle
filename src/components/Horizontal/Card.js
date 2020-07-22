@@ -274,7 +274,7 @@ const ImageComponent = React.forwardRef(({ image, alt, instagram, overlayColor }
                 {instagram && (
                     <InstagramIcon />
                 )}
-            </AnimatedImage>  
+            </AnimatedImage>
             <ImageOverlay overlayColor={overlayColor} ref={imageOverlayRef} />
         </ImageWrapper>
     )
@@ -292,6 +292,7 @@ const Card = ({
     overlayColor
 }) => {
 
+    // Refs
     const itemRef = useRef(null)
     const imageRef = useRef(null)
     const headerRef = useRef(null)

@@ -17,7 +17,8 @@ const Wrapper = styled(Container)`
     padding-bottom: calc(${props => props.theme.sizes.mobile} * 5);
 
     ${props => props.theme.above.desktop`
-        height: 300vh;
+        /* height: 300vh;
+        height: 100vh; */
 
         padding-top: calc(${props.theme.sizes.desktop} * 10);
         padding-bottom: calc(${props.theme.sizes.desktop} * 10);
@@ -39,7 +40,7 @@ const ContentWrapper = styled.div`
         justify-content: space-around;
         align-items: center;
 
-        height: 100vh;
+        /* height: 100vh; */
     `}
 `
 
@@ -182,11 +183,11 @@ const ContentBlock = ({
         }
     }, [inView])
 
-    useEffect(() => {
-        stickybits(innerRef.current, {
-            verticalPosition: 'top'
-        })
-    }, [])
+    // useEffect(() => {
+    //     stickybits(innerRef.current, {
+    //         verticalPosition: 'top'
+    //     })
+    // }, [])
 
     return (
         <Wrapper>
@@ -194,7 +195,7 @@ const ContentBlock = ({
             <ContentWrapper type={type}>
                 <Media>
                     <AnimatedMedia ref={mediaRef}>
-                        {images && !video && images.length > 1 && (
+                        {images && images.length > 1 && (
                             <Carousel params={params}>
                                 {images.map((image, i) => (
                                     <StyledImage
@@ -205,20 +206,20 @@ const ContentBlock = ({
                                 ))}
                             </Carousel>
                         )}
-                        {images && !video && images.length == 1 && images.map((image, i) => (
+                        {images && images.length == 1 && images.map((image, i) => (
                             <StyledImage
                                 key={i}
                                 fluid={image.fluid}
                                 alt={image.title}
                             />
                         ))}
-                        {video && !images && (
+                        {/* {video && !images && (
                             <Video
                                 url={video.videoUrl}
                                 placeholder={video.placeholder}
                                 inView={inView}
                             />
-                        )}
+                        )} */}
                     </AnimatedMedia>
                     <MediaOverlay ref={mediaOverlayRef} />
                 </Media>
