@@ -69,7 +69,7 @@ const Category = styled.span`
     ${props => props.theme.above.desktop`
         margin-bottom: calc(${props.theme.sizes.desktop} / 2);
         
-        font-size: ${props.theme.fontSizes.desktop.p};
+        font-size: ${props.theme.fontSizes.desktop.m};
     `}
 `
 
@@ -125,7 +125,7 @@ const Question = styled.p`
     ${props => props.theme.above.desktop`
         margin-bottom: 0;
         
-        font-size: ${props.theme.desktopVW(27)};
+        font-size: ${props.theme.fontSizes.desktop.h6};
 
         &.question-back {
             display: block;
@@ -194,7 +194,7 @@ const Answer = styled(TextRenderer)`
     ${props => props.theme.above.desktop`
         width: 85%;
 
-        font-size: ${props.theme.fontSizes.desktop.h6};
+        font-size: ${props.theme.fontSizes.desktop.p};
     `}
 `
 

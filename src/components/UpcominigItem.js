@@ -24,7 +24,7 @@ const StyledItem = styled.li`
             margin-top: ${props.theme.desktopVW(500)};
 
             .inner {
-                width: ${props.theme.desktopVW(400)};
+                width: ${props.theme.desktopVW(450)};
             }
 
             .image-wrapper {
@@ -34,6 +34,10 @@ const StyledItem = styled.li`
 
         &:nth-of-type(3) {
             margin-top: -${props.theme.desktopVW(100)};
+
+            .inner {
+                width: ${props.theme.desktopVW(500)};
+            }
         }
 
         &:nth-of-type(4) {

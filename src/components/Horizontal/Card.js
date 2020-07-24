@@ -142,11 +142,11 @@ const AnimatedImage = styled.div`
 const ImageOverlay = styled.div`
     position: absolute;
     
-    top: -10px;
-    left: -10px;
+    top: -50px;
+    left: -50px;
 
-    width: calc(100% + 20px);
-    height: calc(100% + 20px);
+    width: calc(100% + 100px);
+    height: calc(100% + 100px);
 
     ${props => props.overlayColor == 'White' ? `
         background-color: ${props.theme.colors.white};
@@ -272,13 +272,13 @@ const ImageComponent = React.forwardRef(({ image, alt, instagram, overlayColor }
         return {
             transitionIn() {
 
-                gsap.set(imageRef.current, { scale: 1.75, alpha: 0.0 })
-                gsap.set(imageOverlayRef.current, { scaleY: 1.0 })
+                gsap.set(imageRef.current, { scale: 1.35, alpha: 0.0 })
+                gsap.set(imageOverlayRef.current, { y: '0%' })
 
                 const timeline = new gsap.timeline({ delay: 0.5 })
                 
-                timeline.to(imageOverlayRef.current, { scaleY: 0.0, transformOrigin: 'top', duration: 1.5, ease: 'power3.out' }, 0)
-                timeline.to(imageRef.current, { scale: 1.0, alpha: 1.0, duration: 1.5, ease: 'power3.out' }, 0)
+                timeline.to(imageOverlayRef.current, { y: '-100%', transformOrigin: 'top', duration: 1.5, ease: 'power3.out' }, 0)
+                timeline.to(imageRef.current, { scale: 1.0, alpha: 1.0, duration: 0.5, ease: 'none', force3D: false }, 0.25)
                 
                 return timeline
 

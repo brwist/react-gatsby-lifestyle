@@ -45,7 +45,7 @@ const GlobalStyle = createGlobalStyle`
 		background-color: ${props => props.theme.colors.dark};
 
 		font-family: ${props => props.theme.fontFamilies.plainLight}, 'Arial', sans-serif;
-		font-size: ${props => props.theme.desktopVW(20)};
+		font-size: ${props => props.theme.desktopVW(25)};
 		
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;

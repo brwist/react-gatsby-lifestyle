@@ -158,6 +158,7 @@ const InfoBlock = ({
             case 'Events': return 'Sign up for this event'
             case 'Careers': return 'Apply for this job'
             case 'News': return 'More information'
+            default: return 'More information'
         }
 
     }
