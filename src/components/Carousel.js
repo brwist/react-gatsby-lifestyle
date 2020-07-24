@@ -4,7 +4,11 @@ import styled from 'styled-components'
 import Swiper from 'react-id-swiper'
 import 'swiper/css/swiper.css'
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+    > img {
+        opacity: 1 !important;
+    }
+`
 
 const Carousel = ({
     className,

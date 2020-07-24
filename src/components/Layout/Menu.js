@@ -174,6 +174,12 @@ const Menu = ({
         
     }, [menuOpen])
 
+    useEffect(() => {
+        
+        timeline.add(imageRef.current.zoomIn(), 0.0)
+        
+    }, [activeMenuItem])
+
     return (
         <StyledMenu 
             ref={menuRef}

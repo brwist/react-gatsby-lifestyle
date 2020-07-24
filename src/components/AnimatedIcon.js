@@ -19,7 +19,7 @@ const Wrapper = styled.a`
 
         &:hover {
             .inner {
-                transform: translateY(-${props.theme.desktopVW(40)});
+                transform: translateY(0);
             }
         }
     `}
@@ -30,12 +30,20 @@ const Inner = styled.div`
 
     position: relative;
 
+    transform: translateY(-${props => props.theme.desktopVW(40)});
+
     transition: transform 0.25s ease-out;
 `
 
 const IconStyles = css`
     width: 100%;
     height: 100%;
+
+    &.active {
+        path {
+            fill: ${props => props.theme.colors.orange};
+        }
+    }
 
     &:first-of-type {
         margin-bottom: ${props => props.theme.desktopVW(15)};
@@ -60,13 +68,13 @@ const AnimatedIcon = ({
             <Inner className='inner'>
                 {facebook && (
                     <>
-                        <StyledFacebook />
+                        <StyledFacebook className='active' />
                         <StyledFacebook />
                     </>
                 )}
                 {instagram && (
                     <>
-                        <StyledInstagram />
+                        <StyledInstagram className='active' />
                         <StyledInstagram />
                     </>
                 )}

@@ -117,26 +117,6 @@ const Content = styled.div`
         margin-bottom: ${props => props.theme.sizes.mobile};
     }
 
-    li {
-        position: relative;
-
-        padding-left: ${props => props.theme.mobileVW(25)};
-
-        &:before {
-            content: '—';
-            position: absolute;
-
-            margin-top: ${props => props.theme.mobileVW(8)};
-            margin-left: -${props => props.theme.mobileVW(20)};
-
-            font-size: ${props => props.theme.mobileVW(12)};
-        }
-
-        p {
-            margin-bottom: 0;
-        }
-    }
-
     ${props => props.theme.above.desktop`
         max-width: ${props.theme.desktopVW(720)};
 
@@ -145,14 +125,6 @@ const Content = styled.div`
 
         h4 {
             margin-bottom: calc(${props.theme.sizes.desktop} * 1.5);
-        }
-
-        li {
-            padding-left: ${props.theme.desktopVW(25)};
-
-            &:before {
-                margin-left: -${props.theme.desktopVW(25)};
-            }
         }
     `}
 `

@@ -126,6 +126,11 @@ const AnimatedImage = ({
 
                 return windowWidth <= 1023 ? mobileAnimation() : desktopAnimation()
 
+            },
+            zoomIn() {
+
+                gsap.to(imageRef.current, { scale: 1.1, duration: 2.5 })
+
             }
         }
     })

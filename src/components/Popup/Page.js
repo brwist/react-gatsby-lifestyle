@@ -18,7 +18,7 @@ const Wrapper = styled.section`
     padding: calc(${props => props.theme.sizes.mobile} * 3) 0;
     
     ${props => props.theme.above.desktop`
-        padding: calc(${props.theme.sizes.desktop} * 10) 0;
+        padding: calc(${props.theme.sizes.desktop} * 5) 0;
     `}
 `
 
@@ -73,15 +73,24 @@ const Content = styled.div`
 
     margin-bottom: calc(${props => props.theme.sizes.mobile} * 3);
 
+    b {
+        font-family: ${props => props.theme.fontFamilies.plainRegular};
+    }
+
     h5 {
         margin-bottom: ${props => props.theme.sizes.mobile};
+        
+        font-family: ${props => props.theme.fontFamilies.plainRegular};
+    }
+
+    a {
+        color: ${props => props.theme.colors.orange};
     }
 
     ${props => props.theme.above.desktop`
         max-width: ${props.theme.desktopVW(720)};
 
         margin-bottom: 0;
-        margin-right: calc(${props.theme.sizes.desktop} * 4);   
 
         h5 {
             margin-bottom: ${props.theme.sizes.desktop};
@@ -122,6 +131,7 @@ const PopupPage = ({
     data,
     slug
 }) => {
+    console.log(data)
     return (
         <>
             <Constructor
@@ -136,6 +146,7 @@ const PopupPage = ({
                     <Content>
                         {slug == 'join-us' && <JoinUsForm lang={lang} data={data} />}
                         {slug == 'self-test' && <SelfTestForm lang={lang} data={data} />}
+                        {slug == 'cookies-and-privacy' && <TextRenderer lang={lang} data={data.contentDescription} useInlineLink />}
                     </Content>
                     <TestimonialComponent mobile='true' data={data} />
                 </StyledContainer>

@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react'
 import styled from 'styled-components'
 import { useWindowSize } from 'react-use'
-import MouseTooltip from 'react-sticky-mouse-tooltip'
 import gsap from 'gsap'
 
 import theme from './../../styles/theme'
 
-import DragIcon from './DragIcon'
+// import DragIcon from './DragIcon'
 import Card from './Card'
 import HorizontalTitle from './HorizontalTitle'
 import Carousel from './../Carousel'
@@ -69,6 +68,10 @@ const Wrapper = styled.div`
             min-width: ${props.theme.desktopVW(160)};
             width: ${props.theme.desktopVW(160)};
         }
+
+        > img {
+            opacity: 1 !important;
+        }
     `}
 `
 
@@ -88,28 +91,28 @@ const StyledTitle = styled(HorizontalTitle)`
     `}
 `
 
-const StyledMousetip = styled(MouseTooltip)`
-    display: block !important;
+// const StyledMousetip = styled(MouseTooltip)`
+//     display: block !important;
     
-    transform: scale(${props => props.visible ? 1 : 0.5});
+//     transform: scale(${props => props.visible ? 1 : 0.5});
 
-    z-index: 2;
+//     z-index: 2;
 
-    width: ${props => props.theme.desktopVW(150)};
-    height: ${props => props.theme.desktopVW(150)};
+//     width: ${props => props.theme.desktopVW(150)};
+//     height: ${props => props.theme.desktopVW(150)};
 
-    border-radius: 100%;
+//     border-radius: 100%;
 
-    background-color: #fff;
+//     background-color: #fff;
     
-    opacity: ${props => props.visible ? 1 : 0};
+//     opacity: ${props => props.visible ? 1 : 0};
 
-    transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+//     transition: transform 0.15s ease-out, opacity 0.15s ease-out;
 
-    pointer-events: none;
+//     pointer-events: none;
 
-    overflow: visible;
-`
+//     overflow: visible;
+// `
 
 const HorizontalDrag = ({
     lang,
@@ -124,22 +127,21 @@ const HorizontalDrag = ({
     backgroundColor
 }) => {
 
+    // Refs
     const titleRef = useRef(null)
     const dragRef = useRef(null)
 
+    // States
     const [isHovering, setIsHovering] = useState(false)
     const [isMouseMoving, setIsMouseMoving] = useState(false)
 
-    // const [dragSize, setDragSize] = useState({
-    //     width: 50,
-    //     height: 50
-    // })
-
+    // Variables
     const { width: windowWidth } = useWindowSize()
     const isMobile = windowWidth < theme.breakpoints.desktop
     const offset = isMobile ? 32 : windowWidth * 0.1
     const isDisabled = !isMobile && items.length == 3
 
+    // Params
     const params = {
         initialSlide: isDisabled ? 1 : 0,
         spaceBetween: 32,
@@ -181,13 +183,6 @@ const HorizontalDrag = ({
         }
     }
 
-    // useEffect(() => {
-    //     setDragSize({
-    //         width: dragRef.current.clientWidth,
-    //         height: dragRef.current.clientHeight
-    //     })
-    // }, [])
-
     return (
         <Wrapper 
             colors={getColors(backgroundColor)} 
@@ -204,13 +199,6 @@ const HorizontalDrag = ({
                 size='normal'
                 useInlineLink={true}
             />
-            {/* <StyledMousetip
-                visible={isHovering}
-                offsetX={-dragSize.width / 2}
-                offsetY={-dragSize.height / 2}
-            >
-                <DragIcon ref={dragRef} />
-            </StyledMousetip> */}
             <CarouselWrapper
                 onMouseLeave={() => setIsHovering(false)}
                 onMouseMove={()  => setIsHovering(true)}

@@ -44,6 +44,8 @@ const StyledTitle = styled.h1`
 
     /* overflow: hidden; */
 
+    z-index: 0;
+
     margin-bottom: calc(${props => props.theme.sizes.mobile} / 2);
 
     font-family: ${props => props.theme.fontFamilies.nbBold};

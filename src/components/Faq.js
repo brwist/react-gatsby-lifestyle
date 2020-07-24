@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import Image from 'gatsby-image'
+import gsap from 'gsap'
 
 import TextRenderer from './TextRenderer'
 import Container from './Layout/Container'
@@ -69,6 +70,11 @@ const Faq = ({
     }
 }) => {
 
+    // Refs
+    const titleRef = useRef(null)
+    const itemsRef = useRef([])
+    const mobileWrapperRef = useRef(null)
+
     const params = {
         spaceBetween: 32,
         slidesPerView: 1.25,
@@ -76,17 +82,47 @@ const Faq = ({
         autoHeight: true
     }
 
+    useEffect(() => {
+
+        itemsRef.current.forEach((item, i) => {
+            gsap.set(item, { alpha: 0.0 }, i * 0.15)
+        })
+        
+        if (!inView) return
+
+        const timeline = new gsap.timeline()
+
+        timeline.add(titleRef.current.transitionIn(), 0.0)
+        
+        itemsRef.current.forEach((item, i) => {
+            timeline.to(item, { alpha: 1.0 }, i * 0.15)
+        })
+
+        return () => {
+            timeline && timeline.kill()
+        }
+    }, [inView])
+
     return (
         <Wrapper>
             <Header>
-                <StyledTitle title={contentTitle} size='normal' />
+                <StyledTitle 
+                    ref={titleRef}
+                    title={contentTitle} 
+                    size='normal' 
+                />
             </Header>
             <Grid>
                 {items.map((item, i) => (
-                    <FaqDesktopItem key={i} data={item} />
+                    <FaqDesktopItem 
+                        ref={el => itemsRef.current[i] = el} 
+                        key={i} 
+                        data={item} 
+                        index={i + 1}
+                    />
                 ))}
             </Grid>
-            <CarouselWrapper>
+            <CarouselWrapper ref={mobileWrapperRef}>
                 <StyledCarousel params={params}>
                     {items.slice(0, 3).map((item, i) => (
                         <FaqMobileItem key={i} data={item} />

@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, forwardRef } from 'react'
 import styled from 'styled-components'
 import Image from 'gatsby-image'
 import gsap from 'gsap'
 
 import TextRenderer from './TextRenderer'
+import { padLeft } from '../utils/helpers'
 
 const Item = styled.div`
     position: relative;
@@ -117,11 +118,41 @@ const Question = styled.p`
 
     color: currentColor;
 
+    &.question-back {
+        display: none;
+    }
+
     ${props => props.theme.above.desktop`
         margin-bottom: 0;
         
-        font-size: ${props.theme.desktopVW(30)};
+        font-size: ${props.theme.desktopVW(27)};
+
+        &.question-back {
+            display: block;
+
+            margin-bottom: calc(${props.theme.sizes.desktop} / 3);
+
+            font-size: ${props.theme.fontSizes.desktop.h6};
+        }
     `}
+`
+
+const Index = styled.span`
+    display: none;
+
+    position: absolute;
+
+    font-family: ${props => props.theme.fontFamilies.nbBold};
+    font-size: ${props => props.theme.fontSizes.mobile.p};
+
+    ${props => props.theme.above.desktop`
+        display: block;
+
+        right: ${props.theme.desktopVW(80)};
+        bottom: ${props.theme.desktopVW(80)};
+
+        font-size: ${props => props.theme.fontSizes.desktop.h6};
+    `} 
 `
 
 const Back = styled.div`
@@ -161,7 +192,7 @@ const Answer = styled(TextRenderer)`
     `}
 
     ${props => props.theme.above.desktop`
-        width: 75%;
+        width: 85%;
 
         font-size: ${props.theme.fontSizes.desktop.h6};
     `}
@@ -191,13 +222,14 @@ const Background = styled(Image)`
 
 const FaqDesktopItem = ({ 
     className,
+    index,
     data: {
         question, 
         answer, 
         category, 
         image
     }
-}) => {
+}, ref) => {
 
     const frontRef = useRef(null)
     const frontInnerRef = useRef(null)
@@ -208,14 +240,16 @@ const FaqDesktopItem = ({
     const [timeline] = useState(new gsap.timeline({ paused: true }))
 
     useEffect(() => {
+
         gsap.set(backgroundRef.current, { alpha: 0.0})
         gsap.set(answerRef.current, { y: 15, alpha: 0.0})
 
-        timeline.to(frontInnerRef.current, { y: 15, alpha: 0.0, duration: 0.2, ease: 'sine.out' }, 0.0)
-        timeline.to(frontRef.current, { alpha: 0.0, duration: 0.2, ease: 'sine.out' }, 0.0)
-        timeline.to(backRef.current, { width: '100%', duration: 0.2, ease: 'power1.inOut' }, 0.0)
-        timeline.to(backgroundRef.current, { alpha: 1.0, duration: 0.3, ease: 'sine.out' }, 0.3)
-        timeline.to(answerRef.current, { y: 0.0, alpha: 1.0, duration: 0.3, ease: 'sine.out' }, 0.3)
+        timeline.to(frontInnerRef.current, { y: 15, alpha: 0.0, duration: 0.35, ease: 'sine.out' }, 0.0)
+        timeline.to(frontRef.current, { alpha: 0.0, duration: 0.35, ease: 'sine.out' }, 0.0)
+        timeline.to(backRef.current, { width: '100%', duration: 0.35, ease: 'power1.inOut' }, 0.0)
+        timeline.to(backgroundRef.current, { alpha: 1.0, duration: 0.35, ease: 'sine.out' }, 0.4)
+        timeline.to(answerRef.current, { y: 0.0, alpha: 1.0, duration: 0.35, ease: 'sine.out' }, 0.4)
+        
     }, [])
 
     const mouseEnterHandler = () => {
@@ -227,21 +261,21 @@ const FaqDesktopItem = ({
     }
 
     return (
-        <Item className={className} onMouseEnter={mouseEnterHandler} onMouseLeave={mouseLeaveHandler}>
+        <Item ref={ref} className={className} onMouseEnter={mouseEnterHandler} onMouseLeave={mouseLeaveHandler}>
             <Back ref={backRef} className='back'>
                 <BackgroundWrapper ref={backgroundRef}>
                     {image && <Background fluid={image.fluid} alt={image.alt} />}
                 </BackgroundWrapper>
                 <div ref={answerRef}>
+                    <Question className='question-back'>{question}</Question>
                     <Answer data={answer} />
                 </div>
             </Back>
             <Front ref={frontRef} className='front'>
                 <FrontInner ref={frontInnerRef}>
-                    {category && (
-                        <Category>{category}</Category>
-                    )}
+                    <Category>{category || 'Question'}</Category>
                     <Question>{question}</Question>
+                    <Index>{padLeft(index)}</Index>
                     <Answer data={answer} mobile='true' />
                 </FrontInner>
             </Front>
@@ -249,4 +283,4 @@ const FaqDesktopItem = ({
     )
 }
 
-export default FaqDesktopItem
+export default forwardRef(FaqDesktopItem)

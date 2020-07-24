@@ -69,6 +69,16 @@ const StyledLogo = styled.img`
     height: 100%;
 `
 
+const StyledAnimatedIcon = styled(AnimatedIcon)`
+    &:first-of-type {
+        margin-right: calc(${props => props.theme.sizes.mobile} / 2);
+    }
+
+    ${props => props.theme.above.desktop`
+        margin-right: ${props => props.theme.sizes.desktop};
+    `}
+`
+
 const Address = styled(TextRenderer)`
     position: absolute;
 
@@ -170,7 +180,8 @@ const Footer = ({
                     <LogoWrapper to={generatePath(lang, '')}>
                         <StyledLogo src={logoImage.nodes[0].publicURL} alt='Rockstar Lifestyle - Short logo'/>
                     </LogoWrapper>
-                    <AnimatedIcon instagram={instagram} /> 
+                    <StyledAnimatedIcon instagram={instagram} /> 
+                    <StyledAnimatedIcon facebook={facebook} /> 
                 </FooterLeft>
                 <Address data={footerText} useInlineLink={true} />
                 <FooterRight>

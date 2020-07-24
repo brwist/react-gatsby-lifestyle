@@ -63,6 +63,43 @@ const Paragraph = styled.p`
     `}
 `
 
+const UnorderedList = styled.ul`
+    ${TextStyles}
+
+    li {
+        position: relative;
+
+        padding-left: ${props => props.theme.mobileVW(25)};
+
+        &:before {
+            content: '—';
+            position: absolute;
+
+            margin-top: ${props => props.theme.mobileVW(8)};
+            margin-left: -${props => props.theme.mobileVW(20)};
+
+            font-size: ${props => props.theme.mobileVW(12)};
+        }
+
+        p {
+            margin-bottom: 0;
+        }
+    }
+
+    ${props => props.theme.above.desktop`
+        li {
+            padding-left: ${props.theme.desktopVW(25)};
+
+            &:before {
+                margin-top: ${props => props.theme.desktopVW(8)};
+                margin-left: -${props => props.theme.desktopVW(20)};
+
+                font-size: ${props => props.theme.desktopVW(12)};
+            }
+        }
+    `}
+`
+
 const StyledButtonPrimary = styled(ButtonPrimary)`
     color: currentColor;
 
@@ -147,6 +184,9 @@ const TextRenderer = ({
             {data && documentToReactComponents(data.json, {
                 renderNode: {
                     [BLOCKS.HEADING_1]: (node, children) => <h1 className={className}>{children}</h1>,
+                    [BLOCKS.HEADING_2]: (node, children) => <h2 className={className}>{children}</h2>,
+                    [BLOCKS.HEADING_3]: (node, children) => <h3 className={className}>{children}</h3>,
+                    [BLOCKS.UL_LIST]: (node, children) => <UnorderedList className={className}>{children}</UnorderedList>,
                     [BLOCKS.HEADING_4]: (node, children) => <Heading4 className={className}>{children}</Heading4>,
                     [BLOCKS.HEADING_5]: (node, children) => <Heading5 className={className}>{children}</Heading5>,
                     [BLOCKS.PARAGRAPH]: (node, children) => <Paragraph className={className}>{children}</Paragraph>,

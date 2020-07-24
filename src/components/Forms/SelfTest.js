@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import ButtonSubmit from './../Buttons/ButtonSubmit'
+import ButtonPrimary from './../Buttons/ButtonPrimary'
 import TextRenderer from './../TextRenderer'
 import Question from './Question'
 

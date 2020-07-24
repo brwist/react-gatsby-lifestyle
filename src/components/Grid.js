@@ -65,16 +65,14 @@ const StyledImage = styled(Image)`
 const Header = styled.div`
     position: relative;
 
-    ${props => props.theme.styles.flexBox.horCen};
-
     margin-bottom: calc(${props => props.theme.sizes.mobile} / 1.5);
 
     ${props => props.theme.above.desktop`
-        margin-bottom: ${props.theme.desktopVW(24)};
+        margin-bottom: calc(${props.theme.sizes.desktop} / 2);
     `}
 `
 
-const Heading = styled.h4`
+const Heading = styled(Link)`
     display: block;
 
     font-family: ${props => props.theme.fontFamilies.plainLight};
@@ -86,13 +84,21 @@ const Heading = styled.h4`
     `}
 `
 
+const StyledTags = styled(Tags)`
+    margin-top: calc(${props => props.theme.sizes.mobile} / 1.5);
+
+    ${props => props.theme.above.desktop`
+        margin-top: calc(${props.theme.sizes.desktop} / 1.5);
+    `}
+`
+
 const Description = styled(TextRenderer)`
-    margin-bottom: calc(${props => props.theme.sizes.mobile} / 1.5);
+    margin-bottom: calc(${props => props.theme.sizes.mobile} / 1.5) !important;
     
     font-size: ${props => props.theme.fontSizes.mobile.m};
 
     ${props => props.theme.above.desktop`
-        margin-bottom: ${props.theme.sizes.desktop};
+        margin-bottom: calc(${props.theme.sizes.desktop} / 1.5) !important;
 
         font-size: ${props.theme.fontSizes.desktop.p};
     `}
@@ -105,6 +111,10 @@ const Footer = styled.div`
 const Category = styled.span`
     display: block;
     
+    margin-bottom: calc(${props => props.theme.sizes.mobile} / 1.5);
+
+    opacity: 0.5;
+    
     font-family: ${props => props.theme.fontFamilies.nbRegular};
     font-size: ${props => props.theme.fontSizes.mobile.s};
     line-height: 1.5;
@@ -112,6 +122,8 @@ const Category = styled.span`
     text-transform: uppercase;
 
     ${props => props.theme.above.desktop`
+        margin-bottom: calc(${props.theme.sizes.desktop} / 3);
+
         font-size: ${props.theme.fontSizes.desktop.m};
     `}
 `
@@ -135,9 +147,12 @@ const Item = ({
                 <StyledImage fluid={featuredImage.fluid} alt={featuredImage.title} />
             </ImageWrapper>
             <Header>
-                <Heading>{name}</Heading>
+                {gridCategory == 'News & Events' && (
+                    <Category>{category}</Category>
+                )}
+                <Heading to={generatePath(lang, `${category.toLowerCase()}/${slug}`)}>{name}</Heading>
                 {gridCategory == 'Careers' && components && components[0].tags && (
-                    <Tags data={components[0].tags} slice={1}/>
+                    <StyledTags data={components[0].tags} slice={1}/>
                 )}
             </Header>
             {gridCategory != 'News & Events' && (
@@ -145,9 +160,6 @@ const Item = ({
             )}
             <Footer>
                 <ButtonArrow label={buttonLabel || 'Read more'} to={generatePath(lang, `${category.toLowerCase()}/${slug}`)} />
-                {gridCategory == 'News & Events' && (
-                    <Category>{category}</Category>
-                )}
             </Footer>
         </StyledItem>
     )

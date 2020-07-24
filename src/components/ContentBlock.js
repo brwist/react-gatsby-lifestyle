@@ -159,6 +159,12 @@ const ContentBlock = ({
     const params = {
         slidesPerView: 1,
         grabCursor: true,
+        effect: 'fade',
+        preloadImages: false,
+        speed: 500,
+        autoplay: {
+            delay: 5000
+        },
         scrollbar: {
             el: '.swiper-scrollbar',
             hide: false
