@@ -1,31 +1,36 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
+import stickybits from 'stickybits'
 
 import Scroller from './Scroller'
 import HorizontalTitle from './HorizontalTitle'
 import Card from './Card'
 
+import theme from './../../styles/theme'
+
 const StyledSection = styled.div`
     position: relative;
     
-    width: 100%;
-    min-height: 100vh;
+    /* width: 100%; */
+    /* min-height: 100vh; */
 
-    overflow: hidden;
+    /* overflow: hidden; */
 
-    padding: ${props => props.theme.desktopVW(350)} 0;
+    /* padding: ${props => props.theme.desktopVW(350)} 0; */
 `
 
-const StyledHorizontalTitle = styled(HorizontalTitle)`
-    position: sticky;
-    
-    top: 0;
-    left: 0;
+const StyledTitle = styled(HorizontalTitle)`
+    position: absolute;
 
-    width: 100%;
-    height: auto;
-    
-    padding-top: ${props => props.theme.desktopVW(80)};
+    ${props => props.type == 'Wave' && `
+        margin-bottom: calc(${props.theme.sizes.mobile} * 2);
+    `}
+
+    ${props => props.theme.above.desktop`
+        ${props.type == 'Wave' && `
+            margin-bottom: -${props.theme.desktopVW(50)};
+        `}
+    `}
 `
 
 const CardsContainer = styled.div`
@@ -38,7 +43,7 @@ const CardsContainer = styled.div`
     
     height: 100%;
     
-    padding: 0 0 0 80px;
+    padding: 0 10vh;
 `
 
 const StyledCard = styled(Card)`
@@ -56,17 +61,28 @@ const HorizontalScroll = ({
     information,
     component,
     title, 
-    description
+    description,
+    backgroundColor
 }) => {
+
+    const titleRef = useRef(null)
+
+    const [x, setX] = useState(0)
+
     return (
         <StyledSection>
-            {/* <StyledHorizontalTitle 
+            <StyledTitle 
+                ref={titleRef}
                 lang={lang}
+                inView={inView}
+                type={type}
                 title={title} 
                 description={description} 
-                size='normal' 
-            /> */}
-            <Scroller>
+                overlayColor={backgroundColor}
+                size='normal'
+                useInlineLink={true}
+            />
+            <Scroller getX={e => setX(e)}>
                 <CardsContainer>
                     {items.map((item, i) => {
                         return (
@@ -74,9 +90,11 @@ const HorizontalScroll = ({
                                 key={i}
                                 lang={lang}
                                 data={item}
+                                inView={inView}
                                 component={component}
                                 information={information}
                                 type={type}
+                                overlayColor={backgroundColor}
                                 active={item.slug != slug || component == 'InstagramFeed'}
                             />
                         )

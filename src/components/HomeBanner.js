@@ -179,12 +179,28 @@ const HomeBanner = ({
         timeline.add(titleRef.current.transitionIn(), 0)
         timeline.add(descriptionRef.current.transitionIn(), 0)
         timeline.fromTo([imageLeftOverlayRef.current, imageRightOverlayRef.current], { scaleY: 1, transformOrigin: 'top' }, { scaleY: 0, duration: 1, ease: 'power3.out' }, 1.25)
-        timeline.fromTo([imageLeftRef.current, imageRightRef.current], { scale: 1.75 }, { scale: 1, duration: 1, ease: 'power3.out' }, 1.25)
+        timeline.fromTo([imageLeftRef.current, imageRightRef.current], { scale: 1.75 }, { scale: 1.1, duration: 1, ease: 'power3.out' }, 1.25)
 
         return () => {
             timeline && timeline.kill()
         }
         
+    }, [])
+
+    const mousemoveHandler = e => {
+
+        const x = ((window.innerWidth / 2) - e.pageX) / 50
+        const y = ((window.innerHeight / 2)- e.pageY) / 50
+        gsap.to([imageLeftRef.current, imageRightRef.current], { x: x, y: y, ease: 'sine.out', duration: 5 })
+        
+    }
+
+    useEffect(() => {
+        bannerRef.current.addEventListener('mousemove', mousemoveHandler)
+
+        return () => {
+            bannerRef.current.removeEventListener('mousemove', mousemoveHandler)
+        }
     }, [])
 
     return (

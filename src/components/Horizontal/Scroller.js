@@ -44,7 +44,7 @@ const handleDynamicHeight = (ref, setDynamicHeight) => {
     setDynamicHeight(dynamicHeight)
 }
 
-const Scroller = ({ children }) => {
+const Scroller = ({ getX, children }) => {
 
     const [dynamicHeight, setDynamicHeight] = useState(null)
     const [translateX, setTranslateX] = useState(0)
@@ -61,6 +61,7 @@ const Scroller = ({ children }) => {
         setSticky(containerRef.current.offsetTop > 0)
         const offsetTop = -containerRef.current.offsetTop
         setTranslateX(offsetTop)
+        getX(offsetTop)
     }
 
     useEffect(() => {

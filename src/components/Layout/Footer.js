@@ -51,22 +51,19 @@ const LogoWrapper = styled(Link)`
     display: inline-block;
     vertical-align: middle;
 
-    width: ${props => props.theme.mobileVW(25)};
-    height: ${props => props.theme.mobileVW(15)};
-
     margin-right: calc(${props => props.theme.sizes.mobile} / 2);
 
     ${props => props.theme.above.desktop`
-        width: ${props => props.theme.desktopVW(28)};
-        height: ${props => props.theme.desktopVW(20)};
-
         margin-right: ${props => props.theme.sizes.desktop};
     `}
 `
 
 const StyledLogo = styled.img`
-    width: 100%;
-    height: 100%;
+    width: ${props => props.theme.mobileVW(25)};
+
+    ${props => props.theme.above.desktop`
+        width: ${props => props.theme.desktopVW(35)};
+    `}
 `
 
 const StyledAnimatedIcon = styled(AnimatedIcon)`

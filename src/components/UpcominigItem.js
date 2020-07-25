@@ -145,7 +145,7 @@ const UpcomingItem = ({
 
     useEffect(() => {
 
-        gsap.set(nameRef.current, { alpha: 0.0, y: -50 })
+        gsap.set(nameRef.current, { alpha: 0.0 })
         gsap.set(infoRef.current, { alpha: 0.0 })
 
         if (!inView) return
@@ -153,8 +153,8 @@ const UpcomingItem = ({
         const timeline = new gsap.timeline()
 
         timeline.add(imageRef.current.transitionIn(), 0.2)
-        timeline.to(nameRef.current, { alpha: 1.0, y: 0, duration: 0.35, ease: 'power1.out' }, 0.2)
-        timeline.to(infoRef.current, { alpha: 1.0, duration: 0.5, ease: 'power1.out' }, 0.5)
+        timeline.to(nameRef.current, { alpha: 1.0, duration: 0.35, ease: 'power1.out' }, 0.55)
+        timeline.to(infoRef.current, { alpha: 1.0, duration: 0.35, ease: 'power1.out' }, 0.55)
 
         return () => {
             timeline && timeline.kill()

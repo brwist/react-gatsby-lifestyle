@@ -91,29 +91,6 @@ const StyledTitle = styled(HorizontalTitle)`
     `}
 `
 
-// const StyledMousetip = styled(MouseTooltip)`
-//     display: block !important;
-    
-//     transform: scale(${props => props.visible ? 1 : 0.5});
-
-//     z-index: 2;
-
-//     width: ${props => props.theme.desktopVW(150)};
-//     height: ${props => props.theme.desktopVW(150)};
-
-//     border-radius: 100%;
-
-//     background-color: #fff;
-    
-//     opacity: ${props => props.visible ? 1 : 0};
-
-//     transition: transform 0.15s ease-out, opacity 0.15s ease-out;
-
-//     pointer-events: none;
-
-//     overflow: visible;
-// `
-
 const HorizontalDrag = ({
     lang,
     inView,

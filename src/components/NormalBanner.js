@@ -7,6 +7,13 @@ import Container from './Layout/Container'
 import Title from './Title'
 import Locations from './Locations'
 
+const Wrapper = styled.div`
+    position: relative;
+    
+    width: 100%;
+    height: 100%;
+`
+
 const Content = styled.div`
     position: absolute;
     
@@ -100,6 +107,7 @@ const NormalBanner = ({
 }) => {
     
     // Refs
+    const wrapperRef = useRef(null)
     const imageOverlayRef = useRef(null)
     const imageRef = useRef(null)
     const titleRef = useRef(null)
@@ -112,7 +120,7 @@ const NormalBanner = ({
 
         timeline.add(titleRef.current.transitionIn(), 0)
         timeline.fromTo(imageOverlayRef.current, { scaleY: 1, transformOrigin: 'top' }, { scaleY: 0, duration: 1, ease: 'power3.out' }, 0.6)
-        timeline.fromTo(imageRef.current, { scale: 1.75 }, { scale: 1, duration: 1, ease: 'power3.out' }, 0.6)
+        timeline.fromTo(imageRef.current, { scale: 1.75 }, { scale: 1.05, duration: 1, ease: 'power3.out' }, 0.6)
         
         return () => {
             timeline && timeline.kill()
@@ -120,8 +128,22 @@ const NormalBanner = ({
 
     }, [])
 
+    const mousemoveHandler = e => {
+        const x = ((window.innerWidth / 2) - e.pageX) / 50
+        const y = ((window.innerHeight / 2)- e.pageY) / 50
+        gsap.to(imageRef.current, { x: x, y: y, ease: 'sine.out', duration: 5 })
+    }
+
+    useEffect(() => {
+        wrapperRef.current.addEventListener('mousemove', mousemoveHandler)
+
+        return () => {
+            wrapperRef.current.removeEventListener('mousemove', mousemoveHandler)
+        }
+    }, [])
+
     return (
-        <>
+        <Wrapper ref={wrapperRef}>
             {images && (
                 <ImageWrapper>
                     <AnimatedImage ref={imageRef}>
@@ -156,7 +178,7 @@ const NormalBanner = ({
                     )}
                 </Content>
             </Container>
-        </>
+        </Wrapper>
     )
 }
 

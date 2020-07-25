@@ -2,11 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { useInView } from 'react-intersection-observer'
 import styled from 'styled-components'
 import { useWindowSize } from 'react-use'
-// import * as ScrollMagic from 'scrollmagic'
 import gsap from 'gsap'
-// import { ScrollMagicPluginGsap } from 'scrollmagic-plugin-gsap'
-
-// ScrollMagicPluginGsap(ScrollMagic, gsap)
 
 import theme from './../../styles/theme'
 import FlowLine from './../FlowLine'
@@ -28,6 +24,7 @@ const Section = ({
 
     const { width: windowWidth } = useWindowSize()
     const flowRef = useRef(null)    
+    
     const [ref, inView] = useInView({
         threshold: windowWidth < 1023 ? 0 : 0.25,
         triggerOnce: true
@@ -68,7 +65,7 @@ const Section = ({
             tl.from(flowRef.current, { width: 0 })
     
             let requestId
-            const startY = flowRef.current.clientHeight / 3.5
+            const startY = flowRef.current.clientHeight / 2
             const finishDistance = flowRef.current.clientHeight
 
             const update = () => {
