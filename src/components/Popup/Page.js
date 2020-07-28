@@ -131,7 +131,6 @@ const PopupPage = ({
     data,
     slug
 }) => {
-    console.log(data)
     return (
         <>
             <Constructor
