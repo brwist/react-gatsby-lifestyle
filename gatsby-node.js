@@ -167,7 +167,7 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
 
             // Get page category slug prefix
             if (category) {
-                prefix = category == 'Normal' || category == 'Worlds' || category == 'Trainers' ? slug : `${category.toLowerCase()}/${slug}`
+                prefix = category == 'Normal' || category == 'Worlds' ? slug : `${category.toLowerCase()}/${slug}`
             } else {
                 prefix = slug
             }

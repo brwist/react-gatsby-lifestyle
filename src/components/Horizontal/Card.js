@@ -359,6 +359,9 @@ const Card = ({
         )
     } else {
         if (information == 'Excerpt only') {
+
+            const link = data.category ? `${data.category.toLowerCase()}/${data.slug}` : data.buttonLink
+
             return (
                 <NormalCard 
                     ref={itemRef} 
@@ -367,7 +370,7 @@ const Card = ({
                     active={active.toString()}
                 >
                     {data.featuredImage.fluid != null && (
-                        <LinkWrapper to={generatePath(lang, data.buttonLink || data.slug)}>
+                        <LinkWrapper to={generatePath(lang, link)}>
                             <ImageComponent
                                 image={data.featuredImage.fluid}
                                 alt={data.featuredImage.title}
@@ -383,7 +386,7 @@ const Card = ({
                         <ButtonWrapper className='button-wrapper'>
                             <ButtonPrimary
                                 label={data.buttonLabel}
-                                to={generatePath(lang, data.buttonLink || data.slug)}
+                                to={generatePath(lang, link)}
                                 inverted={true}
                             />
                         </ButtonWrapper>
