@@ -26,9 +26,15 @@ const CardStyles = css`
 
             ${props.theme.styles.element.fill};
 
-            background-color: ${props.theme.colors.dark};
+            ${props.overlayColor == 'White' ? `
+                background-color: ${props.theme.colors.white};
+            ` : props.overlayColor == 'Grey' ? `    
+                background-color: ${props.theme.colors.light};
+            ` : `
+                background-color: ${props.theme.colors.dark};
+            `}
 
-            opacity: 0.65;
+            opacity: 0.45;
         }
     `}
 
@@ -344,6 +350,7 @@ const Card = ({
             <NormalCard 
                 ref={itemRef}
                 className={className}
+                overlayColor={overlayColor}
             >
                 <ImageComponent
                     image={data.localFile.childImageSharp.fluid}
@@ -368,6 +375,7 @@ const Card = ({
                     className={className} 
                     type={type} 
                     active={active.toString()}
+                    overlayColor={overlayColor}
                 >
                     {data.featuredImage.fluid != null && (
                         <LinkWrapper to={generatePath(lang, link)}>
@@ -405,6 +413,7 @@ const Card = ({
                     type={type} 
                     to={generatePath(lang, `${category.toLowerCase()}/${slug}`)} 
                     active={active.toString()}
+                    overlayColor={overlayColor}
                 >
                     {data.featuredImage.fluid != null && (
                         <ImageComponent
@@ -435,6 +444,7 @@ const Card = ({
                     className={className} 
                     type={type} 
                     active={active.toString()}
+                    overlayColor={overlayColor}
                 >
                     {data.featuredImage.fluid != null && (
                         <LinkWrapper to={generatePath(lang, data.buttonLink || data.slug)}>
@@ -447,19 +457,21 @@ const Card = ({
                         </LinkWrapper>
                     )}
                     <Header ref={headerRef}>
-                        <Heading>{data.name}</Heading>
+                        <Heading>{data.excerptTitle || data.name}</Heading>
                     </Header>
                     <LargeDescription ref={descriptionRef}>
                         <Caption data={data.excerpt} />
                     </LargeDescription>
-                    <ButtonWrapper 
-                        className='button-wrapper'
-                    >
-                        <ButtonPrimary
-                            label={data.buttonLabel || `Discover our ${data.name}`}
-                            to={generatePath(lang, data.buttonLink || data.slug)}
-                        />
-                    </ButtonWrapper>
+                    {data.buttonLabel && data.buttonLink && (
+                        <ButtonWrapper 
+                            className='button-wrapper'
+                        >
+                            <ButtonPrimary
+                                label={data.buttonLabel || `Discover our ${data.name}`}
+                                to={generatePath(lang, data.buttonLink || data.slug)}
+                            />
+                        </ButtonWrapper>
+                    )}
                 </NormalCard>
             )
         }

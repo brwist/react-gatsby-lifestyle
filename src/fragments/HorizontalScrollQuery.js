@@ -20,6 +20,7 @@ export const HorizontalScrollQuery = graphql`
                 name
                 slug
                 category
+                excerptTitle
                 excerpt {
                     json
                 }
@@ -37,6 +38,7 @@ export const HorizontalScrollQuery = graphql`
             }
             ...on ContentfulService {
                 name
+                excerptTitle
                 excerpt {
                     json
                 }

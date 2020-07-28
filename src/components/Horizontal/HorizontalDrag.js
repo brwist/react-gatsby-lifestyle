@@ -142,18 +142,19 @@ const HorizontalDrag = ({
 
     const getColors = background => {
         switch (background) {
-            case 'Black': {
-                let colors = {
-                    bar: 'rgba(255, 255, 255, 0.1)',
-                    drag: theme.colors['light']
-                }
-                return colors
-            }
             case 'White':
             case 'Grey': {
                 let colors = {
                     bar: 'rgba(0, 0, 0, 0.1)',
                     drag: theme.colors['dark']
+                }
+                return colors
+            }
+            case 'Black':
+            default: {
+                let colors = {
+                    bar: 'rgba(255, 255, 255, 0.1)',
+                    drag: theme.colors['light']
                 }
                 return colors
             }
