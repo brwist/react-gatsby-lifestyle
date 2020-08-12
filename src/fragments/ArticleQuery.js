@@ -22,6 +22,7 @@ export const ArticleQuery = graphql`
             json
         }
         name
+        title
         author
         date(formatString: "DD / MM / YYYY")
         link

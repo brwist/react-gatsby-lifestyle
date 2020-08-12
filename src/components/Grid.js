@@ -132,7 +132,7 @@ const Item = ({
     lang, 
     gridCategory,
     data: { 
-        name,
+        title,
         slug,
         category,
         featuredImage,
@@ -150,7 +150,7 @@ const Item = ({
                 {gridCategory == 'News & Events' && (
                     <Category>{category}</Category>
                 )}
-                <Heading to={generatePath(lang, `${category.toLowerCase()}/${slug}`)}>{name}</Heading>
+                <Heading to={generatePath(lang, `${category.toLowerCase()}/${slug}`)}>{title}</Heading>
                 {gridCategory == 'Careers' && components && components[0].tags && (
                     <StyledTags data={components[0].tags} slice={1}/>
                 )}

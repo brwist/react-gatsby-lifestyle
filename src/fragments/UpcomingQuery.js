@@ -14,6 +14,7 @@ export const UpcomingQuery = graphql`
         items {
             slug
             name
+            title
             category
             featuredImage {
                 title

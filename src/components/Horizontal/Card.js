@@ -462,7 +462,7 @@ const Card = ({
                     <LargeDescription ref={descriptionRef}>
                         <Caption data={data.excerpt} />
                     </LargeDescription>
-                    {data.buttonLabel && data.buttonLink && (
+                    {data.buttonLabel && (
                         <ButtonWrapper 
                             className='button-wrapper'
                         >

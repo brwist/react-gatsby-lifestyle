@@ -275,7 +275,7 @@ const FaqDesktopItem = ({
                 <FrontInner ref={frontInnerRef}>
                     <Category>{category || 'Question'}</Category>
                     <Question>{question}</Question>
-                    <Index>{padLeft(index)}</Index>
+                    {/* <Index>{padLeft(index)}</Index> */}
                     <Answer data={answer} mobile='true' />
                 </FrontInner>
             </Front>

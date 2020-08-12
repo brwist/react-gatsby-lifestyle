@@ -21,6 +21,7 @@ export const HorizontalScrollQuery = graphql`
                 slug
                 category
                 excerptTitle
+                buttonLabel
                 excerpt {
                     json
                 }

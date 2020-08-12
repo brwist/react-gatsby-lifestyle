@@ -162,9 +162,11 @@ const ContentBlock = ({
         effect: 'fade',
         preloadImages: false,
         speed: 500,
+        loop: true,
         autoplay: {
-            delay: 5000
+            delay: 2500
         },
+        disableOnInteraction: true,
         scrollbar: {
             el: '.swiper-scrollbar',
             hide: false
@@ -173,14 +175,18 @@ const ContentBlock = ({
 
     useEffect(() => {
 
+        let scrollBar = document.querySelector('.swiper-scrollbar')
+
         gsap.set(mediaRef.current, { scale: 1.75, alpha: 0.0 })
         gsap.set(mediaOverlayRef.current, { scaleY: 1.0 })
+        gsap.set(scrollBar, { scaleX: 0.0, alpha: 0.0 })
         
         if (!inView) return
 
         const timeline = new gsap.timeline()
 
         timeline.add(titleRef.current.transitionIn(), 0)
+        timeline.to(scrollBar, { scaleX: 1.0, alpha: 1.0, transformOrigin: 'center', ease: 'power3.out' }, 0)
         timeline.to(mediaOverlayRef.current, { scaleY: 0.0, transformOrigin: 'top', duration: 0.5, ease: 'power3.out' }, 0)
         timeline.to(mediaRef.current, { scale: 1.0, alpha: 1.0, duration: 0.5, ease: 'power3.out' }, 0)
 

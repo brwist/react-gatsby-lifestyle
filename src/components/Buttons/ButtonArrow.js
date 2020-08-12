@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import styled from 'styled-components'
 import { Link } from 'gatsby'
 
@@ -6,7 +6,7 @@ const Button = styled(Link)`
     ${props => props.theme.above.desktop`
         transition: all .5s cubic-bezier(.16,1.08,.38,.98);
 
-        &:hover {
+        &:hover, &.hover {
             opacity: 0.25;
 
             .arrow {
@@ -89,10 +89,11 @@ const ButtonArrow = ({
     className,
     label, 
     to
-}) => {
+}, ref) => {
     return (
         <Button 
-            className={className}
+            ref={ref}
+            className={`button ${className && className}`}
             to={to}
         >
             <Label className='label'>{label}</Label>
@@ -101,4 +102,4 @@ const ButtonArrow = ({
     )
 }
 
-export default ButtonArrow
+export default forwardRef(ButtonArrow)

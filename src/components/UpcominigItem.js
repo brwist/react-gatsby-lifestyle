@@ -52,6 +52,12 @@ const StyledItem = styled.li`
                 height: ${props.theme.desktopVW(640)};
             }
         }
+
+        &:hover {
+            img {
+                transform: scale(1.1);
+            }
+        }
     `}
 `
 
@@ -69,12 +75,6 @@ const ImageWrapper = styled(Link)``
 
 const StyledAnimatedImage = styled(AnimatedImage)`
     width: 100%;
-
-    &:hover {
-        img {
-            transform: scale(1.1);
-        }
-    }
 
     ${props => props.theme.below.desktop`
         margin-bottom: calc(${props.theme.sizes.mobile} / 2);
@@ -125,6 +125,7 @@ const UpcomingItem = ({
     overlayColor,
     data: {
         name,
+        title,
         slug, 
         category,
         featuredImage
@@ -136,6 +137,7 @@ const UpcomingItem = ({
     const imageRef = useRef(null)
     const imageOverlayRef = useRef(null)
     const nameRef = useRef(null)
+    const buttonRef = useRef(null)
     const infoRef = useRef(null)
 
     const [ref, inView] = useInView({
@@ -164,7 +166,11 @@ const UpcomingItem = ({
     
     return (
         <StyledItem ref={ref}>
-            <Inner className='inner'>
+            <Inner 
+                className='inner'
+                onMouseEnter={() => buttonRef.current.classList.add('hover')} 
+                onMouseLeave={() => buttonRef.current.classList.remove('hover')}
+            >
                 <ImageWrapper to={generatePath(lang, `${category.toLowerCase()}/${slug}`)}>
                     <StyledAnimatedImage 
                         ref={imageRef} 
@@ -172,9 +178,10 @@ const UpcomingItem = ({
                         overlayColor={overlayColor} 
                     />
                 </ImageWrapper>
-                <Name ref={nameRef}>{name}</Name>
+                <Name ref={nameRef}>{title}</Name>
                 <Info ref={infoRef}>
                     <ButtonArrow 
+                        ref={buttonRef}
                         label='Read more' 
                         to={generatePath(lang, `${category.toLowerCase()}/${slug}`)}
                     />
