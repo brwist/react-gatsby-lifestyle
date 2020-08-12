@@ -209,16 +209,16 @@ const TextRenderer = ({
                     [BLOCKS.EMBEDDED_ASSET]: (node, children) => {
                         const { data: { target: { fields } } } = node
 
-                        if (typeof fields == 'undefined') return
+                        if (typeof fields == 'undefined' || fields.file['en-US'] == 'undefined') return
                         
                         return (
-                            <StyledImage className='embedded-asset' src={fields.file['en-US'].url} alt={fields.title['en-US']} />
+                            <StyledImage className='embedded-asset' src={fields.file['en-US'].url} alt={fields.title['en-US'] || 'RL - Embedded Image'} />
                         )
                     },
                     [BLOCKS.EMBEDDED_ENTRY]: (node, children) => {
                         const { data: { target: { fields } } } = node
-
-                        if (typeof fields == 'undefined') return
+                        
+                        if (typeof fields == 'undefined' || typeof fields.videoUrl['en-US'] == 'undefined') return
                         
                         if (fields) {
                             return (
@@ -227,12 +227,14 @@ const TextRenderer = ({
                                         <StyledVideo
                                             className={className}
                                             url={fields.videoUrl['en-US']}
-                                            title={fields.name['en-US']}
+                                            title={fields.name['en-US'] || 'RL - Embedded Video'}
                                             inline={true}
                                             inView={true}
                                         />
                                     </Media>
-                                    <VideoTitle>{fields.videoSubtitle['en-US']}</VideoTitle>
+                                    {fields.videoSubtitle && (
+                                        <VideoTitle>{fields.videoSubtitle['en-US']}</VideoTitle>
+                                    )}
                                 </>
                             )
                         } else {

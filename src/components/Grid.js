@@ -193,9 +193,11 @@ const Grid = ({
         <Wrapper>
             <Container>
                 {filterable && <Filter>All categories</Filter>}
-                <List>
-                    {items.map((item, i) => <Item key={i} lang={lang} data={item} gridCategory={category} />)}
-                </List>
+                {items.length > 0 && (
+                    <List>
+                        {items.map((item, i) => <Item key={i} lang={lang} data={item} gridCategory={category} />)}
+                    </List>
+                )}
             </Container>
             {/* {isFetching && 'Fetching more list items...'} */}
         </Wrapper>
