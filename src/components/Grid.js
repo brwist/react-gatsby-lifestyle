@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Image from 'gatsby-image'
-import { Link } from 'gatsby'
+import { Link, useStaticQuery, graphql } from 'gatsby'
 
 import Container from './Layout/Container'
 import ButtonArrow from './Buttons/ButtonArrow'
@@ -172,6 +172,22 @@ const Grid = ({
 }) => {
 
     const { category, items, filterable } = data
+
+    // const { newsItems } = useStaticQuery(graphql`{
+    //     allContentfulArticle(filter: {category: {eq: "Events and Trips"}}) {
+    //         nodes {
+    //             name
+    //             slug
+    //             category
+    //             featuredImage
+    //             buttonLabel
+    //             excerpt
+    //             components
+    //         }
+    //     }
+    // }`)
+
+    // console.log(newsItems)
 
     return (
         <Wrapper>

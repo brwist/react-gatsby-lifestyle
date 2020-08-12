@@ -156,7 +156,6 @@ const Footer = ({
         inViewRef(node)
     }, [inViewRef])
     
-
     useEffect(() => {
 
         gsap.set(footerRef.current, { alpha: 0.0 })
