@@ -208,12 +208,18 @@ const TextRenderer = ({
                     [BLOCKS.PARAGRAPH]: (node, children) => <Paragraph className={className}>{children}</Paragraph>,
                     [BLOCKS.EMBEDDED_ASSET]: (node, children) => {
                         const { data: { target: { fields } } } = node
+
+                        if (!fields.file['en-US']) return
+                        
                         return (
                             <StyledImage className='embedded-asset' src={fields.file['en-US'].url} alt={fields.title['en-US']} />
                         )
                     },
                     [BLOCKS.EMBEDDED_ENTRY]: (node, children) => {
                         const { data: { target: { fields } } } = node
+
+                        if (!fields.videoUrl['en-US']) return
+                        
                         if (fields) {
                             return (
                                 <>
