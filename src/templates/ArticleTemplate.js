@@ -124,7 +124,7 @@ const Content = styled.div`
         margin-right: calc(${props.theme.sizes.desktop} * 4);
 
         h4 {
-            margin-bottom: calc(${props.theme.sizes.desktop} * 1.5);
+            margin-bottom: ${props.theme.sizes.desktop};
         }
     `}
 `
