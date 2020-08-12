@@ -209,7 +209,7 @@ const TextRenderer = ({
                     [BLOCKS.EMBEDDED_ASSET]: (node, children) => {
                         const { data: { target: { fields } } } = node
 
-                        if (!fields.file['en-US']) return
+                        if (typeof fields == 'undefined') return
                         
                         return (
                             <StyledImage className='embedded-asset' src={fields.file['en-US'].url} alt={fields.title['en-US']} />
@@ -218,7 +218,7 @@ const TextRenderer = ({
                     [BLOCKS.EMBEDDED_ENTRY]: (node, children) => {
                         const { data: { target: { fields } } } = node
 
-                        if (!fields.videoUrl['en-US']) return
+                        if (typeof fields == 'undefined') return
                         
                         if (fields) {
                             return (
