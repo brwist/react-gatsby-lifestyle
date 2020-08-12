@@ -50,6 +50,10 @@ const Paragraph = styled.p`
     font-size: ${props => props.theme.fontSizes.mobile.m};
     line-height: 1.4;
 
+    b, strong {
+        font-family: ${props => props.theme.fontFamilies.plainRegular};
+    }
+
     &:empty {
         display: none;
     }
@@ -143,6 +147,18 @@ const StyledVideo = styled(Video)`
     }
 `
 
+const StyledImage = styled.img`
+    display: block;
+
+    width: 100%;
+
+    margin: ${props => props.theme.sizes.mobile} 0;
+
+    ${props => props.theme.above.desktop`
+        margin: calc(${props.theme.sizes.desktop} * 4) 0;
+    `}
+`
+
 const VideoTitle = styled.span`
     display: block;
 
@@ -193,7 +209,7 @@ const TextRenderer = ({
                     [BLOCKS.EMBEDDED_ASSET]: (node, children) => {
                         const { data: { target: { fields } } } = node
                         return (
-                            <img className='embedded-asset' src={fields.file['en-US'].url} alt={fields.title['en-US']} />
+                            <StyledImage className='embedded-asset' src={fields.file['en-US'].url} alt={fields.title['en-US']} />
                         )
                     },
                     [BLOCKS.EMBEDDED_ENTRY]: (node, children) => {

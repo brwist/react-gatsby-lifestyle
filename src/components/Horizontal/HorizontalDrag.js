@@ -161,6 +161,18 @@ const HorizontalDrag = ({
         }
     }
 
+    useEffect(() => {
+
+        let scrollBar = document.querySelector('.swiper-scrollbar')
+
+        gsap.set(scrollBar, { scaleX: 0.0, alpha: 0.0 })
+        
+        if (!inView) return
+
+        gsap.to(scrollBar, { scaleX: 1.0, alpha: 1.0, delay: 0.75, transformOrigin: 'center', ease: 'power3.out' })
+
+    }, [inView])
+
     return (
         <Wrapper 
             colors={getColors(backgroundColor)} 
