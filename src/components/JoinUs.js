@@ -69,22 +69,31 @@ const MouseAnimatedImage = styled.div`
 const MouseAnimatedBorder = styled.div`
     position: absolute;
     
-    top: -300px;
-    left: -300px;
+    top: -${props => props.theme.desktopVW(300)};
+    left: -${props => props.theme.desktopVW(300)};
     
     z-index: 12;
     
-    width: calc(100% + 300px);
-    height: calc(100% + 300px);
+    width: calc(100% + ${props => props.theme.desktopVW(300)});
+    height: calc(100% + ${props => props.theme.desktopVW(300)});
     
-    margin: 150px 150px;
+    margin: ${props => props.theme.desktopVW(150)};
     
     background-color: transparent;
-    border: 250px solid ${props => props.theme.colors.dark};
+    border: ${props => props.theme.desktopVW(300)} solid ${props => props.theme.colors.dark};
     
     overflow: hidden;
     
     transition: transform 0.5s ease-out 0s;
+
+    &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
 `  
 
 const JoinUs = ({
@@ -148,7 +157,7 @@ const JoinUs = ({
 
     const update = (event) => {
         mouse.updatePosition(event)
-        imageWrapperRef.current.style.background = 'radial-gradient(at ' + (-80 + mouse.x / -5 % 100) + '% -50%, #fff, transparent 60%)'
+        // imageWrapperRef.current.style.background = 'radial-gradient(at ' + (-80 + mouse.x / -5 % 100) + '% -50%, #fff, transparent 60%)'
         updateTransformStyle(
         (mouse.y / mainRef.current.offsetHeight / -2).toFixed(2),
         (mouse.x / mainRef.current.offsetWidth / -2).toFixed(2)
@@ -156,7 +165,7 @@ const JoinUs = ({
     }
     
     const updateTransformStyle = (x, y) => {
-        const style = 'rotateX(' + x + 'deg) rotateY(' + y + 'deg)'
+        const style = 'rotateX(' + Math.min(Math.max(x, -0.20), 0.20) + 'deg) rotateY(' + Math.min(Math.max(y, -0.20), 0.20) + 'deg)'
         imageWrapperRef.current.style.transform = style
     }
 
@@ -188,8 +197,6 @@ const JoinUs = ({
         timeline.to(imageRef.current, { alpha: 1.0, duration: 0.35, ease: 'sine.out' }, 0.25)
 
     }, [inView])
-
-    console.log(image)
 
     return (
         <Wrapper ref={mainRef}>
