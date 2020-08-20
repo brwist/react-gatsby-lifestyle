@@ -18,8 +18,6 @@ const TitleWrapper = styled.div`
     justify-content: center;
 
     position: relative;
-
-    /* overflow: hidden; */
 `
 
 const Category = styled.span`
@@ -41,8 +39,6 @@ const StyledTitle = styled.h1`
     display: block;
 
     position: relative;
-
-    /* overflow: hidden; */
 
     z-index: 0;
 
@@ -193,20 +189,16 @@ const LineWrapper = styled.span`
         text-shadow: 10px 50px 30px rgba(0, 0, 0, 0.7);
     }
 
-    /* overflow: hidden; */
-
     &:nth-of-type(1) {
         z-index: 3;
     }
 
     &:nth-of-type(2) {
         z-index: 2;
-        /* margin-left: calc(${props => props.theme.sizes.mobile} / 2); */
     }
 
     &:nth-of-type(3) {
         z-index: 1;
-        /* margin-left: ${props => props.theme.sizes.mobile}; */
     }
 
     ${props => props.theme.above.desktop`
@@ -244,9 +236,9 @@ const DescriptionWrapper = styled.div`
     opacity: 0;
 
     ${props => props.theme.above.desktop`
-        max-width: ${props.theme.desktopVW(500)};
+        max-width: ${props.theme.desktopVW(600)};
 
-        margin-left: calc(${props.theme.sizes.desktop} * 5);
+        margin-left: calc(${props.theme.sizes.desktop} * 4);
 
         ${props.size == 'medium' && `
             margin-left: ${props.theme.desktopVW(120)};
@@ -276,6 +268,8 @@ const StyledTestimonial = styled(Testimonial)`
     margin: ${props => props.theme.sizes.mobile} 0;
     
     ${props => props.theme.above.desktop`
+        max-width: ${props.theme.desktopVW(500)};
+
         margin: ${props.theme.sizes.desktop} 0;
     `}
 `

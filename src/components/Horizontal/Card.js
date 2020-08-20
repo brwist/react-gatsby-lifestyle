@@ -89,6 +89,8 @@ const LargeDescription = styled.div`
         vertical-align: middle;
         
         width: ${props => props.theme.mobileVW(125)};
+        
+        margin: 0;
 
         &:not(:last-of-type) {
             margin-right: ${props => props.theme.mobileVW(25)};
@@ -97,6 +99,7 @@ const LargeDescription = styled.div`
 
     ${props => props.theme.above.desktop`
         .embedded-asset {
+            margin: 0;
             width: ${props.theme.desktopVW(100)};
 
             &:not(:last-of-type) {
@@ -222,6 +225,10 @@ const Heading = styled.h4`
     ${props => props.theme.above.desktop`
         font-size: ${props.theme.fontSizes.desktop.h5};
     `}
+`
+
+const StyledTags = styled(Tags)`
+    justify-content: flex-end;
 `
 
 const Caption = styled(TextRenderer)`
@@ -367,7 +374,15 @@ const Card = ({
     } else {
         if (information == 'Excerpt only') {
 
-            const link = data.category ? `${data.category.toLowerCase()}/${data.slug}` : data.buttonLink
+            let link
+
+            if (data.category) {
+                if (data.category == 'Trainers') {
+                    link = `performance/${data.category.toLowerCase()}/${data.slug}`
+                }
+            } else {
+                link = data.buttonLink
+            }
 
             return (
                 <NormalCard 
@@ -396,22 +411,99 @@ const Card = ({
                                 label={data.buttonLabel}
                                 to={generatePath(lang, link)}
                                 inverted={true}
+                                colored={true}
                             />
                         </ButtonWrapper>
                     )}
                 </NormalCard>
             )
         } else if (information == 'Extended') {
+
+            if (data.category) {
+                
+                let link
+
+                const { category, slug } = data
+                const { tags, testimonial, headerDescription } = data.components[0]
+
+                if (category == 'Workshops') {
+                    link = `spirit/${category.toLowerCase()}/${slug}`
+                } else {
+                    link = `${category.toLowerCase()}/${slug}`
+                }
+                
+                return (
+                    <LinkedCard 
+                        ref={itemRef}
+                        className={className} 
+                        type={type} 
+                        to={generatePath(lang, link)} 
+                        active={active.toString()}
+                        overlayColor={overlayColor}
+                    >
+                        {data.featuredImage.fluid != null && (
+                            <ImageComponent
+                                image={data.featuredImage.fluid}
+                                alt={data.featuredImage.title}
+                                ref={imageRef}
+                                overlayColor={overlayColor}
+                            />
+                        )}
+                        <LargeDescription ref={descriptionRef}>
+                            <Header ref={headerRef}>
+                                <Heading>{data.name}</Heading>
+                                {tags && (
+                                    <StyledTags data={tags} slice={2}></StyledTags>
+                                )}
+                            </Header>
+                            <Caption data={data.excerpt != null ? data.excerpt : headerDescription} />
+                            {testimonial && (
+                                <StyledTestimonial data={testimonial} />
+                            )}
+                        </LargeDescription>
+                        {data.buttonLabel && (
+                            <ButtonWrapper className='button-wrapper'>
+                                <ButtonPrimary
+                                    label={data.buttonLabel}
+                                    to={generatePath(lang, link)}
+                                />
+                            </ButtonWrapper>
+                        )}
+                    </LinkedCard>
+                )
+            } else {
+                return (
+                    <NormalCard 
+                        ref={itemRef}
+                        className={className} 
+                        type={type} 
+                        active={active.toString()}
+                        overlayColor={overlayColor}
+                    >
+                        {data.featuredImage.fluid != null && (
+                            <ImageComponent
+                                image={data.featuredImage.fluid}
+                                alt={data.featuredImage.title}
+                                ref={imageRef}
+                                overlayColor={overlayColor}
+                            />
+                        )}
+                        <LargeDescription ref={descriptionRef}>
+                            <Header ref={headerRef}>
+                                <Heading>{data.name}</Heading>
+                            </Header>
+                            <Caption data={data.excerpt} />
+                        </LargeDescription>
+                    </NormalCard>
+                )
+            }
             
-            const { category, slug } = data
-            const { tags, testimonial, headerDescription } = data.components[0]
-            
+        } else {
             return (
-                <LinkedCard 
+                <NormalCard 
                     ref={itemRef}
                     className={className} 
                     type={type} 
-                    to={generatePath(lang, `${category.toLowerCase()}/${slug}`)} 
                     active={active.toString()}
                     overlayColor={overlayColor}
                 >
@@ -423,39 +515,6 @@ const Card = ({
                             overlayColor={overlayColor}
                         />
                     )}
-                    <LargeDescription ref={descriptionRef}>
-                        <Header ref={headerRef}>
-                            <Heading>{data.name}</Heading>
-                            {tags && (
-                                <Tags data={tags} slice={2}></Tags>
-                            )}
-                        </Header>
-                        <Caption data={data.excerpt != null ? data.excerpt : headerDescription} />
-                        {testimonial && (
-                            <StyledTestimonial data={testimonial} />
-                        )}
-                    </LargeDescription>
-                </LinkedCard>
-            )
-        } else {
-            return (
-                <NormalCard 
-                    ref={itemRef}
-                    className={className} 
-                    type={type} 
-                    active={active.toString()}
-                    overlayColor={overlayColor}
-                >
-                    {data.featuredImage.fluid != null && (
-                        <LinkWrapper to={generatePath(lang, data.buttonLink || data.slug)}>
-                            <ImageComponent
-                                image={data.featuredImage.fluid}
-                                alt={data.featuredImage.title}
-                                ref={imageRef}
-                                overlayColor={overlayColor}
-                            />
-                        </LinkWrapper>
-                    )}
                     <Header ref={headerRef}>
                         <Heading>{data.excerptTitle || data.name}</Heading>
                     </Header>
@@ -466,10 +525,17 @@ const Card = ({
                         <ButtonWrapper 
                             className='button-wrapper'
                         >
-                            <ButtonPrimary
-                                label={data.buttonLabel || `Discover our ${data.name}`}
-                                to={generatePath(lang, data.buttonLink || data.slug)}
-                            />
+                            {data.buttonLink ? (
+                                <ButtonPrimary
+                                    label={data.buttonLabel || `Discover our ${data.name}`}
+                                    href={data.buttonLink}
+                                />
+                            ) : (
+                                <ButtonPrimary
+                                    label={data.buttonLabel || `Discover our ${data.name}`}
+                                    to={generatePath(lang, data.slug)}
+                                />
+                            )}
                         </ButtonWrapper>
                     )}
                 </NormalCard>

@@ -17,27 +17,35 @@ const PopupTemplate = ({
         contentfulPopup
     }
 }) => {
+    
+    const { name } = contentfulPopup
+
     return (
-        <ModalRoutingContext.Consumer>
-            {({ modal, closeTo }) => (
-                <>
-                    {modal ? (
-                        <PopupModal 
-                            lang={langSlug}
-                            data={contentfulPopup}
-                            closeTo={closeTo}
-                            slug={slug}
-                        />
-                    ) : (
-                        <PopupPage 
-                            lang={langSlug}
-                            data={contentfulPopup}
-                            slug={slug}
-                        />
-                    )}
-                </>
-            )}
-        </ModalRoutingContext.Consumer>
+        <>
+            <Seo 
+                title={name}
+            />
+            <ModalRoutingContext.Consumer>
+                {({ modal, closeTo }) => (
+                    <>
+                        {modal ? (
+                            <PopupModal 
+                                lang={langSlug}
+                                data={contentfulPopup}
+                                closeTo={closeTo}
+                                slug={slug}
+                            />
+                        ) : (
+                            <PopupPage 
+                                lang={langSlug}
+                                data={contentfulPopup}
+                                slug={slug}
+                            />
+                        )}
+                    </>
+                )}
+            </ModalRoutingContext.Consumer>
+        </>
     )
 }
 

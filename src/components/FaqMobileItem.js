@@ -11,34 +11,11 @@ const Item = styled.div`
 
     align-self: stretch;
 
-    ${props => props.theme.above.desktop`
-        padding-bottom: 50%;
-
-        &:nth-of-type(1) {
-            grid-column: 2;
-
-            .inner {
-                left: initial;
-                right: 0;
-            }
-        }
-
-        &:nth-of-type(4),
-        &:nth-of-type(5) {
-            .inner {
-                left: initial;
-                right: 0;
-            }
-        }
-
-        &:hover {
-            .inner {
-                width: 100%;
-            }
-
-            .back {
-                display: block;
-            }
+    ${props => props.colored && `
+        .front {
+            color: ${props.theme.colors.dark};
+            
+            background-color: ${props.theme.colors.yellow};
         }
     `}
 `
@@ -50,15 +27,6 @@ const Inner = styled.div`
     height: 100%;
     
     text-align: left;
-
-    ${props => props.theme.above.desktop`
-        position: absolute;
-
-        top: 0;
-        left: 0;
-
-        width: 50%;
-    `}
 `
 
 const Category = styled.span`
@@ -73,11 +41,6 @@ const Category = styled.span`
     color: currentColor;
 
     opacity: 0.6;
-
-    ${props => props.theme.above.desktop`
-        margin-bottom: calc(${props.theme.sizes.desktop} / 2);
-        font-size: ${props.theme.fontSizes.desktop.s};
-    `}
 `
 
 const Front = styled.div`
@@ -91,15 +54,6 @@ const Front = styled.div`
     background-color: ${props => props.theme.colors.darkGrey};
 
     color: ${props => props.theme.colors.light};
-
-    ${props => props.theme.above.desktop`
-        position: absolute;
-        
-        top: 0;
-        left: 0;
-        
-        padding: ${props.theme.desktopVW(80)};
-    `}
 `
 
 const Question = styled.p`
@@ -112,12 +66,6 @@ const Question = styled.p`
     line-height: 1.3;
 
     color: currentColor;
-
-    ${props => props.theme.above.desktop`
-        margin-bottom: 0;
-        
-        font-size: ${props.theme.fontSizes.desktop.h6};
-    `}
 `
 
 const Back = styled.div`
@@ -136,10 +84,6 @@ const Back = styled.div`
     background-color: ${props => props.theme.colors.white};
 
     color: ${props => props.theme.colors.light};
-
-    ${props => props.theme.above.desktop`
-        padding: ${props.theme.desktopVW(80)};
-    `}
 `
 
 const Answer = styled(TextRenderer)`
@@ -151,18 +95,6 @@ const Answer = styled(TextRenderer)`
     line-height: 1.3;
 
     color: currentColor;
-
-    ${props => props.theme.above.desktop`
-        ${props.mobile == 'true' && `
-            display: none;
-        `}
-    `}
-
-    ${props => props.theme.above.desktop`
-        width: 75%;
-
-        font-size: ${props.theme.fontSizes.desktop.h6};
-    `}
 `
 
 const BackgroundWrapper = styled.div`
@@ -189,6 +121,7 @@ const Background = styled(Image)`
 
 const FaqMobileItem = ({ 
     className,
+    colored,
     data: {
         question, 
         answer, 
@@ -197,7 +130,7 @@ const FaqMobileItem = ({
     }
 }) => {
     return (
-        <Item className={className}>
+        <Item className={className} colored={colored}>
             <Inner className='inner'>
                 <Front className='front'>
                     {category && (

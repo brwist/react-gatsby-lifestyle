@@ -28,6 +28,10 @@ const StyledFlow = styled.div`
 
         background: linear-gradient(to right, rgba(16, 16, 16, 0) 0%, rgba(16, 16, 16, 0.72) 75%, rgba(16, 16, 16, 1) 100%);
     }
+
+    ${props => props.theme.below.desktop`
+        display: none;
+    `}
 `
 
 const FlowImage = styled(FlowSvg)``

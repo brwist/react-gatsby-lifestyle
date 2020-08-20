@@ -17,26 +17,22 @@ const Seo = ({
 			theme: contentfulTheme {
                 title
                 seoDescription {
-                    content {
-                        content {
-                            value
-                        }
-                    }
+                    seoDescription
                 }
                 seoKeywords
-                # seoImage {
-                #     fixed(width: 1200, height: 630, quality: 100) {
-                #         ...GatsbyContentfulFixed_withWebp
-                #     }
-                # }
+                seoImage {
+                    fixed(width: 1200, height: 630, quality: 70) {
+                        ...GatsbyContentfulFixed
+                    }
+                }
 			}
 		}
     `)
 
     const siteName = theme.title || 'Rockstar Lifestyle'
-    // const metaImage = image || theme.seoImage.fixed.src
+    const metaImage = image.fixed.src || theme.seoImage.fixed.src
     const metaTitle = title ? `${title} - ${siteName}` : siteName
-    const metaDescription = description || theme.seoDescription
+    const metaDescription = description || theme.seoDescription.seoDescription
     const metaKeywords = keywords || theme.seoKeywords.join(', ')
 
     return (
@@ -70,10 +66,10 @@ const Seo = ({
                     property: `og:description`,
                     content: metaDescription,
                 },
-                // {
-                //     property: `og:image`,
-                //     content: metaImage,
-                // },
+                {
+                    property: `og:image`,
+                    content: metaImage,
+                },
                 {
                     property: `og:type`,
                     content: `website`,

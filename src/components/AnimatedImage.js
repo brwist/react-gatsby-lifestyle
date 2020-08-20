@@ -69,7 +69,7 @@ const StyledImage = styled(Image)`
     object-fit: cover;
 
     img {
-        transition: transform 1.0s ease-out !important;
+        transition: transform 0.25s ease-out !important;
         opacity: 1 !important;
     }
 `

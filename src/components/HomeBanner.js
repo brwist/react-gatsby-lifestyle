@@ -26,6 +26,8 @@ const StyledContainer = styled(Container)`
     ${props => props.theme.above.desktop`
         justify-content: center;
         align-items: center;
+
+        pointer-events: none;
     `}
 `
 
@@ -43,10 +45,11 @@ const StyledTitle = styled(Title)`
 
 const StyledDescription = styled(Title)`
     ${props => props.theme.above.desktop`
-        position: absolute;
+        .description-wrapper {
+            max-width: ${props.theme.desktopVW(480)};
 
-        left: ${props.theme.desktopVW(120)};
-        bottom: ${props.theme.desktopVW(120)};
+            margin-left: 0;
+        }
     `}
 `
 
@@ -57,14 +60,18 @@ const AnimatedImage = styled.div`
     overflow: hidden;
 `
 
+const ImageLeftWrapper = styled.div`
+    ${props => props.theme.above.desktop`
+        position: absolute;
+        
+        top: 55%;
+        left: 12%;
+
+        transform: translateY(-50%);
+    `}
+`
+
 const ImageLeft = styled.div`
-    position: absolute;
-
-    top: 50%;
-    left: 0;
-
-    transform: translateY(-50%);
-
     width: ${props => props.theme.mobileVW(129)};
     height: ${props => props.theme.mobileVW(240)};
 
@@ -77,14 +84,10 @@ const ImageLeft = styled.div`
     `}
 
     ${props => props.theme.above.desktop`
-        top: initial;
-        left: ${props.theme.desktopVW(240)};
-        bottom: ${props.theme.desktopVW(350)};
-
-        transform: none;
-
         width: ${props.theme.desktopVW(480)};
         height: ${props.theme.desktopVW(600)};
+
+        margin-bottom: ${props.theme.sizes.desktop};
     `}
 `
 
@@ -179,7 +182,7 @@ const HomeBanner = ({
         timeline.add(titleRef.current.transitionIn(), 0)
         timeline.add(descriptionRef.current.transitionIn(), 0)
         timeline.fromTo([imageLeftOverlayRef.current, imageRightOverlayRef.current], { scaleY: 1, transformOrigin: 'top' }, { scaleY: 0, duration: 1, ease: 'power3.out' }, 1.25)
-        timeline.fromTo([imageLeftRef.current, imageRightRef.current], { scale: 1.75 }, { scale: 1.1, duration: 1, ease: 'power3.out' }, 1.25)
+        timeline.fromTo([imageLeftRef.current, imageRightRef.current], { scale: 1.75 }, { scale: 1.15, duration: 1, ease: 'power3.out' }, 1.25)
 
         return () => {
             timeline && timeline.kill()
@@ -189,9 +192,11 @@ const HomeBanner = ({
 
     const mousemoveHandler = e => {
 
-        const x = ((window.innerWidth / 2) - e.pageX) / 50
-        const y = ((window.innerHeight / 2)- e.pageY) / 50
-        gsap.to([imageLeftRef.current, imageRightRef.current], { x: x, y: y, ease: 'sine.out', duration: 5 })
+        const x = ((window.innerWidth / 2) - e.pageX) / 20
+        const y = ((window.innerHeight / 2)- e.pageY) / 20
+        
+        gsap.to(imageLeftRef.current, { x: -x, y: -y, duration: 3.5 })
+        gsap.to(imageRightRef.current, { x: x, y: y, duration: 3.5 })
         
     }
 
@@ -209,22 +214,33 @@ const HomeBanner = ({
             className={className} 
             type={bannerType}
         >
-            {images && (
-                <>
-                    <ImageLeft>
-                        <AnimatedImage ref={imageLeftRef}>
-                            <StyledImage fluid={images[0].fluid} alt={images[0].title} />
-                        </AnimatedImage>
-                        <ImageOverlay ref={imageLeftOverlayRef} />
-                    </ImageLeft>
-                    <ImageRight>
-                        <AnimatedImage ref={imageRightRef}>
-                            <StyledImage fluid={images[1].fluid} alt={images[1].title} />
-                        </AnimatedImage>
-                        <ImageOverlay ref={imageRightOverlayRef} />
-                    </ImageRight>
-                </>
-            )}
+            <ImageLeftWrapper>
+                <ImageLeft>
+                    <AnimatedImage ref={imageLeftRef}>
+                        <StyledImage fluid={images[0].fluid} alt={images[0].title} />
+                    </AnimatedImage>
+                    <ImageOverlay ref={imageLeftOverlayRef} />
+                </ImageLeft>
+                <StyledDescription 
+                    lang={lang}
+                    ref={descriptionRef}
+                    size='extra-large'
+                    description={headerDescription}
+                    links={internalLinks || externalLink && {
+                        internal: internalLinks,
+                        external: {
+                            link: externalLink,
+                            label: externalLinkLabel
+                        }
+                    }}
+                />
+            </ImageLeftWrapper>
+            <ImageRight>
+                <AnimatedImage ref={imageRightRef}>
+                    <StyledImage fluid={images[1].fluid} alt={images[1].title} />
+                </AnimatedImage>
+                <ImageOverlay ref={imageRightOverlayRef} />
+            </ImageRight>
             <StyledContainer>
                 <TitleWrapper>
                     <StyledTitle
@@ -233,19 +249,6 @@ const HomeBanner = ({
                         size='extra-large'
                         title={headerTitle}
                         category={category}
-                    />
-                    <StyledDescription 
-                        lang={lang}
-                        ref={descriptionRef}
-                        size='extra-large'
-                        description={headerDescription}
-                        links={internalLinks || externalLink && {
-                            internal: internalLinks,
-                            external: {
-                                link: externalLink,
-                                label: externalLinkLabel
-                            }
-                        }}
                     />
                 </TitleWrapper>
             </StyledContainer>

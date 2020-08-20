@@ -48,7 +48,6 @@ const ImageWrapper = styled.div`
     top: 0;
     right: 0;
 
-    /* width: ${props => props.theme.mobileVW(188)}; */
     width: 100%;
     height: 100%;
 
@@ -120,7 +119,7 @@ const NormalBanner = ({
 
         timeline.add(titleRef.current.transitionIn(), 0)
         timeline.fromTo(imageOverlayRef.current, { scaleY: 1, transformOrigin: 'top' }, { scaleY: 0, duration: 1, ease: 'power3.out' }, 0.6)
-        timeline.fromTo(imageRef.current, { scale: 1.75 }, { scale: 1.05, duration: 1, ease: 'power3.out' }, 0.6)
+        timeline.fromTo(imageRef.current, { scale: 1.75 }, { scale: 1.1, duration: 1, ease: 'power3.out' }, 0.6)
         
         return () => {
             timeline && timeline.kill()
@@ -129,9 +128,9 @@ const NormalBanner = ({
     }, [])
 
     const mousemoveHandler = e => {
-        const x = ((window.innerWidth / 2) - e.pageX) / 50
-        const y = ((window.innerHeight / 2)- e.pageY) / 50
-        gsap.to(imageRef.current, { x: x, y: y, ease: 'sine.out', duration: 5 })
+        const x = ((window.innerWidth / 2) - e.pageX) / 20
+        const y = ((window.innerHeight / 2)- e.pageY) / 20
+        gsap.to(imageRef.current, { x: x, y: y, ease: 'sine.out', duration: 3.5 })
     }
 
     useEffect(() => {

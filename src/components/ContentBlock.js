@@ -71,10 +71,38 @@ const Media = styled.div`
             background-color: ${props => props.theme.colors.white};
         }
     }
+
+    .swiper-pagination {
+        bottom: ${props => props.theme.sizes.mobile};
+    }
+
+    .swiper-pagination-bullet-active {
+        background-color: ${props => props.theme.colors.white};
+    }
+
+    .swiper-button-next, 
+    .swiper-button-prev {
+        top: initial;
+        bottom: ${props => props.theme.sizes.mobile};
+        
+        width: 70%;
+
+        &:after {
+            font-size: 1rem;
+            color: ${props => props.theme.colors.white}
+        }
+    }
+
+    .swiper-button-next {
+        right: ${props => props.theme.sizes.mobile};
+    }
+
+    .swiper-button-prev {
+        left: ${props => props.theme.sizes.mobile};
+    }
     
     ${props => props.theme.above.desktop`
         width: ${props.theme.desktopVW(720)};
-        height: ${props.theme.desktopVW(720)};
 
         margin-bottom: 0;
 
@@ -82,6 +110,22 @@ const Media = styled.div`
             bottom: calc(${props.theme.sizes.desktop} * 2);
 
             width: ${props.theme.desktopVW(160)};
+        }
+
+        .swiper-button-next, .swiper-button-prev {
+            bottom: ${props.theme.desktopVW(30)};
+        }
+
+        .swiper-button-next {
+            right: ${props.theme.sizes.desktop};
+        }
+
+        .swiper-button-prev {
+            left: ${props.theme.sizes.desktop};
+        }
+
+        .swiper-pagination {
+            bottom: ${props.theme.desktopVW(50)};
         }
     `}
 `
@@ -108,10 +152,14 @@ const Content = styled.div`
     padding: 0;
 
     ${props => props.theme.above.desktop`
+        .description-wrapper {
+            max-width: ${props.theme.desktopVW(700)};
+        }
+
         ${props.order == 'left' ? `
             padding: 0 ${props.theme.desktopVW(160)} 0 ${props.theme.desktopVW(80)};
         ` : `
-            padding: 0 ${props.theme.desktopVW(80)} 0 ${props.theme.desktopVW(80)};
+            padding: 0 0 0 ${props.theme.desktopVW(80)};
         `}
     `}
 `
@@ -161,15 +209,17 @@ const ContentBlock = ({
         grabCursor: true,
         effect: 'fade',
         preloadImages: false,
-        speed: 500,
         loop: true,
         autoplay: {
-            delay: 2500
+            delay: 3500
         },
-        disableOnInteraction: true,
-        scrollbar: {
-            el: '.swiper-scrollbar',
-            hide: false
+        pagination: {
+            el: '.swiper-pagination',
+            type: 'bullets'
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev'
         }
     }
 

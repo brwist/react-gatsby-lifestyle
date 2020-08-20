@@ -1,8 +1,11 @@
-import React, { useContext, forwardRef } from 'react'
+import React, { useEffect, useRef, useContext } from 'react'
 import { useStaticQuery, graphql, Link } from 'gatsby'
 import styled from 'styled-components'
 import Img from 'gatsby-image'
 import Headroom from 'react-headroom'
+import { useInView } from 'react-intersection-observer'
+import gsap from 'gsap'
+
 
 import Container from './../Layout/Container'
 import Navigation from './Navigation'
@@ -12,6 +15,7 @@ import ButtonPrimary from './../Buttons/ButtonPrimary'
 import LogoFullSvg from './../../images/graphics/rockstar-lifestyle.svg'
 import LogoShortSvg from './../../images/graphics/rl.svg'
 
+import { PreloaderContext } from './../../contexts/preloader'
 import { DictionaryContext } from './../../contexts/dictionary'
 import { generatePath } from '../../utils/helpers'
 
@@ -23,7 +27,7 @@ const StyledHeader = styled.header`
     padding: ${props => props.theme.mobileVW(25)} ${props => props.theme.sizes.mobile} 0 ${props => props.theme.sizes.mobile};
     
     ${props => props.theme.above.desktop`
-        padding: ${props => props.theme.sizes.desktop} 0;
+        padding: ${props.theme.sizes.desktop} 0;
     `}
 `
 
@@ -62,6 +66,8 @@ const StyledNavigation = styled(Navigation)`
 `
 
 const LogoImage = styled.img`
+    display: block;
+
     width: ${props => props.theme.mobileVW(200)};
 
     ${props => props.theme.above.desktop`
@@ -129,7 +135,14 @@ const Header = ({
     },
     setMenuOpen,
     menuOpen
-}, ref) => {
+}) => {
+
+    // Refs
+    const headerRef = useRef(null)
+
+    // Context
+    const preloaderState = useContext(PreloaderContext)
+    const delay = preloaderState == 'preloader' ? 4 : 1.5
 
     const { logoImage } = useStaticQuery(graphql`{
         logoImage: allFile(filter: {relativePath: {eq: "rockstar-lifestyle.png"}}) {
@@ -139,9 +152,20 @@ const Header = ({
         }
     }`)
 
+    useEffect(() => {
+
+        gsap.set(headerRef.current, { alpha: 0.0, y: '-100%' })
+        
+        const tween = gsap.to(headerRef.current, { alpha: 1.0, y: '0%', duration: 0.35, delay: delay, ease: 'sine.out' })
+
+        return () => {
+            tween && tween.kill()
+        }
+    }, [])
+
     return (
         <Headroom>
-            <StyledHeader ref={ref}>
+            <StyledHeader ref={headerRef}>
                 <StyledContainer>
                     <InnerLeft>
                         <Logo to={generatePath(lang, '')}>
@@ -174,4 +198,4 @@ const Header = ({
     )
 }
 
-export default forwardRef(Header)
+export default Header

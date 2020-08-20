@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import styled from 'styled-components'
 import Image from 'gatsby-image'
 import { Link, useStaticQuery, graphql } from 'gatsby'
@@ -41,7 +41,13 @@ const List = styled.ul`
     `}
 `
 
-const StyledItem = styled.li``
+const StyledItem = styled.li`
+    &:hover {
+        img {
+            transform: scale(1.05);
+        }
+    }
+`
 
 const ImageWrapper = styled(Link)`
     display: block;
@@ -60,6 +66,10 @@ const StyledImage = styled(Image)`
     ${props => props.theme.styles.element.fill};
 
     position: absolute !important;
+
+    img {
+        transition: transform 5.0s ease-out !important;
+    }
 `
 
 const Header = styled.div`
@@ -141,25 +151,46 @@ const Item = ({
         components
     } 
 }) => {
+    
+    // Refs
+    const buttonRef = useRef(null)
+
+    let link 
+
+    if (gridCategory == 'Events and Trips') {
+        link = `events-and-trips/${category.toLowerCase()}/${slug}`
+    } else if (gridCategory == 'Trainers') {
+        link = `performance/${category.toLowerCase()}/${slug}`
+    } else {
+        link = `${category.toLowerCase()}/${slug}`
+    }
+
     return (
-        <StyledItem>
-            <ImageWrapper to={generatePath(lang, `${category.toLowerCase()}/${slug}`)}>
+        <StyledItem
+            onMouseEnter={() => buttonRef.current.classList.add('hover')} 
+            onMouseLeave={() => buttonRef.current.classList.remove('hover')}
+        >
+            <ImageWrapper to={generatePath(lang, link)}>
                 <StyledImage fluid={featuredImage.fluid} alt={featuredImage.title} />
             </ImageWrapper>
             <Header>
-                {gridCategory == 'News & Events' && (
+                {gridCategory == 'Events and Trips' && (
                     <Category>{category}</Category>
                 )}
-                <Heading to={generatePath(lang, `${category.toLowerCase()}/${slug}`)}>{title}</Heading>
+                <Heading to={generatePath(lang, link)}>{title}</Heading>
                 {gridCategory == 'Careers' && components && components[0].tags && (
                     <StyledTags data={components[0].tags} slice={1}/>
                 )}
             </Header>
-            {gridCategory != 'News & Events' && (
+            {gridCategory != 'Events and Trips' && (
                 <Description data={excerpt} />
             )}
             <Footer>
-                <ButtonArrow label={buttonLabel || 'Read more'} to={generatePath(lang, `${category.toLowerCase()}/${slug}`)} />
+                <ButtonArrow 
+                    ref={buttonRef}
+                    label={buttonLabel || 'Read more'} 
+                    to={generatePath(lang, link)} 
+                />
             </Footer>
         </StyledItem>
     )
@@ -171,23 +202,63 @@ const Grid = ({
     data
 }) => {
 
-    const { category, items, filterable } = data
+    let items
 
-    // const { newsItems } = useStaticQuery(graphql`{
-    //     allContentfulArticle(filter: {category: {eq: "Events and Trips"}}) {
-    //         nodes {
-    //             name
-    //             slug
-    //             category
-    //             featuredImage
-    //             buttonLabel
-    //             excerpt
-    //             components
-    //         }
-    //     }
-    // }`)
+    const { 
+        category, 
+        filterable 
+    } = data
 
-    // console.log(newsItems)
+    const { 
+        newsItems, 
+        trainerItems, 
+        careerItems 
+    } = useStaticQuery(graphql`{
+        newsItems: allContentfulArticle(filter: {
+            category: {
+                in: ["News", "Events", "Trips", "Brainfood"]
+            }
+        }, sort: {
+            order: DESC, 
+            fields: createdAt
+        }) {
+            nodes {
+                ...ArticleQuery
+            }
+        },
+        trainerItems: allContentfulArticle(filter: {
+            category: {
+                eq: "Trainers"
+            }
+        }, sort: {
+            order: DESC, 
+            fields: createdAt
+        }) {
+            nodes {
+                ...ArticleQuery
+            }
+        },
+        careerItems: allContentfulArticle(filter: {
+            category: {
+                eq: "Careers"
+            }
+        }, sort: {
+            order: DESC, 
+            fields: createdAt
+        }) {
+            nodes {
+                ...ArticleQuery
+            }
+        }
+    }`)
+
+    if (category == 'Events and Trips') {
+        items = newsItems.nodes
+    } else if (category == 'Careers') {
+        items = careerItems.nodes
+    } else if (category == 'Trainers') {
+        items = trainerItems.nodes
+    }
 
     return (
         <Wrapper>
@@ -195,7 +266,14 @@ const Grid = ({
                 {filterable && <Filter>All categories</Filter>}
                 {items && items.length > 0 && (
                     <List>
-                        {items.map((item, i) => <Item key={i} lang={lang} data={item} gridCategory={category} />)}
+                        {items.map((item, i) => (
+                            <Item 
+                                key={i} 
+                                lang={lang} 
+                                data={item} 
+                                gridCategory={category} 
+                            />
+                        ))}
                     </List>
                 )}
             </Container>

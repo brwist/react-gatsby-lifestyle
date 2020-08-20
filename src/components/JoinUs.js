@@ -7,6 +7,7 @@ import gsap from 'gsap'
 import Container from './Layout/Container'
 import Title from './Title'
 import AnimatedImage from './AnimatedImage'
+import MouseImage from './MouseImage'
 
 const Wrapper = styled.div`
     ${props => props.theme.above.desktop`
@@ -36,8 +37,6 @@ const Content = styled(Title)`
     }
 
     ${props => props.theme.above.desktop`
-        margin-right: calc(${props.theme.sizes.desktop} * 4);
-        
         .description-wrapper {
             max-width: ${props.theme.desktopVW(480)};
         }
@@ -48,42 +47,45 @@ const Content = styled(Title)`
     `}
 `
 
-const ImageWrapper = styled.div`
-    position: relative;
-
+const MouseAnimatedWrapper = styled.div`
     width: ${props => props.theme.mobileVW(500)};
     height: ${props => props.theme.mobileVW(500)};
-
-    background-color: ${props => props.theme.colors.darkGrey};
-
-    transition: transform 0.5s ease-out;
-
-    ${props => props.theme.below.desktop`
-        position: absolute;
-
-        top: 0;
-        left: 0;
-
-        z-index: -1;
-
-        width: 100%;
-        height: 100%;
-
-        opacity: 0.25;
-    `}
+    
+    perspective: 10px;
+    
+    overflow: hidden;
 
     ${props => props.theme.above.desktop`
-        width: ${props.theme.desktopVW(500)};
-        height: ${props.theme.desktopVW(500)};
-
-        /* box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5); */
+        width: ${props.theme.desktopVW(850)};
+        height: ${props.theme.desktopVW(850)};
     `}
 `
-
-const StyledAnimatedImage = styled(AnimatedImage)`
-    width: 100%;
-    height: 100%;
+  
+const MouseAnimatedImage = styled.div`
+    background-repeat: no-repeat;
+    background-position: center;
 `
+
+const MouseAnimatedBorder = styled.div`
+    position: absolute;
+    
+    top: -300px;
+    left: -300px;
+    
+    z-index: 12;
+    
+    width: calc(100% + 300px);
+    height: calc(100% + 300px);
+    
+    margin: 150px 150px;
+    
+    background-color: transparent;
+    border: 250px solid ${props => props.theme.colors.dark};
+    
+    overflow: hidden;
+    
+    transition: transform 0.5s ease-out 0s;
+`  
 
 const JoinUs = ({
     lang,
@@ -103,7 +105,7 @@ const JoinUs = ({
 
     // Window Size
     const { width: windowWidth } = useWindowSize()
-    
+  
     const [mouse] = useState({
         _x: 0,
         _y: 0,
@@ -123,17 +125,6 @@ const JoinUs = ({
         }
     })
 
-    useEffect(() => {
-        
-        if (!inView) return
-
-        const timeline = new gsap.timeline()
-        
-        timeline.add(titleRef.current.transitionIn(), 0)
-        timeline.add(imageRef.current.transitionIn(), 0)
-
-    }, [inView])
-
     let counter = 0
     let refreshRate = 10
     
@@ -151,15 +142,16 @@ const JoinUs = ({
 
     const onMouseMoveHandler = (event) => {
         if (isTimeToUpdate()) {
-            update(event)
+        update(event)
         }
     }
 
     const update = (event) => {
         mouse.updatePosition(event)
+        imageWrapperRef.current.style.background = 'radial-gradient(at ' + (-80 + mouse.x / -5 % 100) + '% -50%, #fff, transparent 60%)'
         updateTransformStyle(
-            (mouse.y / mainRef.current.offsetHeight / 2).toFixed(2),
-            (mouse.x / mainRef.current.offsetWidth / 2).toFixed(2)
+        (mouse.y / mainRef.current.offsetHeight / -2).toFixed(2),
+        (mouse.x / mainRef.current.offsetWidth / -2).toFixed(2)
         )
     }
     
@@ -169,7 +161,6 @@ const JoinUs = ({
     }
 
     useEffect(() => {
-
         if (windowWidth < 1023) return
 
         mouse.setOrigin(mainRef.current)
@@ -179,11 +170,26 @@ const JoinUs = ({
         mainRef.current.addEventListener('mouseleave', onMouseLeaveHandler)
 
         return () => {
-            mainRef.current.removeEventListener('mouseenter', onMouseEnterHandler)
-            mainRef.current.removeEventListener('mousemove', onMouseMoveHandler)
-            mainRef.current.removeEventListener('mouseleave', onMouseLeaveHandler)
+        mainRef.current.removeEventListener('mouseenter', onMouseEnterHandler)
+        mainRef.current.removeEventListener('mousemove', onMouseMoveHandler)
+        mainRef.current.removeEventListener('mouseleave', onMouseLeaveHandler)
         }
     }, [])
+
+    useEffect(() => {
+
+        gsap.set(imageRef.current, { alpha: 0.0 })
+        
+        if (!inView) return
+
+        const timeline = new gsap.timeline()
+        
+        timeline.add(titleRef.current.transitionIn(), 0.0)
+        timeline.to(imageRef.current, { alpha: 1.0, duration: 0.35, ease: 'sine.out' }, 0.25)
+
+    }, [inView])
+
+    console.log(image)
 
     return (
         <Wrapper ref={mainRef}>
@@ -195,12 +201,19 @@ const JoinUs = ({
                     size='medium'
                     ref={titleRef}
                 />
-                <ImageWrapper ref={imageWrapperRef}>
-                    <StyledAnimatedImage
-                        ref={imageRef} 
-                        data={image} 
-                    />
-                </ImageWrapper>
+                <MouseAnimatedWrapper ref={imageRef}>
+                    <MouseAnimatedImage
+                        style={{
+                            backgroundImage: `url(${image.fluid.src})`,
+                            height: '100%'
+                        }}
+                    >
+                    </MouseAnimatedImage>
+                    <MouseAnimatedBorder
+                        ref={imageWrapperRef}
+                    >
+                    </MouseAnimatedBorder>
+                </MouseAnimatedWrapper>
             </StyledContainer>
         </Wrapper>
     )

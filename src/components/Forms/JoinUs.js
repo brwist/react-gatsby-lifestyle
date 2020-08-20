@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import ButtonSubmit from './../Buttons/ButtonSubmit'
 import TextRenderer from './../TextRenderer'
+import Testimonial from './../Testimonial'
 
 const Wrapper = styled.div``
 
@@ -31,6 +32,8 @@ const Title = styled.h4`
         font-size: ${props.theme.fontSizes.desktop.h5};
     `}
 `
+
+const StyledTestimonial = styled(Testimonial)``
 
 const Form = styled.form`
     width: 100%;
@@ -207,13 +210,19 @@ const JoinUs = ({
     className,
     data
 }) => {
+    
+    const { 
+        contentTitle,
+        contentDescription, 
+        testimonial
+    } = data
 
     return (
         <Wrapper>
             {data && (
                 <Copy>
-                    <Title>{data.contentTitle}</Title>
-                    <TextRenderer data={data.contentDescription}/>
+                    <Title>{contentTitle}</Title>
+                    <TextRenderer data={contentDescription}/>
                 </Copy>
             )}
             <Form

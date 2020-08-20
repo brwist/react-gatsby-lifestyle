@@ -27,7 +27,7 @@ export const HorizontalScrollQuery = graphql`
                 }
                 featuredImage {
                     title
-                    fluid(maxWidth: 560, quality: 100) {
+                    fluid(maxWidth: 480, quality: 100) {
                         ...GatsbyContentfulFluid_withWebp
                     }
                 }
@@ -47,7 +47,7 @@ export const HorizontalScrollQuery = graphql`
                 buttonLink
                 featuredImage {
                     title
-                    fluid(maxWidth: 560, quality: 100) {
+                    fluid(maxWidth: 480, quality: 100) {
                         ...GatsbyContentfulFluid_withWebp
                     }
                 }

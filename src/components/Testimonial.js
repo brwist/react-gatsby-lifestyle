@@ -88,11 +88,13 @@ const Testimonial = ({
 }) => {
     return (
         <StyledTestimonial className={className}>
-            <ImageWrapper>
-                <StyledImage fluid={image.fluid} alt={image.title}/>
-            </ImageWrapper>
+            {image && (
+                <ImageWrapper>
+                    <StyledImage fluid={image.fluid} alt={image.title}/>
+                </ImageWrapper>
+            )}
             <DescriptionWrapper>
-                <Description>{description}</Description>
+                <Description>"{description}"</Description>
                 <Name>{name}</Name>
             </DescriptionWrapper>
         </StyledTestimonial>

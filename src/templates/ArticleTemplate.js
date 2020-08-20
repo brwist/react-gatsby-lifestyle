@@ -121,7 +121,6 @@ const Content = styled.div`
         max-width: ${props.theme.desktopVW(720)};
 
         margin-bottom: 0;
-        margin-right: calc(${props.theme.sizes.desktop} * 4);
 
         h4 {
             margin-bottom: ${props.theme.sizes.desktop};
@@ -211,12 +210,15 @@ const ArticleTemplate = ({
     const {
         category,
         content,
-        components
+        components,
+        title
     } = contentfulArticle
 
     return (
         <>
-            <Seo />
+            <Seo 
+                title={title} 
+            />
             <Constructor
                 lang={langSlug}
                 category={category}

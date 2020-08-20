@@ -16,7 +16,7 @@ const StyledContainer = styled(Container)`
 
     ${props => props.theme.above.desktop`
         flex-direction: row;
-        align-items: flex-end;
+        align-items: center;
 
         ${props.type == 'Scrollable' && `
             position: sticky;
@@ -59,7 +59,6 @@ const Description = styled(Title)`
         .description-wrapper {
             max-width: calc(${props.theme.sizes.desktop} * 11);
             
-            margin-right: calc(${props.theme.sizes.desktop} * 7);
             margin-left: 0;
         }
     `}

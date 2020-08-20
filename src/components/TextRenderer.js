@@ -62,8 +62,16 @@ const Paragraph = styled.p`
         margin-bottom: 0;
     }
 
+    a, button {
+        margin-top: calc(${props => props.theme.sizes.mobile} / 2);
+    }
+
     ${props => props.theme.above.desktop`
         font-size: ${props.theme.fontSizes.desktop.p};
+
+        a, button {
+            margin-top: calc(${props.theme.sizes.desktop} / 2);
+        }
     `}
 `
 
@@ -217,8 +225,6 @@ const TextRenderer = ({
                     },
                     [BLOCKS.EMBEDDED_ENTRY]: (node, children) => {
                         const { data: { target: { fields } } } = node
-
-                        console.log(fields)
                         
                         if (typeof fields == 'undefined' || typeof fields.videoUrl['en-US'] == 'undefined') return
                         

@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Img from 'gatsby-image'
 import gsap, { timeline } from 'gsap'
 import { useInView } from 'react-intersection-observer'
+import { Link, useStaticQuery, graphql } from 'gatsby'
 
 import Title from './Title'
 import Container from './Layout/Container'
@@ -70,6 +71,16 @@ const Description = styled(Title)`
         margin-left: 0;
     }
 
+    .button {
+        &:hover {
+            background-color: transparent;
+
+            border-color: ${props => props.theme.colors.dark}; 
+            
+            color: ${props => props.theme.colors.dark};
+        }
+    }
+
     ${props => props.theme.above.desktop`
         .description-wrapper {
             max-width: ${props.theme.desktopVW(380)};
@@ -83,8 +94,7 @@ const Upcoming = ({
     backgroundColor,
     data: {
         contentTitle,
-        contentDescription,
-        items
+        contentDescription
     }
 }) => {
 
@@ -122,6 +132,21 @@ const Upcoming = ({
             timeline && timeline.kill()
         }
     }, [descriptionWrapperInView])
+
+    const { latestItems } = useStaticQuery(graphql`{
+        latestItems: allContentfulArticle(filter: {
+            category: {
+                in: ["News", "Events", "Trips", "Brainfood"]
+            }
+        }, sort: {
+            order: DESC, 
+            fields: createdAt
+        }, limit: 4) {
+            nodes {
+                ...ArticleQuery
+            }
+        }
+    }`)
     
     return (
         <Wrapper>
@@ -134,7 +159,7 @@ const Upcoming = ({
                     overlayColor={backgroundColor}
                 />
                 <Grid>
-                    {items.map((item, index) => (
+                    {latestItems.nodes.map((item, index) => (
                         <UpcomingItem
                             key={index} 
                             data={item} 

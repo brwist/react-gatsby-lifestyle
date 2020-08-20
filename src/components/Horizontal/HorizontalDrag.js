@@ -33,7 +33,7 @@ const Wrapper = styled.div`
         left: 50%;
         bottom: 0;
 
-        transform: translateX(-50%);
+        transform: translateX(-50%) scaleX(0);
 
         width: 60%;
         min-width: ${props => props.theme.mobileVW(200)};
@@ -50,13 +50,13 @@ const Wrapper = styled.div`
 
         ${props.type == 'Straight' && `
             .swiper-wrapper {
-                padding: ${props.theme.desktopVW(120)} 0;
+                padding: ${props.theme.desktopVW(120)} 0 ${props.theme.desktopVW(60)} 0;
             }
         `}
 
         ${props.type == 'Wave' && `
             .swiper-wrapper {
-                padding-bottom: ${props.theme.desktopVW(120)};
+                padding-bottom: ${props.theme.desktopVW(60)};
             }
         `}
 
@@ -121,12 +121,12 @@ const HorizontalDrag = ({
     // Params
     const params = {
         initialSlide: isDisabled ? 1 : 0,
-        spaceBetween: 32,
+        spaceBetween: offset,
         slidesOffsetBefore: isDisabled ? 0 : offset,
         slidesOffsetAfter: isDisabled ? 0 : offset,
         slidesPerView: isDisabled ? 3 : 1.25,
         centeredSlides: isDisabled ? true : false,
-        grabCursor: isMobile ? false : true,
+        grabCursor: isMobile || items.length == 3 ? false : true,
         touchRatio: !isMobile && isDisabled ? 0 : 1,
         scrollbar: {
             el: '.swiper-scrollbar',
@@ -134,7 +134,7 @@ const HorizontalDrag = ({
         },
         breakpoints: {
             1023: {
-                spaceBetween: 80,
+                spaceBetween: offset / 2,
                 slidesPerView: 'auto',
             }
         }

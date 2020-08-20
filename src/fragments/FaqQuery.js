@@ -7,6 +7,9 @@ export const FaqQuery = graphql`
         contentTitle {
             json
         }
+        contentDescription {
+            json
+        }
         items {
             question
             category

@@ -13,18 +13,18 @@ export const PopupQuery = graphql`
         contentDescription {
             json
         }
-        ## testimonial {
-            ## name
-            ## image {
-                ## title
-                ## fluid(maxWidth: 100, quality: 100) {
-                    ## ...GatsbyContentfulFluid_withWebp
-                ## }
-            ## }
-            ## description {
-                ## description
-            ## }
-        ## }
+        testimonial {
+            name
+            image {
+                title
+                fluid(maxWidth: 100, quality: 100) {
+                    ...GatsbyContentfulFluid_withWebp
+                }
+            }
+            description {
+                description
+            }
+        }
         image {
             title
             fluid(maxWidth: 1200, quality: 100) {

@@ -5,7 +5,7 @@ import Swiper from 'react-id-swiper'
 import 'swiper/css/swiper.css'
 
 const Wrapper = styled.div`
-    > img {
+    > img, + img, img {
         opacity: 1 !important;
     }
 `

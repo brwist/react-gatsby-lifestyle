@@ -9,6 +9,13 @@ const StyledNavigation = styled.nav`
     display: block;
 
     width: 100%;
+    
+    ${props => props.type == 'header' && `
+        .list {
+            display: flex;
+            flex-direction: row;
+        }
+    `}
 
     ${props => props.type == 'main' && `
         margin-bottom: ${props.theme.sizes.mobile};
@@ -93,8 +100,6 @@ const StyledNavigation = styled.nav`
 const List = styled.ul``
 
 const Item = styled.li`
-    display: inline-block;
-
     color: ${props => props.theme.colors.light};
 
     &:not(:last-of-type) {
@@ -103,7 +108,7 @@ const Item = styled.li`
 `
 
 const StyledLink = styled(Link)`
-    display: inline-block;
+    display: block;
 
     position: relative;
 

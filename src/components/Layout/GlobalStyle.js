@@ -61,6 +61,10 @@ const GlobalStyle = createGlobalStyle`
 
 		&.ReactModal__Body--open {
 			overflow: hidden;
+
+			.headroom {
+				background-color: transparent;
+			}
 		}
     }
 
@@ -156,6 +160,18 @@ const GlobalStyle = createGlobalStyle`
 
 		margin: 0 auto ${props => props.theme.mobileVW(120)} auto;
 		padding: ${props => props.theme.mobileVW(120)} 0;
+	}
+
+	.headroom {
+		transition: background 0.35s ease-out, background-color 0.35s ease-out;
+
+		&--unfixed {
+			background: linear-gradient(to bottom, ${props => props.theme.colors.dark}, transparent);
+		}
+
+		&--unpinned, &--pinned {
+			background-color: ${props => props.theme.colors.dark};
+		}
 	}
 
 	.headroom-wrapper {

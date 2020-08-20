@@ -11,13 +11,7 @@ import Carousel from './Carousel'
 import FaqMobileItem from './FaqMobileItem'
 import FaqDesktopItem from './FaqDesktopItem'
 
-const Wrapper = styled.div`
-    padding-bottom: calc(${props => props.theme.sizes.mobile} * 3);
-    
-    ${props => props.theme.above.desktop`
-        padding-bottom: calc(${props.theme.sizes.desktop} * 10);
-    `}
-`
+const Wrapper = styled.div``
 
 const Header = styled(Container)`
     margin-bottom: calc(${props => props.theme.sizes.mobile} * 3);
@@ -39,6 +33,8 @@ const StyledTitle = styled(Title)`
         margin-left: 0;
     }
 `
+
+const Description = styled(Title)``
 
 const CarouselWrapper = styled.div`
     ${props => props.theme.above.desktop`
@@ -65,13 +61,15 @@ const Faq = ({
     lang, 
     inView,
     data: {
-        contentTitle, 
+        contentTitle,
+        contentDescription,
         items
     }
 }) => {
 
     // Refs
     const titleRef = useRef(null)
+    const descriptionRef = useRef(null)
     const itemsRef = useRef([])
     const mobileWrapperRef = useRef(null)
 
@@ -92,6 +90,7 @@ const Faq = ({
 
         const timeline = new gsap.timeline()
 
+        timeline.add(descriptionRef.current.transitionIn(), 0.0)
         timeline.add(titleRef.current.transitionIn(), 0.0)
         
         itemsRef.current.forEach((item, i) => {
@@ -111,6 +110,11 @@ const Faq = ({
                     title={contentTitle} 
                     size='normal' 
                 />
+                <Description 
+                    ref={descriptionRef}
+                    description={contentDescription}
+                    size='normal'
+                />
             </Header>
             <Grid>
                 {items.map((item, i) => (
@@ -125,12 +129,12 @@ const Faq = ({
             <CarouselWrapper ref={mobileWrapperRef}>
                 <StyledCarousel params={params}>
                     {items.slice(0, 3).map((item, i) => (
-                        <FaqMobileItem key={i} data={item} />
+                        <FaqMobileItem key={i} data={item} colored={i == 1} />
                     ))}
                 </StyledCarousel>
                 <StyledCarousel params={{ ...params, initialSlide: 1 }}>
                     {items.slice(-2).map((item, i) => (
-                        <FaqMobileItem key={i} data={item} />
+                        <FaqMobileItem key={i} data={item} colored={i == 0} />
                     ))}
                 </StyledCarousel>
             </CarouselWrapper>

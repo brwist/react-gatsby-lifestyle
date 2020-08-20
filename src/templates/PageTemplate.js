@@ -14,14 +14,18 @@ const PageTemplate = ({
     data: {
         contentfulPage: {
             category,
+            name,
             components
         },
         allInstaNode
     }
 }) => {
+    
     return (
         <>
-            <Seo />
+            <Seo 
+                title={name} 
+            />
             <Constructor 
                 lang={langSlug}
                 slug={slug}

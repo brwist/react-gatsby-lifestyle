@@ -11,17 +11,5 @@ export const UpcomingQuery = graphql`
             json
         }
         backgroundColor
-        items {
-            slug
-            name
-            title
-            category
-            featuredImage {
-                title
-                fluid(maxWidth: 720, quality: 100) {
-                    ...GatsbyContentfulFluid_withWebp
-                }
-            }
-        }
     }
 `
