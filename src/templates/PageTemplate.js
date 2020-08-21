@@ -53,6 +53,7 @@ export const query = graphql`
                 caption
                 mediaType
                 localFile {
+                    url
                     childImageSharp {
                         fluid(maxWidth: 560, quality: 100) {
                             ...GatsbyImageSharpFluid
