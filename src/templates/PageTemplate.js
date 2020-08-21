@@ -20,6 +20,8 @@ const PageTemplate = ({
         allInstaNode
     }
 }) => {
+
+    console.log(allInstaNode)
     
     return (
         <>
