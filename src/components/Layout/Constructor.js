@@ -80,7 +80,8 @@ const Constructor = ({
                     lang={lang} 
                     inView={inView} 
                     data={component} 
-                    items={instagram} 
+                    items={instagram.items} 
+                    hashtag={instagram.hashtag}
                     backgroundColor={backgroundColor}
                 />
             )

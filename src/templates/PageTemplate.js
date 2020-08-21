@@ -6,6 +6,7 @@ import Constructor from './../components/Layout/Constructor'
 
 const PageTemplate = ({
     pageContext: {
+        instagram: instagramHashtag,
         layout: {
             langSlug,
             slug
@@ -20,9 +21,6 @@ const PageTemplate = ({
         allInstaNode
     }
 }) => {
-
-    console.log(allInstaNode)
-    
     return (
         <>
             <Seo 
@@ -33,18 +31,21 @@ const PageTemplate = ({
                 slug={slug}
                 category={category}
                 data={components}
-                instagram={allInstaNode}
+                instagram={{
+                    items: allInstaNode,
+                    hashtag: instagramHashtag
+                }}
             />
         </>
     )
 }
 
 export const query = graphql`
-	query($id: String!, $instagram: String!) {
+	query($id: String!) {
 		contentfulPage(id: {eq: $id}) {
             ...PageQuery
         }
-        allInstaNode(filter: {username: {eq: $instagram}}, limit: 12) {
+        allInstaNode(limit: 100) {
             nodes {
                 id
                 username

@@ -15,6 +15,7 @@ const renderComponent = ({
         gesture, // Draggable or Scrollable
         itemsInformation, // Title and excerpt, Excerpt or Extended
         items,
+        hashtag, // If Instagram
         contentTitle,
         contentDescription
     }
@@ -27,7 +28,8 @@ const renderComponent = ({
             <HorizontalDrag 
                 lang={lang} 
                 inView={inView} 
-                items={items} 
+                items={items}
+                hashtag={hashtag} 
                 component={component} 
                 type={type}
                 slug={slug}

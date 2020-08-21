@@ -95,6 +95,7 @@ const HorizontalDrag = ({
     lang,
     inView,
     items,
+    hashtag,
     title, 
     description,
     component,
@@ -111,12 +112,13 @@ const HorizontalDrag = ({
     // States
     const [isHovering, setIsHovering] = useState(false)
     const [isMouseMoving, setIsMouseMoving] = useState(false)
+    const [carouselItems, setCarouselItems] = useState(items)
 
     // Variables
     const { width: windowWidth } = useWindowSize()
     const isMobile = windowWidth < theme.breakpoints.desktop
     const offset = isMobile ? 32 : windowWidth * 0.1
-    const isDisabled = !isMobile && items.length == 3
+    const isDisabled = !isMobile && carouselItems.length == 3
 
     // Params
     const params = {
@@ -126,7 +128,7 @@ const HorizontalDrag = ({
         slidesOffsetAfter: isDisabled ? 0 : offset,
         slidesPerView: isDisabled ? 3 : 1.25,
         centeredSlides: isDisabled ? true : false,
-        grabCursor: isMobile || items.length == 3 ? false : true,
+        grabCursor: isMobile || carouselItems.length == 3 ? false : true,
         touchRatio: !isMobile && isDisabled ? 0 : 1,
         scrollbar: {
             el: '.swiper-scrollbar',
@@ -173,6 +175,22 @@ const HorizontalDrag = ({
 
     }, [inView])
 
+    useEffect(() => {
+
+        if (hashtag) {
+            let hashtagItems = []
+        
+            carouselItems.forEach((item, i) => {
+                if (item.caption && item.caption.includes(hashtag)) {
+                    hashtagItems.push(item)
+                }
+            })
+
+            setCarouselItems(hashtagItems)
+        }
+
+    }, [])
+
     return (
         <Wrapper 
             colors={getColors(backgroundColor)} 
@@ -196,7 +214,7 @@ const HorizontalDrag = ({
                 <Carousel 
                     params={params}
                 >
-                    {items.map((item, i) => {
+                    {carouselItems.slice(0, 9).map((item, i) => {
                         return (
                             <Card
                                 key={i}
@@ -207,7 +225,7 @@ const HorizontalDrag = ({
                                 information={information}
                                 type={type}
                                 overlayColor={backgroundColor}
-                                active={item.slug != slug || component == 'InstagramFeed'}
+                                active={true}
                             />
                         )
                     })}
