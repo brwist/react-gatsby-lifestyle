@@ -3,6 +3,7 @@ import { graphql } from 'gatsby'
 export const PageQuery = graphql`
     fragment PageQuery on ContentfulPage {
         name
+        title: name
         category
         slug
         hidden
@@ -15,7 +16,6 @@ export const PageQuery = graphql`
         excerpt {
             excerpt
         }
-        title: name
         components {
             ... on ContentfulComponentContact {
                 ...ContactQuery
