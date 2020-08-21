@@ -176,6 +176,10 @@ const HorizontalDrag = ({
     }, [inView])
 
     useEffect(() => {
+        
+        console.log(hashtag)
+
+        console.log(items)
 
         if (hashtag) {
             let hashtagItems = []

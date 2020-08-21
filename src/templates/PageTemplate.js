@@ -45,7 +45,7 @@ export const query = graphql`
 		contentfulPage(id: {eq: $id}) {
             ...PageQuery
         }
-        allInstaNode(limit: 100) {
+        allInstaNode(limit: 250) {
             nodes {
                 id
                 username
