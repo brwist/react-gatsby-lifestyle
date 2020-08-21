@@ -61,7 +61,7 @@ const SelfTest = ({
             if (questions[i].correct != el) faults++
         })
 
-        setFormResult(faults < 3 ? 0 : 1)
+        setFormResult(faults <= 2 ? 0 : 1)
         setFormSubmitted(true)
     }
 

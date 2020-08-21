@@ -18,7 +18,7 @@ const Layout = ({
 }) => {
 	
 	const [menuOpen, setMenuOpen] = useState(false)
-	const [showPreloader, setShowPreloader] = useState(false)
+	const [showPreloader, setShowPreloader] = useState(true)
 	const showFooter = location.pathname.includes('contact') || location.pathname.includes('404') ? false : true
 
   	return (

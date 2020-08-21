@@ -6,6 +6,16 @@ export const PageQuery = graphql`
         category
         slug
         hidden
+        featuredImage {
+            title
+            fluid(maxWidth: 1280, quality: 100) {
+                ...GatsbyContentfulFluid_withWebp
+            }
+        }
+        excerpt {
+            excerpt
+        }
+        title: name
         components {
             ... on ContentfulComponentContact {
                 ...ContactQuery

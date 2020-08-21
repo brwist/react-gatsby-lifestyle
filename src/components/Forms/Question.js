@@ -66,8 +66,6 @@ const Answer = styled.div`
     justify-content: space-between;
     align-items: center;
 
-    cursor: pointer;
-
     text-align: center;
 
     &:not(:last-of-type) {

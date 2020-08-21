@@ -30,6 +30,19 @@ const Filter = styled.span`
     `}
 `
 
+const FilterItem = styled.span`
+    display: inline-block;
+    vertical-align: middle;
+
+    margin-right: ${props => props.theme.desktopVW(30)};
+
+    font-size: 1.2rem;
+
+    &:not(:first-of-type) {
+        opacity: 0.25;
+    }
+`
+
 const List = styled.ul`
     display: grid;
     grid-template-columns: 1fr;
@@ -216,7 +229,7 @@ const Grid = ({
     } = useStaticQuery(graphql`{
         newsItems: allContentfulArticle(filter: {
             category: {
-                in: ["News", "Events", "Trips", "Brainfood"]
+                in: ["News", "Events", "Trips", "Knowledge"]
             }
         }, sort: {
             order: DESC, 
@@ -226,7 +239,7 @@ const Grid = ({
                 ...ArticleQuery
             }
         },
-        trainerItems: allContentfulArticle(filter: {
+        trainerItems: allContentfulPage(filter: {
             category: {
                 eq: "Trainers"
             }
@@ -235,7 +248,7 @@ const Grid = ({
             fields: createdAt
         }) {
             nodes {
-                ...ArticleQuery
+                ...PageQuery
             }
         },
         careerItems: allContentfulArticle(filter: {
@@ -263,7 +276,14 @@ const Grid = ({
     return (
         <Wrapper>
             <Container>
-                {filterable && <Filter>All categories</Filter>}
+                {filterable && (
+                    <Filter>
+                        <FilterItem>All categories</FilterItem>
+                        <FilterItem>Trips</FilterItem>
+                        <FilterItem>Events</FilterItem>
+                        <FilterItem>Brainfood</FilterItem>
+                    </Filter>
+                )}
                 {items && items.length > 0 && (
                     <List>
                         {items.map((item, i) => (

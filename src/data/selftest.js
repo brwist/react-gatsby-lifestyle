@@ -32,7 +32,7 @@ export const questions = [
         correct: 1
     },
     {
-        title: 'If I want to lose weight the best carbohydrates from my diet can be:',
+        title: 'If I want to lose weight I need to cut carbohydrates from my diet',
         correct: 1
     },
     {
@@ -45,7 +45,11 @@ export const results = [
     {
         title: 'You will need some training my friend',
         description: 'You already have some knowledge, but you also have a lot to learn. We will help you with that. Framework and context is incredibly important to achieve long-lasting results. So lets get it on in our Rockstar Bootcamp program!',
-        link: 'performance'
+        link: 'performance',
+        button: {
+            label: 'Sign up here',
+            link: 'join-us'
+        }
     },
     {
         title: 'Great, you are Bootcamp ready!',

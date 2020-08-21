@@ -74,13 +74,6 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
                                 type
                             }
                         }
-                        ... on ContentfulPopup {
-                            name
-                            slug
-                            internal {
-                                type
-                            }
-                        }
                     }
                     footerItems {
                         ... on ContentfulPopup {

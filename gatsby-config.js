@@ -85,6 +85,12 @@ module.exports = {
 		{
 			resolve: `gatsby-source-instagram`,
 			options: {
+				username: '2610360'
+			}
+		},
+		{
+			resolve: `gatsby-source-instagram`,
+			options: {
 				type: `hashtag`,
 				hashtag: `kitchenrladam`
 			}

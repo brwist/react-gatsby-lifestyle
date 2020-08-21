@@ -234,7 +234,7 @@ const JoinUs = ({
                 className={className}
             >
                 <Field>
-                    <Label htmlFor='mce-FNAME'>Your first name</Label>
+                    <Label htmlFor='mce-FNAME'>First name</Label>
                     <Input
                         type='text'
                         name='FNAME'
@@ -244,7 +244,7 @@ const JoinUs = ({
                     />
                 </Field>
                 <Field>
-                    <Label htmlFor='mce-LNAME'>Your last name</Label>
+                    <Label htmlFor='mce-LNAME'>Last name</Label>
                     <Input
                         type='text'
                         name='LNAME'
@@ -254,7 +254,7 @@ const JoinUs = ({
                     />
                 </Field>
                 <Field>
-                    <Label htmlFor='mce-EMAIL'>Your email please</Label>
+                    <Label htmlFor='mce-EMAIL'>Email</Label>
                     <Input
                         type='email'
                         name='EMAIL'
@@ -264,7 +264,7 @@ const JoinUs = ({
                     />
                 </Field>
                 <Field>
-                    <Label htmlFor='mce-PHONE'>Your phone number</Label>
+                    <Label htmlFor='mce-PHONE'>Phone</Label>
                     <Input
                         type='text'
                         name='PHONE'
@@ -274,7 +274,7 @@ const JoinUs = ({
                     />
                 </Field>
                 <Field>
-                    <Label htmlFor='mce-MOTIVATION'>And your motivation to join Rockstar Lifestyle</Label>
+                    <Label htmlFor='mce-MOTIVATION'>Motivation</Label>
                     <Input
                         type='text'
                         name='MOTIVATION'

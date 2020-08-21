@@ -134,7 +134,7 @@ const ImageWrapper = styled.div`
     }
 
     ${props => props.theme.above.desktop`
-        margin-bottom: ${props.theme.desktopVW(40)};
+        margin-bottom: ${props.theme.desktopVW(30)};
     `}
 `
 
@@ -209,7 +209,7 @@ const Header = styled.div`
     margin-bottom: calc(${props => props.theme.sizes.mobile} / 1.5);
 
     ${props => props.theme.above.desktop`
-        margin-bottom: ${props.theme.desktopVW(24)};
+        margin-bottom: ${props.theme.desktopVW(15)};
     `}
 `
 
@@ -223,7 +223,7 @@ const Heading = styled.h4`
     text-transform: uppercase;
 
     ${props => props.theme.above.desktop`
-        font-size: ${props.theme.fontSizes.desktop.h5};
+        font-size: ${props.theme.desktopVW(35)};
     `}
 `
 
@@ -232,6 +232,8 @@ const StyledTags = styled(Tags)`
 `
 
 const Caption = styled(TextRenderer)`
+    font-size: ${props => props.theme.fontSizes.desktop.m};
+
     b  {
         font-family: ${props => props.theme.fontFamilies.plainRegular};
     }
