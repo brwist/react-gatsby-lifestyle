@@ -21,6 +21,7 @@ const PageTemplate = ({
         allInstaNode
     }
 }) => {
+    console.log('instanode', allInstaNode)
     return (
         <>
             <Seo 
@@ -45,7 +46,7 @@ export const query = graphql`
 		contentfulPage(id: {eq: $id}) {
             ...PageQuery
         }
-        allInstaNode(limit: 250) {
+        allInstaNode {
             nodes {
                 id
                 username
