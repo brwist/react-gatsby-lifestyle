@@ -82,7 +82,7 @@ const HorizontalTitle = ({
         
         if (!inView) return 
 
-        const timeline = new gsap.timeline()
+        const timeline = new gsap.timeline({ delay: 0.35 })
 
         title && timeline.add(titleRef.current.transitionIn(), 0)
         description && timeline.add(descriptionRef.current.transitionIn(), 0)

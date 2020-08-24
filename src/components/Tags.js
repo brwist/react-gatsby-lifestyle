@@ -63,7 +63,7 @@ const Tags = ({
         <List className={className}>
             {items.map((tag, i) => {
                 return (
-                    <Tag key={i}>
+                    <Tag key={i} className='tag'>
                         <Label>{tag}</Label>
                     </Tag>
                 )

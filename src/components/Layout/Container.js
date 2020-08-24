@@ -5,7 +5,7 @@ const StyledContainer = styled.div`
     position: relative;
     
     width: 100%;
-    max-width: ${props => props.theme.breakpoints.maxWidth}px;
+    /* max-width: ${props => props.theme.breakpoints.maxWidth}px; */
     
     height: 100%;
 
@@ -13,6 +13,10 @@ const StyledContainer = styled.div`
 
     ${props => props.theme.below.maxWidth`
         padding: 0 ${props.theme.sizes.mobile};
+    `}
+
+    ${props => props.theme.above.maxWidth`
+        padding: 0 ${props.theme.sizes.desktop};
     `}
 `
 

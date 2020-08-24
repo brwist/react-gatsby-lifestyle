@@ -123,8 +123,6 @@ const Label = styled.span`
 
     color: currentColor;
 
-    transition: color 0.5s cubic-bezier(.16,1.08,.38,.98);
-
     ${props => props.theme.above.desktop`
         font-size: ${props.theme.fontSizes.desktop.m};
     `}

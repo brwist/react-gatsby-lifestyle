@@ -209,10 +209,10 @@ const ContentBlock = ({
         grabCursor: true,
         effect: 'fade',
         preloadImages: false,
+        waitForTransition: true,
         loop: true,
-        autoplay: {
-            delay: 3500
-        },
+        autoplay: true,
+        disableOnInternation: false,
         pagination: {
             el: '.swiper-pagination',
             type: 'bullets'
@@ -233,7 +233,7 @@ const ContentBlock = ({
         
         if (!inView) return
 
-        const timeline = new gsap.timeline()
+        const timeline = new gsap.timeline({ delay: 0.35 })
 
         timeline.add(titleRef.current.transitionIn(), 0)
         timeline.to(scrollBar, { scaleX: 1.0, alpha: 1.0, transformOrigin: 'center', ease: 'power3.out' }, 0)

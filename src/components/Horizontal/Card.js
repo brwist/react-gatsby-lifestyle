@@ -20,6 +20,24 @@ const CardStyles = css`
 
     width: ${props => props.theme.mobileVW(450)};
 
+    ${props => props.overlayColor == 'White' || props.overlayColor == 'Grey' && `
+        .button {
+            background-color: ${props.theme.colors.dark};
+            
+            border-color: ${props.theme.colors.dark};
+
+            color: ${props.theme.colors.white};
+
+            &:hover {
+                background-color: transparent;
+            
+                border-color: ${props.theme.colors.dark};
+
+                color: ${props.theme.colors.dark};
+            }
+        }
+    `}
+
     ${props => props.active == 'false' && `
         &:after {
             content: '';
@@ -54,6 +72,10 @@ const CardStyles = css`
         ${props.active == 'true' && `
             &.loaded {
                 &:hover {
+                    .button-wrapper {
+                        overflow: visible;
+                    }
+                    
                     .button {
                         transform: translateY(0);
                     }
@@ -263,6 +285,8 @@ const Title = styled.span`
 `
 
 const ButtonWrapper = styled.div`
+    display: block;
+
     margin-top: calc(${props => props.theme.sizes.mobile} / 1.5);
 
     opacity: 1;
@@ -360,6 +384,24 @@ const Card = ({
         }
     }, [inView])
 
+    const getLink = data => {
+        
+        let link
+
+        if (data.category == 'Workshops') {
+            link = `spirit/${data.category.toLowerCase()}/${data.slug}`
+        } else if (data.category == 'Trainers') {
+            link = `performance/${data.category.toLowerCase()}/${data.slug}`
+        } else if (data.category == 'Worlds' || data.category == 'Normal') {
+            link = data.slug
+        } else {
+            link = `${data.category.toLowerCase()}/${data.slug}`
+        }
+
+        return link
+
+    }
+
     if (component == 'InstagramFeed') {
         return (
             <NormalCard 
@@ -385,9 +427,7 @@ const Card = ({
             let link
 
             if (data.category) {
-                if (data.category == 'Trainers') {
-                    link = `performance/${data.category.toLowerCase()}/${data.slug}`
-                }
+                link = getLink(data)
             } else {
                 link = data.buttonLink
             }
@@ -429,23 +469,18 @@ const Card = ({
 
             if (data.category) {
                 
-                let link
-
-                const { category, slug } = data
-                const { tags, testimonial, headerDescription } = data.components[0]
-
-                if (category == 'Workshops') {
-                    link = `spirit/${category.toLowerCase()}/${slug}`
-                } else {
-                    link = `${category.toLowerCase()}/${slug}`
-                }
+                const { 
+                    tags, 
+                    testimonial, 
+                    headerDescription 
+                } = data.components[0]
                 
                 return (
                     <LinkedCard 
                         ref={itemRef}
                         className={className} 
                         type={type} 
-                        to={generatePath(lang, link)} 
+                        to={generatePath(lang, getLink(data))} 
                         active={active.toString()}
                         overlayColor={overlayColor}
                     >
@@ -473,7 +508,7 @@ const Card = ({
                             <ButtonWrapper className='button-wrapper'>
                                 <ButtonPrimary
                                     label={data.buttonLabel}
-                                    to={generatePath(lang, link)}
+                                    to={generatePath(lang, getLink(data))}
                                 />
                             </ButtonWrapper>
                         )}
@@ -515,7 +550,16 @@ const Card = ({
                     active={active.toString()}
                     overlayColor={overlayColor}
                 >
-                    {data.featuredImage.fluid != null && (
+                    {data.slug ? (
+                        <LinkWrapper to={generatePath(lang, getLink(data))}>
+                            <ImageComponent
+                                image={data.featuredImage.fluid}
+                                alt={data.featuredImage.title}
+                                ref={imageRef}
+                                overlayColor={overlayColor}
+                            />
+                        </LinkWrapper>
+                    ) : (
                         <ImageComponent
                             image={data.featuredImage.fluid}
                             alt={data.featuredImage.title}
@@ -528,6 +572,9 @@ const Card = ({
                     </Header>
                     <LargeDescription ref={descriptionRef}>
                         <Caption data={data.excerpt} />
+                        {data.testimonial && (
+                            <StyledTestimonial data={data.testimonial} />
+                        )}
                     </LargeDescription>
                     {data.buttonLabel && (
                         <ButtonWrapper 
@@ -541,7 +588,7 @@ const Card = ({
                             ) : (
                                 <ButtonPrimary
                                     label={data.buttonLabel || `Discover our ${data.name}`}
-                                    to={generatePath(lang, data.slug)}
+                                    to={generatePath(lang, getLink(data))}
                                 />
                             )}
                         </ButtonWrapper>

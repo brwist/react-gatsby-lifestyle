@@ -32,11 +32,11 @@ const Description = styled.p``
 const Questions = styled.div``
 
 const Form = styled.form`
-    margin-top: ${props => props.theme.mobileVW(80)};
+    /* margin-top: ${props => props.theme.mobileVW(80)};
     
     ${props => props.theme.above.desktop`
         margin-top: ${props.theme.desktopVW(80)};
-    `}
+    `} */
 `
 
 const ResultWrapper = styled.div``
@@ -97,12 +97,12 @@ const SelfTest = ({
                 </ResultWrapper>
             ) : (
                 <Questions>
-                    {data && (
+                    {/* {data && (
                         <>
                             <Title>{data.contentTitle}</Title>
                             <TextRenderer data={data.contentDescription} />
                         </>
-                    )}
+                    )} */}
                     <Form>
                         {questions.map((question, i) => {
                             return (

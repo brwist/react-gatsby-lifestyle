@@ -76,48 +76,6 @@ module.exports = {
 				access_token: `EAAKdmNVgv18BAAXravubSutE4FdwmLtflJsM63WbMbH4QObvZBaoAXLzuc8Yj2f2ZAR1qCjVMfrGWjUDoYtaTMuidHSYibZBMuCk3KQ9XVgZCeMB0mENCn4cr1M2RCuavYApC5qszTgMkPPPiOA4q2PqoEGMP2sYmUmlS88GtQZDZD`,
 				maxPosts: 500
 			}
-		},
-		{
-			resolve: `gatsby-source-instagram`,
-			options: {
-				type: `hashtag`,
-				hashtag: `performancerladam`
-			}
-		},
-		{
-			resolve: `gatsby-source-instagram`,
-			options: {
-				type: `hashtag`,
-				hashtag: `kitchenrladam`
-			}
-		},
-		{
-			resolve: `gatsby-source-instagram`,
-			options: {
-				type: `hashtag`,
-				hashtag: `eventsrladam`
-			}
-		},
-		{
-			resolve: `gatsby-source-instagram`,
-			options: {
-				type: `hashtag`,
-				hashtag: `tripsrladam`
-			}
-		},
-		{
-			resolve: `gatsby-source-instagram`,
-			options: {
-				type: `hashtag`,
-				hashtag: `instituterladam`
-			}
-		},
-		{
-			resolve: `gatsby-source-instagram`,
-			options: {
-				type: `hashtag`,
-				hashtag: `spiritrladam`
-			}
 		}
 	]
 }

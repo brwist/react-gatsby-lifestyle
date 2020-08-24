@@ -21,6 +21,18 @@ const Layout = ({
 	const [showPreloader, setShowPreloader] = useState(false)
 	const showFooter = location.pathname.includes('contact') || location.pathname.includes('404') ? false : true
 
+	const toggleMenuHandler = () => {
+		
+		let headroom = document.querySelector('.headroom')
+		
+		if (!headroom.classList.contains('headroom--pinned')) {
+			headroom.classList.add('headroom-pinned')
+		}
+
+		setMenuOpen(!menuOpen)
+		
+	}
+
   	return (
 		<PreloaderContext.Provider value={showPreloader ? 'preloader' : 'no-preloader'}>
 			<GlobalStyle shouldDisableScroll={menuOpen ? true : false} />
@@ -32,14 +44,14 @@ const Layout = ({
 				lang={lang}
 				contentTheme={contentTheme}
 				menuOpen={menuOpen}
-				setMenuOpen={() => setMenuOpen(!menuOpen)}
+				setMenuOpen={toggleMenuHandler}
 			/>
-			<Menu 
+			<Menu
 				lang={lang}
 				contentTheme={contentTheme}
 				menuOpen={menuOpen}
 				currentLocation={location}
-				setMenuOpen={() => setMenuOpen(!menuOpen)}
+				setMenuOpen={toggleMenuHandler}
 			/>
 			<main>
 				{children}

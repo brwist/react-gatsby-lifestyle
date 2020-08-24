@@ -113,9 +113,9 @@ const UnorderedList = styled.ul`
 `
 
 const StyledButtonPrimary = styled(ButtonPrimary)`
-    color: currentColor;
+    /* color: currentColor;
 
-    border-color: currentColor;
+    border-color: currentColor; */
 `
 
 const StyledLink = styled.a`
@@ -135,7 +135,7 @@ const Media = styled.div`
     padding-top: 56%;
 
     ${props => props.theme.above.desktop`
-        margin-top: calc(${props.theme.sizes.desktop} * 4);
+        margin-top: calc(${props.theme.sizes.desktop} * 2);
     `}
 `
 
@@ -163,7 +163,7 @@ const StyledImage = styled.img`
     margin: ${props => props.theme.sizes.mobile} 0;
 
     ${props => props.theme.above.desktop`
-        margin: calc(${props.theme.sizes.desktop} * 4) 0;
+        margin: calc(${props.theme.sizes.desktop} * 2) 0;
     `}
 `
 
@@ -180,7 +180,7 @@ const VideoTitle = styled.span`
     opacity: 0.5;
 
     ${props => props.theme.above.desktop`
-        margin: ${props.theme.sizes.desktop} 0 calc(${props.theme.sizes.desktop} * 4) 0;
+        margin: ${props.theme.sizes.desktop} 0 calc(${props.theme.sizes.desktop} * 2) 0;
 
         font-size: ${props.theme.fontSizes.desktop.p};
     `}
@@ -225,6 +225,8 @@ const TextRenderer = ({
                     },
                     [BLOCKS.EMBEDDED_ENTRY]: (node, children) => {
                         const { data: { target: { fields } } } = node
+
+                        console.log(node)
                         
                         if (typeof fields == 'undefined' || typeof fields.videoUrl['en-US'] == 'undefined') return
                         

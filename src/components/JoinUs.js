@@ -3,6 +3,7 @@ import { useWindowSize } from 'react-use'
 import styled from 'styled-components'
 import Image from 'gatsby-image'
 import gsap from 'gsap'
+import { useStaticQuery, graphql } from 'gatsby'
 
 import Container from './Layout/Container'
 import Title from './Title'
@@ -26,7 +27,7 @@ const StyledContainer = styled(Container)`
     ${props => props.theme.above.desktop`
         flex-direction: row;
         
-        padding: calc(${props.theme.sizes.desktop} * 10) 0;
+        padding: calc(${props.theme.sizes.desktop} * 5) 0;
     `}
 `
 
@@ -62,8 +63,28 @@ const MouseAnimatedWrapper = styled.div`
 `
   
 const MouseAnimatedImage = styled.div`
+    height: 100%;
+
+    background: #000;
+
+    background-image: url(${props => props.image});
     background-repeat: no-repeat;
     background-position: center;
+    background-size: contain;
+
+    &:after {
+        content: '';
+        position: absolute;
+        
+        top: 0;
+        left: 0;
+        
+        width: 100%;
+        height: 100%;
+
+        background-image: url(${props => props.glowImage});
+        background-size: cover;
+    }
 `
 
 const MouseAnimatedBorder = styled.div`
@@ -85,15 +106,6 @@ const MouseAnimatedBorder = styled.div`
     overflow: hidden;
     
     transition: transform 0.5s ease-out 0s;
-
-    &:after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
 `  
 
 const JoinUs = ({
@@ -151,7 +163,7 @@ const JoinUs = ({
 
     const onMouseMoveHandler = (event) => {
         if (isTimeToUpdate()) {
-        update(event)
+            update(event)
         }
     }
 
@@ -179,9 +191,9 @@ const JoinUs = ({
         mainRef.current.addEventListener('mouseleave', onMouseLeaveHandler)
 
         return () => {
-        mainRef.current.removeEventListener('mouseenter', onMouseEnterHandler)
-        mainRef.current.removeEventListener('mousemove', onMouseMoveHandler)
-        mainRef.current.removeEventListener('mouseleave', onMouseLeaveHandler)
+            mainRef.current.removeEventListener('mouseenter', onMouseEnterHandler)
+            mainRef.current.removeEventListener('mousemove', onMouseMoveHandler)
+            mainRef.current.removeEventListener('mouseleave', onMouseLeaveHandler)
         }
     }, [])
 
@@ -191,12 +203,22 @@ const JoinUs = ({
         
         if (!inView) return
 
-        const timeline = new gsap.timeline()
+        const timeline = new gsap.timeline({ delay: 0.25 })
         
-        timeline.add(titleRef.current.transitionIn(), 0.0)
+        timeline.add(titleRef.current.transitionIn(), 0.25)
         timeline.to(imageRef.current, { alpha: 1.0, duration: 0.35, ease: 'sine.out' }, 0.25)
 
     }, [inView])
+
+    const { glowImage } = useStaticQuery(graphql`{
+        glowImage: file(relativePath: { eq: "glow.png" }) {
+            childImageSharp {
+                fluid(maxWidth: 500, quality: 100) {
+                    src
+                }
+            }
+        }
+    }`)
 
     return (
         <Wrapper ref={mainRef}>
@@ -206,14 +228,13 @@ const JoinUs = ({
                     title={contentTitle}
                     description={contentDescription}
                     size='medium'
+                    inView={inView}
                     ref={titleRef}
                 />
                 <MouseAnimatedWrapper ref={imageRef}>
                     <MouseAnimatedImage
-                        style={{
-                            backgroundImage: `url(${image.fluid.src})`,
-                            height: '100%'
-                        }}
+                        image={image.fluid.src}
+                        glowImage={glowImage.childImageSharp.fluid.src}
                     >
                     </MouseAnimatedImage>
                     <MouseAnimatedBorder

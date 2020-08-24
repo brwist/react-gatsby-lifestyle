@@ -8,6 +8,10 @@ import TextRenderer from './../TextRenderer'
 import JoinUsForm from './../Forms/JoinUs'
 import SelfTestForm from './../Forms/SelfTest'
 
+const ModalInner = styled.div`
+    box-shadow: 0 0 ${props => props.theme.desktopVW(100)} rgba(0, 0, 0, 0.85);
+`
+
 const Header = styled.header`
     position: relative;
 
@@ -33,11 +37,41 @@ const StyledImage = styled(Image)`
     }
 `
 
+const Copy = styled.div`
+    width: 100%;
+
+    margin-bottom: ${props => props.theme.sizes.mobile};
+
+    ${props => props.theme.above.desktop`
+        margin-bottom: ${props.theme.sizes.desktop};
+    `}
+`
+
+const Title = styled.h4`
+    display: block;
+
+    margin-bottom: ${props => props.theme.sizes.mobile};
+
+    font-family: ${props => props.theme.fontFamilies.nbBold};
+    font-size: ${props => props.theme.fontSizes.mobile.h5};
+
+    text-transform: uppercase;
+
+    ${props => props.theme.above.desktop`
+        margin-bottom: ${props.theme.sizes.desktop};
+
+        font-family: ${props.theme.fontFamilies.nbBold};
+        font-size: ${props.theme.fontSizes.desktop.h5};
+    `}
+`
+
 const StyledLink = styled(Link)`
     position: absolute;
     
     top: ${props => props.theme.sizes.desktop};
     right: ${props => props.theme.sizes.desktop};
+
+    font-size: ${props => props.theme.fontSizes.desktop.p};
 
     color: ${props => props.theme.colors.light};
 `
@@ -86,11 +120,13 @@ const PopupModal = ({
 }) => {
 
     const {
-        image
+        image,
+        contentTitle,
+        contentDescription
     } = data
 
     return (
-        <>
+        <ModalInner>
             <Header>
                 <StyledImage 
                     fluid={image.fluid} 
@@ -101,11 +137,15 @@ const PopupModal = ({
                 </StyledLink>
             </Header>
             <FormWrapper>
+                <Copy>
+                    <Title>{contentTitle}</Title>
+                    <TextRenderer data={contentDescription}/>
+                </Copy>
                 {slug == 'join-us' && <StyledJoinUsForm data={data} />}
                 {slug == 'self-test' && <StyledSelfTestForm data={data} />}
             </FormWrapper>
             {/* <Grain /> */}
-        </>
+        </ModalInner>
     )
 }
 

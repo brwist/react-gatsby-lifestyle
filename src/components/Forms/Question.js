@@ -151,8 +151,6 @@ const StyledQuestion = styled.label`
     line-height: 1.5;
 
     color: ${props => props.theme.colors.light};
-    
-    cursor: pointer;
 
     ${props => props.theme.above.desktop`
         font-size: ${props.theme.fontSizes.desktop.p};

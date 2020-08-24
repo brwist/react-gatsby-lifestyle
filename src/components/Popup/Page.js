@@ -22,16 +22,6 @@ const Wrapper = styled.section`
     `}
 `
 
-const StyledHeroBanner = styled(HeroBanner)`
-    // .description-wrapper {
-    //     margin-bottom: ${props => props.theme.desktopVW(120)};
-    // }
-    
-    // .description {
-    //     font-size: ${props => props.theme.fontSizes.desktop.h6};
-    // }
-`
-
 const StyledContainer = styled(Container)`
     ${props => props.theme.above.desktop`
         display: flex;
@@ -40,7 +30,7 @@ const StyledContainer = styled(Container)`
     `}
 `
 
-const TestimonialWrapper = styled.div`
+const StickyWrapper = styled.div`
     ${props => props.theme.below.desktop`
         ${props.mobile == 'true' && `
             display: block;
@@ -54,7 +44,7 @@ const TestimonialWrapper = styled.div`
     ${props => props.theme.above.desktop`
         width: 100%;
 
-        max-width: ${props => props.theme.desktopVW(500)};
+        max-width: ${props.theme.desktopVW(600)};
 
         ${props.mobile == 'true' && `
             display: none;
@@ -65,6 +55,42 @@ const TestimonialWrapper = styled.div`
             
             height: 0;
         `} 
+    `}
+`
+
+const Copy = styled.div`
+    width: 100%;
+
+    margin-bottom: ${props => props.theme.sizes.mobile};
+
+    ${props => props.theme.above.desktop`
+        margin-bottom: ${props.theme.sizes.desktop};
+    `}
+`
+
+const Title = styled.h4`
+    display: block;
+
+    margin-bottom: ${props => props.theme.sizes.mobile};
+
+    font-family: ${props => props.theme.fontFamilies.nbBold};
+    font-size: ${props => props.theme.fontSizes.mobile.h5};
+
+    text-transform: uppercase;
+
+    ${props => props.theme.above.desktop`
+        margin-bottom: ${props.theme.sizes.desktop};
+
+        font-family: ${props.theme.fontFamilies.nbBold};
+        font-size: ${props.theme.fontSizes.desktop.h5};
+    `}
+`
+
+const StyledTestimonial = styled(Testimonial)`
+    max-width: ${props => props.theme.mobileVW(450)};
+
+    ${props => props.theme.above.desktop`
+        max-width: ${props.theme.desktopVW(450)};
     `}
 `
 
@@ -98,7 +124,7 @@ const Content = styled.div`
     `}
 `
 
-const TestimonialComponent = ({
+const StickyComponent = ({
     className,
     mobile, 
     data
@@ -116,13 +142,19 @@ const TestimonialComponent = ({
     }, [])
 
     return (
-        <TestimonialWrapper 
+        <StickyWrapper 
             className={className} 
             mobile={mobile}
             ref={testimonialsRef}
         >
-            {data.testimonial && <Testimonial data={data.testimonial} />}
-        </TestimonialWrapper>
+            <Copy>
+                <Title>{data.contentTitle}</Title>
+                <TextRenderer data={data.contentDescription}/>
+            </Copy>
+            {data.testimonial && (
+                <StyledTestimonial data={data.testimonial} />
+            )}
+        </StickyWrapper>
     )
 }
 
@@ -141,13 +173,19 @@ const PopupPage = ({
             />
             <Wrapper>
                 <StyledContainer>
-                    <TestimonialComponent mobile='false' data={data} />
+                    <StickyComponent 
+                        mobile='false' 
+                        data={data} 
+                    />
                     <Content>
                         {slug == 'join-us' && <JoinUsForm lang={lang} data={data} />}
                         {slug == 'self-test' && <SelfTestForm lang={lang} data={data} />}
                         {slug == 'cookies-and-privacy' && <TextRenderer lang={lang} data={data.contentDescription} useInlineLink />}
                     </Content>
-                    <TestimonialComponent mobile='true' data={data} />
+                    <StickyComponent 
+                        mobile='true' 
+                        data={data}
+                    />
                 </StyledContainer>
                 {/* <Grain /> */}
             </Wrapper>

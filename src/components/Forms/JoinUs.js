@@ -38,14 +38,14 @@ const StyledTestimonial = styled(Testimonial)``
 const Form = styled.form`
     width: 100%;
 
-    padding: ${props => props.theme.sizes.mobile} 0 0 0;
+    /* padding: ${props => props.theme.sizes.mobile} 0 0 0; */
     
     color: ${props => props.theme.colors.light};
 
     ${props => props.theme.above.desktop`
-        max-width: ${props.theme.desktopVW(500)};
+        max-width: ${props.theme.desktopVW(600)};
     
-        padding: ${props.theme.desktopVW(80)} 0 0 0;
+        /* padding: ${props.theme.desktopVW(80)} 0 0 0; */
     `}
 `
 
@@ -219,12 +219,12 @@ const JoinUs = ({
 
     return (
         <Wrapper>
-            {data && (
+            {/* {data && (
                 <Copy>
                     <Title>{contentTitle}</Title>
                     <TextRenderer data={contentDescription}/>
                 </Copy>
-            )}
+            )} */}
             <Form
                 action='https://rockstarlifestyle.us8.list-manage.com/subscribe/post?u=86397600011aa7ae66131d8b8&amp;id=5c30063382'
                 method='post'

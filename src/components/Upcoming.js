@@ -72,6 +72,12 @@ const Description = styled(Title)`
     }
 
     .button {
+        background-color: ${props => props.theme.colors.dark};
+
+        border-color: ${props => props.theme.colors.dark}; 
+        
+        color: ${props => props.theme.colors.dark};
+        
         &:hover {
             background-color: transparent;
 

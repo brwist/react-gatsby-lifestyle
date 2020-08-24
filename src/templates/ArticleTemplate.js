@@ -73,7 +73,7 @@ const InfoItem = styled.li`
         ${props.flex && `
             .button {
                 &:first-of-type {
-                    margin-bottom: calc(${props.theme.sizes.desktop} / 2);
+                    margin-bottom: ${props.theme.sizes.desktop};
                 }
             }
         `}
@@ -103,8 +103,19 @@ const InfoValue = styled.span`
     font-size: ${props => props.theme.fontSizes.mobile.s};
     line-height: 1;
 
+    ${props => props.large && `
+        max-width: ${props.theme.desktopVW(600)};
+        
+        font-family: ${props.theme.fontFamilies.plainRegular};
+        font-size: ${props.theme.fontSizes.mobile.m};
+    `}
+
     ${props => props.theme.above.desktop`
         font-size: ${props.theme.fontSizes.desktop.p};
+
+        ${props.large && `
+            font-size: ${props.theme.fontSizes.desktop.h5};
+        `}
     `}
 `
 
@@ -168,6 +179,10 @@ const InfoBlock = ({
             ref={informationRef}
             mobile={mobile}
         >
+            <InfoItem>
+                <InfoTitle>Title</InfoTitle>
+                <InfoValue large>{name}</InfoValue>
+            </InfoItem>
             <InfoItem>
                 <InfoTitle>Author</InfoTitle>
                 <InfoValue>{author}</InfoValue>

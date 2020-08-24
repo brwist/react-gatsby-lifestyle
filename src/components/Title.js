@@ -167,6 +167,10 @@ const StyledTitle = styled.h1`
         ${props.size == 'small' && `
             font-family: ${props.theme.fontFamilies.plainLight};
             font-size: calc(${props.theme.fontSizes.desktop.h5} * 2);
+            
+            .words {
+                line-height: 1.25;
+            }
 
             .line-wrapper {
                 &:nth-of-type(2), 
@@ -226,9 +230,7 @@ const TitleOverlay = styled.div`
     `}
 `
 
-const Words = styled.span`
-    
-`
+const Words = styled.span``
 
 const DescriptionWrapper = styled.div`
     width: 100%;
@@ -253,10 +255,20 @@ const DescriptionWrapper = styled.div`
 `
 
 const StyledTags = styled(Tags)`
-    margin-bottom: calc(${props => props.theme.sizes.mobile} / 3);
+    margin-left: -${props => props.theme.mobileVW(10)};
+    margin-bottom: ${props => props.theme.sizes.mobile};
+    
+    .tag {
+        margin: ${props => props.theme.mobileVW(5)};
+    }
     
     ${props => props.theme.above.desktop`
+        margin-left: -${props.theme.desktopVW(10)};
         margin-bottom: ${props.theme.sizes.desktop};
+        
+        .tag {
+            margin: ${props.theme.desktopVW(5)};
+        }
     `}
 `
 
@@ -386,14 +398,14 @@ const Title = ({
                             [BLOCKS.HEADING_1]: (node, children) => {
                                 return (
                                     <LineWrapper className='line-wrapper'>
-                                        <Words>{children}</Words>
+                                        <Words className='words'>{children}</Words>
                                     </LineWrapper>
                                 )
                             },
                             [BLOCKS.PARAGRAPH]: (node, children) => {
                                 return (
                                     <LineWrapper className='line-wrapper'>
-                                        <Words>{children}</Words>
+                                        <Words className='words'>{children}</Words>
                                     </LineWrapper>
                                 )
                             }
