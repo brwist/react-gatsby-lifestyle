@@ -30,7 +30,7 @@ const Seo = ({
     `)
 
     const siteName = theme.title || 'Rockstar Lifestyle'
-    const metaImage = image.fixed.src || theme.seoImage.fixed.src
+    const metaImage = image != null ? image.fixed.src : theme.seoImage.fixed.src
     const metaTitle = title ? `${title} - ${siteName}` : siteName
     const metaDescription = description || theme.seoDescription.seoDescription
     const metaKeywords = keywords || theme.seoKeywords.join(', ')

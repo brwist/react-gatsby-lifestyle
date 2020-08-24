@@ -27,7 +27,7 @@ const PageTemplate = ({
         <>
             <Seo 
                 title={name} 
-                image={seoImage && seoImage}
+                image={seoImage}
             />
             <Constructor 
                 lang={langSlug}
