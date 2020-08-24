@@ -76,6 +76,11 @@ module.exports = {
 				access_token: `EAAKdmNVgv18BAAXravubSutE4FdwmLtflJsM63WbMbH4QObvZBaoAXLzuc8Yj2f2ZAR1qCjVMfrGWjUDoYtaTMuidHSYibZBMuCk3KQ9XVgZCeMB0mENCn4cr1M2RCuavYApC5qszTgMkPPPiOA4q2PqoEGMP2sYmUmlS88GtQZDZD`,
 				maxPosts: 500
 			}
+		}, {
+			resolve: `gatsby-source-instagram`,
+			options: {
+			  	username: `2610360`
+			}
 		}
 	]
 }

@@ -16,6 +16,11 @@ export const PageQuery = graphql`
         excerpt {
             excerpt
         }
+        seoImage: featuredImage {
+            fixed(width: 1200, height: 630, cropFocus: CENTER) {
+                ...GatsbyContentfulFixed
+            }
+        }
         components {
             ... on ContentfulComponentContact {
                 ...ContactQuery

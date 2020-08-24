@@ -18,12 +18,16 @@ const PopupTemplate = ({
     }
 }) => {
     
-    const { name } = contentfulPopup
+    const { 
+        name,
+        seoImage 
+    } = contentfulPopup
 
     return (
         <>
             <Seo 
                 title={name}
+                image={seoImage}
             />
             <ModalRoutingContext.Consumer>
                 {({ modal, closeTo }) => (

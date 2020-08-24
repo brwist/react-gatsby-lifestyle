@@ -10,6 +10,11 @@ export const ArticleQuery = graphql`
                 ...GatsbyContentfulFluid_withWebp
             }
         }
+        seoImage: featuredImage {
+            fixed(width: 1200, height: 630, cropFocus: CENTER) {
+                ...GatsbyContentfulFixed
+            }
+        }
         excerpt {
             excerpt
         }

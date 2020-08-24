@@ -112,19 +112,19 @@ const Menu = ({
     const imageRef = useRef(null)
 
     const [timeline] = useState(new gsap.timeline({ paused: true }))
-    const [activeMenuItem, setActiveMenuItem] = useState(Math.floor(Math.random() * contentTheme.menu.mainItems.length))
+    const [activeMenuItem, setActiveMenuItem] = useState(Math.floor(Math.random() * contentTheme.menu.menuItems.length))
 
     const {
         contentfulTheme: {
             menu: {
-                mainItems
+                menuItems
             }
         }
     } = useStaticQuery(graphql`
         query MenuImagesQuery {
             contentfulTheme {
                 menu {
-                    mainItems {
+                    menuItems {
                         name
                         slug
                         featuredImage {
@@ -144,9 +144,9 @@ const Menu = ({
         let slug = removeLeadingSlashes(currentLocation.pathname)
 
         if (slug == '') {
-            setActiveMenuItem(Math.floor(Math.random() * contentTheme.menu.mainItems.length))
+            setActiveMenuItem(Math.floor(Math.random() * contentTheme.menu.menuItems.length))
         } else {
-            mainItems.forEach((item, i) => {
+            menuItems.forEach((item, i) => {
                 if (slug == item.slug) {
                     setActiveMenuItem(i)
                 }
@@ -191,7 +191,7 @@ const Menu = ({
                     <Navigation
                         ref={mainNavRef}
                         lang={lang}
-                        data={contentTheme.menu.mainItems}
+                        data={contentTheme.menu.menuItems}
                         setMenuOpen={setMenuOpen}
                         setActiveMenuItem={i => setActiveMenuItem(i)}
                         type='main'
@@ -205,10 +205,10 @@ const Menu = ({
                     />
                 </NavigationWrapper>
                 <ImageWrapper>
-                    {mainItems[activeMenuItem].featuredImage != null && (
+                    {menuItems[activeMenuItem].featuredImage != null && (
                         <StyledAnimatedImage 
                             ref={imageRef}
-                            data={mainItems[activeMenuItem].featuredImage}
+                            data={menuItems[activeMenuItem].featuredImage}
                         />
                     )}
                 </ImageWrapper>

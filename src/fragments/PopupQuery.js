@@ -31,5 +31,10 @@ export const PopupQuery = graphql`
                 ...GatsbyContentfulFluid_withWebp
             }
         }
+        seoImage: image {
+            fixed(width: 1200, height: 630, cropFocus: CENTER) {
+                ...GatsbyContentfulFixed
+            }
+        }
     }
 `

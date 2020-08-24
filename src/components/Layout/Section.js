@@ -26,7 +26,7 @@ const Section = ({
     const flowRef = useRef(null)    
     
     const [ref, inView] = useInView({
-        threshold: windowWidth < 1023 ? 0 : 0.45,
+        threshold: windowWidth < 1023 ? 0 : 0.3,
         triggerOnce: true
     })
 

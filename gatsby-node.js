@@ -66,6 +66,13 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
                             type
                         }
                     }
+                    menuItems {
+                        name
+                        slug
+                        internal {
+                            type
+                        }
+                    }
                     subItems {
                         ... on ContentfulPage {
                             name

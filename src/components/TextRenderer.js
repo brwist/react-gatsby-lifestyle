@@ -225,8 +225,6 @@ const TextRenderer = ({
                     },
                     [BLOCKS.EMBEDDED_ENTRY]: (node, children) => {
                         const { data: { target: { fields } } } = node
-
-                        console.log(node)
                         
                         if (typeof fields == 'undefined' || typeof fields.videoUrl['en-US'] == 'undefined') return
                         

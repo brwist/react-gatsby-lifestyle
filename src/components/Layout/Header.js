@@ -168,7 +168,7 @@ const Header = ({
             <StyledHeader ref={headerRef}>
                 <StyledContainer>
                     <InnerLeft>
-                        <Logo to={generatePath(lang, '')}>
+                        <Logo to={generatePath(lang, '')} onClick={() => setMenuOpen(!menuOpen)}>
                             {/* <LogoIcon /> */}
                             <LogoImage src={logoImage.nodes[0].publicURL} alt='Rockstar Lifestyle - Logo'/>
                         </Logo>

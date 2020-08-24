@@ -147,7 +147,8 @@ const InfoBlock = ({
         author,
         date,
         link,
-        category
+        category,
+        seoImage
     }
 }) => {
     
@@ -233,6 +234,7 @@ const ArticleTemplate = ({
         <>
             <Seo 
                 title={title} 
+                image={seoImage}
             />
             <Constructor
                 lang={langSlug}

@@ -71,11 +71,7 @@ const CardStyles = css`
 
         ${props.active == 'true' && `
             &.loaded {
-                &:hover {
-                    .button-wrapper {
-                        overflow: visible;
-                    }
-                    
+                &:hover {    
                     .button {
                         transform: translateY(0);
                     }

@@ -16,15 +16,18 @@ const PageTemplate = ({
         contentfulPage: {
             category,
             name,
-            components
+            components,
+            seoImage
         },
-        allInstaNode
+        instaNodes,
+        robertInstaNodes
     }
 }) => {
     return (
         <>
             <Seo 
                 title={name} 
+                image={seoImage}
             />
             <Constructor 
                 lang={langSlug}
@@ -32,7 +35,7 @@ const PageTemplate = ({
                 category={category}
                 data={components}
                 instagram={{
-                    items: allInstaNode,
+                    items: slug == 'robert-stols' ? robertInstaNodes : instaNodes,
                     hashtag: instagramHashtag
                 }}
             />
@@ -45,7 +48,7 @@ export const query = graphql`
 		contentfulPage(id: {eq: $id}) {
             ...PageQuery
         }
-        allInstaNode {
+        instaNodes: allInstaNode {
             nodes {
                 id
                 username
@@ -54,6 +57,21 @@ export const query = graphql`
                 localFile {
                     url
                 }           
+            }
+        }
+        robertInstaNodes: allInstaNode(filter: {
+            username: {
+                eq: "2610360"
+            }
+        }) {
+            nodes {
+                id
+                username
+                caption
+                mediaType
+                localFile {
+                    url
+                } 
             }
         }
 	}
