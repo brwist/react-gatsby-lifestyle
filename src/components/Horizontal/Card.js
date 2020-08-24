@@ -52,9 +52,11 @@ const CardStyles = css`
         width: ${props.theme.desktopVW(450)};
 
         ${props.active == 'true' && `
-            &:hover {
-                .button {
-                    transform: translateY(0);
+            &.loaded {
+                &:hover {
+                    .button {
+                        transform: translateY(0);
+                    }
                 }
             }
         `}
@@ -304,11 +306,13 @@ const ImageComponent = React.forwardRef(({ image, alt, instagram, overlayColor }
     return (
         <ImageWrapper className='image-wrapper'>
             <AnimatedImage ref={imageRef}>
-                {image != null && (
+                {instagram ? (
+                    <>
+                        <StyledImage className='image' src={image} alt={alt} as='img'  />
+                        <InstagramIcon />
+                    </>
+                ) : (
                     <StyledImage className='image' fluid={image} alt={alt}  />
-                )}
-                {instagram && (
-                    <InstagramIcon />
                 )}
             </AnimatedImage>
             <ImageOverlay overlayColor={overlayColor} ref={imageOverlayRef} />
@@ -342,7 +346,9 @@ const Card = ({
 
         if (!inView) return
 
-        const timeline = new gsap.timeline()
+        const timeline = new gsap.timeline({ onComplete: () => {
+            itemRef.current.classList.add('loaded')
+        }})
 
         timeline.to(itemRef.current, { y: 0.0, duration: 0.5, ease: 'sine.out' }, 0.0)
         timeline.add(imageRef.current.transitionIn(), 0.0)
@@ -362,7 +368,7 @@ const Card = ({
                 overlayColor={overlayColor}
             >
                 <ImageComponent
-                    image={data.localFile.childImageSharp.fluid}
+                    image={data.localFile.url}
                     alt={data.username}
                     instagram
                     ref={imageRef}

@@ -214,7 +214,7 @@ const HorizontalDrag = ({
                 <Carousel 
                     params={params}
                 >
-                    {carouselItems.slice(0, 9).map((item, i) => {
+                    {carouselItems.slice(0, 7).map((item, i) => {
                         return (
                             <Card
                                 key={i}
@@ -225,7 +225,7 @@ const HorizontalDrag = ({
                                 information={information}
                                 type={type}
                                 overlayColor={backgroundColor}
-                                active={true}
+                                active={item.slug != slug || component == 'InstagramFeed'}
                             />
                         )
                     })}

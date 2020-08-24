@@ -21,7 +21,6 @@ const PageTemplate = ({
         allInstaNode
     }
 }) => {
-    console.log('instanode', allInstaNode)
     return (
         <>
             <Seo 
@@ -54,11 +53,6 @@ export const query = graphql`
                 mediaType
                 localFile {
                     url
-                    childImageSharp {
-                        fluid(maxWidth: 560, quality: 100) {
-                            ...GatsbyImageSharpFluid
-                        }
-                    }
                 }           
             }
         }
