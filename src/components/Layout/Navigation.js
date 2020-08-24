@@ -249,7 +249,7 @@ const Navigation = ({
                                 <Label 
                                     className='label'
                                     ref={el => labelsRef.current[index] = el}
-                                >{name}</Label>
+                                >{type == 'main' ? name.replace('Development', 'Dev.') : name}</Label>
                             </StyledLink>
                         </Item>
                     )

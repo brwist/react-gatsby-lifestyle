@@ -147,8 +147,7 @@ const InfoBlock = ({
         author,
         date,
         link,
-        category,
-        seoImage
+        category
     }
 }) => {
     
@@ -227,7 +226,8 @@ const ArticleTemplate = ({
         category,
         content,
         components,
-        title
+        title,
+        seoImage
     } = contentfulArticle
 
     return (
