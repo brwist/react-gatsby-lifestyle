@@ -24,7 +24,7 @@ const Wrapper = styled.div`
 
 const StyledContainer = styled(Container)`
     ${props => props.theme.above.desktop`
-        max-width: ${props.theme.breakpoints.wide}px;
+        max-width: ${props.theme.desktopVW(1600)};
     `}
 `
 

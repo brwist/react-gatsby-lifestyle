@@ -17,7 +17,8 @@ const PageTemplate = ({
             category,
             name,
             components,
-            seoImage
+            seoImage,
+            seoTitle
         },
         instaNodes,
         robertInstaNodes
@@ -26,7 +27,7 @@ const PageTemplate = ({
     return (
         <>
             <Seo 
-                title={name} 
+                title={seoTitle || name} 
                 image={seoImage && seoImage}
             />
             <Constructor 

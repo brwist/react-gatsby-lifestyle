@@ -16,6 +16,7 @@ export const PageQuery = graphql`
         excerpt {
             excerpt
         }
+        seoTitle
         seoImage: featuredImage {
             fixed(width: 1200, height: 630, cropFocus: CENTER) {
                 ...GatsbyContentfulFixed

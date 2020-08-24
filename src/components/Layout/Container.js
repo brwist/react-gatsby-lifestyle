@@ -16,7 +16,7 @@ const StyledContainer = styled.div`
     `}
 
     ${props => props.theme.above.maxWidth`
-        padding: 0 ${props.theme.sizes.desktop};
+        padding: 0 calc(${props.theme.sizes.desktop} * 2);
     `}
 `
 
