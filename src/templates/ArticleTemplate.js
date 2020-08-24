@@ -234,7 +234,7 @@ const ArticleTemplate = ({
         <>
             <Seo 
                 title={title} 
-                image={seoImage}
+                image={seoImage && seoImage}
             />
             <Constructor
                 lang={langSlug}
