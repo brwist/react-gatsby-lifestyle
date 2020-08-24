@@ -177,7 +177,7 @@ const HorizontalDrag = ({
 
     useEffect(() => {
 
-        if (hashtag != 'trainer') {
+        if (hashtag && hashtag != 'trainer') {
             let hashtagItems = []
         
             carouselItems.forEach((item, i) => {
