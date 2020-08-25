@@ -146,7 +146,7 @@ const Header = ({
 
     // Context
     const preloaderState = useContext(PreloaderContext)
-    const delay = preloaderState == 'preloader' ? 4 : 1.5
+    const delay = preloaderState == 'preloader' ? 4.0 : 2.0
 
     const { logoImage } = useStaticQuery(graphql`{
         logoImage: allFile(filter: {relativePath: {eq: "rockstar-lifestyle.png"}}) {
@@ -170,7 +170,7 @@ const Header = ({
             <StyledHeader ref={headerRef}>
                 <StyledContainer>
                     <InnerLeft>
-                        <Logo to={generatePath(lang, '')} onClick={() => setMenuOpen(!menuOpen)}>
+                        <Logo to={generatePath(lang, '')} onClick={() => menuOpen && setMenuOpen(!menuOpen)}>
                             {/* <LogoIcon /> */}
                             <LogoImage src={logoImage.nodes[0].publicURL} alt='Rockstar Lifestyle - Logo'/>
                         </Logo>
