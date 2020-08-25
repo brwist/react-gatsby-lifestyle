@@ -19,7 +19,9 @@ export const HeroBannerQuery = graphql`
             json
         }
         internalLinks {
-            title
+            name
+            label
+            program
             internalLink {
                 ... on ContentfulPage {
                     name

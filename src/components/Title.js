@@ -315,7 +315,7 @@ const getLinkComponent = (links, lang) => {
                 <StyledButtonPrimary href={links.external.link} label={links.external.label} inverted />
             ) : (
                 <>
-                    {links.map(({ title, internalLink: { __typename, slug } }, i) => {
+                    {links.map(({ label, internalLink: { __typename, slug } }, i) => {
                         
                         let modal
 
@@ -330,7 +330,7 @@ const getLinkComponent = (links, lang) => {
                                 key={i} 
                                 lang={lang} 
                                 to={generatePath(lang, slug)} 
-                                label={title} 
+                                label={label} 
                                 inverted={i == 0}
                                 modal={modal}
                             />

@@ -40,6 +40,8 @@ const StyledTitle = styled(Title)`
     }
 
     ${props => props.theme.above.desktop`
+        padding: 0 ${props.theme.sizes.desktop};
+
         .title-wrapper {
             margin-bottom: 0;
         }

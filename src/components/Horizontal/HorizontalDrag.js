@@ -50,7 +50,7 @@ const Wrapper = styled.div`
 
         ${props.type == 'Straight' && `
             .swiper-wrapper {
-                padding: ${props.theme.desktopVW(120)} 0 ${props.theme.desktopVW(60)} 0;
+                padding: ${props.theme.desktopVW(120)} 0 ${props.theme.desktopVW(120)} 0;
             }
         `}
 
@@ -165,7 +165,7 @@ const HorizontalDrag = ({
 
     useEffect(() => {
 
-        let scrollBar = document.querySelector('.swiper-scrollbar')
+        let scrollBar = document.querySelectorAll('.swiper-scrollbar')
 
         gsap.set(scrollBar, { scaleX: 0.0, alpha: 0.0 })
         

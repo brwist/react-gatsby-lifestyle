@@ -3,9 +3,7 @@ import reset from 'styled-reset'
 
 import PlainLight from './../../fonts/Plain-Light.woff'
 import PlainRegular from './../../fonts/Plain-Regular.woff'
-// import NBInternationalProLight from './../../fonts/NBInternationalPro-Lig.woff'
 import NBInternationalProRegular from './../../fonts/NBInternationalPro-Reg.woff'
-// import NBInternationalProMedium from './../../fonts/NBInternationalPro-Medium.woff'
 import NBInternationalProBold from './../../fonts/NBInternationalPro-Bold.woff'
 
 const GlobalStyle = createGlobalStyle`
@@ -118,6 +116,16 @@ const GlobalStyle = createGlobalStyle`
 		font-family: ${props => props.theme.fontFamilies.plainLight};
 		font-size: ${props => props.theme.fontSizes.desktop.p};
 		line-height: 1.35;
+	}
+
+	input {
+		&:-webkit-autofill,
+		&:-webkit-autofill:hover, 
+		&:-webkit-autofill:focus, 
+		&:-webkit-autofill:active  {
+			-webkit-box-shadow: 0 0 0 30px ${props => props.theme.colors.dark} inset !important;
+			-webkit-text-fill-color: ${props => props.theme.colors.white};
+		}
 	}
 
 	.ReactModal__Overlay {

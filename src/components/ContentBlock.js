@@ -153,7 +153,7 @@ const Content = styled.div`
 
     ${props => props.theme.above.desktop`
         .description-wrapper {
-            max-width: ${props.theme.desktopVW(700)};
+            max-width: ${props.theme.desktopVW(550)};
         }
 
         ${props.order == 'left' ? `

@@ -23,6 +23,10 @@ const StyledHeader = styled.header`
     position: relative;
     
     width: 100%;
+    
+    transform: translateY(-100%);
+
+    opacity: 0;
 
     padding: ${props => props.theme.mobileVW(25)} ${props => props.theme.sizes.mobile} 0 ${props => props.theme.sizes.mobile};
     
@@ -153,8 +157,6 @@ const Header = ({
     }`)
 
     useEffect(() => {
-
-        gsap.set(headerRef.current, { alpha: 0.0, y: '-100%' })
         
         const tween = gsap.to(headerRef.current, { alpha: 1.0, y: '0%', duration: 0.35, delay: delay, ease: 'sine.out' })
 

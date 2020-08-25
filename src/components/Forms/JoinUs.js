@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import { useWindowSize } from 'react-use'
+import Select from 'react-select'
 
 import ButtonSubmit from './../Buttons/ButtonSubmit'
 import TextRenderer from './../TextRenderer'
 import Testimonial from './../Testimonial'
+
+import theme from './../../styles/theme'
 
 const Wrapper = styled.div``
 
@@ -62,13 +66,23 @@ const Field = styled.div`
 `
 
 const Label = styled.label`
+    display: block;
+
     font-family: ${props => props.theme.fontFamilies.plainLight};
     font-size: ${props => props.theme.fontSizes.mobile.s};
 
     opacity: 0.5;
 
+    ${props => props.program && `
+        margin-bottom: calc(${props => props.theme.sizes.mobile} / 2);
+    `}
+
     ${props => props.theme.above.desktop`
         font-size: ${props.theme.fontSizes.desktop.s};
+
+        ${props.program && `
+            margin-bottom: calc(${props.theme.sizes.desktop} / 2);
+        `}
     `}
 `
 
@@ -210,21 +224,109 @@ const JoinUs = ({
     className,
     data
 }) => {
-    
-    const { 
-        contentTitle,
-        contentDescription, 
-        testimonial
-    } = data
+
+    // Window Size
+    const { width: windowWidth } = useWindowSize()
+
+    const options = [
+        { 
+            value: 'Bootcamp',
+            label: 'Bootcamp'
+        },
+        { 
+            value: 'Next Level',
+            label: 'Next Level'
+        },
+        { 
+            value: 'CTDI',
+            label: 'CTDI'
+        },
+        { 
+            value: 'Rockstar',
+            label: 'Rockstar'
+        },
+        { 
+            value: 'Athlete',
+            label: 'Athlete'
+        },
+        { 
+            value: 'Elite',
+            label: 'Elite'
+        }
+    ]
+
+    const customStyles = {
+        control: (provided) => ({
+            ...provided,
+            backgroundColor: theme.colors.dark,
+            borderRadius: 'none',
+            borderColor: '#fff',
+            minHeight: 'auto',
+            boxShadow: 'none',
+            cursor: 'pointer',
+            '&:hover': {
+                color: theme.colors.white,
+                background: theme.colors.darkLight,
+            }
+        }),
+        indicatorsContainer: (provided) => ({
+            ...provided,
+            padding: windowWidth < 1023 ? '0.25rem' : '0.75rem'
+        }),
+        clearIndicator: () => ({
+            padding: '0.5rem',
+            opacity: 1
+        }),
+        indicatorSeparator: () => ({
+            display: 'none'
+        }),
+        dropdownIndicator: () => ({
+            padding: '0.5rem',
+            opacity: 1
+        }),
+        valueContainer: (provided) => ({
+            ...provided,
+            padding: windowWidth < 1023 ? '0.5rem 1rem' : '0.5rem 1.5rem'
+        }),
+        placeholder: (provided) => ({
+            ...provided,
+            color: theme.colors.white,
+            fontFamily: theme.fontFamilies.plainLight,
+            fontSize: windowWidth < 1023 ? theme.fontSizes.mobile.p : theme.fontSizes.desktop.p,
+        }),
+        input: (provided) => ({
+            ...provided,
+            color: theme.colors.white,
+            fontFamily: theme.fontFamilies.plainLight,
+            fontSize: windowWidth < 1023 ? theme.fontSizes.mobile.p : theme.fontSizes.desktop.p,
+        }),
+        singleValue: (provided, state) => ({
+            ...provided,
+            color: theme.colors.white,
+            fontFamily: theme.fontFamilies.plainLight,
+            fontSize: windowWidth < 1023 ? theme.fontSizes.mobile.p : theme.fontSizes.desktop.p,
+        }),
+        menu: (provided) => ({
+            ...provided,
+            marginTop: 0,
+            borderRadius: 0,
+            backgroundColor: theme.colors.white
+        }),
+        option: (provided, state) => ({
+            ...provided,
+            color: state.isSelected ? theme.colors.yellow : theme.colors.dark,
+            backgroundColor: state.isFocused ? '#efefef' : 'transparent',
+            fontFamily: theme.fontFamilies.plainLight,
+            fontSize: windowWidth < 1023 ? theme.fontSizes.mobile.p : theme.fontSizes.desktop.p,
+            '&:active': {
+                color: theme.colors.dark,
+                background: '#efefef'
+            }
+        })
+    }
 
     return (
         <Wrapper>
-            {/* {data && (
-                <Copy>
-                    <Title>{contentTitle}</Title>
-                    <TextRenderer data={contentDescription}/>
-                </Copy>
-            )} */}
             <Form
                 action='https://rockstarlifestyle.us8.list-manage.com/subscribe/post?u=86397600011aa7ae66131d8b8&amp;id=5c30063382'
                 method='post'
@@ -274,16 +376,32 @@ const JoinUs = ({
                     />
                 </Field>
                 <Field>
+                    <Label htmlFor='mce-PROGRAM' program>Program</Label>
+                    <Select
+                        name='PROGRAM' 
+                        id='mce-PROGRAM'
+                        isSearchable={false}
+                        styles={customStyles}
+                        // defaultValue={options[0]}
+                        placeholder='Select program..'
+                        onChange={([selected]) => {
+                            return { 
+                                value: selected 
+                            }
+                        }}
+                        options={options}
+                    />
+                </Field>
+                <Field>
                     <Label htmlFor='mce-MOTIVATION'>Motivation</Label>
                     <Input
                         type='text'
                         name='MOTIVATION'
                         className='required'
                         id='mce-MOTIVATION'
-                        placeholder='I want to join Rockstar Lifestyle ..'
+                        placeholder='I want to join Rockstar Lifestyle...'
                     />
                 </Field>
-
                 <GDPR>
                     <CheckboxField>
                         <CheckboxWrapper>
