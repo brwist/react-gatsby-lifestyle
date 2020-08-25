@@ -192,7 +192,11 @@ const Header = ({
                             menuOpen={menuOpen}
                             setMenuOpen={setMenuOpen}
                         />
-                        <ButtonJoinUs label='Join Us' to={generatePath(lang, 'join-us')} modal/>
+                        <ButtonJoinUs 
+                            label='Join Us' 
+                            to={generatePath(lang, 'join-us')} 
+                            modal
+                        />
                     </InnerRight>
                 </StyledContainer>
             </StyledHeader>

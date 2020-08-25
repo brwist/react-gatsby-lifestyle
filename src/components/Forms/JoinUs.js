@@ -271,7 +271,7 @@ const JoinUs = ({
         }),
         indicatorsContainer: (provided) => ({
             ...provided,
-            padding: windowWidth < 1023 ? '0.25rem' : '0.75rem'
+            padding: windowWidth < 1023 ? '0.25rem' : '0.5rem'
         }),
         clearIndicator: () => ({
             padding: '0.5rem',
@@ -286,7 +286,7 @@ const JoinUs = ({
         }),
         valueContainer: (provided) => ({
             ...provided,
-            padding: windowWidth < 1023 ? '0.5rem 1rem' : '0.5rem 1.5rem'
+            padding: windowWidth < 1023 ? '0.5rem 1rem' : '0.5rem 1rem'
         }),
         placeholder: (provided) => ({
             ...provided,

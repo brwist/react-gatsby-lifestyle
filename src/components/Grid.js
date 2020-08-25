@@ -1,7 +1,8 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState, useEffect, forwardRef } from 'react'
 import styled from 'styled-components'
 import Image from 'gatsby-image'
 import { Link, useStaticQuery, graphql } from 'gatsby'
+import gsap from 'gsap'
 
 import Container from './Layout/Container'
 import ButtonArrow from './Buttons/ButtonArrow'
@@ -18,7 +19,7 @@ const Wrapper = styled.div`
     `}
 `
 
-const Filter = styled.span`
+const Filter = styled.div`
     display: none;
     
     margin-bottom: ${props => props.theme.mobileVW(80)};
@@ -30,7 +31,7 @@ const Filter = styled.span`
     `}
 `
 
-const FilterItem = styled.span`
+const FilterItem = styled.button`
     display: inline-block;
     vertical-align: middle;
 
@@ -38,9 +39,21 @@ const FilterItem = styled.span`
 
     font-size: 1.2rem;
 
-    &:not(:first-of-type) {
+    color: ${props => props.theme.colors.white};
+
+    cursor: pointer;
+
+    transition: opacity 0.25s ease-out;
+
+    ${props => props.active ? `
+        opacity: 1;
+    `: `
         opacity: 0.25;
-    }
+
+        &:hover {
+            opacity: 0.5;
+        }
+    `}
 `
 
 const List = styled.ul`
@@ -151,7 +164,7 @@ const Category = styled.span`
     `}
 `
 
-const Item = ({ 
+const Item = React.forwardRef(({ 
     lang, 
     gridCategory,
     data: { 
@@ -163,7 +176,7 @@ const Item = ({
         excerpt,
         components
     } 
-}) => {
+}, ref) => {
     
     // Refs
     const buttonRef = useRef(null)
@@ -180,6 +193,7 @@ const Item = ({
 
     return (
         <StyledItem
+            ref={ref}
             onMouseEnter={() => buttonRef.current.classList.add('hover')} 
             onMouseLeave={() => buttonRef.current.classList.remove('hover')}
         >
@@ -207,23 +221,28 @@ const Item = ({
             </Footer>
         </StyledItem>
     )
-}
+})
 
 const Grid = ({
     lang,
     inView,
-    data
+    data: {
+        category
+    }
 }) => {
 
+    // Items
     let items
 
-    const { 
-        category, 
-        filterable 
-    } = data
+    // States
+    const [activeNewsItems, setActiveNewsItems] = useState(-1)
+    const [filteredItems, setFilteredItems] = useState([])
+
+    // Refs
+    const itemRefs = useRef([])
 
     const { 
-        newsItems, 
+        newsItems,
         trainerItems, 
         careerItems 
     } = useStaticQuery(graphql`{
@@ -235,10 +254,23 @@ const Grid = ({
             order: DESC, 
             fields: createdAt
         }) {
-            nodes {
-                ...ArticleQuery
+            group(field: category) {
+                field
+                fieldValue
+                nodes {
+                    slug
+                    category
+                    name
+                    title
+                    featuredImage {
+                        title
+                        fluid(maxWidth: 400, quality: 100) {
+                            ...GatsbyContentfulFluid_withWebp
+                        }
+                    }
+                }
             }
-        },
+          },
         trainerItems: allContentfulPage(filter: {
             category: {
                 eq: "Trainers"
@@ -248,7 +280,16 @@ const Grid = ({
             fields: createdAt
         }) {
             nodes {
-                ...PageQuery
+                name
+                title: name
+                category
+                slug
+                featuredImage {
+                    title
+                    fluid(maxWidth: 400, quality: 100) {
+                        ...GatsbyContentfulFluid_withWebp
+                    }
+                }
             }
         },
         careerItems: allContentfulArticle(filter: {
@@ -260,44 +301,90 @@ const Grid = ({
             fields: createdAt
         }) {
             nodes {
-                ...ArticleQuery
+                slug
+                    category
+                    name
+                    title
+                    featuredImage {
+                        title
+                        fluid(maxWidth: 400, quality: 100) {
+                            ...GatsbyContentfulFluid_withWebp
+                        }
+                    }
             }
         }
     }`)
 
+    const getAllNewsItems = () => {
+        let allNews = []
+        newsItems.group.forEach(group => {
+            group.nodes.forEach(node => allNews.push(node))
+        })
+        return allNews
+    }
+
     if (category == 'Events and Trips') {
-        items = newsItems.nodes
+        items = getAllNewsItems()
     } else if (category == 'Careers') {
         items = careerItems.nodes
     } else if (category == 'Trainers') {
         items = trainerItems.nodes
     }
 
+    useEffect(() => {
+        if (activeNewsItems == -1) {
+            let items = []
+
+            newsItems.group.forEach(group => {
+                group.nodes.forEach(node => items.push(node))
+            })
+            
+            setFilteredItems(items)
+        } else {
+            setFilteredItems(newsItems.group[activeNewsItems].nodes)
+        }
+    }, [activeNewsItems])
+
+    useEffect(() => {
+
+        itemRefs.current.forEach((item, i) => {
+            gsap.fromTo(item, { y: 25.0, alpha: 0.0 }, { y: 0.0, alpha: 1.0, delay: i * 0.25, duration: 0.5, ease: 'sine.out' })
+        })
+        
+    }, [filteredItems])
+
     return (
         <Wrapper>
             <Container>
-                {filterable && (
+                {category == 'Events and Trips' && (
                     <Filter>
-                        <FilterItem>All categories</FilterItem>
-                        <FilterItem>Trips</FilterItem>
-                        <FilterItem>Events</FilterItem>
-                        <FilterItem>Brainfood</FilterItem>
+                        <FilterItem 
+                            onClick={() => setActiveNewsItems(-1)}
+                            active={activeNewsItems == -1}
+                        >All categories</FilterItem>
+                        {newsItems.group.map((category, i) => {
+                            return (
+                                <FilterItem
+                                    key={i}
+                                    active={activeNewsItems == i}
+                                    onClick={() => setActiveNewsItems(i)}
+                                >{category.fieldValue}</FilterItem>
+                            )
+                        })}
                     </Filter>
                 )}
-                {items && items.length > 0 && (
-                    <List>
-                        {items.map((item, i) => (
-                            <Item 
-                                key={i} 
-                                lang={lang} 
-                                data={item} 
-                                gridCategory={category} 
-                            />
-                        ))}
-                    </List>
-                )}
+                <List>
+                    {filteredItems.map((item, i) => (
+                        <Item 
+                            key={i} 
+                            lang={lang} 
+                            data={item} 
+                            gridCategory={category} 
+                            ref={el => itemRefs.current[i] = el}
+                        />
+                    ))}
+                </List>
             </Container>
-            {/* {isFetching && 'Fetching more list items...'} */}
         </Wrapper>
     )
 }
