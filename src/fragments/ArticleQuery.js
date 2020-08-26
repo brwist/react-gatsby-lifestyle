@@ -31,5 +31,16 @@ export const ArticleQuery = graphql`
         author
         date(formatString: "DD / MM / YYYY")
         link
+        relatedArticles {
+            slug
+            title
+            category
+            featuredImage {
+                title
+                fluid(maxWidth: 400, quality: 100) {
+                    ...GatsbyContentfulFluid_withWebp
+                }
+            }
+        }
     }
 `

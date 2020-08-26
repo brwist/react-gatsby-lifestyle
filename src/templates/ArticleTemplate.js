@@ -9,6 +9,7 @@ import TextRenderer from '../components/TextRenderer'
 import Container from './../components/Layout/Container'
 import ButtonPrimary from '../components/Buttons/ButtonPrimary'
 import Grain from './../components/Layout/Grain'
+import RelatedArticles from './../components/RelatedArticles'
 
 const Wrapper = styled.section`
     position: relative;
@@ -227,7 +228,8 @@ const ArticleTemplate = ({
         content,
         components,
         title,
-        seoImage
+        seoImage,
+        relatedArticles
     } = contentfulArticle
 
     return (
@@ -257,6 +259,10 @@ const ArticleTemplate = ({
                 </StyledContainer>
                 {/* <Grain /> */}
             </Wrapper>
+            <RelatedArticles 
+                lang={langSlug}
+                data={relatedArticles}
+            />
         </>
     )
 }
