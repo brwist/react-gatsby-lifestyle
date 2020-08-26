@@ -157,7 +157,6 @@ const Header = ({
     }`)
 
     useEffect(() => {
-        
         const tween = gsap.to(headerRef.current, { alpha: 1.0, y: '0%', duration: 0.35, delay: delay, ease: 'sine.out' })
 
         return () => {

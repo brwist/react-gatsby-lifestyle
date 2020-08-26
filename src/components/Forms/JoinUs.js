@@ -293,6 +293,7 @@ const JoinUs = ({
             color: theme.colors.white,
             fontFamily: theme.fontFamilies.plainLight,
             fontSize: windowWidth < 1023 ? theme.fontSizes.mobile.p : theme.fontSizes.desktop.p,
+            lineHeight: '2em'
         }),
         input: (provided) => ({
             ...provided,
