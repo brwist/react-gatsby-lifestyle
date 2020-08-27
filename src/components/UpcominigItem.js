@@ -97,7 +97,7 @@ const Description = styled.div``
 const Category = styled.span`
     display: block;
     
-    margin-bottom: calc(${props => props.theme.sizes.mobile} / 1.5);
+    margin-bottom: calc(${props => props.theme.sizes.mobile} / 3);
 
     opacity: 0.5;
     

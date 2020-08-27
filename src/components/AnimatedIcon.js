@@ -8,8 +8,8 @@ const Wrapper = styled.a`
     display: inline-block;
     vertical-align: middle;
 
-    width: ${props => props.theme.mobileVW(20)};
-    height: ${props => props.theme.mobileVW(20)};
+    width: ${props => props.theme.mobileVW(18)};
+    height: ${props => props.theme.mobileVW(18)};
 
     overflow: hidden;
 
@@ -30,24 +30,34 @@ const Inner = styled.div`
 
     position: relative;
 
-    transform: translateY(-${props => props.theme.desktopVW(40)});
-
     transition: transform 0.25s ease-out;
+
+    ${props => props.theme.above.desktop`
+        transform: translateY(-${props.theme.desktopVW(40)});
+    `}
 `
 
 const IconStyles = css`
     width: 100%;
     height: 100%;
 
-    &.active {
-        path {
-            fill: ${props => props.theme.colors.orange};
+    ${props => props.theme.below.desktop`
+        &.active {
+            display: none;
         }
-    }
+    `}
 
-    &:first-of-type {
-        margin-bottom: ${props => props.theme.desktopVW(15)};
-    }
+    ${props => props.theme.above.desktop`
+        &.active {
+            path {
+                fill: ${props.theme.colors.orange};
+            }
+        }
+
+        &:first-of-type {
+            margin-bottom: ${props.theme.desktopVW(15)};
+        }
+    `}
 `
 
 const StyledInstagram = styled(InstagramSvg)`

@@ -22,6 +22,10 @@ const StyledContainer = styled(Container)`
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+
+    ${props => props.theme.below.desktop`
+        display: none;
+    `}
     
     ${props => props.theme.above.desktop`
         justify-content: center;
@@ -61,6 +65,10 @@ const AnimatedImage = styled.div`
 `
 
 const ImageLeftWrapper = styled.div`
+    ${props => props.theme.below.desktop`
+        display: none;
+    `}
+
     ${props => props.theme.above.desktop`
         position: absolute;
         
@@ -140,6 +148,27 @@ const StyledImage = styled(Image)`
     height: 100%;
 `
 
+const MobileWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    position: absolute;
+    
+    top: 0;
+    left: 0;
+    
+    width: 100%;
+    height: 100%;
+
+    padding: ${props => props.theme.sizes.mobile};
+
+    ${props => props.theme.above.desktop`
+        display: none;
+    `}
+`
+
 const HomeBanner = ({
     lang,
     inView,
@@ -167,6 +196,8 @@ const HomeBanner = ({
     const imageRightOverlayRef = useRef(null)
     const titleRef = useRef(null)
     const descriptionRef = useRef(null)
+    const titleMobileRef = useRef(null)
+    const descriptionMobileRef = useRef(null)
 
     useEffect(() => {
 
@@ -181,6 +212,8 @@ const HomeBanner = ({
         
         timeline.add(titleRef.current.transitionIn(), 0)
         timeline.add(descriptionRef.current.transitionIn(), 0)
+        timeline.add(titleMobileRef.current.transitionIn(), 0)
+        timeline.add(descriptionMobileRef.current.transitionIn(), 0)
         timeline.fromTo([imageLeftOverlayRef.current, imageRightOverlayRef.current], { scaleY: 1, transformOrigin: 'top' }, { scaleY: 0, duration: 1, ease: 'power3.out' }, 1.25)
         timeline.fromTo(imageLeftRef.current, { scale: 1.75 }, { scale: 1.2, duration: 1, ease: 'power3.out' }, 1.25)
         timeline.fromTo(imageRightRef.current, { scale: 1.75 }, { scale: 1.15, duration: 1, ease: 'power3.out' }, 1.25)
@@ -253,6 +286,28 @@ const HomeBanner = ({
                     />
                 </TitleWrapper>
             </StyledContainer>
+            <MobileWrapper>
+                <Title
+                    ref={titleMobileRef}
+                    lang={lang}
+                    size='medium'
+                    title={headerTitle}
+                    category={category}
+                />
+                <Title 
+                    lang={lang}
+                    ref={descriptionMobileRef}
+                    size='normal'
+                    description={headerDescription}
+                    links={internalLinks || externalLink && {
+                        internal: internalLinks,
+                        external: {
+                            link: externalLink,
+                            label: externalLinkLabel
+                        }
+                    }}
+                />
+            </MobileWrapper>
         </StyledHeroBanner>
     )
 }

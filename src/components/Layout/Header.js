@@ -28,7 +28,7 @@ const StyledHeader = styled.header`
 
     opacity: 0;
 
-    padding: ${props => props.theme.mobileVW(25)} ${props => props.theme.sizes.mobile} 0 ${props => props.theme.sizes.mobile};
+    padding: calc(${props => props.theme.sizes.mobile} / 1.5);
     
     ${props => props.theme.above.desktop`
         padding: ${props.theme.sizes.desktop} 0;
@@ -72,7 +72,7 @@ const StyledNavigation = styled(Navigation)`
 const LogoImage = styled.img`
     display: block;
 
-    width: ${props => props.theme.mobileVW(200)};
+    width: ${props => props.theme.mobileVW(175)};
 
     ${props => props.theme.above.desktop`
         width: ${props.theme.desktopVW(218)};

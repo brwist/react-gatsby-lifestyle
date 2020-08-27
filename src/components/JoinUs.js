@@ -106,7 +106,25 @@ const MouseAnimatedBorder = styled.div`
     overflow: hidden;
     
     transition: transform 0.5s ease-out 0s;
-`  
+` 
+
+const ImageWrapper = styled.div`
+    position: absolute;
+    
+    top: 0;
+    left: 0;
+
+    z-index: -1;
+
+    width: 100%;
+    height: 100%;
+`
+
+const StyledImage = styled(Image)`
+    ${props => props.theme.styles.image.objectCover};
+
+    opacity: 0.5;
+`
 
 const JoinUs = ({
     lang,
@@ -171,8 +189,8 @@ const JoinUs = ({
         mouse.updatePosition(event)
         // imageWrapperRef.current.style.background = 'radial-gradient(at ' + (-80 + mouse.x / -5 % 100) + '% -50%, #fff, transparent 60%)'
         updateTransformStyle(
-        (mouse.y / mainRef.current.offsetHeight / -2).toFixed(2),
-        (mouse.x / mainRef.current.offsetWidth / -2).toFixed(2)
+            (mouse.y / mainRef.current.offsetHeight / -2).toFixed(2),
+            (mouse.x / mainRef.current.offsetWidth / -2).toFixed(2)
         )
     }
     
@@ -231,17 +249,23 @@ const JoinUs = ({
                     inView={inView}
                     ref={titleRef}
                 />
-                <MouseAnimatedWrapper ref={imageRef}>
-                    <MouseAnimatedImage
-                        image={image.fluid.src}
-                        glowImage={glowImage.childImageSharp.fluid.src}
-                    >
-                    </MouseAnimatedImage>
-                    <MouseAnimatedBorder
-                        ref={imageWrapperRef}
-                    >
-                    </MouseAnimatedBorder>
-                </MouseAnimatedWrapper>
+                {windowWidth > 1023 ? (
+                    <MouseAnimatedWrapper ref={imageRef}>
+                        <MouseAnimatedImage
+                            image={image.fluid.src}
+                            glowImage={glowImage.childImageSharp.fluid.src}
+                        >
+                        </MouseAnimatedImage>
+                        <MouseAnimatedBorder
+                            ref={imageWrapperRef}
+                        >
+                        </MouseAnimatedBorder>
+                    </MouseAnimatedWrapper>
+                ) : (
+                    <ImageWrapper ref={imageRef}>
+                        <StyledImage fluid={image.fluid} alt={image.alt} />
+                    </ImageWrapper>
+                )}
             </StyledContainer>
         </Wrapper>
     )

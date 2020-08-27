@@ -67,9 +67,7 @@ const StyledLogo = styled.img`
 `
 
 const StyledAnimatedIcon = styled(AnimatedIcon)`
-    &:first-of-type {
-        margin-right: calc(${props => props.theme.sizes.mobile} / 2);
-    }
+    margin-right: calc(${props => props.theme.sizes.mobile} / 2);
 
     ${props => props.theme.above.desktop`
         margin-right: ${props => props.theme.sizes.desktop};
