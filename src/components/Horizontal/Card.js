@@ -4,14 +4,14 @@ import Image from 'gatsby-image'
 import { Link } from 'gatsby'
 import gsap from 'gsap'
 
-import InstagramSvg from './../../images/graphics/instagram.svg'
-
+import Tags from '../Tags'
+import Testimonial from '../Testimonial'
 import TextRenderer from '../TextRenderer'
 import ButtonPrimary from './../Buttons/ButtonPrimary'
 
 import { generatePath } from './../../utils/helpers'
-import Tags from '../Tags'
-import Testimonial from '../Testimonial'
+
+import InstagramSvg from './../../images/graphics/instagram.svg'
 
 const CardStyles = css`
     position: relative;
@@ -312,7 +312,7 @@ const ImageComponent = React.forwardRef(({ image, alt, instagram, overlayColor }
                 gsap.set(imageRef.current, { scale: 1.35, alpha: 0.0 })
                 gsap.set(imageOverlayRef.current, { y: '0%' })
 
-                const timeline = new gsap.timeline({ delay: 0.5 })
+                const timeline = new gsap.timeline()
                 
                 timeline.to(imageOverlayRef.current, { y: '-100%', transformOrigin: 'top', duration: 1.5, ease: 'power3.out' }, 0)
                 timeline.to(imageRef.current, { scale: 1.0, alpha: 1.0, duration: 0.5, ease: 'none', force3D: false }, 0.25)
@@ -372,8 +372,8 @@ const Card = ({
 
         timeline.to(itemRef.current, { y: 0.0, duration: 0.5, ease: 'sine.out' }, 0.0)
         timeline.add(imageRef.current.transitionIn(), 0.0)
-        information != 'Excerpt only' && timeline.to(headerRef.current, { y: 0.0, alpha: 1.0, duration: 0.35, ease: 'sine.out' }, 1.0)
-        timeline.to(descriptionRef.current, { y: 0.0, alpha: 1.0, duration: 0.35, ease: 'sine.out' }, 1)
+        information != 'Excerpt only' && timeline.to(headerRef.current, { y: 0.0, alpha: 1.0, duration: 0.35, ease: 'sine.out' }, 0.5)
+        timeline.to(descriptionRef.current, { y: 0.0, alpha: 1.0, duration: 0.35, ease: 'sine.out' }, 0.5)
 
         return () => {
             timeline && timeline.kill()

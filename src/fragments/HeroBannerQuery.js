@@ -8,7 +8,7 @@ export const HeroBannerQuery = graphql`
         tags
         images {
             title
-            fluid(maxWidth: 1280, quality: 100) {
+            fluid(maxWidth: 840, quality: 100) {
                 ...GatsbyContentfulFluid_withWebp
             }
         }
@@ -45,7 +45,7 @@ export const HeroBannerQuery = graphql`
             name
             image {
                 title
-                fluid(maxWidth: 100, maxHeight: 100, quality: 100) {
+                fluid(maxWidth: 60, quality: 100) {
                     ...GatsbyContentfulFluid_withWebp
                 }
             }

@@ -4,12 +4,25 @@ import gsap from 'gsap'
 
 import GridItem from './GridItem'
 import Container from './Layout/Container'
+import HorizontalTitle from './Horizontal/HorizontalTitle'
 
 const Wrapper = styled.section`
     padding: calc(${props => props.theme.sizes.mobile} * 5) 0;
 
     ${props => props.theme.above.desktop`
         padding: calc(${props.theme.sizes.desktop} * 10) 0;
+    `}
+`
+
+const StyledTitle = styled(HorizontalTitle)`
+    padding-left: 0;
+
+    .title-container {
+        padding: 0;
+    }
+
+    ${props => props.theme.above.desktop`
+        margin-bottom: calc(${props.theme.sizes.desktop} * 3);
     `}
 `
 
@@ -31,11 +44,21 @@ const RelatedArticles = ({
 }) => {
 
     // Refs
+    const titleRef = useRef(null)
     const itemRefs = useRef([])
 
     return (
         <Wrapper>
             <Container>
+                <StyledTitle 
+                    ref={titleRef}
+                    lang={lang}
+                    inView={true}
+                    title={{
+                        words: ["Related", "Articles"]
+                    }} 
+                    size='normal'
+                />
                 <List className={className}>
                     {data.map((item, i) => (
                         <GridItem 

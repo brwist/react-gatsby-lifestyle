@@ -55,7 +55,7 @@ export const HorizontalScrollQuery = graphql`
                     name
                     image {
                         title
-                        fluid(maxWidth: 100, maxHeight: 100, quality: 100) {
+                        fluid(maxWidth: 60, quality: 100) {
                             ...GatsbyContentfulFluid_withWebp
                         }
                     }

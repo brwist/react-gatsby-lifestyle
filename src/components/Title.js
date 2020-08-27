@@ -386,12 +386,12 @@ const Title = ({
     return (
         <TitleWrapper 
             size={size} 
-            className={className && className}
+            className={`title-container ${className && className}`}
         >
             {category == 'Event' && (
                 <Category>{category}</Category>
             )}
-            {title && (
+            {title && title.json && (
                 <StyledTitle className='title-wrapper' size={size}>
                     {title && documentToReactComponents(title.json, {
                         renderNode: {
@@ -410,6 +410,18 @@ const Title = ({
                                 )
                             }
                         }
+                    })}
+                    <TitleOverlay ref={titleRef} overlayColor={overlayColor && overlayColor} />
+                </StyledTitle>
+            )}
+            {title && title.words && (
+                <StyledTitle className='title-wrapper' size={size}>
+                    {title.words.map((item, i) => {
+                        return (
+                            <LineWrapper key={i} className='line-wrapper'>
+                                <Words className='words'>{item}</Words>
+                            </LineWrapper>
+                        )
                     })}
                     <TitleOverlay ref={titleRef} overlayColor={overlayColor && overlayColor} />
                 </StyledTitle>

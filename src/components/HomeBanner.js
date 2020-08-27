@@ -182,7 +182,8 @@ const HomeBanner = ({
         timeline.add(titleRef.current.transitionIn(), 0)
         timeline.add(descriptionRef.current.transitionIn(), 0)
         timeline.fromTo([imageLeftOverlayRef.current, imageRightOverlayRef.current], { scaleY: 1, transformOrigin: 'top' }, { scaleY: 0, duration: 1, ease: 'power3.out' }, 1.25)
-        timeline.fromTo([imageLeftRef.current, imageRightRef.current], { scale: 1.75 }, { scale: 1.15, duration: 1, ease: 'power3.out' }, 1.25)
+        timeline.fromTo(imageLeftRef.current, { scale: 1.75 }, { scale: 1.2, duration: 1, ease: 'power3.out' }, 1.25)
+        timeline.fromTo(imageRightRef.current, { scale: 1.75 }, { scale: 1.15, duration: 1, ease: 'power3.out' }, 1.25)
 
         return () => {
             timeline && timeline.kill()

@@ -171,7 +171,7 @@ const GlobalStyle = createGlobalStyle`
 	}
 
 	.headroom {
-		transition: background 0.35s ease-out, background-color 0.35s ease-out;
+		transition: background 0.15s ease-out, background-color 0.15s ease-out;
 
 		&--unfixed {
 			background: linear-gradient(to bottom, ${props => props.theme.colors.dark}, transparent);

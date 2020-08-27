@@ -44,12 +44,13 @@ const handleDynamicHeight = (ref, setDynamicHeight) => {
     setDynamicHeight(dynamicHeight)
 }
 
-const Scroller = ({ getX, children }) => {
+const Scroller = ({ children }) => {
 
+    // States
     const [dynamicHeight, setDynamicHeight] = useState(null)
     const [translateX, setTranslateX] = useState(0)
-    const [sticky, setSticky] = useState(false)
 
+    // Refs
     const containerRef = useRef(null)
     const objectRef = useRef(null)
 
@@ -58,15 +59,14 @@ const Scroller = ({ getX, children }) => {
     }
 
     const scrollHandler = () => {
-        setSticky(containerRef.current.offsetTop > 0)
-        const offsetTop = -containerRef.current.offsetTop
+        const offsetTop = -containerRef.current.offsetTop        
         setTranslateX(offsetTop)
-        getX(offsetTop)
     }
 
     useEffect(() => {
 
         handleDynamicHeight(objectRef, setDynamicHeight)
+        
         stickybits(containerRef.current)
 
         window.addEventListener('resize', resizeHandler)

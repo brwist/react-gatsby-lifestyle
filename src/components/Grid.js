@@ -156,23 +156,20 @@ const Grid = ({
         }
     }`)
 
-    const getAllNewsItems = () => {
-        let allNews = []
-        newsItems.group.forEach(group => {
-            group.nodes.forEach(node => allNews.push(node))
-        })
-        return allNews
-    }
+    useEffect(() => {
 
-    if (category == 'Events and Trips') {
-        gridItems = getAllNewsItems()
-    } else if (category == 'Careers') {
-        gridItems = careerItems.nodes
-    } else if (category == 'Trainers') {
-        gridItems = trainerItems.nodes
-    } 
+        if (category == 'Careers') {
+            setFilteredItems(careerItems.nodes)
+        } else if (category == 'Trainers') {
+            setFilteredItems(trainerItems.nodes)
+        } 
+
+    }, [])
 
     useEffect(() => {
+
+        if (category != 'Events and Trips') return
+
         if (activeNewsItems == -1) {
             let items = []
 
@@ -184,9 +181,12 @@ const Grid = ({
         } else {
             setFilteredItems(newsItems.group[activeNewsItems].nodes)
         }
+        
     }, [activeNewsItems])
 
     useEffect(() => {
+
+        if (category != 'Events and Trips') return
 
         itemRefs.current.forEach((item, i) => {
             gsap.fromTo(item, { y: 25.0, alpha: 0.0 }, { y: 0.0, alpha: 1.0, delay: i * 0.25, duration: 0.5, ease: 'sine.out' })
