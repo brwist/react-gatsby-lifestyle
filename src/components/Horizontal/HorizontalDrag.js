@@ -101,6 +101,7 @@ const HorizontalDrag = ({
     component,
     type,
     slug,
+    category,
     information,
     backgroundColor
 }) => {
@@ -214,7 +215,7 @@ const HorizontalDrag = ({
                 <Carousel 
                     params={params}
                 >
-                    {carouselItems.slice(0, 7).map((item, i) => {
+                    {carouselItems.slice(0, 9).map((item, i) => {
                         return (
                             <Card
                                 key={i}

@@ -472,21 +472,22 @@ const Card = ({
                 } = data.components[0]
                 
                 return (
-                    <LinkedCard 
+                    <NormalCard 
                         ref={itemRef}
                         className={className} 
-                        type={type} 
-                        to={generatePath(lang, getLink(data))} 
+                        type={type}
                         active={active.toString()}
                         overlayColor={overlayColor}
                     >
                         {data.featuredImage.fluid != null && (
-                            <ImageComponent
-                                image={data.featuredImage.fluid}
-                                alt={data.featuredImage.title}
-                                ref={imageRef}
-                                overlayColor={overlayColor}
-                            />
+                            <Link to={generatePath(lang, getLink(data))}>
+                                <ImageComponent
+                                    image={data.featuredImage.fluid}
+                                    alt={data.featuredImage.title}
+                                    ref={imageRef}
+                                    overlayColor={overlayColor}
+                                />
+                            </Link>
                         )}
                         <LargeDescription ref={descriptionRef}>
                             <Header ref={headerRef}>
@@ -508,7 +509,7 @@ const Card = ({
                                 />
                             </ButtonWrapper>
                         )}
-                    </LinkedCard>
+                    </NormalCard>
                 )
             } else {
                 return (

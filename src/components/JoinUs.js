@@ -72,7 +72,7 @@ const MouseAnimatedImage = styled.div`
     background-position: center;
     background-size: contain;
 
-    &:after {
+    /* &:after {
         content: '';
         position: absolute;
         
@@ -84,7 +84,7 @@ const MouseAnimatedImage = styled.div`
 
         background-image: url(${props => props.glowImage});
         background-size: cover;
-    }
+    } */
 `
 
 const MouseAnimatedBorder = styled.div`

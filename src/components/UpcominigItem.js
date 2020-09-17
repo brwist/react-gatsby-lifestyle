@@ -177,7 +177,7 @@ const UpcomingItem = ({
                 onMouseEnter={() => buttonRef.current.classList.add('hover')} 
                 onMouseLeave={() => buttonRef.current.classList.remove('hover')}
             >
-                <ImageWrapper to={generatePath(lang, `${category.toLowerCase()}/${slug}`)}>
+                <ImageWrapper to={generatePath(lang, `events-and-trips/${category.toLowerCase()}/${slug}`)}>
                     <StyledAnimatedImage 
                         ref={imageRef} 
                         data={featuredImage} 

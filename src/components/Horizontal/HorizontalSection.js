@@ -40,6 +40,7 @@ const renderComponent = ({
                 backgroundColor={backgroundColor}
                 title={contentTitle}
                 description={contentDescription}
+                category={category}
             />
         )
     } else {
@@ -57,6 +58,7 @@ const renderComponent = ({
                     backgroundColor={backgroundColor}
                     title={contentTitle}
                     description={contentDescription}
+                    category={category}
                 />
             )
             case 'Scrollable': return (
@@ -71,6 +73,7 @@ const renderComponent = ({
                     backgroundColor={backgroundColor}
                     title={contentTitle}
                     description={contentDescription}
+                    category={category}
                 />
             )
         }

@@ -130,13 +130,21 @@ const Content = styled.div`
     }
 
     ${props => props.theme.above.desktop`
-        max-width: ${props.theme.desktopVW(720)};
+        width: 50%;
 
         margin-bottom: 0;
 
         h4 {
             margin-bottom: ${props.theme.sizes.desktop};
         }
+    `}
+`
+
+const ContentInner = styled.div`
+    width: 100%;
+    
+    ${props => props.theme.above.desktop`
+        max-width: ${props.theme.desktopVW(650)};
     `}
 `
 
@@ -243,22 +251,26 @@ const ArticleTemplate = ({
                 category={category}
                 data={components}
             />
-            <Wrapper>
-                <StyledContainer>
-                    <InfoBlock 
-                        mobile='false' 
-                        data={contentfulArticle} 
-                    />
-                    <Content>
-                        <TextRenderer data={content} />
-                    </Content>
-                    <InfoBlock 
-                        mobile='true' 
-                        data={contentfulArticle} 
-                    />
-                </StyledContainer>
-                {/* <Grain /> */}
-            </Wrapper>
+            {content && (
+                <Wrapper>
+                    <StyledContainer>
+                        <InfoBlock 
+                            mobile='false' 
+                            data={contentfulArticle} 
+                        />
+                        <Content>
+                            <ContentInner>
+                                <TextRenderer data={content} />
+                            </ContentInner>
+                        </Content>
+                        <InfoBlock 
+                            mobile='true' 
+                            data={contentfulArticle} 
+                        />
+                    </StyledContainer>
+                    {/* <Grain /> */}
+                </Wrapper>
+            )}
             {relatedArticles && (
                 <RelatedArticles 
                     lang={langSlug}

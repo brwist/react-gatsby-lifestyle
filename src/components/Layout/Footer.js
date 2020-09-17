@@ -35,7 +35,7 @@ const StyledFooter = styled.footer`
     `}
 
     ${props => props.theme.above.desktop`
-        padding: 0 0 ${props.theme.sizes.desktop} 0;
+        padding: ${props.theme.sizes.desktop} 0;
     `}
 `
 

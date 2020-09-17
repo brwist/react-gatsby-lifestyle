@@ -72,33 +72,55 @@ const Media = styled.div`
         }
     }
 
-    .swiper-pagination {
-        bottom: ${props => props.theme.sizes.mobile};
-    }
-
-    .swiper-pagination-bullet-active {
-        background-color: ${props => props.theme.colors.white};
-    }
-
     .swiper-button-next, 
     .swiper-button-prev {
-        top: initial;
-        bottom: ${props => props.theme.sizes.mobile};
+        top: 50%;
+        bottom: initial;
+
+        transform: translateY(-50%);
+
+        width: ${props => props.theme.mobileVW(30)};
+        height: ${props => props.theme.mobileVW(30)};
+
+        margin: 0;
+
+        color: #fff;
         
-        width: 70%;
+        transition: all 0.15s ease-out;
 
         &:after {
-            font-size: 1rem;
-            color: ${props => props.theme.colors.white}
+            font-size: ${props => props.theme.mobileVW(15)};
         }
     }
 
     .swiper-button-next {
-        right: ${props => props.theme.sizes.mobile};
+        right: ${props => props.theme.mobileVW(10)};
     }
 
     .swiper-button-prev {
-        left: ${props => props.theme.sizes.mobile};
+        left: ${props => props.theme.mobileVW(10)};
+    }
+
+    .swiper-pagination {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        bottom: ${props => props.theme.mobileVW(15)};
+
+        height: ${props => props.theme.mobileVW(25)};
+
+        .swiper-pagination-bullet {
+            width: 1.8vw;
+            height: 1.8vw;
+
+            margin: 0 ${props => props.theme.mobileVW(5)};
+        }
+    }
+
+    .swiper-pagination-bullet-active {
+        background-color: ${props => props.theme.colors.white};
     }
     
     ${props => props.theme.above.desktop`
@@ -113,7 +135,22 @@ const Media = styled.div`
         }
 
         .swiper-button-next, .swiper-button-prev {
-            bottom: ${props.theme.desktopVW(30)};
+            width: ${props.theme.desktopVW(50)};
+            height: ${props.theme.desktopVW(50)};
+
+            opacity: 0.2;
+
+            &:after {
+                font-size: ${props.theme.desktopVW(20)};
+            }
+        
+            &:hover {
+                opacity: 1;
+            }
+
+            &:active {
+                background-color: rgba(255, 255, 255, 0.15);
+            }
         }
 
         .swiper-button-next {
@@ -126,6 +163,15 @@ const Media = styled.div`
 
         .swiper-pagination {
             bottom: ${props.theme.desktopVW(50)};
+
+            height: ${props.theme.desktopVW(25)};
+
+            .swiper-pagination-bullet {
+                width: 0.5vw;
+                height: 0.5vw;
+
+                margin: 0 ${props.theme.desktopVW(10)};
+            }
         }
     `}
 `
@@ -170,7 +216,7 @@ const StyledTitle = styled(Title)`
     }
 
     h4 {
-        margin-bottom: ${props => props.theme.sizes.mobile};
+        margin-bottom: ${props => props.theme.sizes.mobile} / 1.5;
 
 		font-family: ${props => props.theme.fontFamilies.plainLight};
 		font-size: ${props => props.theme.fontSizes.mobile.p};
@@ -206,12 +252,12 @@ const ContentBlock = ({
 
     const params = {
         slidesPerView: 1,
-        grabCursor: true,
+        // grabCursor: true,
         effect: 'fade',
         preloadImages: false,
-        waitForTransition: true,
+        // waitForTransition: true,
         loop: true,
-        autoplay: true,
+        // autoplay: true,
         disableOnInternation: false,
         pagination: {
             el: '.swiper-pagination',
@@ -244,12 +290,6 @@ const ContentBlock = ({
             timeline && timeline.kill()
         }
     }, [inView])
-
-    // useEffect(() => {
-    //     stickybits(innerRef.current, {
-    //         verticalPosition: 'top'
-    //     })
-    // }, [])
 
     return (
         <Wrapper>

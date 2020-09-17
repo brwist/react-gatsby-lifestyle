@@ -11,7 +11,11 @@ import Carousel from './Carousel'
 import FaqMobileItem from './FaqMobileItem'
 import FaqDesktopItem from './FaqDesktopItem'
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+    ${props => props.theme.below.desktop`
+        margin-bottom: ${props.theme.sizes.mobile};
+    `}
+`
 
 const Header = styled(Container)`
     margin-bottom: calc(${props => props.theme.sizes.mobile} * 3);

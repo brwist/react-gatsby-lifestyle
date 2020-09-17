@@ -24,10 +24,8 @@ const Layout = ({
 	const toggleMenuHandler = () => {
 		
 		let headroom = document.querySelector('.headroom')
-		
-		if (!headroom.classList.contains('headroom--pinned')) {
-			headroom.classList.add('headroom-pinned')
-		}
+
+		headroom.style.transform = 'translate3d(0px, 0px, 0px)'
 
 		setMenuOpen(!menuOpen)
 		
