@@ -95,7 +95,7 @@ const StyledTestimonial = styled(Testimonial)`
 `
 
 const Content = styled.div`
-    width: 100%;
+    width: 50%;
 
     margin-bottom: calc(${props => props.theme.sizes.mobile} * 3);
 
@@ -114,13 +114,19 @@ const Content = styled.div`
     }
 
     ${props => props.theme.above.desktop`
-        max-width: ${props.theme.desktopVW(720)};
-
         margin-bottom: 0;
 
         h5 {
             margin-bottom: ${props.theme.sizes.desktop};
         }
+    `}
+`
+
+const ContentInner = styled.div`
+    width: 100%;
+    
+    ${props => props.theme.above.desktop`
+        max-width: ${props.theme.desktopVW(650)};
     `}
 `
 
@@ -147,10 +153,6 @@ const StickyComponent = ({
             mobile={mobile}
             ref={testimonialsRef}
         >
-            <Copy>
-                <Title>{data.contentTitle}</Title>
-                <TextRenderer data={data.contentDescription}/>
-            </Copy>
             {data.testimonial && (
                 <StyledTestimonial data={data.testimonial} />
             )}
@@ -178,9 +180,11 @@ const PopupPage = ({
                         data={data} 
                     />
                     <Content>
-                        {slug == 'join-us' && <JoinUsForm lang={lang} data={data} />}
-                        {slug == 'self-test' && <SelfTestForm lang={lang} data={data} />}
-                        {slug == 'cookies-and-privacy' && <TextRenderer lang={lang} data={data.contentDescription} useInlineLink />}
+                        <ContentInner>
+                            {slug == 'join-us' && <JoinUsForm lang={lang} data={data} />}
+                            {slug == 'self-test' && <SelfTestForm lang={lang} data={data} />}
+                            {slug == 'cookies-and-privacy' && <TextRenderer lang={lang} data={data.contentDescription} useInlineLink />}
+                        </ContentInner>
                     </Content>
                     <StickyComponent 
                         mobile='true' 

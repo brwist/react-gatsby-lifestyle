@@ -102,7 +102,7 @@ const CopyrightStyles = css`
     display: block;
 
     font-family: ${props => props.theme.fontFamilies.plainLight};
-    font-size: ${props => props.theme.fontSizes.mobile.h6};
+    font-size: ${props => props.theme.fontSizes.mobile.p};
 
     ${props => props.theme.above.desktop`
         font-size: ${props => props.theme.fontSizes.desktop.h6};

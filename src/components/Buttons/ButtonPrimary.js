@@ -125,7 +125,6 @@ const Label = styled.span`
 
     ${props => props.theme.above.desktop`
         font-size: ${props.theme.fontSizes.desktop.m};
-        line-height: 3;
     `}
 `
 

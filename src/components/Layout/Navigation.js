@@ -22,10 +22,6 @@ const StyledNavigation = styled.nav`
     
         .item {
             display: block;
-
-            &:not(:last-of-type) {
-                margin-bottom: calc(${props.theme.sizes.mobile} / 3);
-            }
         }
 
         .link {
@@ -35,6 +31,7 @@ const StyledNavigation = styled.nav`
         .label {
             font-family: ${props.theme.fontFamilies.nbBold};
             font-size: ${props.theme.fontSizes.mobile.h4};
+            line-height: 1.25;
 
             text-transform: uppercase;
         }
@@ -44,7 +41,7 @@ const StyledNavigation = styled.nav`
         .list {
             display: grid;
             grid-template-columns: 1fr;
-            grid-gap: calc(${props.theme.sizes.mobile} / 2) 0;
+            grid-gap: calc(${props.theme.sizes.mobile} / 4) 0;
         }
 
         .link {
@@ -152,6 +149,7 @@ const Label = styled.span`
 
     font-family: ${props => props.theme.fontFamilies.plainLight};
     font-size: ${props => props.theme.fontSizes.desktop.p};
+    line-height: 1.5;
     font-weight: 100;
 
     color: currentColor;
