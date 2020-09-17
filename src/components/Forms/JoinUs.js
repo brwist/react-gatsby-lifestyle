@@ -74,7 +74,7 @@ const Label = styled.label`
     opacity: 0.5;
 
     ${props => props.program && `
-        margin-bottom: calc(${props => props.theme.sizes.mobile} / 2);
+        margin-bottom: calc(${props.theme.sizes.mobile} / 2);
     `}
 
     ${props => props.theme.above.desktop`

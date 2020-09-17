@@ -95,7 +95,7 @@ const StyledTestimonial = styled(Testimonial)`
 `
 
 const Content = styled.div`
-    width: 50%;
+    width: 100%;
 
     margin-bottom: calc(${props => props.theme.sizes.mobile} * 3);
 
@@ -114,6 +114,8 @@ const Content = styled.div`
     }
 
     ${props => props.theme.above.desktop`
+        width: 50%;
+
         margin-bottom: 0;
 
         h5 {

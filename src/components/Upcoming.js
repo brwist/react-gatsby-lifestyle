@@ -23,9 +23,9 @@ const Wrapper = styled.div`
 `
 
 const StyledContainer = styled(Container)`
-    ${props => props.theme.above.desktop`
+    /* ${props => props.theme.above.desktop`
         max-width: ${props.theme.desktopVW(1600)};
-    `}
+    `} */
 `
 
 const Grid = styled.ul`

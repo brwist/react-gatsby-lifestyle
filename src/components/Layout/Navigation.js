@@ -62,12 +62,6 @@ const StyledNavigation = styled.nav`
 
         ${props.type == 'main' && `
             margin-bottom: ${props.theme.desktopVW(80)};
-        
-            .item {
-                &:not(:last-of-type) {
-                    margin-bottom: ${props.theme.desktopVW(24)};
-                }
-            }
 
             .link {
                 &:after {

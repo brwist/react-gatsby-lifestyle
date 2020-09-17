@@ -45,7 +45,7 @@ const StyledItem = styled.li`
             margin-bottom: calc(${props.theme.sizes.desktop} * 5);
 
             .inner {
-                width: ${props.theme.desktopVW(720)};
+                width: ${props.theme.desktopVW(750)};
             }
 
             .image-wrapper {
