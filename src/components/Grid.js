@@ -89,7 +89,7 @@ const Grid = ({
     } = useStaticQuery(graphql`{
         newsItems: allContentfulArticle(filter: {
             category: {
-                in: ["News", "Events", "Trips", "Recipe", "Knowledge"]
+                in: ["News", "Events", "Trips", "Recipes", "Knowledge"]
             }
         }, sort: {
             order: DESC, 

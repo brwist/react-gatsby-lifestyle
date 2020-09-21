@@ -172,7 +172,7 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
                     prefix = slug
                 } else if (category == 'Trainers') {
                     prefix = `performance/trainers/${slug}`
-                } else if (category == 'Events' || category == 'News' || category == 'Trips' || category == 'Knowledge' || category == 'Recipe') {
+                } else if (category == 'Events' || category == 'News' || category == 'Trips' || category == 'Knowledge' || category == 'Recipes') {
                     prefix = `events-and-trips/${category.toLowerCase()}/${slug}`
                 } else if (category == 'Performance' || category == 'Careers') {
                     prefix = `${category.toLowerCase()}/${slug}`

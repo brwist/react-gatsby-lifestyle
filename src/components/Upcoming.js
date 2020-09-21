@@ -142,7 +142,7 @@ const Upcoming = ({
     const { latestItems } = useStaticQuery(graphql`{
         latestItems: allContentfulArticle(filter: {
             category: {
-                in: ["News", "Events", "Trips", "Recipe", "Knowledge"]
+                in: ["News", "Events", "Trips", "Recipes", "Knowledge"]
             }
         }, sort: {
             order: DESC, 
