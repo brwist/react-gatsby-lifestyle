@@ -13,30 +13,12 @@ import { generatePath } from './../../utils/helpers'
 
 import InstagramSvg from './../../images/graphics/instagram.svg'
 
-const CardStyles = css`
+const NormalCard = styled.div`
     position: relative;
 
     flex-shrink: 0;
 
     width: ${props => props.theme.mobileVW(450)};
-
-    ${props => props.overlayColor == 'White' || props.overlayColor == 'Grey' && `
-        .button {
-            background-color: ${props.theme.colors.dark};
-            
-            border-color: ${props.theme.colors.dark};
-
-            color: ${props.theme.colors.white};
-
-            &:hover {
-                background-color: transparent;
-            
-                border-color: ${props.theme.colors.dark};
-
-                color: ${props.theme.colors.dark};
-            }
-        }
-    `}
 
     ${props => props.active == 'false' && `
         &:after {
@@ -66,6 +48,42 @@ const CardStyles = css`
         }
     `}
 
+    ${props => props.overlayColor == 'Grey' && `
+        .button {
+            background-color: ${props.theme.colors.dark};
+            
+            border-color: ${props.theme.colors.dark};
+
+            color: ${props.theme.colors.white};
+
+            &:hover {
+                background-color: transparent;
+            
+                border-color: ${props.theme.colors.dark};
+
+                color: ${props.theme.colors.dark};
+            }
+        }
+    `}
+
+    ${props => props.overlayColor == 'White' && `
+        .button {
+            background-color: ${props.theme.colors.dark};
+            
+            border-color: ${props.theme.colors.dark};
+
+            color: ${props.theme.colors.white};
+
+            &:hover {
+                background-color: transparent;
+            
+                border-color: ${props.theme.colors.dark};
+
+                color: ${props.theme.colors.dark};
+            }
+        }
+    `}
+
     ${props => props.theme.above.desktop`
         width: ${props.theme.desktopVW(450)};
 
@@ -81,12 +99,8 @@ const CardStyles = css`
     `}
 `
 
-const NormalCard = styled.div`
-    ${CardStyles}
-`
-
 const LinkedCard = styled(Link)`
-    ${CardStyles}
+    ${NormalCard}
 `
 
 const SmallDescription = styled.p`
