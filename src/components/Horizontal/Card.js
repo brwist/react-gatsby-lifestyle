@@ -451,7 +451,7 @@ const Card = ({
                     overlayColor={overlayColor}
                 >
                     {data.featuredImage.fluid != null && (
-                        <LinkWrapper to={generatePath(lang, link)}>
+                        <LinkWrapper className='link' to={generatePath(lang, link)}>
                             <ImageComponent
                                 image={data.featuredImage.fluid}
                                 alt={data.featuredImage.title}
@@ -494,14 +494,14 @@ const Card = ({
                         overlayColor={overlayColor}
                     >
                         {data.featuredImage.fluid != null && (
-                            <Link to={generatePath(lang, getLink(data))}>
+                            <LinkWrapper to={generatePath(lang, getLink(data))}>
                                 <ImageComponent
                                     image={data.featuredImage.fluid}
                                     alt={data.featuredImage.title}
                                     ref={imageRef}
                                     overlayColor={overlayColor}
                                 />
-                            </Link>
+                            </LinkWrapper>
                         )}
                         <LargeDescription ref={descriptionRef}>
                             <Header ref={headerRef}>

@@ -21,7 +21,7 @@ export const HeroBannerQuery = graphql`
         internalLinks {
             name
             label
-            program
+            formInput
             internalLink {
                 ... on ContentfulPage {
                     name

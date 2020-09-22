@@ -315,14 +315,14 @@ const getLinkComponent = (links, lang) => {
                 <StyledButtonPrimary href={links.external.link} label={links.external.label} inverted />
             ) : (
                 <>
-                    {links.map(({ label, internalLink: { __typename, slug } }, i) => {
+                    {links.map(({ label, formInput, internalLink: { __typename, slug } }, i) => {
                         
                         let modal
 
                         if (slug == null) {
                             modal = false
                         } else {
-                            modal = slug.includes('join-us') || slug.includes('self-test') ? true : false
+                            modal = slug.includes('join-us') || slug.includes('self-test') || slug.includes('reserve-your-spot') ? true : false
                         }
                         
                         return (
@@ -332,7 +332,10 @@ const getLinkComponent = (links, lang) => {
                                 to={generatePath(lang, slug)} 
                                 label={label} 
                                 inverted={i == 0}
-                                modal={modal}
+                                modal={{
+                                    modal: modal,
+                                    formInput: formInput 
+                                }}
                             />
                         )
                     })}

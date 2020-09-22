@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 import Grain from './../Layout/Grain'
 import TextRenderer from './../TextRenderer'
-import JoinUsForm from './../Forms/JoinUs'
+import GlobalForm from './../Forms/Global'
 import SelfTestForm from './../Forms/SelfTest'
 
 const ModalInner = styled.div`
@@ -96,7 +96,7 @@ const FormWrapper = styled.div`
     `}
 `
 
-const StyledJoinUsForm = styled(JoinUsForm)`
+const StyledGlobalForm = styled(GlobalForm)`
     width: 100%;
     
     ${props => props.theme.above.desktop`
@@ -115,15 +115,20 @@ const StyledSelfTestForm = styled(SelfTestForm)`
 const PopupModal = ({
     lang, 
     data,
+    formInput,
     slug, 
     closeTo
 }) => {
+
+    console.log(slug)
 
     const {
         image,
         contentTitle,
         contentDescription
     } = data
+
+    let showGlobalForm = slug == 'join-us' || slug == 'reserve-your-spot'
 
     return (
         <ModalInner>
@@ -141,7 +146,7 @@ const PopupModal = ({
                     <Title>{contentTitle}</Title>
                     <TextRenderer data={contentDescription}/>
                 </Copy>
-                {slug == 'join-us' && <StyledJoinUsForm data={data} />}
+                {showGlobalForm && <StyledGlobalForm data={data} formInput={formInput} />}
                 {slug == 'self-test' && <StyledSelfTestForm data={data} />}
             </FormWrapper>
             {/* <Grain /> */}

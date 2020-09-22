@@ -158,19 +158,33 @@ const ButtonPrimary = ({
             </StyledButton>
         )
     } else if (to) {
-        return (
-            <StyledInternal 
-                className={`button ${className || ''}`} 
-                to={to} 
-                inverted={inverted ? 'true' : 'false'}
-                colored={colored ? 'true' : 'false'}
-                state={{
-                    modal: modal
-                }}
-            >
-                {buttonInside(label)}
-            </StyledInternal>
-        )
+        if (modal) {
+            return (
+                <StyledInternal 
+                    className={`button ${className || ''}`} 
+                    to={to} 
+                    inverted={inverted ? 'true' : 'false'}
+                    colored={colored ? 'true' : 'false'}
+                    state={{
+                        modal: modal.modal,
+                        formInput: modal.formInput
+                    }}
+                >
+                    {buttonInside(label)}
+                </StyledInternal>
+            )
+        } else {
+            return (
+                <StyledInternal 
+                    className={`button ${className || ''}`} 
+                    to={to} 
+                    inverted={inverted ? 'true' : 'false'}
+                    colored={colored ? 'true' : 'false'}
+                >
+                    {buttonInside(label)}
+                </StyledInternal>
+            )
+        }
     } else if (href) {
         const url = href.includes('@') && !href.includes('mailto') ? 'mailto:' + href : href
         return (

@@ -192,7 +192,7 @@ const TextRenderer = ({
     const { width: windowWidth } = useWindowSize()
 
     const checkModal = uri => {
-        if (uri.includes('join-us') || uri.includes('self-test')) {
+        if (uri.includes('join-us') || uri.includes('self-test') || uri.includes('reserve-your-spot')) {
             return windowWidth < 1023 ? false : true 
         } else {
             return false

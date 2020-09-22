@@ -3,11 +3,11 @@ import styled from 'styled-components'
 import { useWindowSize } from 'react-use'
 import Select from 'react-select'
 
-import ButtonSubmit from './../Buttons/ButtonSubmit'
-import TextRenderer from './../TextRenderer'
-import Testimonial from './../Testimonial'
+import ButtonSubmit from '../Buttons/ButtonSubmit'
+import TextRenderer from '../TextRenderer'
+import Testimonial from '../Testimonial'
 
-import theme from './../../styles/theme'
+import theme from '../../styles/theme'
 
 const Wrapper = styled.div``
 
@@ -73,14 +73,14 @@ const Label = styled.label`
 
     opacity: 0.5;
 
-    ${props => props.program && `
+    ${props => props.select && `
         margin-bottom: calc(${props.theme.sizes.mobile} / 2);
     `}
 
     ${props => props.theme.above.desktop`
         font-size: ${props.theme.fontSizes.desktop.s};
 
-        ${props.program && `
+        ${props.select && `
             margin-bottom: calc(${props.theme.sizes.desktop} / 2);
         `}
     `}
@@ -220,15 +220,16 @@ const Anchor = styled.a`
     text-decoration: underline;
 `
 
-const JoinUs = ({
+const Global = ({
     className,
-    data
+    data,
+    formInput
 }) => {
 
     // Window Size
     const { width: windowWidth } = useWindowSize()
 
-    const options = [
+    const programOptions = [
         { 
             value: 'Bootcamp',
             label: 'Bootcamp'
@@ -252,6 +253,21 @@ const JoinUs = ({
         { 
             value: 'Elite',
             label: 'Elite'
+        }
+    ]
+
+    const workshopOptions = [
+        { 
+            value: 'Deepdive',
+            label: 'Deepdive'
+        },
+        { 
+            value: 'Remembering the deep',
+            label: 'Remembering the deep'
+        },
+        { 
+            value: 'Living in the deep',
+            label: 'Living in the deep'
         }
     ]
 
@@ -300,12 +316,14 @@ const JoinUs = ({
             color: theme.colors.white,
             fontFamily: theme.fontFamilies.plainLight,
             fontSize: windowWidth < 1023 ? theme.fontSizes.mobile.p : theme.fontSizes.desktop.p,
+            lineHeight: '2em'
         }),
         singleValue: (provided, state) => ({
             ...provided,
             color: theme.colors.white,
             fontFamily: theme.fontFamilies.plainLight,
             fontSize: windowWidth < 1023 ? theme.fontSizes.mobile.p : theme.fontSizes.desktop.p,
+            lineHeight: '2em'
         }),
         menu: (provided) => ({
             ...provided,
@@ -324,6 +342,27 @@ const JoinUs = ({
                 background: '#efefef'
             }
         })
+    }
+
+    const findCurrentInput = () => {
+        
+        let currentOptions
+        let currentOption
+
+        if (data.slug == 'join-us') {
+            currentOptions = programOptions
+        } else if (data.slug == 'reserve-your-spot') {
+            currentOptions = workshopOptions
+        }
+
+        currentOptions.forEach((item, i) => {
+            if (item.label == formInput) {
+                currentOption = currentOptions[i]
+            }
+        })
+        
+        return currentOption
+
     }
 
     return (
@@ -376,23 +415,44 @@ const JoinUs = ({
                         placeholder='+31 6 12345678'
                     />
                 </Field>
-                <Field>
-                    <Label htmlFor='mce-PROGRAM' program>Program</Label>
-                    <Select
-                        name='PROGRAM' 
-                        id='mce-PROGRAM'
-                        isSearchable={false}
-                        styles={customStyles}
-                        // defaultValue={options[0]}
-                        placeholder='Select program..'
-                        onChange={([selected]) => {
-                            return { 
-                                value: selected 
-                            }
-                        }}
-                        options={options}
-                    />
-                </Field>
+                {data.slug == 'join-us' && (
+                    <Field>
+                        <Label htmlFor='mce-PROGRAM' select>Program</Label>
+                        <Select
+                            name='PROGRAM' 
+                            id='mce-PROGRAM'
+                            isSearchable={false}
+                            styles={customStyles}
+                            defaultValue={findCurrentInput()}
+                            placeholder='Select program..'
+                            onChange={([selected]) => {
+                                return { 
+                                    value: selected 
+                                }
+                            }}
+                            options={programOptions}
+                        />
+                    </Field>
+                )}
+                {data.slug == 'reserve-your-spot' && (
+                    <Field>
+                        <Label htmlFor='mce-WORKSHOP' select>Workshop</Label>
+                        <Select
+                            name='WORKSHOP' 
+                            id='mce-WORKSHOP'
+                            isSearchable={false}
+                            styles={customStyles}
+                            defaultValue={findCurrentInput()}
+                            placeholder='Select workshop..'
+                            onChange={([selected]) => {
+                                return { 
+                                    value: selected 
+                                }
+                            }}
+                            options={workshopOptions}
+                        />
+                    </Field>
+                )}
                 <Field>
                     <Label htmlFor='mce-MOTIVATION'>Motivation</Label>
                     <Input
@@ -441,4 +501,4 @@ const JoinUs = ({
     )
 }
 
-export default JoinUs
+export default Global

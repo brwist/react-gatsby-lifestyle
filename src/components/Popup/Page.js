@@ -8,7 +8,7 @@ import Constructor from './../Layout/Constructor'
 import Container from './../Layout/Container'
 import HeroBanner from './../HeroBanner'
 import Testimonial from '../Testimonial'
-import JoinUsForm from './../Forms/JoinUs'
+import GlobalForm from './../Forms/Global'
 import SelfTestForm from './../Forms/SelfTest'
 import TextRenderer from './../TextRenderer'
 
@@ -165,8 +165,12 @@ const StickyComponent = ({
 const PopupPage = ({
     lang,
     data,
-    slug
+    slug,
+    formInput
 }) => {
+    
+    let showGlobalForm = slug == 'join-us' || slug == 'reserve-your-spot'
+
     return (
         <>
             <Constructor
@@ -183,7 +187,7 @@ const PopupPage = ({
                     />
                     <Content>
                         <ContentInner>
-                            {slug == 'join-us' && <JoinUsForm lang={lang} data={data} />}
+                            {showGlobalForm && <GlobalForm lang={lang} data={data} formInput={formInput} />}
                             {slug == 'self-test' && <SelfTestForm lang={lang} data={data} />}
                             {slug == 'cookies-and-privacy' && <TextRenderer lang={lang} data={data.contentDescription} useInlineLink />}
                         </ContentInner>

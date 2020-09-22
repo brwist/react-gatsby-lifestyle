@@ -7,6 +7,11 @@ import PopupPage from './../components/Popup/Page'
 import PopupModal from './../components/Popup/Modal'
 
 const PopupTemplate = ({
+    location: {
+        state: {
+            formInput
+        }
+    },
     pageContext: {
         layout: {
             langSlug,
@@ -38,12 +43,14 @@ const PopupTemplate = ({
                                 data={contentfulPopup}
                                 closeTo={closeTo}
                                 slug={slug}
+                                formInput={formInput}
                             />
                         ) : (
                             <PopupPage 
                                 lang={langSlug}
                                 data={contentfulPopup}
                                 slug={slug}
+                                formInput={formInput}
                             />
                         )}
                     </>

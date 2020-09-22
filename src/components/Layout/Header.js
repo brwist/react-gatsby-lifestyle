@@ -194,7 +194,10 @@ const Header = ({
                         <ButtonJoinUs 
                             label='Join Us' 
                             to={generatePath(lang, 'join-us')} 
-                            modal
+                            modal={{
+                                modal: true,
+                                formInput: 'header'
+                            }}
                         />
                     </InnerRight>
                 </StyledContainer>
