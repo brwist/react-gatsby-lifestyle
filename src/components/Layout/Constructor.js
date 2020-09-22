@@ -81,7 +81,7 @@ const Constructor = ({
                     inView={inView} 
                     data={component} 
                     items={instagram.items} 
-                    hashtag={instagram.hashtag}
+                    hashtags={instagram.hashtags}
                     backgroundColor={backgroundColor}
                 />
             )

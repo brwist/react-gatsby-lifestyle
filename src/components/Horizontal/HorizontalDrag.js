@@ -95,7 +95,7 @@ const HorizontalDrag = ({
     lang,
     inView,
     items,
-    hashtag,
+    hashtags,
     title, 
     description,
     component,
@@ -178,11 +178,21 @@ const HorizontalDrag = ({
 
     useEffect(() => {
 
-        if (hashtag && hashtag != 'trainer') {
+        function hasTerm(string, terms) {
+            function search(term) { 
+                return string.includes(term)
+            }
+            return terms.map(search).includes(true)
+        }
+
+        if (hashtags) {
+
+            if (hashtags[0] == 'robertstols' || hashtags[0] == 'all') return
+            
             let hashtagItems = []
-        
-            carouselItems.forEach((item, i) => {
-                if (item.caption && item.caption.includes(hashtag)) {
+
+            items.forEach((item) => {
+                if (hasTerm(item.caption, hashtags)) {
                     hashtagItems.push(item)
                 }
             })

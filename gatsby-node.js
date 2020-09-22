@@ -155,14 +155,14 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
             if (components) {
                 components.forEach((item) => {
                     if (item.__typename == 'ContentfulComponentInstagramFeed') {
-                        hashtag = item.instagramHashtag.replace('#', '')
+                        hashtags = item.instagramHashtag
                     }
                 })
             }
 
             // If no hashtag set to fallback
-            if (hashtag == null) {
-                hashtag = 'rockstarlifestyleamsterdam'
+            if (hashtags == null) {
+                hashtags = ['all']
             }
 
             // Get page category slug prefix
@@ -199,7 +199,7 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
                         },
                         theme: themes[node_locale],
                         dictionary: dictionaries[node_locale],
-                        instagram: hashtag
+                        instagram: hashtags
                     }
                 })
             }

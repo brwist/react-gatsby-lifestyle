@@ -16,7 +16,7 @@ const renderComponent = ({
         gesture, // Draggable or Scrollable
         itemsInformation, // Title and excerpt, Excerpt or Extended
         items,
-        hashtag, // If Instagram
+        hashtags, // If Instagram
         contentTitle,
         contentDescription
     }
@@ -32,7 +32,7 @@ const renderComponent = ({
                 lang={lang} 
                 inView={inView} 
                 items={items}
-                hashtag={hashtag} 
+                hashtags={hashtags} 
                 component={component} 
                 type={type}
                 slug={slug}
@@ -50,7 +50,7 @@ const renderComponent = ({
                     lang={lang} 
                     inView={inView} 
                     items={items}
-                    hashtag={hashtag} 
+                    hashtags={hashtags} 
                     component={component} 
                     type={type}
                     slug={slug}

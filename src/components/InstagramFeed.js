@@ -6,7 +6,7 @@ const InstagramFeed = ({
     lang,
     inView,
     items,
-    hashtag,
+    hashtags,
     backgroundColor,
     data: {
         contentTitle,
@@ -20,7 +20,7 @@ const InstagramFeed = ({
             data={{
                 __typename: 'ContentfulComponentInstagramFeed',
                 items: items.nodes,
-                hashtag: hashtag,
+                hashtags: hashtags,
                 type: 'Straight',
                 itemsInformation: 'Excerpt only',
                 gesture: 'Draggable',
