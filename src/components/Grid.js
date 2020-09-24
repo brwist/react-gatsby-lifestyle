@@ -72,9 +72,6 @@ const Grid = ({
     }
 }) => {
 
-    // Items
-    let gridItems
-
     // States
     const [activeNewsItems, setActiveNewsItems] = useState(-1)
     const [filteredItems, setFilteredItems] = useState([])
@@ -83,13 +80,14 @@ const Grid = ({
     const itemRefs = useRef([])
 
     const { 
-        newsItems,
+        eventsAndTripsItems,
+        blogItems,
         trainerItems, 
         careerItems 
     } = useStaticQuery(graphql`{
-        newsItems: allContentfulArticle(filter: {
+        eventsAndTripsItems: allContentfulArticle(filter: {
             category: {
-                in: ["News", "Events", "Trips", "Recipes", "Knowledge"]
+                in: ["Events", "Trips"]
             }
         }, sort: {
             order: DESC, 
@@ -111,20 +109,48 @@ const Grid = ({
                     }
                 }
             }
-          },
+        },
+        blogItems: allContentfulArticle(filter: {
+            category: {
+                in: ["News", "Recipes", "Knowledge"]
+            }
+        }, sort: {
+            order: DESC, 
+            fields: createdAt
+        }) {
+            group(field: category) {
+                field
+                fieldValue
+                nodes {
+                    slug
+                    category
+                    name
+                    title
+                    featuredImage {
+                        title
+                        fluid(maxWidth: 400, quality: 100) {
+                            ...GatsbyContentfulFluid_withWebp
+                        }
+                    }
+                }
+            }
+        },
         trainerItems: allContentfulPage(filter: {
             category: {
                 eq: "Trainers"
             }
         }, sort: {
-            order: DESC, 
-            fields: createdAt
+            order: ASC, 
+            fields: slug
         }) {
             nodes {
                 name
                 title: name
                 category
                 slug
+                excerpt {
+                    json
+                }
                 featuredImage {
                     title
                     fluid(maxWidth: 400, quality: 100) {
@@ -146,6 +172,9 @@ const Grid = ({
                     category
                     name
                     title
+                    excerpt {
+                        json
+                    }
                     featuredImage {
                         title
                         fluid(maxWidth: 400, quality: 100) {
@@ -155,6 +184,17 @@ const Grid = ({
             }
         }
     }`)
+    
+    let categoryItems
+    let showFilter = false
+
+    if (category == 'Events and Trips') {
+        categoryItems = eventsAndTripsItems
+        showFilter = true
+    } else if (category == 'Blog') {
+        categoryItems = blogItems
+        showFilter = true
+    }
 
     useEffect(() => {
 
@@ -162,31 +202,31 @@ const Grid = ({
             setFilteredItems(careerItems.nodes)
         } else if (category == 'Trainers') {
             setFilteredItems(trainerItems.nodes)
-        } 
+        }
 
     }, [])
 
     useEffect(() => {
 
-        if (category != 'Events and Trips') return
+        if (category == 'Careers' || category == 'Trainers') return
 
         if (activeNewsItems == -1) {
             let items = []
 
-            newsItems.group.forEach(group => {
+            categoryItems.group.forEach(group => {
                 group.nodes.forEach(node => items.push(node))
             })
             
             setFilteredItems(items)
         } else {
-            setFilteredItems(newsItems.group[activeNewsItems].nodes)
+            setFilteredItems(categoryItems.group[activeNewsItems].nodes)
         }
         
     }, [activeNewsItems])
 
     useEffect(() => {
 
-        if (category != 'Events and Trips') return
+        if (!showFilter) return
 
         itemRefs.current.forEach((item, i) => {
             gsap.fromTo(item, { y: 25.0, alpha: 0.0 }, { y: 0.0, alpha: 1.0, delay: i * 0.25, duration: 0.5, ease: 'sine.out' })
@@ -197,13 +237,13 @@ const Grid = ({
     return (
         <Wrapper>
             <Container>
-                {category == 'Events and Trips' && (
+                {showFilter && (
                     <Filter>
                         <FilterItem 
                             onClick={() => setActiveNewsItems(-1)}
                             active={activeNewsItems == -1}
                         >All categories</FilterItem>
-                        {newsItems.group.map((category, i) => {
+                        {categoryItems.group.map((category, i) => {
                             return (
                                 <FilterItem
                                     key={i}

@@ -109,7 +109,10 @@ const Category = styled.span`
 const GridItem = ({ 
     lang, 
     gridCategory,
-    data: { 
+    data
+}, ref) => {
+
+    const { 
         title,
         slug,
         category,
@@ -117,18 +120,24 @@ const GridItem = ({
         buttonLabel,
         excerpt,
         components
-    } 
-}, ref) => {
+    } = data
     
     // Refs
     const buttonRef = useRef(null)
 
-    let link 
+    let link
+    let showDescription = false
+    let showCategory = false
 
     if (gridCategory == 'Events and Trips') {
         link = `events-and-trips/${category.toLowerCase()}/${slug}`
+        showCategory = true
+    } else if (gridCategory == 'Blog') {
+        link = `blog/${category.toLowerCase()}/${slug}`
+        showCategory = true
     } else if (gridCategory == 'Trainers') {
         link = `performance/${category.toLowerCase()}/${slug}`
+        showDescription = true
     } else {
         link = `${category.toLowerCase()}/${slug}`
     }
@@ -143,7 +152,7 @@ const GridItem = ({
                 <StyledImage fluid={featuredImage.fluid} alt={featuredImage.title} />
             </ImageWrapper>
             <Header>
-                {gridCategory == 'Events and Trips' && (
+                {showCategory && (
                     <Category>{category}</Category>
                 )}
                 <Heading to={generatePath(lang, link)}>{title}</Heading>
@@ -151,7 +160,7 @@ const GridItem = ({
                     <StyledTags data={components[0].tags} slice={1}/>
                 )}
             </Header>
-            {gridCategory != 'Events and Trips' && (
+            {showDescription && (
                 <Description data={excerpt} />
             )}
             <Footer>

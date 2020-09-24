@@ -138,14 +138,8 @@ const Media = styled.div`
             width: ${props.theme.desktopVW(50)};
             height: ${props.theme.desktopVW(50)};
 
-            opacity: 0.2;
-
             &:after {
                 font-size: ${props.theme.desktopVW(20)};
-            }
-        
-            &:hover {
-                opacity: 1;
             }
 
             &:active {

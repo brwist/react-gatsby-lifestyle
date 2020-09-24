@@ -97,7 +97,7 @@ const Input = styled.input`
     
 	background: transparent;
     border: none;
-    border-bottom: 1px solid ${props => props.theme.colors.light};
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 0;
     
     font-family: ${props => props.theme.fontFamilies.plainLight};
@@ -105,8 +105,14 @@ const Input = styled.input`
 
     color: ${props => props.theme.colors.light};
 
+    transition: all 0.15s ease-out;
+
     &::placeholder {
         color: ${props => props.theme.colors.light};
+    }
+
+    &:focus {
+        border-bottom: 1px solid ${props => props.theme.colors.light};
     }
 
     ${props => props.theme.above.desktop`
@@ -415,7 +421,7 @@ const Global = ({
                         placeholder='+31 6 12345678'
                     />
                 </Field>
-                {data.slug == 'join-us' && (
+                {/* {data.slug == 'join-us' && (
                     <Field>
                         <Label htmlFor='mce-PROGRAM' select>Program</Label>
                         <Select
@@ -452,7 +458,17 @@ const Global = ({
                             options={workshopOptions}
                         />
                     </Field>
-                )}
+                )} */}
+                <Field>
+                    <Label htmlFor='mce-SUBJECT'>Subject</Label>
+                    <Input
+                        type='text'
+                        name='SUBJECT'
+                        className='required'
+                        id='mce-SUBJECT'
+                        defaultValue={formInput || ''}
+                    />
+                </Field>
                 <Field>
                     <Label htmlFor='mce-MOTIVATION'>Motivation</Label>
                     <Input

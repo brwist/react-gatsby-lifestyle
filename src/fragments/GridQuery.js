@@ -5,6 +5,5 @@ export const GridQuery = graphql`
         __typename
         componentTitle
         category
-        filterable
     }
 `

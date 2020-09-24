@@ -196,7 +196,7 @@ const Header = ({
                             to={generatePath(lang, 'join-us')} 
                             modal={{
                                 modal: true,
-                                formInput: 'header'
+                                formInput: 'Join us'
                             }}
                         />
                     </InnerRight>

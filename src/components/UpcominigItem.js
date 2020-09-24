@@ -169,6 +169,14 @@ const UpcomingItem = ({
         }
 
     }, [inView])
+
+    let prefix
+
+    if (category == 'News') {
+        prefix = `blog/${category.toLowerCase()}/${slug}`
+    } else {
+        prefix = `events-and-trips/${category.toLowerCase()}/${slug}`
+    }
     
     return (
         <StyledItem ref={ref}>
@@ -177,7 +185,7 @@ const UpcomingItem = ({
                 onMouseEnter={() => buttonRef.current.classList.add('hover')} 
                 onMouseLeave={() => buttonRef.current.classList.remove('hover')}
             >
-                <ImageWrapper to={generatePath(lang, `events-and-trips/${category.toLowerCase()}/${slug}`)}>
+                <ImageWrapper to={generatePath(lang, prefix)}>
                     <StyledAnimatedImage 
                         ref={imageRef} 
                         data={featuredImage} 
