@@ -23,7 +23,7 @@ const Grain = ({ className }) => {
     useEffect(() => {
         gsap.set(ref.current, { alpha: 0.0 })
 
-        const tween = gsap.to(ref.current, { alpha: 0.15, delay: 1.0, duration: 1.0 })
+        const tween = gsap.to(ref.current, { alpha: 0.15, delay: 2.0, duration: 1.0 })
 
         return () => {
             tween && tween.kill()

@@ -31,7 +31,7 @@ const NormalCard = styled.div`
             ` : props.overlayColor == 'Grey' ? `    
                 background-color: ${props.theme.colors.light};
             ` : `
-                background-color: ${props.theme.colors.darkGreen};
+                background-color: ${props.theme.colors.dark};
             `}
 
             opacity: 0.45;
@@ -196,7 +196,7 @@ const ImageOverlay = styled.div`
     ` : props.overlayColor == 'Grey' ? `    
         background-color: ${props.theme.colors.light};
     ` : `
-        background-color: ${props.theme.colors.darkGreen};
+        background-color: ${props.theme.colors.dark};
     `}
 `
 
@@ -348,8 +348,14 @@ const ImageComponent = React.forwardRef(({ image, alt, instagram, overlayColor }
     return (
         <ImageWrapper className='image-wrapper'>
             <AnimatedImage ref={imageRef}>
-                <StyledImage className='image' fluid={image} alt={alt}  />
-                {instagram && <InstagramIcon />}
+                {instagram ? (
+                    <>
+                        <StyledImage className='image' src={image} alt={alt} as='img'  />
+                        <InstagramIcon />
+                    </>
+                ) : (
+                    <StyledImage className='image' fluid={image} alt={alt}  />
+                )}
             </AnimatedImage>
             <ImageOverlay overlayColor={overlayColor} ref={imageOverlayRef} />
         </ImageWrapper>
@@ -423,7 +429,7 @@ const Card = ({
                 overlayColor={overlayColor}
             >
                 <ImageComponent
-                    image={data.localFile.childImageSharp.fluid}
+                    image={data.localFile.url}
                     alt={data.username}
                     instagram
                     ref={imageRef}

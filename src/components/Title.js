@@ -232,7 +232,7 @@ const TitleOverlay = styled.div`
     ` : props.overlayColor == 'Grey' ? `    
         background-color: ${props.theme.colors.light};
     ` : `
-        background-color: ${props.theme.colors.darkGreen};
+        background-color: ${props.theme.colors.dark};
     `}
 `
 

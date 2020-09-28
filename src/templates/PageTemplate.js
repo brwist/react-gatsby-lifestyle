@@ -57,11 +57,6 @@ export const query = graphql`
                 mediaType
                 localFile {
                     url
-                    childImageSharp {
-                        fluid(maxHeight: 350, maxWidth: 400, cropFocus: CENTER) {
-                            ...GatsbyImageSharpFluid_withWebp
-                        }
-                    }
                 }           
             }
         }
@@ -77,11 +72,6 @@ export const query = graphql`
                 mediaType
                 localFile {
                     url
-                    childImageSharp {
-                        fluid(maxHeight: 350, maxWidth: 400, cropFocus: CENTER) {
-                            ...GatsbyImageSharpFluid_withWebp
-                        }
-                    }
                 } 
             }
         }
