@@ -106,7 +106,7 @@ const LinkedCard = styled(Link)`
 const SmallDescription = styled.p`
     position: relative;
     
-    font-size: ${props => props.theme.fontSizes.mobile.s};
+    font-size: ${props => props.theme.fontSizes.mobile.xs};
 
     ${props => props.theme.above.desktop`
         padding-right: ${props.theme.sizes.desktop};

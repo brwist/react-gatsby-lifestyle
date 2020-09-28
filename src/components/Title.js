@@ -217,7 +217,13 @@ const LineWrapper = styled.span`
 `
 
 const TitleOverlay = styled.div`
-    ${props => props.theme.styles.element.fill}
+    position: absolute;
+    
+    top: -10px;
+    left: -10px;
+
+    width: calc(100% + 20px);
+    height: calc(100% + 20px);
 
     z-index: 4;
 
@@ -311,7 +317,7 @@ const StyledButtonPrimary = styled(ButtonPrimary)`
 const getLinkComponent = (links, lang) => {
 
     console.log(links, lang)
-    
+
     return (
         <LinksWrapper>
             {links.external ? (
