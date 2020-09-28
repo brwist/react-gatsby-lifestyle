@@ -169,7 +169,7 @@ const Footer = ({
 
     return (
         <StyledFooter ref={setRefs} className={className} type={type}>
-            <Inner>
+            <Inner className='inner'>
                 <FooterLeft>
                     <LogoWrapper to={generatePath(lang, '')}>
                         <StyledLogo src={logoImage.nodes[0].publicURL} alt='Rockstar Lifestyle - Short logo'/>

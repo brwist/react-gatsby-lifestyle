@@ -103,7 +103,7 @@ const Address = styled(TextRenderer)`
     }
 
     &:first-of-type {
-        margin-bottom: calc(${props => props.theme.sizes.mobile} / 1.5);
+        margin-bottom: calc(${props => props.theme.sizes.mobile} / 3);
     }
 
     ${props => props.theme.above.desktop`
@@ -120,9 +120,19 @@ const Address = styled(TextRenderer)`
 `
 
 const StyledAnimatedIcon = styled(AnimatedIcon)`
+    margin-top: calc(${props => props.theme.sizes.mobile} / 2);
+    
     &:first-of-type {
-        margin-right: calc(${props => props.theme.sizes.desktop} / 2);
+        margin-right: calc(${props => props.theme.sizes.mobile} / 3);
     }
+
+    ${props => props.theme.above.desktop`
+        margin-top: calc(${props.theme.sizes.desktop} / 2);
+        
+        &:first-of-type {
+            margin-right: calc(${props.theme.sizes.desktop} / 2);
+        }
+    `}
 `
 
 const Locations = ({

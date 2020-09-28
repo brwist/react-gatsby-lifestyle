@@ -40,6 +40,8 @@ const Wrapper = styled.div`
         
         background-color: ${props => props.colors.bar};
 
+        opacity: 0;
+
         .swiper-scrollbar-drag {
             background-color: ${props => props.colors.drag};
         }
@@ -84,6 +86,26 @@ const StyledTitle = styled(HorizontalTitle)`
         margin-bottom: calc(${props.theme.sizes.mobile} * 2);
     `}
 
+    ${props => props.theme.below.desktop`
+        ${props.type == 'Wave' && `
+            .title-wrapper {
+                margin-bottom: 0;
+            }
+        `}
+        
+        ${props.type == 'Straight' && `
+            .title-wrapper {
+                margin-bottom: 0;
+            }
+
+            .title-container {
+                &:nth-of-type(2) {
+                    margin-top: calc(${props.theme.sizes.mobile} / 2);
+                }
+            }
+        `}
+    `}
+
     ${props => props.theme.above.desktop`
         ${props.type == 'Wave' && `
             margin-bottom: -${props.theme.desktopVW(50)};
@@ -103,7 +125,8 @@ const HorizontalDrag = ({
     slug,
     category,
     information,
-    backgroundColor
+    backgroundColor,
+    className
 }) => {
 
     // Refs
@@ -167,8 +190,6 @@ const HorizontalDrag = ({
     useEffect(() => {
 
         let scrollBar = document.querySelectorAll('.swiper-scrollbar')
-
-        gsap.set(scrollBar, { scaleX: 0.0, alpha: 0.0 })
         
         if (!inView) return
 
@@ -208,6 +229,7 @@ const HorizontalDrag = ({
         <Wrapper 
             colors={getColors(backgroundColor)} 
             type={type}
+            className={className}
         >
             <StyledTitle 
                 ref={titleRef}
@@ -231,6 +253,7 @@ const HorizontalDrag = ({
                         return (
                             <Card
                                 key={i}
+                                index={i}
                                 lang={lang}
                                 data={item}
                                 inView={inView}

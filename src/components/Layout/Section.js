@@ -109,6 +109,7 @@ const Section = ({
         >
             {layout.flowLine == 'Visible' && <FlowLine ref={flowRef}/>}
             {children(inView)}
+            {getGrain()}
         </StyledSection>
     )
 }

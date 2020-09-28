@@ -7,7 +7,7 @@ import Container from './Layout/Container'
 import GridItem from './GridItem'
 
 const Wrapper = styled.div`
-    padding: calc(${props => props.theme.sizes.mobile} * 5) 0;
+    padding: ${props => props.theme.sizes.mobile} 0;
 
     ${props => props.theme.above.desktop`
         padding: calc(${props.theme.sizes.desktop} * 10) 0;
@@ -19,12 +19,16 @@ const Filter = styled.div`
     
     margin-bottom: ${props => props.theme.mobileVW(80)};
 
+    overflow: hidden;
+
     ${props => props.theme.above.desktop`
         display: block;
 
         margin-bottom: ${props.theme.desktopVW(80)};
     `}
 `
+
+const FilterInner = styled.div``
 
 const FilterItem = styled.button`
     display: inline-block;
@@ -78,6 +82,7 @@ const Grid = ({
 
     // Refs
     const itemRefs = useRef([])
+    const filterRef = useRef(null)
 
     const { 
         eventsAndTripsItems,
@@ -229,29 +234,49 @@ const Grid = ({
         if (!showFilter) return
 
         itemRefs.current.forEach((item, i) => {
-            gsap.fromTo(item, { y: 25.0, alpha: 0.0 }, { y: 0.0, alpha: 1.0, delay: i * 0.25, duration: 0.5, ease: 'sine.out' })
+            if (item) gsap.to(item, { y: 0.0, alpha: 1.0, delay: i * 0.25, duration: 0.5, ease: 'sine.out' })
         })
         
     }, [filteredItems])
+
+    useEffect(() => {
+        
+        gsap.set(filterRef.current, { x: -25.0, alpha: 0.0 })
+
+        itemRefs.current.forEach(item => {
+            gsap.set(item, { y: 25.0, alpha: 0.0 })
+        })
+        
+        if (!inView) return
+
+        gsap.to(filterRef.current, { x: 0.0, alpha: 1.0, transformOrigin: 'left', ease: 'power3.out' })
+        
+        itemRefs.current.forEach((item, i) => {
+            gsap.fromTo(item, { y: 25.0, alpha: 0.0 }, { y: 0.0, alpha: 1.0, delay: i * 0.25, duration: 0.5, ease: 'sine.out' })
+        })
+
+    }, [inView])
 
     return (
         <Wrapper>
             <Container>
                 {showFilter && (
                     <Filter>
-                        <FilterItem 
-                            onClick={() => setActiveNewsItems(-1)}
-                            active={activeNewsItems == -1}
-                        >All categories</FilterItem>
-                        {categoryItems.group.map((category, i) => {
-                            return (
-                                <FilterItem
-                                    key={i}
-                                    active={activeNewsItems == i}
-                                    onClick={() => setActiveNewsItems(i)}
-                                >{category.fieldValue}</FilterItem>
-                            )
-                        })}
+                        <FilterInner ref={filterRef}>
+                            <FilterItem 
+                                onClick={() => setActiveNewsItems(-1)}
+                                active={activeNewsItems == -1}
+                            >All categories</FilterItem>
+                            {categoryItems.group.map((category, i) => {
+                                return (
+                                    <FilterItem
+                                        key={i}
+                                        active={activeNewsItems == i}
+                                        onClick={() => setActiveNewsItems(i)}
+                                    >{category.fieldValue}</FilterItem>
+                                )
+                            })}
+                        </FilterInner>
                     </Filter>
                 )}
                 <List>

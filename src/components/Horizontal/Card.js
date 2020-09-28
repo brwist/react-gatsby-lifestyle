@@ -31,7 +31,7 @@ const NormalCard = styled.div`
             ` : props.overlayColor == 'Grey' ? `    
                 background-color: ${props.theme.colors.light};
             ` : `
-                background-color: ${props.theme.colors.dark};
+                background-color: ${props.theme.colors.darkGreen};
             `}
 
             opacity: 0.45;
@@ -196,7 +196,7 @@ const ImageOverlay = styled.div`
     ` : props.overlayColor == 'Grey' ? `    
         background-color: ${props.theme.colors.light};
     ` : `
-        background-color: ${props.theme.colors.dark};
+        background-color: ${props.theme.colors.darkGreen};
     `}
 `
 
@@ -240,7 +240,7 @@ const Header = styled.div`
 
     ${props => props.theme.styles.flexBox.horCen};
 
-    margin-bottom: calc(${props => props.theme.sizes.mobile} / 1.5);
+    margin-bottom: calc(${props => props.theme.sizes.mobile} / 2);
 
     ${props => props.theme.above.desktop`
         margin-bottom: ${props.theme.desktopVW(15)};
@@ -263,6 +263,14 @@ const Heading = styled.h4`
 
 const StyledTags = styled(Tags)`
     justify-content: flex-end;
+    
+    ${props => props.theme.below.desktop`
+        .tag {
+            &:not(:last-of-type) {
+                margin-bottom: ${props.theme.mobileVW(5)};
+            }
+        }
+    `}
 `
 
 const Caption = styled(TextRenderer)`
@@ -283,7 +291,7 @@ const StyledTestimonial = styled(Testimonial)`
     justify-content: space-between;
     align-items: center;
 
-    margin-top: ${props => props.theme.sizes.mobile};
+    margin-top: calc(${props => props.theme.sizes.mobile} / 2);
 
     ${props => props.theme.above.desktop`
         margin-top: ${props.theme.sizes.desktop};
@@ -323,13 +331,13 @@ const ImageComponent = React.forwardRef(({ image, alt, instagram, overlayColor }
         return {
             transitionIn() {
 
-                gsap.set(imageRef.current, { scale: 1.35, alpha: 0.0 })
-                gsap.set(imageOverlayRef.current, { y: '0%' })
+                gsap.set(imageRef.current, { scale: 1.0, alpha: 0.0 })
+                gsap.set(imageOverlayRef.current, { alpha: 1.0 })
 
                 const timeline = new gsap.timeline()
                 
-                timeline.to(imageOverlayRef.current, { y: '-100%', transformOrigin: 'top', duration: 1.5, ease: 'power3.out' }, 0)
-                timeline.to(imageRef.current, { scale: 1.0, alpha: 1.0, duration: 0.5, ease: 'none', force3D: false }, 0.25)
+                timeline.to(imageOverlayRef.current, { alpha: 0.0, duration: 1.5, ease: 'power3.out' }, 0.0)
+                timeline.to(imageRef.current, { scale: 1.0, alpha: 1.0, duration: 1.5, ease: 'power3.out' }, 0.0)
                 
                 return timeline
 
@@ -340,14 +348,8 @@ const ImageComponent = React.forwardRef(({ image, alt, instagram, overlayColor }
     return (
         <ImageWrapper className='image-wrapper'>
             <AnimatedImage ref={imageRef}>
-                {instagram ? (
-                    <>
-                        <StyledImage className='image' src={image} alt={alt} as='img'  />
-                        <InstagramIcon />
-                    </>
-                ) : (
-                    <StyledImage className='image' fluid={image} alt={alt}  />
-                )}
+                <StyledImage className='image' fluid={image} alt={alt}  />
+                {instagram && <InstagramIcon />}
             </AnimatedImage>
             <ImageOverlay overlayColor={overlayColor} ref={imageOverlayRef} />
         </ImageWrapper>
@@ -361,6 +363,7 @@ const Card = ({
     component,
     information,
     type,
+    index,
     active,
     inView,
     overlayColor
@@ -374,20 +377,20 @@ const Card = ({
 
     useEffect(() => {
 
-        gsap.set(itemRef.current, { y: 15.0 })
+        gsap.set(itemRef.current, { y: 100.0 })
         information != 'Excerpt only' && gsap.set(headerRef.current, { y: 5.0, alpha: 0.0 })
         gsap.set(descriptionRef.current, { y: -15.0, alpha: 0.0 })
 
         if (!inView) return
 
-        const timeline = new gsap.timeline({ onComplete: () => {
+        const timeline = new gsap.timeline({ delay: index * 0.05 || 0.0, onComplete: () => {
             itemRef.current.classList.add('loaded')
         }})
 
         timeline.to(itemRef.current, { y: 0.0, duration: 0.5, ease: 'sine.out' }, 0.0)
         timeline.add(imageRef.current.transitionIn(), 0.0)
-        information != 'Excerpt only' && timeline.to(headerRef.current, { y: 0.0, alpha: 1.0, duration: 0.35, ease: 'sine.out' }, 0.5)
-        timeline.to(descriptionRef.current, { y: 0.0, alpha: 1.0, duration: 0.35, ease: 'sine.out' }, 0.5)
+        information != 'Excerpt only' && timeline.to(headerRef.current, { y: 0.0, alpha: 1.0, duration: 0.35, ease: 'sine.out' }, 0.25)
+        timeline.to(descriptionRef.current, { y: 0.0, alpha: 1.0, duration: 0.35, ease: 'sine.out' }, 0.25)
 
         return () => {
             timeline && timeline.kill()
@@ -420,7 +423,7 @@ const Card = ({
                 overlayColor={overlayColor}
             >
                 <ImageComponent
-                    image={data.localFile.url}
+                    image={data.localFile.childImageSharp.fluid}
                     alt={data.username}
                     instagram
                     ref={imageRef}

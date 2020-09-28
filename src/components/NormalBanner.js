@@ -143,7 +143,7 @@ const NormalBanner = ({
 
     return (
         <Wrapper ref={wrapperRef}>
-            {images && (
+            {!contact && images && (
                 <ImageWrapper>
                     <AnimatedImage ref={imageRef}>
                         {images.map(({ fluid, title }, i) => (

@@ -10,6 +10,8 @@ import { generatePath } from './../utils/helpers'
 import TextRenderer from './TextRenderer'
 
 const StyledItem = styled.li`
+    opacity: 0;
+    
     &:hover {
         img {
             transform: scale(1.05);
@@ -89,7 +91,7 @@ const Footer = styled.div`
 const Category = styled.span`
     display: block;
     
-    margin-bottom: calc(${props => props.theme.sizes.mobile} / 1.5);
+    margin-bottom: calc(${props => props.theme.sizes.mobile} / 4);
 
     opacity: 0.5;
     

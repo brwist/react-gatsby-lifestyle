@@ -26,6 +26,10 @@ const StyledNavigation = styled.nav`
 
         .link {
             overflow: hidden;
+
+            &.in-active {
+                opacity: 0.15;
+            }
         }
 
         .label {
@@ -122,7 +126,7 @@ const StyledLink = styled(Link)`
     }
 
     &.in-active {
-        opacity: 0.25;
+        opacity: 0.5;
     }
 
     ${props => props.theme.above.desktop`

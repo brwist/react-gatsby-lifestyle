@@ -12,8 +12,8 @@ export const JoinUsQuery = graphql`
         }
         image {
             title
-            fluid(maxWidth: 750, quality: 100) {
-                ...GatsbyContentfulFluid
+            fluid(maxWidth: 600, quality: 80) {
+                ...GatsbyContentfulFluid_withWebp
             }
         }
     }

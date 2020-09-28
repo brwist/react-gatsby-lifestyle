@@ -137,6 +137,7 @@ const HorizontalScroll = ({
                                 lang={lang}
                                 data={item}
                                 inView={inView}
+                                index={i}
                                 component={component}
                                 information={information}
                                 type={type}

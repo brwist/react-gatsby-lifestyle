@@ -23,6 +23,7 @@ const colors = {
     silver: '#c9cccc',
     coolGrey: '#a6afb0',
     darkGrey: '#242525',
+    darkGreen: '#0f1412',
     dark: '#101010',
     black: '#000',
     green: '#697366',

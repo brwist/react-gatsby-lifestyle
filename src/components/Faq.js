@@ -18,7 +18,7 @@ const Wrapper = styled.div`
 `
 
 const Header = styled(Container)`
-    margin-bottom: calc(${props => props.theme.sizes.mobile} * 3);
+    margin-bottom: ${props => props.theme.sizes.mobile};
 
     ${props => props.theme.above.desktop`
         position: absolute;

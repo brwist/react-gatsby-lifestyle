@@ -53,8 +53,12 @@ const DescriptionWrapper = styled.div`
 `
 
 const Description = styled.p`
+    display: block;
+
+    margin-bottom: calc(${props => props.theme.sizes.mobile} / 6);
+
     font-family: ${props => props.theme.fontFamilies.plainLight};
-    font-size: ${props => props.theme.fontSizes.mobile.xs};
+    font-size: ${props => props.theme.fontSizes.mobile.xxs};
     line-height: 1.43;
 
     ${props => props.theme.above.desktop`
@@ -66,7 +70,7 @@ const Description = styled.p`
 
 const Name = styled.h4`
     font-family: ${props => props.theme.fontFamilies.plainLight};
-    font-size: ${props => props.theme.fontSizes.mobile.xs};
+    font-size: ${props => props.theme.fontSizes.mobile.xxs};
     line-height: 1.43;
 
     opacity: 0.6;

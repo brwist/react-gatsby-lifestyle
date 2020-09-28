@@ -29,6 +29,7 @@ const StyledMenu = styled.aside`
 
     width: 100%;
     height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
 
     opacity: 0;
 
@@ -179,6 +180,13 @@ const Menu = ({
         timeline.add(imageRef.current.zoomIn(), 0.0)
         
     }, [activeMenuItem])
+
+    useEffect(() => {
+
+        let vh = typeof window !== 'undefined' ? window.innerHeight * 0.01 : 1000
+        menuRef.current.style.setProperty('--vh', `${vh}px`)
+    
+    }, [])
 
     return (
         <StyledMenu 

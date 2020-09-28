@@ -6,7 +6,7 @@ import gsap from 'gsap'
 import TextRenderer from './TextRenderer'
 import { padLeft } from '../utils/helpers'
 
-const Item = styled.div`
+const Item = styled.li`
     position: relative;
 
     width: 100%;

@@ -14,7 +14,7 @@ import RelatedArticles from './../components/RelatedArticles'
 const Wrapper = styled.section`
     position: relative;
 
-    padding: calc(${props => props.theme.sizes.mobile} * 5) 0;
+    padding: ${props => props.theme.sizes.mobile} 0 calc(${props => props.theme.sizes.mobile} * 3) 0;
     
     ${props => props.theme.above.desktop`
         padding: calc(${props.theme.sizes.desktop} * 10) 0 calc(${props.theme.sizes.desktop} * 5) 0;
@@ -104,9 +104,7 @@ const InfoValue = styled.span`
     font-size: ${props => props.theme.fontSizes.mobile.s};
     line-height: 1;
 
-    ${props => props.large && `
-        max-width: ${props.theme.desktopVW(600)};
-        
+    ${props => props.large && `        
         font-family: ${props.theme.fontFamilies.plainRegular};
         font-size: ${props.theme.fontSizes.mobile.m};
     `}
@@ -115,6 +113,8 @@ const InfoValue = styled.span`
         font-size: ${props.theme.fontSizes.desktop.p};
 
         ${props.large && `
+            max-width: ${props.theme.desktopVW(600)};
+
             font-size: ${props.theme.fontSizes.desktop.h5};
         `}
     `}
@@ -123,7 +123,7 @@ const InfoValue = styled.span`
 const Content = styled.div`
     width: 100%;
 
-    margin-bottom: calc(${props => props.theme.sizes.mobile} * 3);
+    margin-bottom: calc(${props => props.theme.sizes.mobile} * 2);
 
     h4 {
         margin-bottom: ${props => props.theme.sizes.mobile};
@@ -153,6 +153,7 @@ const InfoBlock = ({
     mobile,
     data: {
         name,
+        title,
         author,
         date,
         link,
@@ -190,7 +191,7 @@ const InfoBlock = ({
         >
             <InfoItem>
                 <InfoTitle>Title</InfoTitle>
-                <InfoValue large>{name}</InfoValue>
+                <InfoValue large>{title}</InfoValue>
             </InfoItem>
             <InfoItem>
                 <InfoTitle>Author</InfoTitle>

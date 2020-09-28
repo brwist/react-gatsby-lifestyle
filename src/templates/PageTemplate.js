@@ -49,7 +49,7 @@ export const query = graphql`
 		contentfulPage(id: {eq: $id}) {
             ...PageQuery
         }
-        instaNodes: allInstaNode(limit: 500) {
+        instaNodes: allInstaNode {
             nodes {
                 id
                 username
@@ -57,6 +57,11 @@ export const query = graphql`
                 mediaType
                 localFile {
                     url
+                    childImageSharp {
+                        fluid(maxHeight: 350, maxWidth: 400, cropFocus: CENTER) {
+                            ...GatsbyImageSharpFluid_withWebp
+                        }
+                    }
                 }           
             }
         }
@@ -72,6 +77,11 @@ export const query = graphql`
                 mediaType
                 localFile {
                     url
+                    childImageSharp {
+                        fluid(maxHeight: 350, maxWidth: 400, cropFocus: CENTER) {
+                            ...GatsbyImageSharpFluid_withWebp
+                        }
+                    }
                 } 
             }
         }

@@ -22,10 +22,6 @@ const Layout = ({
 	const showFooter = location.pathname.includes('contact') || location.pathname.includes('404') ? false : true
 
 	const toggleMenuHandler = () => {
-		
-		let headroom = document.querySelector('.headroom')
-
-		headroom.style.transform = 'translate3d(0px, 0px, 0px)'
 
 		setMenuOpen(!menuOpen)
 		
@@ -34,7 +30,6 @@ const Layout = ({
   	return (
 		<PreloaderContext.Provider value={showPreloader ? 'preloader' : 'no-preloader'}>
 			<GlobalStyle shouldDisableScroll={menuOpen ? true : false} />
-			{/* <Grain /> */}
 			{showPreloader && (
 				<Preloader showPreloader={e => setShowPreloader(e)} />
 			)}

@@ -200,6 +200,21 @@ const ButtonPrimary = ({
         )
     } else if (share) {
         if (typeof window !== 'undefined' && window.navigator.share) {
+
+            const shareHandler = (title, url) => {
+
+                window.navigator.share({
+                    title: title,
+                    url: url
+                }).then(() => {
+                    console.log('Share success')
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        
+            }
+
             return (
                 <StyledButton 
                     onClick={() => shareHandler(share.text, share.link)}

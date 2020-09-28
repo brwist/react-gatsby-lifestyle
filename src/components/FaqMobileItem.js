@@ -49,11 +49,13 @@ const Front = styled.div`
     width: 100%;
     height: 100%;
 
-    padding: ${props => props.theme.sizes.mobile};
-
     background-color: ${props => props.theme.colors.darkGrey};
 
+    padding: ${props => props.theme.sizes.mobile};
+
     color: ${props => props.theme.colors.light};
+
+    overflow: scroll;
 `
 
 const Question = styled.p`

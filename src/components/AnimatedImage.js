@@ -53,7 +53,7 @@ const Overlay = styled.div`
     ` : props.overlayColor == 'Grey' ? `    
         background-color: ${props.theme.colors.light};
     ` : `
-        background-color: ${props.theme.colors.dark};
+        background-color: ${props.theme.colors.darkGreen};
     `}
 `
 

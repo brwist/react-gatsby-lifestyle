@@ -20,13 +20,15 @@ import { DictionaryContext } from './../../contexts/dictionary'
 import { generatePath } from '../../utils/helpers'
 
 const StyledHeader = styled.header`
-    position: relative;
+    position: fixed;
+
+    z-index: 4;
     
     width: 100%;
     
-    transform: translateY(-100%);
+    /* transform: translateY(-100%); */
 
-    opacity: 0;
+    /* opacity: 0; */
 
     padding: calc(${props => props.theme.sizes.mobile} / 1.5);
     
@@ -70,11 +72,21 @@ const StyledNavigation = styled(Navigation)`
 `
 
 const LogoImage = styled.img`
-    display: block;
+    ${props => props.mobile ? `
+        display: block;
+    ` : `
+        display: none;
+    `}
 
-    width: ${props => props.theme.mobileVW(175)};
+    width: ${props => props.theme.mobileVW(30)};
 
     ${props => props.theme.above.desktop`
+        ${props => props.mobile ? `
+            display: none;
+        ` : `
+            display: block;
+        `}
+
         width: ${props.theme.desktopVW(218)};
     `}
 `
@@ -148,8 +160,13 @@ const Header = ({
     const preloaderState = useContext(PreloaderContext)
     const delay = preloaderState == 'preloader' ? 4.0 : 2.0
 
-    const { logoImage } = useStaticQuery(graphql`{
+    const { logoImage, logoIcon } = useStaticQuery(graphql`{
         logoImage: allFile(filter: {relativePath: {eq: "rockstar-lifestyle.png"}}) {
+            nodes {
+               publicURL
+            }
+        }
+        logoIcon: allFile(filter: {relativePath: {eq: "rl.png"}}) {
             nodes {
                publicURL
             }
@@ -165,44 +182,42 @@ const Header = ({
     }, [])
 
     return (
-        <Headroom>
-            <StyledHeader ref={headerRef}>
-                <StyledContainer>
-                    <InnerLeft>
-                        <Logo to={generatePath(lang, '')} onClick={() => menuOpen && setMenuOpen(!menuOpen)}>
-                            {/* <LogoIcon /> */}
-                            <LogoImage src={logoImage.nodes[0].publicURL} alt='Rockstar Lifestyle - Logo'/>
-                        </Logo>
-                        <StyledNavigation 
-                            lang={lang}
-                            data={mainItems}
-                            visible={!menuOpen}
-                            type='header'
-                        />
-                    </InnerLeft>
-                    <InnerRight>
-                        <MenuClose 
-                            visible={menuOpen}
-                            onClick={setMenuOpen}
-                        >
-                            <MenuCloseLabel className='close-label'>Close</MenuCloseLabel>
-                        </MenuClose>
-                        <ButtonMenu 
-                            menuOpen={menuOpen}
-                            setMenuOpen={setMenuOpen}
-                        />
-                        <ButtonJoinUs 
-                            label='Join Us' 
-                            to={generatePath(lang, 'join-us')} 
-                            modal={{
-                                modal: true,
-                                formInput: 'Join us'
-                            }}
-                        />
-                    </InnerRight>
-                </StyledContainer>
-            </StyledHeader>
-        </Headroom>
+        <StyledHeader ref={headerRef}>
+            <StyledContainer>
+                <InnerLeft>
+                    <Logo to={generatePath(lang, '')} onClick={() => menuOpen && setMenuOpen(!menuOpen)}>
+                        <LogoImage src={logoImage.nodes[0].publicURL} alt='Rockstar Lifestyle - Logo'/>
+                        <LogoImage mobile src={logoIcon.nodes[0].publicURL} alt='Rockstar Lifestyle - Logo Small'/>
+                    </Logo>
+                    <StyledNavigation 
+                        lang={lang}
+                        data={mainItems}
+                        visible={!menuOpen}
+                        type='header'
+                    />
+                </InnerLeft>
+                <InnerRight>
+                    <MenuClose 
+                        visible={menuOpen}
+                        onClick={setMenuOpen}
+                    >
+                        <MenuCloseLabel className='close-label'>Close</MenuCloseLabel>
+                    </MenuClose>
+                    <ButtonMenu 
+                        menuOpen={menuOpen}
+                        setMenuOpen={setMenuOpen}
+                    />
+                    <ButtonJoinUs 
+                        label='Join Us' 
+                        to={generatePath(lang, 'join-us')} 
+                        modal={{
+                            modal: true,
+                            formInput: 'Join us'
+                        }}
+                    />
+                </InnerRight>
+            </StyledContainer>
+        </StyledHeader>
     )
 }
 

@@ -13,7 +13,7 @@ const Tag = styled.li`
 
     height: ${props => props.theme.mobileVW(25)};
 
-    padding: 0 ${props => props.theme.mobileVW(10)};
+    padding: 0 ${props => props.theme.mobileVW(7.5)};
 
     background-color: #1a1b1d;
     border-radius: ${props => props.theme.mobileVW(4)};
@@ -41,13 +41,17 @@ const Label = styled.span`
     
     font-family: ${props => props.theme.fontFamilies.plainLight};
     font-size: ${props => props.theme.fontSizes.mobile.xxs};
-    line-height: ${props => props.theme.mobileVW(25)};
+    line-height: ${props => props.theme.mobileVW(24)};
 
     color: ${props => props.theme.colors.light};
+
+    opacity: 0.5;
 
     ${props => props.theme.above.desktop`
         font-size: ${props.theme.fontSizes.desktop.xs};
         line-height: ${props.theme.desktopVW(38)};
+
+        opacity: 1;
     `}
 `
 

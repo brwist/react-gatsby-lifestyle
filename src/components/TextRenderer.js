@@ -108,6 +108,22 @@ const UnorderedList = styled.ul`
     `}
 `
 
+const OrderedList = styled.ol`
+    ${TextStyles}
+
+    padding-left: ${props => props.theme.mobileVW(25)};
+
+    list-style: decimal;
+
+    font-size: ${props => props.theme.mobileVW(12)};
+
+    ${props => props.theme.above.desktop`
+        padding-left: ${props.theme.desktopVW(20)};
+
+        font-size: ${props => props.theme.desktopVW(15)};
+    `}
+`
+
 const StyledButtonPrimary = styled(ButtonPrimary)`
     /* color: currentColor;
 
@@ -207,6 +223,7 @@ const TextRenderer = ({
                     [BLOCKS.HEADING_2]: (node, children) => <h2 className={className}>{children}</h2>,
                     [BLOCKS.HEADING_3]: (node, children) => <h3 className={className}>{children}</h3>,
                     [BLOCKS.UL_LIST]: (node, children) => <UnorderedList className={className}>{children}</UnorderedList>,
+                    [BLOCKS.OL_LIST]: (node, children) => <OrderedList className={className}>{children}</OrderedList>,
                     [BLOCKS.HEADING_4]: (node, children) => <Heading4 className={className}>{children}</Heading4>,
                     [BLOCKS.HEADING_5]: (node, children) => <Heading5 className={className}>{children}</Heading5>,
                     [BLOCKS.PARAGRAPH]: (node, children) => <Paragraph className={className}>{children}</Paragraph>,

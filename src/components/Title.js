@@ -232,7 +232,7 @@ const TitleOverlay = styled.div`
     ` : props.overlayColor == 'Grey' ? `    
         background-color: ${props.theme.colors.light};
     ` : `
-        background-color: ${props.theme.colors.dark};
+        background-color: ${props.theme.colors.darkGreen};
     `}
 `
 
@@ -261,11 +261,11 @@ const DescriptionWrapper = styled.div`
 `
 
 const StyledTags = styled(Tags)`
-    margin-left: -${props => props.theme.mobileVW(10)};
-    margin-bottom: ${props => props.theme.sizes.mobile};
+    margin-left: -${props => props.theme.mobileVW(5)};
+    margin-bottom: calc(${props => props.theme.sizes.mobile} / 2);
     
     .tag {
-        margin: ${props => props.theme.mobileVW(5)};
+        margin: ${props => props.theme.mobileVW(2.5)};
     }
     
     ${props => props.theme.above.desktop`
