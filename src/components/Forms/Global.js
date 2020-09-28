@@ -467,6 +467,7 @@ const Global = ({
                         className='required'
                         id='mce-SUBJECT'
                         defaultValue={formInput || ''}
+                        placeholder='Where do you like to start?'
                     />
                 </Field>
                 <Field>

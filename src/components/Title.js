@@ -357,7 +357,8 @@ const Title = ({
     links,
     className,
     useInlineLink,
-    overlayColor
+    overlayColor,
+    modal
 }, ref) => {
 
     const titleRef = useRef(null)

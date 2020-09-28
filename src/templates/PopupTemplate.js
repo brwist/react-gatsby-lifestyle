@@ -7,11 +7,7 @@ import PopupPage from './../components/Popup/Page'
 import PopupModal from './../components/Popup/Modal'
 
 const PopupTemplate = ({
-    location: {
-        state: {
-            formInput
-        }
-    },
+    location,
     pageContext: {
         layout: {
             langSlug,
@@ -27,6 +23,8 @@ const PopupTemplate = ({
         name,
         seoImage 
     } = contentfulPopup
+
+    const formInput = location.state ? location.state.formInput : ''
 
     return (
         <>

@@ -19,6 +19,8 @@ const StyledTitle = styled(HorizontalTitle)`
 
     ${props => props.theme.above.desktop`
         width: ${props.theme.desktopVW(750)};
+
+        padding: 0;
     `}
 `
 

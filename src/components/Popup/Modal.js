@@ -120,8 +120,6 @@ const PopupModal = ({
     closeTo
 }) => {
 
-    console.log(slug)
-
     const {
         image,
         contentTitle,

@@ -248,6 +248,10 @@ const JoinUs = ({
                     size='medium'
                     inView={inView}
                     ref={titleRef}
+                    modal={{
+                        modal: true,
+                        formInput: 'Join us'
+                    }}
                 />
                 {windowWidth > 1023 ? (
                     <MouseAnimatedWrapper ref={imageRef}>
