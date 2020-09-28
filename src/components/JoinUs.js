@@ -220,7 +220,7 @@ const JoinUs = ({
         const timeline = new gsap.timeline({ delay: 0.25 })
         
         timeline.add(titleRef.current.transitionIn(), 0.25)
-        timeline.to(imageRef.current, { alpha: 1.0, duration: 0.35, ease: 'sine.out' }, 0.25)
+        timeline.to(imageRef.current, { alpha: 1.0, duration: 0.35, ease: 'sine.out' }, 0.5)
 
     }, [inView])
 

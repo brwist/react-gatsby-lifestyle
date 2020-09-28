@@ -192,6 +192,8 @@ const HorizontalDrag = ({
             let hashtagItems = []
 
             items.forEach((item) => {
+                if (item.caption == null) return 
+                
                 if (hasTerm(item.caption, hashtags)) {
                     hashtagItems.push(item)
                 }
