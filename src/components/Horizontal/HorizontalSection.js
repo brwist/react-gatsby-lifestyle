@@ -26,7 +26,10 @@ const renderComponent = ({
     
     const component = __typename.replace('ContentfulComponent', '')
 
+    console.log(typeof window != 'undefined' && window.innerWidth)
+
     if (typeof window != 'undefined' && window.innerWidth < 1023) {
+        console.log('window mobile drag')
         return (
             <HorizontalDrag 
                 lang={lang} 
