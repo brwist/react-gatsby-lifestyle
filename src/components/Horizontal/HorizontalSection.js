@@ -26,7 +26,7 @@ const renderComponent = ({
     
     const component = __typename.replace('ContentfulComponent', '')
 
-    if (windowWidth < 1023) {
+    if (typeof window != 'undefined' && window.innerWidth < 1023) {
         return (
             <HorizontalDrag 
                 lang={lang} 
