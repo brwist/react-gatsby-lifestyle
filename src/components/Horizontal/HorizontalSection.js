@@ -1,8 +1,25 @@
 import React, { useRef } from 'react'
 import { useWindowSize } from 'react-use'
+import styled from 'styled-components'
 
 import HorizontalDrag from './HorizontalDrag'
 import HorizontalScroll from './HorizontalScroll'
+
+const MobileDrag = styled(HorizontalDrag)`
+    display: block;
+
+    ${props => props.theme.above.desktop`
+        display: none;
+    `}
+`
+
+const DesktopScroll = styled(HorizontalScroll)`
+    display: none;
+
+    ${props => props.theme.above.desktop`
+        display: block;
+    `}
+`
 
 const renderComponent = ({ 
     lang,
@@ -21,16 +38,11 @@ const renderComponent = ({
         contentDescription
     }
 }) => {
-
-    const { width: windowWidth } = useWindowSize()
     
     const component = __typename.replace('ContentfulComponent', '')
 
-    console.log(typeof window != 'undefined' && window.innerWidth)
-
-    if (typeof window != 'undefined' && window.innerWidth < 1023) {
-        console.log('window mobile drag')
-        return (
+    switch (gesture) {
+        case 'Draggable': return (
             <HorizontalDrag 
                 lang={lang} 
                 inView={inView} 
@@ -46,10 +58,9 @@ const renderComponent = ({
                 category={category}
             />
         )
-    } else {
-        switch (gesture) {
-            case 'Draggable': return (
-                <HorizontalDrag 
+        case 'Scrollable': return (
+            <>
+                <MobileDrag 
                     lang={lang} 
                     inView={inView} 
                     items={items}
@@ -63,9 +74,7 @@ const renderComponent = ({
                     description={contentDescription}
                     category={category}
                 />
-            )
-            case 'Scrollable': return (
-                <HorizontalScroll 
+                <DesktopScroll 
                     lang={lang} 
                     inView={inView} 
                     items={items} 
@@ -78,8 +87,8 @@ const renderComponent = ({
                     description={contentDescription}
                     category={category}
                 />
-            )
-        }
+            </>
+        )
     }
 
 }

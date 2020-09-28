@@ -309,6 +309,9 @@ const StyledButtonPrimary = styled(ButtonPrimary)`
 `
 
 const getLinkComponent = (links, lang) => {
+
+    console.log(links, lang)
+    
     return (
         <LinksWrapper>
             {links.external ? (

@@ -57,7 +57,8 @@ const HorizontalScroll = ({
     component,
     title, 
     description,
-    backgroundColor
+    backgroundColor,
+    className
 }) => {
 
     // Refs
@@ -112,7 +113,7 @@ const HorizontalScroll = ({
     }, [inView])
 
     return (
-        <StyledSection>
+        <StyledSection className={className}>
             <FlowWrapper ref={flowWrapperRef}>
                 <FlowLine ref={flowRef} />
             </FlowWrapper>

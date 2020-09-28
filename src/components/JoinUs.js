@@ -49,6 +49,8 @@ const Content = styled(Title)`
 `
 
 const MouseAnimatedWrapper = styled.div`
+    display: none;
+
     width: ${props => props.theme.mobileVW(500)};
     height: ${props => props.theme.mobileVW(500)};
     
@@ -57,6 +59,8 @@ const MouseAnimatedWrapper = styled.div`
     overflow: hidden;
 
     ${props => props.theme.above.desktop`
+        display: block;
+
         width: ${props.theme.desktopVW(850)};
         height: ${props.theme.desktopVW(850)};
     `}
@@ -71,20 +75,6 @@ const MouseAnimatedImage = styled.div`
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-
-    /* &:after {
-        content: '';
-        position: absolute;
-        
-        top: 0;
-        left: 0;
-        
-        width: 100%;
-        height: 100%;
-
-        background-image: url(${props => props.glowImage});
-        background-size: cover;
-    } */
 `
 
 const MouseAnimatedBorder = styled.div`
@@ -109,6 +99,8 @@ const MouseAnimatedBorder = styled.div`
 ` 
 
 const ImageWrapper = styled.div`
+    display: block;
+
     position: absolute;
     
     top: 0;
@@ -118,6 +110,10 @@ const ImageWrapper = styled.div`
 
     width: 100%;
     height: 100%;
+
+    ${props => props.theme.above.desktop`
+        display: none;
+    `}
 `
 
 const StyledImage = styled(Image)`
@@ -248,28 +244,21 @@ const JoinUs = ({
                     size='medium'
                     inView={inView}
                     ref={titleRef}
-                    modal={{
-                        modal: true,
-                        formInput: 'Join us'
-                    }}
                 />
-                {windowWidth > 1023 ? (
-                    <MouseAnimatedWrapper ref={imageRef}>
-                        <MouseAnimatedImage
-                            image={image.fluid.src}
-                            glowImage={glowImage.childImageSharp.fluid.src}
-                        >
-                        </MouseAnimatedImage>
-                        <MouseAnimatedBorder
-                            ref={imageWrapperRef}
-                        >
-                        </MouseAnimatedBorder>
-                    </MouseAnimatedWrapper>
-                ) : (
-                    <ImageWrapper ref={imageRef}>
-                        <StyledImage fluid={image.fluid} alt={image.alt} />
-                    </ImageWrapper>
-                )}
+                <MouseAnimatedWrapper ref={imageRef}>
+                    <MouseAnimatedImage
+                        image={image.fluid.src}
+                        glowImage={glowImage.childImageSharp.fluid.src}
+                    >
+                    </MouseAnimatedImage>
+                    <MouseAnimatedBorder
+                        ref={imageWrapperRef}
+                    >
+                    </MouseAnimatedBorder>
+                </MouseAnimatedWrapper>
+                <ImageWrapper ref={imageRef}>
+                    <StyledImage fluid={image.fluid} alt={image.alt} />
+                </ImageWrapper>
             </StyledContainer>
         </Wrapper>
     )
