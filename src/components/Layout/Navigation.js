@@ -131,7 +131,7 @@ const StyledLink = styled(Link)`
 
     ${props => props.theme.above.desktop`
         &:after {
-            bottom: -${props.theme.desktopVW(5)};
+            bottom: -${props.theme.desktopVW(2)};
         }
 
         &.active, &:hover {
@@ -224,6 +224,16 @@ const Navigation = ({
         }
     }, [])
 
+    const cutName = name => {
+        if (name.includes('Development')) {
+            return name.replace('Development', 'Dev.')
+        } else if (name.includes('Rockstar')) {
+            return name.replace('Rockstar', '')
+        } else {
+            return name
+        }
+    }
+
     return (
         <StyledNavigation className={className} type={type}>
             <List className='list'>
@@ -245,7 +255,7 @@ const Navigation = ({
                                 <Label 
                                     className='label'
                                     ref={el => labelsRef.current[index] = el}
-                                >{type == 'main' ? name.replace('Development', 'Dev.') : name}</Label>
+                                >{type == 'main' ? cutName(name) : name}</Label>
                             </StyledLink>
                         </Item>
                     )

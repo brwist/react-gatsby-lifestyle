@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useContext } from 'react'
+import React, { useEffect, useRef, useContext, useState } from 'react'
 import { useStaticQuery, graphql, Link } from 'gatsby'
 import styled from 'styled-components'
 import Img from 'gatsby-image'
@@ -31,6 +31,14 @@ const StyledHeader = styled.header`
     /* opacity: 0; */
 
     padding: calc(${props => props.theme.sizes.mobile} / 1.5);
+
+    background: linear-gradient(to bottom, ${props => props.theme.colors.dark}, transparent);
+    
+    transition: all 0.15s ease-out;
+
+    ${props => props.sticky && `
+		background-color: ${props.theme.colors.dark};
+    `}
     
     ${props => props.theme.above.desktop`
         padding: ${props.theme.sizes.desktop} 0;
@@ -153,6 +161,9 @@ const Header = ({
     menuOpen
 }) => {
 
+    // States
+    const [sticky, setSticky] = useState(false)
+
     // Refs
     const headerRef = useRef(null)
 
@@ -181,8 +192,23 @@ const Header = ({
         }
     }, [])
 
+    const scrollHandler = () => {
+        if (window.scrollY >= 80) {
+            setSticky(true)
+        } else {
+            setSticky(false)
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener('scroll', scrollHandler)
+        return () => {
+            window.removeEventListener('scroll', scrollHandler)
+        }
+    }, [])
+
     return (
-        <StyledHeader ref={headerRef}>
+        <StyledHeader sticky={sticky} ref={headerRef}>
             <StyledContainer>
                 <InnerLeft>
                     <Logo to={generatePath(lang, '')} onClick={() => menuOpen && setMenuOpen(!menuOpen)}>
