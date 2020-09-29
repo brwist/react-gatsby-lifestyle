@@ -15,19 +15,25 @@ const Wrapper = styled.div`
 
     width: 100%;
     height: 100%;
+
+    ${props => props.hide ? `
+        opacity: 0 !important;
+    ` : `
+        opacity: 1;
+    `}
 `
 
-const Grain = ({ className }) => {
+const Grain = ({ className, hide }) => {
     const ref = useRef(null)
 
     useEffect(() => {
         gsap.set(ref.current, { alpha: 0.0 })
 
-        const tween = gsap.to(ref.current, { alpha: 0.2, delay: 2.0, duration: 1.0 })
+        // const tween = gsap.to(ref.current, { alpha: 0.1, delay: 2.0, duration: 1.0 })
 
-        return () => {
-            tween && tween.kill()
-        }
+        // return () => {
+        //     tween && tween.kill()
+        // }
     }, [])
 
     return (
@@ -44,12 +50,11 @@ const Grain = ({ className }) => {
             render={data => {
                 const imageData = data.desktop.childImageSharp.fluid            
                 return (
-                    <Wrapper ref={ref}>
+                    <Wrapper hide={hide || false} ref={ref} className={className}>
                         <BackgroundImage
                             Tag='div'
-                            className={className}
                             fluid={imageData}
-                            ref={ref}
+                            className={className}
                         />
                     </Wrapper>
                 )
@@ -74,8 +79,6 @@ const StyledGrain = styled(Grain)`
     background-size: auto;
 
     opacity: 1;
-    
-    mix-blend-mode: difference;
 
     pointer-events: none;
 `

@@ -90,10 +90,8 @@ const Section = ({
         if (!flowRef.current) return
         
         gsap.set(flowRef.current, { alpha: 0.0 })
-        
-        if (!inView) return
 
-        const tween = gsap.to(flowRef.current, { alpha: 1.0, duration: 1.0, delay: 1.0, ease: 'sine.out' })
+        const tween = gsap.fromTo(flowRef.current, { alpha: 0.0 }, { alpha: 1.0, duration: 1.0, delay: 1.0, ease: 'sine.out' })
 
         return () => {
             tween && tween.kill()

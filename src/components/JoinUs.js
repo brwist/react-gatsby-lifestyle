@@ -91,7 +91,7 @@ const MouseAnimatedBorder = styled.div`
     margin: ${props => props.theme.desktopVW(150)};
     
     background-color: transparent;
-    border: ${props => props.theme.desktopVW(300)} solid ${props => props.theme.colors.darkGreen};
+    border: ${props => props.theme.desktopVW(300)} solid ${props => props.theme.colors.dark};
     
     overflow: hidden;
     
@@ -215,7 +215,7 @@ const JoinUs = ({
     useEffect(() => {
 
         gsap.set(imageRef.current, { alpha: 0.0 })
-        gsap.set(animatedRef.current, { alpha: 0.0, scale: 1.1, skewY: 5.0 })
+        gsap.set(animatedRef.current, { alpha: 0.0, y: 25.0, scale: 1.1 })
         
         if (!inView) return
 
@@ -223,7 +223,7 @@ const JoinUs = ({
         
         timeline.add(titleRef.current.transitionIn(), 0.25)
         timeline.to(imageRef.current, { alpha: 1.0, duration: 0.35, ease: 'sine.out' }, 0.5)
-        timeline.to(animatedRef.current, { alpha: 1.0, scale: 1.0, skewY: 0.0, duration: 0.35, ease: 'sine.out' }, 0.5)
+        timeline.to(animatedRef.current, { alpha: 1.0, scale: 1.0, y: 0.0, duration: 0.35, ease: 'sine.out' }, 0.5)
 
     }, [inView])
 

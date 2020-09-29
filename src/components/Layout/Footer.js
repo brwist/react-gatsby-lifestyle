@@ -194,6 +194,7 @@ const Footer = ({
                     )}
                 </FooterRight>
             </Inner>
+            <Grain />
         </StyledFooter>
     )
 }

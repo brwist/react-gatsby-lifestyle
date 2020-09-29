@@ -138,7 +138,7 @@ const GridItem = ({
         link = `blog/${category.toLowerCase()}/${slug}`
         showCategory = true
     } else if (gridCategory == 'Trainers') {
-        link = `performance/${category.toLowerCase()}/${slug}`
+        link = `physical-development/${category.toLowerCase()}/${slug}`
         showDescription = true
     } else {
         link = `${category.toLowerCase()}/${slug}`

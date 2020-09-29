@@ -8,9 +8,13 @@ import { generatePath } from './../../utils/helpers'
 const StyledNavigation = styled.nav`
     display: block;
 
+    position: relative;
+
     width: 100%;
     
     ${props => props.type == 'header' && `
+        top: -2px;
+        
         .list {
             display: flex;
             flex-direction: row;

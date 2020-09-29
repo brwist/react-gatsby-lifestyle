@@ -408,9 +408,9 @@ const Card = ({
         let link
 
         if (data.category == 'Workshops') {
-            link = `spirit/${data.category.toLowerCase()}/${data.slug}`
+            link = `personal-development/${data.category.toLowerCase()}/${data.slug}`
         } else if (data.category == 'Trainers') {
-            link = `performance/${data.category.toLowerCase()}/${data.slug}`
+            link = `physical-development/${data.category.toLowerCase()}/${data.slug}`
         } else if (data.category == 'Worlds' || data.category == 'Normal') {
             link = data.slug
         } else {

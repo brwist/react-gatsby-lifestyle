@@ -138,7 +138,13 @@ const ImageRight = styled.div`
 `
 
 const ImageOverlay = styled.div`
-    ${props => props.theme.styles.element.fill}
+    position: absolute;
+
+    top: -10px;
+    left: -10px;
+
+    width: calc(100% + 20px);
+    height: calc(100% + 20px);
 
     background-color: ${props => props.theme.colors.dark};
 `
@@ -214,9 +220,9 @@ const HomeBanner = ({
         timeline.add(descriptionRef.current.transitionIn(), 0)
         timeline.add(titleMobileRef.current.transitionIn(), 0)
         timeline.add(descriptionMobileRef.current.transitionIn(), 0)
-        timeline.fromTo([imageLeftOverlayRef.current, imageRightOverlayRef.current], { scaleY: 1, transformOrigin: 'top' }, { scaleY: 0, duration: 1, ease: 'power3.out' }, 1.25)
-        timeline.fromTo(imageLeftRef.current, { scale: 1.75 }, { scale: 1.2, duration: 1, ease: 'power3.out' }, 1.25)
-        timeline.fromTo(imageRightRef.current, { scale: 1.75 }, { scale: 1.15, duration: 1, ease: 'power3.out' }, 1.25)
+        timeline.fromTo([imageLeftOverlayRef.current, imageRightOverlayRef.current], { scaleY: 1, transformOrigin: 'top' }, { scaleY: 0, duration: 1, ease: 'power3.out' }, 1.0)
+        timeline.fromTo(imageLeftRef.current, { scale: 1.75 }, { scale: 1.2, duration: 0.75, ease: 'power3.out' }, 1.0)
+        timeline.fromTo(imageRightRef.current, { scale: 1.75 }, { scale: 1.15, duration: 0.75, ease: 'power3.out' }, 1.0)
 
         return () => {
             timeline && timeline.kill()

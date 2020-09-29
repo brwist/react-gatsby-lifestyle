@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react'
 import { useStaticQuery, graphql } from 'gatsby'
 import gsap from 'gsap'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import Grain from './Grain'
 
@@ -28,28 +28,47 @@ const Wrapper = styled.div`
 
 const LogoWrapper = styled.div`
     position: relative;
+
+    overflow: hidden;
 `
 
-const LogoOverlay = styled.div`
-    position: absolute;
+const logoStyles = css`
+    height: ${props => props.theme.mobileVW(20)};
 
+    max-height: 25px;
+
+    ${props => props.theme.above.desktop`
+        height: ${props.theme.desktopVW(20)};
+    `}
+`
+
+const WrapperInner = styled.div`
+    position: relative;
+
+    z-index: 1;
+
+    ${logoStyles}
+`
+
+const Logo = styled.img`
+    ${logoStyles}
+`
+
+const Video = styled.video`
+    position: absolute;
+    
     top: 0;
     left: 0;
+
+    z-index: 0;
 
     width: 100%;
     height: 100%;
 
-    background-color: ${props => props.theme.colors.dark};
-`
+    opacity: 0.5;
 
-const Logo = styled.img`
-    width: ${props => props.theme.mobileVW(200)};
-
-    ${props => props.theme.above.desktop`
-        width: ${props.theme.desktopVW(500)};
-
-        max-width: 350px;
-    `}
+    object-fit: cover;
+    object-position: center;
 `
 
 const Preloader = ({
@@ -58,20 +77,20 @@ const Preloader = ({
 
     const preloaderRef = useRef(null)
     const logoWrapperRef = useRef(null)
-    const logoOverlayRef = useRef(null)
 
-    // const { logoImage } = useStaticQuery(graphql`{
-    //     logoImage: allFile(filter: {relativePath: {eq: "graphics/rockstar-lifestyle.svg"}}) {
-    //         nodes {
-    //            publicURL
-    //         }
-    //     }
-    // }`)
-
-    const { logoImage } = useStaticQuery(graphql`{
+    const { logoImage, grainVideo } = useStaticQuery(graphql`{
         logoImage: allFile(filter: {relativePath: {eq: "rockstar-lifestyle.png"}}) {
             nodes {
                publicURL
+            }
+        },
+        grainVideo: allContentfulTheme {
+            nodes {
+                preloaderGrain {
+                    file {
+                        url
+                    }
+                }
             }
         }
     }`)
@@ -86,19 +105,20 @@ const Preloader = ({
     useEffect(() => {
 
         const timeline = new gsap.timeline({ delay: 1.0, onComplete: () => showPreloader() })
-        timeline.fromTo(logoOverlayRef.current, { scaleY: 1.0, transformOrigin: 'bottom' }, { scaleY: 0.0, duration: 1.0, ease: 'power3.out' }, 0.0)
-        timeline.to(logoWrapperRef.current, { alpha: 0.0, duration: 0.35, ease: 'power3.out' }, 1.5)
-        timeline.to(preloaderRef.current, { alpha: 0.0, duration: 0.5, ease: 'sine.out' }, 1.5)
+        timeline.fromTo(logoWrapperRef.current, { height: 0.0, transformOrigin: 'top' }, { height: 'auto', duration: 1.5, ease: 'power3.out' }, 0.5)
+        timeline.to(logoWrapperRef.current, { alpha: 0.0, duration: 0.5, ease: 'power3.out' }, 2.0)
+        timeline.to(preloaderRef.current, { alpha: 0.0, duration: 0.5, ease: 'sine.out' }, 2.5)
 
     }, [])
 
     return (
         <Wrapper ref={preloaderRef}>
-            <LogoWrapper ref={logoWrapperRef}>
-                <LogoOverlay ref={logoOverlayRef}/>
-                <Logo src={logoImage.nodes[0].publicURL} alt='Rockstar Lifestyle - Logo' />
-            </LogoWrapper>
-            <Grain />
+            <WrapperInner>
+                <LogoWrapper ref={logoWrapperRef}>
+                    <Logo src={logoImage.nodes[0].publicURL} alt='Rockstar Lifestyle - Logo' />
+                </LogoWrapper>
+            </WrapperInner>
+            <Video src={grainVideo.nodes[0].preloaderGrain.file.url} loop muted autoPlay playsInline />
         </Wrapper>
     )
 }

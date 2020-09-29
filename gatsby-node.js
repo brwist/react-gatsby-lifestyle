@@ -171,7 +171,7 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
                 if (category == 'Normal' || category == 'Worlds') {
                     prefix = slug
                 } else if (category == 'Trainers') {
-                    prefix = `performance/trainers/${slug}`
+                    prefix = `physical-development/trainers/${slug}`
                 } else if (category == 'Events' || category == 'Trips') {
                     prefix = `events-and-trips/${category.toLowerCase()}/${slug}`
                 } else if (category == 'News' || category == 'Knowledge' || category == 'Recipes') {
@@ -179,7 +179,7 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
                 } else if (category == 'Performance' || category == 'Careers') {
                     prefix = `${category.toLowerCase()}/${slug}`
                 } else if (category == 'Workshops') {
-                    prefix = `spirit/${category.toLowerCase()}/${slug}`
+                    prefix = `personal-development/${category.toLowerCase()}/${slug}`
                 }
 
             } else {

@@ -30,7 +30,7 @@ const HeroBanner = ({
 
     // Context
     const preloaderState = useContext(PreloaderContext)
-    const delay = preloaderState == 'preloader' ? 3 : 0.5
+    const delay = preloaderState == 'preloader' ? 4.0 : 0.5
 
     useEffect(() => {
 

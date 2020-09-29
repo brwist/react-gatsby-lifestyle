@@ -7,6 +7,7 @@ import { useInView } from 'react-intersection-observer'
 import gsap from 'gsap'
 
 
+import Grain from './Grain'
 import Container from './../Layout/Container'
 import Navigation from './Navigation'
 import ButtonMenu from './../Buttons/ButtonMenu'
@@ -25,23 +26,25 @@ const StyledHeader = styled.header`
     z-index: 4;
     
     width: 100%;
-    
-    /* transform: translateY(-100%); */
 
-    /* opacity: 0; */
+    opacity: 0;
 
     padding: calc(${props => props.theme.sizes.mobile} / 1.5);
 
     background: linear-gradient(to bottom, ${props => props.theme.colors.dark}, transparent);
     
-    transition: all 0.15s ease-out;
+    transition: all 0.25s cubic-bezier(.16,1.08,.38,.98);
 
     ${props => props.sticky && `
-		background-color: ${props.theme.colors.dark};
+		background: ${props.theme.colors.dark};
     `}
     
     ${props => props.theme.above.desktop`
         padding: ${props.theme.sizes.desktop} 0;
+
+        ${props.sticky && `
+            padding: calc(${props.theme.sizes.desktop} / 1.5) 0;
+        `}
     `}
 `
 
@@ -169,7 +172,7 @@ const Header = ({
 
     // Context
     const preloaderState = useContext(PreloaderContext)
-    const delay = preloaderState == 'preloader' ? 4.0 : 2.0
+    const delay = preloaderState == 'preloader' ? 5.0 : 2.0
 
     const { logoImage, logoIcon } = useStaticQuery(graphql`{
         logoImage: allFile(filter: {relativePath: {eq: "rockstar-lifestyle.png"}}) {
@@ -185,7 +188,7 @@ const Header = ({
     }`)
 
     useEffect(() => {
-        const tween = gsap.to(headerRef.current, { alpha: 1.0, y: '0%', duration: 0.35, delay: delay, ease: 'sine.out' })
+        const tween = gsap.to(headerRef.current, { alpha: 1.0, duration: 1.0, delay: delay, ease: 'power3.out' })
 
         return () => {
             tween && tween.kill()
@@ -243,6 +246,7 @@ const Header = ({
                     />
                 </InnerRight>
             </StyledContainer>
+            <Grain hide={sticky ? false : true} />
         </StyledHeader>
     )
 }
