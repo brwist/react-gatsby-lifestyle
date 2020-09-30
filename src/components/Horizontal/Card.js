@@ -411,6 +411,8 @@ const Card = ({
             link = `personal-development/${data.category.toLowerCase()}/${data.slug}`
         } else if (data.category == 'Trainers') {
             link = `physical-development/${data.category.toLowerCase()}/${data.slug}`
+        } else if (data.category == 'Performance') {
+            link = `physical-development/${data.slug}`
         } else if (data.category == 'Worlds' || data.category == 'Normal') {
             link = data.slug
         } else {

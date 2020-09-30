@@ -178,7 +178,9 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
                     prefix = `events-and-trips/${category.toLowerCase()}/${slug}`
                 } else if (category == 'News' || category == 'Knowledge' || category == 'Recipes') {
                     prefix = `blog/${category.toLowerCase()}/${slug}`
-                } else if (category == 'Performance' || category == 'Careers') {
+                } else if (category == 'Performance') {
+                    prefix = `physical-development/${slug}`
+                } else if (category == 'Careers') {
                     prefix = `${category.toLowerCase()}/${slug}`
                 } else if (category == 'Workshops') {
                     prefix = `personal-development/${category.toLowerCase()}/${slug}`

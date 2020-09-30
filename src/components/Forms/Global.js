@@ -483,8 +483,7 @@ const Global = ({
                     />
                 </Field>
                 <Field>
-                    <Label htmlFor='mce-MOTIVATION'>Motivation</Label>
-                    <p>This is very important to us..</p>
+                    <Label htmlFor='mce-MOTIVATION'>Motivation - this is very important to us</Label>
                     <Input
                         type='text'
                         name='MOTIVATION'
@@ -523,7 +522,7 @@ const Global = ({
                     />
                 </div>
                 <ButtonSubmit
-                    value='Send'
+                    value='Send form'
                     name='subscribe'
                     id='mc-embedded-subscribe'
                 />
