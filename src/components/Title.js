@@ -121,6 +121,8 @@ const StyledTitle = styled.h1`
         ${props.size == 'extra-large' && `
             font-size: ${props.theme.fontSizes.desktop.h1};
 
+            background: blue;
+            
             .line-wrapper {
                 &:nth-of-type(2) {
                     margin-left: ${props.theme.desktopVW(60)};
@@ -316,39 +318,46 @@ const StyledButtonPrimary = styled(ButtonPrimary)`
 
 const getLinkComponent = (links, lang) => {
 
-    console.log(links, lang)
+    let linkElement
+
+    if (links.length) {
+        linkElement = links
+    } else if (!links.length && links.internal) {
+        linkElement = links.internal
+    }
 
     return (
         <LinksWrapper>
             {links.external ? (
-                <StyledButtonPrimary href={links.external.link} label={links.external.label} inverted />
+                <StyledButtonPrimary 
+                    href={links.external.link} 
+                    label={links.external.label} 
+                    inverted 
+                />
             ) : (
-                <>
-                    {links.map(({ label, formInput, internalLink: { __typename, slug } }, i) => {
-                        
-                        let modal
+                linkElement.map(({ label, formInput, internalLink: { __typename, slug } }, i) => {           
+                    let modal
 
-                        if (slug == null) {
-                            modal = false
-                        } else {
-                            modal = slug.includes('get-in-touch') || slug.includes('self-test') || slug.includes('reserve-your-space') ? true : false
-                        }
-                        
-                        return (
-                            <StyledButtonPrimary 
-                                key={i} 
-                                lang={lang} 
-                                to={generatePath(lang, slug)} 
-                                label={label} 
-                                inverted={i == 0}
-                                modal={{
-                                    modal: modal,
-                                    formInput: formInput 
-                                }}
-                            />
-                        )
-                    })}
-                </>
+                    if (slug == null) {
+                        modal = false
+                    } else {
+                        modal = slug.includes('get-in-touch') || slug.includes('self-test') || slug.includes('reserve-your-space') ? true : false
+                    }
+                    
+                    return (
+                        <StyledButtonPrimary 
+                            key={i} 
+                            lang={lang} 
+                            to={generatePath(lang, slug)} 
+                            label={label} 
+                            inverted={i == 0}
+                            modal={{
+                                modal: modal,
+                                formInput: formInput 
+                            }}
+                        />
+                    )
+                })
             )}
         </LinksWrapper>
     )
@@ -404,7 +413,7 @@ const Title = ({
                 <Category>{category}</Category>
             )}
             {title && title.json && (
-                <StyledTitle className='title-wrapper' size={size}>
+                <StyledTitle className={`title-wrapper ${size}`} size={size}>
                     {title && documentToReactComponents(title.json, {
                         renderNode: {
                             [BLOCKS.HEADING_1]: (node, children) => {

@@ -235,48 +235,6 @@ const Global = ({
     // Window Size
     const { width: windowWidth } = useWindowSize()
 
-    const programOptions = [
-        { 
-            value: 'Bootcamp',
-            label: 'Bootcamp'
-        },
-        { 
-            value: 'Next Level',
-            label: 'Next Level'
-        },
-        { 
-            value: 'CTDI',
-            label: 'CTDI'
-        },
-        { 
-            value: 'Rockstar',
-            label: 'Rockstar'
-        },
-        { 
-            value: 'Athlete',
-            label: 'Athlete'
-        },
-        { 
-            value: 'Elite',
-            label: 'Elite'
-        }
-    ]
-
-    const workshopOptions = [
-        { 
-            value: 'Deepdive',
-            label: 'Deepdive'
-        },
-        { 
-            value: 'Remembering the deep',
-            label: 'Remembering the deep'
-        },
-        { 
-            value: 'Living in the deep',
-            label: 'Living in the deep'
-        }
-    ]
-
     const customStyles = {
         control: (provided) => ({
             ...provided,
@@ -350,38 +308,39 @@ const Global = ({
         })
     }
 
-    const findCurrentInput = () => {
-        
-        let currentOptions
-        let currentOption
+    const getFormText = () => {
 
-        if (data.slug == 'get-in-touch') {
-            currentOptions = programOptions
-        } else if (data.slug == 'reserve-your-space') {
-            currentOptions = workshopOptions
+        if (!formInput || formInput == 'Default') {
+            return {
+                subject: {
+                    label: 'Subject',
+                    value: ''
+                },
+                message: {
+                    label: 'Message',
+                    placeholder: ''
+                },
+                submit: {
+                    label: 'Send now'
+                }
+            }
+        } else {
+            return {
+                subject: {
+                    label: 'Registration',
+                    value: formInput
+                },
+                message: {
+                    label: 'Motivation (this is important to us)',
+                    placeholder: 'I want to join because..'
+                },
+                submit: {
+                    label: 'Register now'
+                }
+            }
         }
 
-        currentOptions.forEach((item, i) => {
-            if (item.label == formInput) {
-                currentOption = currentOptions[i]
-            }
-        })
-        
-        return currentOption
-
     }
-
-    // const formLabel = () => {
-        
-    //     default: {
-    //         subject: '',
-    //         submit: 'Get in touch'
-    //     }
-    //     physical: {
-    //         subject: [het programma],
-    //         submit: 'S'
-    //     }
-    // }
 
     return (
         <Wrapper>
@@ -472,24 +431,23 @@ const Global = ({
                     </Field>
                 )} */}
                 <Field>
-                    <Label htmlFor='mce-SUBJECT'>Subject</Label>
+                    <Label htmlFor='mce-SUBJECT'>{getFormText().subject.label}</Label>
                     <Input
                         type='text'
                         name='SUBJECT'
                         className='required'
                         id='mce-SUBJECT'
-                        defaultValue={formInput || ''}
-                        placeholder='Where do you like to start?'
+                        defaultValue={getFormText().subject.value}
                     />
                 </Field>
                 <Field>
-                    <Label htmlFor='mce-MOTIVATION'>Motivation - this is very important to us</Label>
+                    <Label htmlFor='mce-MESSAGE'>{getFormText().message.label}</Label>
                     <Input
                         type='text'
-                        name='MOTIVATION'
+                        name='MESSAGE'
                         className='required'
-                        id='mce-MOTIVATION'
-                        placeholder='I want to join Rockstar Lifestyle because..'
+                        id='mce-MESSAGE'
+                        placeholder={getFormText().message.placeholder}
                         required
                     />
                 </Field>
@@ -522,7 +480,7 @@ const Global = ({
                     />
                 </div>
                 <ButtonSubmit
-                    value='Send form'
+                    value={getFormText().submit.label}
                     name='subscribe'
                     id='mc-embedded-subscribe'
                 />

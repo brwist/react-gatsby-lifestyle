@@ -131,7 +131,8 @@ const JoinUs = ({
     const {
         contentTitle,
         contentDescription,
-        image
+        image,
+        button
     } = data
 
     // Refs
@@ -249,6 +250,9 @@ const JoinUs = ({
                     size='medium'
                     inView={inView}
                     ref={titleRef}
+                    links={{
+                        internal: button
+                    }}
                 />
                 <MouseAnimatedWrapper ref={animatedRef}>
                     <MouseAnimatedImage

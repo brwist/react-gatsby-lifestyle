@@ -10,6 +10,27 @@ export const JoinUsQuery = graphql`
         contentDescription {
             json
         }
+        button {
+            name
+            label
+            formInput
+            internalLink {
+                ... on ContentfulPage {
+                    name
+                    slug
+                    internal {
+                        type
+                    }
+                }
+                ... on ContentfulPopup {
+                    name
+                    slug
+                    internal {
+                        type
+                    }
+                }
+            }
+        }
         image {
             title
             fluid(maxWidth: 600, quality: 80) {

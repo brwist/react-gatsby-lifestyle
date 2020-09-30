@@ -22,6 +22,27 @@ export const HorizontalScrollQuery = graphql`
                 category
                 excerptTitle
                 buttonLabel
+                registerButton {
+                    name
+                    label
+                    formInput
+                    internalLink {
+                        ... on ContentfulPage {
+                            name
+                            slug
+                            internal {
+                                type
+                            }
+                        }
+                        ... on ContentfulPopup {
+                            name
+                            slug
+                            internal {
+                                type
+                            }
+                        }
+                    }
+                }
                 excerpt {
                     json
                 }

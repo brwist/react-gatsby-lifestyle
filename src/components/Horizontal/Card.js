@@ -311,6 +311,14 @@ const ButtonWrapper = styled.div`
 
     overflow: hidden;
 
+    ${props => props.theme.below.desktop`
+        .button {
+            &:nth-of-type(2) {
+                display: none;
+            }
+        }
+    `}
+
     ${props => props.theme.above.desktop`
         margin-top: ${props.theme.sizes.desktop};
 
@@ -318,6 +326,10 @@ const ButtonWrapper = styled.div`
             transform: translateY(-105%);
 
             transition: transform 0.15s ease-out;
+
+            &:first-of-type {
+                margin-right: calc(${props.theme.sizes.desktop} / 2);
+            }
         }
     `}
 `
@@ -532,6 +544,17 @@ const Card = ({
                                     label={data.buttonLabel}
                                     to={generatePath(lang, getLink(data))}
                                 />
+                                {data.registerButton && (
+                                    <ButtonPrimary
+                                        label={data.registerButton[0].label}
+                                        to={generatePath(lang, 'get-in-touch')}
+                                        colored
+                                        modal={{
+                                            modal: true,
+                                            formInput: data.registerButton[0].formInput
+                                        }}
+                                    />
+                                )}
                             </ButtonWrapper>
                         )}
                     </NormalCard>
