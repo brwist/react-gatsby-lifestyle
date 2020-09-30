@@ -37,13 +37,15 @@ const StyledHeader = styled.header`
 
     ${props => props.sticky && `
 		background: ${props.theme.colors.dark};
+
+        padding: calc(${props.theme.sizes.mobile} / 1.5) 0;
     `}
     
     ${props => props.theme.above.desktop`
         padding: ${props.theme.sizes.desktop} 0;
 
         ${props.sticky && `
-            padding: calc(${props.theme.sizes.desktop} / 1.5) 0;
+            padding: calc(${props.theme.sizes.desktop} / 2) 0;
         `}
     `}
 `
@@ -155,6 +157,7 @@ const ButtonJoinUs = styled(ButtonPrimary)`
 
 const Header = ({
     lang,
+    location,
     contentTheme: {
         menu:{
             mainItems

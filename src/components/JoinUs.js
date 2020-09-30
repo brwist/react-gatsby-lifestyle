@@ -125,12 +125,14 @@ const StyledImage = styled(Image)`
 const JoinUs = ({
     lang,
     inView,
-    data: {
+    data
+}) => {
+
+    const {
         contentTitle,
         contentDescription,
         image
-    }
-}) => {
+    } = data
 
     // Refs
     const mainRef = useRef(null)

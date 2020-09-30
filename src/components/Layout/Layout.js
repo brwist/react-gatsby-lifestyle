@@ -18,7 +18,7 @@ const Layout = ({
 }) => {
 	
 	const [menuOpen, setMenuOpen] = useState(false)
-	const [showPreloader, setShowPreloader] = useState(true)
+	const [showPreloader, setShowPreloader] = useState(false)
 	const showFooter = location.pathname.includes('contact') || location.pathname.includes('404') ? false : true
 
 	const toggleMenuHandler = () => {
@@ -36,6 +36,7 @@ const Layout = ({
 				contentTheme={contentTheme}
 				menuOpen={menuOpen}
 				setMenuOpen={toggleMenuHandler}
+				location={location}
 			/>
 			<Menu
 				lang={lang}

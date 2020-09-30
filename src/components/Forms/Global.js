@@ -357,7 +357,7 @@ const Global = ({
 
         if (data.slug == 'join-us') {
             currentOptions = programOptions
-        } else if (data.slug == 'reserve-your-spot') {
+        } else if (data.slug == 'reserve-your-space') {
             currentOptions = workshopOptions
         }
 
@@ -369,6 +369,18 @@ const Global = ({
         
         return currentOption
 
+    }
+
+    const formLabel = () => {
+        
+        default: {
+            subject: '',
+            submit: 'Get in touch'
+        }
+        physical: {
+            subject: [het programma],
+            submit: 'S'
+        }
     }
 
     return (
@@ -509,7 +521,7 @@ const Global = ({
                     />
                 </div>
                 <ButtonSubmit
-                    value='Submit my application'
+                    value='Send'
                     name='subscribe'
                     id='mc-embedded-subscribe'
                 />

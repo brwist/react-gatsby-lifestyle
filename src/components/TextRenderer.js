@@ -202,14 +202,17 @@ const TextRenderer = ({
     lang,
     data,
     className,
-    useInlineLink,
+    useInlineLink
 }) => {
 
     const { width: windowWidth } = useWindowSize()
 
     const checkModal = uri => {
-        if (uri.includes('join-us') || uri.includes('self-test') || uri.includes('reserve-your-spot')) {
-            return windowWidth < 1023 ? false : true 
+        if (uri.includes('join-us') || uri.includes('self-test') || uri.includes('reserve-your-space')) {
+            return {
+                modal: true,
+                formInput: uri
+            }
         } else {
             return false
         }
@@ -276,7 +279,10 @@ const TextRenderer = ({
                                 )
                             } else {
                                 return (
-                                    <StyledLink href={uri} target={uri.includes('http') ? '_target' : ''}>{children}</StyledLink>
+                                    <StyledLink 
+                                        href={uri} 
+                                        target={uri.includes('http') ? '_target' : ''}
+                                    >{children}</StyledLink>
                                 )
                             }
                         } else {

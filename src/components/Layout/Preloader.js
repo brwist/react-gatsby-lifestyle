@@ -35,10 +35,12 @@ const LogoWrapper = styled.div`
 const logoStyles = css`
     height: ${props => props.theme.mobileVW(20)};
 
-    max-height: 25px;
+    max-height: 15px;
 
     ${props => props.theme.above.desktop`
         height: ${props.theme.desktopVW(20)};
+
+        max-height: 35px;
     `}
 `
 

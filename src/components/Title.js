@@ -331,7 +331,7 @@ const getLinkComponent = (links, lang) => {
                         if (slug == null) {
                             modal = false
                         } else {
-                            modal = slug.includes('join-us') || slug.includes('self-test') || slug.includes('reserve-your-spot') ? true : false
+                            modal = slug.includes('join-us') || slug.includes('self-test') || slug.includes('reserve-your-space') ? true : false
                         }
                         
                         return (
@@ -366,8 +366,7 @@ const Title = ({
     links,
     className,
     useInlineLink,
-    overlayColor,
-    modal
+    overlayColor
 }, ref) => {
 
     const titleRef = useRef(null)

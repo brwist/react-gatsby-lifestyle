@@ -10,6 +10,7 @@ const pageNodes = `
     category
     node_locale
     slug
+    name
 `
 
 const langSettings = [
@@ -126,6 +127,7 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
                 __typename
                 node_locale
                 slug
+                name
             }
         }
     }`)
@@ -145,9 +147,8 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
     )(pageQuery)
 
     langSettings.forEach(({ locale, langSlug }) => {    
-        pages.forEach(({ id, category, __typename, node_locale, slug, type, hidden, components }) => {
+        pages.forEach(({ id, name, category, __typename, node_locale, slug, type, hidden, components }) => {
             
-            let hashtag
             let prefix
             const template = __typename.replace('Contentful', '')
 
@@ -201,7 +202,8 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
                         },
                         theme: themes[node_locale],
                         dictionary: dictionaries[node_locale],
-                        instagram: hashtags
+                        instagram: hashtags,
+                        joinUs: name
                     }
                 })
             }

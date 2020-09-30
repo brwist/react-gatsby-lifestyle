@@ -234,7 +234,7 @@ const Grid = ({
         if (!showFilter || !inView) return
 
         itemRefs.current.forEach((item, i) => {
-            if (item) gsap.to(item, { y: 0.0, alpha: 1.0, delay: i * 0.25, duration: 0.5, ease: 'sine.out' })
+            if (item) gsap.fromTo(item, { y: 25.0, alpha: 0.0 }, { y: 0.0, alpha: 1.0, delay: i * 0.25, duration: 0.5, ease: 'sine.out' })
         })
         
     }, [filteredItems])

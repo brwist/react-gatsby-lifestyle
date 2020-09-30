@@ -126,7 +126,7 @@ const PopupModal = ({
         contentDescription
     } = data
 
-    let showGlobalForm = slug == 'join-us' || slug == 'reserve-your-spot'
+    let showGlobalForm = slug == 'join-us' || slug == 'reserve-your-space'
 
     return (
         <ModalInner>
