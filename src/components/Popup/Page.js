@@ -169,7 +169,7 @@ const PopupPage = ({
     formInput
 }) => {
     
-    let showGlobalForm = slug == 'join-us' || slug == 'reserve-your-space'
+    let showGlobalForm = slug == 'get-in-touch' || slug == 'reserve-your-space'
 
     return (
         <>

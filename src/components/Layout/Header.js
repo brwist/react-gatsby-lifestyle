@@ -240,11 +240,10 @@ const Header = ({
                         setMenuOpen={setMenuOpen}
                     />
                     <ButtonJoinUs 
-                        label='Join Us' 
-                        to={generatePath(lang, 'join-us')} 
+                        label='Get in touch' 
+                        to={generatePath(lang, 'get-in-touch')} 
                         modal={{
-                            modal: true,
-                            formInput: 'Join us'
+                            modal: true
                         }}
                     />
                 </InnerRight>

@@ -208,7 +208,7 @@ const TextRenderer = ({
     const { width: windowWidth } = useWindowSize()
 
     const checkModal = uri => {
-        if (uri.includes('join-us') || uri.includes('self-test') || uri.includes('reserve-your-space')) {
+        if (uri.includes('get-in-touch') || uri.includes('self-test') || uri.includes('reserve-your-space')) {
             return {
                 modal: true,
                 formInput: uri

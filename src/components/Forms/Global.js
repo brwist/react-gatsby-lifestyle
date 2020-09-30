@@ -355,7 +355,7 @@ const Global = ({
         let currentOptions
         let currentOption
 
-        if (data.slug == 'join-us') {
+        if (data.slug == 'get-in-touch') {
             currentOptions = programOptions
         } else if (data.slug == 'reserve-your-space') {
             currentOptions = workshopOptions
@@ -371,17 +371,17 @@ const Global = ({
 
     }
 
-    const formLabel = () => {
+    // const formLabel = () => {
         
-        default: {
-            subject: '',
-            submit: 'Get in touch'
-        }
-        physical: {
-            subject: [het programma],
-            submit: 'S'
-        }
-    }
+    //     default: {
+    //         subject: '',
+    //         submit: 'Get in touch'
+    //     }
+    //     physical: {
+    //         subject: [het programma],
+    //         submit: 'S'
+    //     }
+    // }
 
     return (
         <Wrapper>
@@ -433,7 +433,7 @@ const Global = ({
                         placeholder='+31 6 12345678'
                     />
                 </Field>
-                {/* {data.slug == 'join-us' && (
+                {/* {data.slug == 'get-in-touch' && (
                     <Field>
                         <Label htmlFor='mce-PROGRAM' select>Program</Label>
                         <Select
@@ -484,12 +484,14 @@ const Global = ({
                 </Field>
                 <Field>
                     <Label htmlFor='mce-MOTIVATION'>Motivation</Label>
+                    <p>This is very important to us..</p>
                     <Input
                         type='text'
                         name='MOTIVATION'
                         className='required'
                         id='mce-MOTIVATION'
-                        placeholder='I want to join Rockstar Lifestyle...'
+                        placeholder='I want to join Rockstar Lifestyle because..'
+                        required
                     />
                 </Field>
                 <GDPR>

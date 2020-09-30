@@ -48,7 +48,7 @@ export const results = [
         link: 'performance',
         button: {
             label: 'Sign up here',
-            link: 'join-us'
+            link: 'get-in-touch'
         }
     },
     {

@@ -149,6 +149,7 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
     langSettings.forEach(({ locale, langSlug }) => {    
         pages.forEach(({ id, name, category, __typename, node_locale, slug, type, hidden, components }) => {
             
+            let hashtags
             let prefix
             const template = __typename.replace('Contentful', '')
 
