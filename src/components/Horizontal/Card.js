@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components'
 import Image from 'gatsby-image'
 import { Link } from 'gatsby'
 import gsap from 'gsap'
+import { useWindowSize } from 'react-use'
 
 import Tags from '../Tags'
 import Testimonial from '../Testimonial'
@@ -122,22 +123,37 @@ const LargeDescription = styled.div`
         display: inline-block;
         vertical-align: middle;
         
-        width: ${props => props.theme.mobileVW(125)};
+        width: ${props => props.theme.mobileVW(75)};
         
         margin: 0;
+        
+        transition: all 0.15s ease-out;
+
+        .embedded-asset-image {
+            margin: 0;
+        }
 
         &:not(:last-of-type) {
-            margin-right: ${props => props.theme.mobileVW(25)};
+            margin-right: ${props => props.theme.mobileVW(10)};
         }
     }
 
     ${props => props.theme.above.desktop`
         .embedded-asset {
-            margin: 0;
+            display: inline-block;
+            vertical-align: middle;
+        
             width: ${props.theme.desktopVW(100)};
+            
+            margin: 0;
 
             &:not(:last-of-type) {
                 margin-right: ${props.theme.desktopVW(25)};
+            }
+            
+            &:hover {
+                transform: scale(0.95);
+                opacity: 0.5;
             }
         }
     `}
@@ -393,6 +409,8 @@ const Card = ({
     const headerRef = useRef(null)
     const descriptionRef = useRef(null)
 
+    const { width: windowWidth } = useWindowSize()
+
     useEffect(() => {
 
         gsap.set(itemRef.current, { y: 100.0 })
@@ -548,10 +566,10 @@ const Card = ({
                                 {data.registerButton && (
                                     <ButtonPrimary
                                         label={data.registerButton[0].label}
-                                        to={generatePath(lang, 'get-in-touch')}
+                                        to={generatePath(lang, data.registerButton[0].internalLink.slug)}
                                         colored
                                         modal={{
-                                            modal: true,
+                                            modal: windowWidth < 1023 ? false : true,
                                             formInput: data.registerButton[0].formInput
                                         }}
                                     />

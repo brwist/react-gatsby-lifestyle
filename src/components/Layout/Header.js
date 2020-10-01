@@ -2,8 +2,7 @@ import React, { useEffect, useRef, useContext, useState } from 'react'
 import { useStaticQuery, graphql, Link } from 'gatsby'
 import styled from 'styled-components'
 import Img from 'gatsby-image'
-import Headroom from 'react-headroom'
-import { useInView } from 'react-intersection-observer'
+import { useWindowSize } from 'react-use'
 import gsap from 'gsap'
 
 
@@ -38,7 +37,7 @@ const StyledHeader = styled.header`
     ${props => props.sticky && `
 		background: ${props.theme.colors.dark};
 
-        padding: calc(${props.theme.sizes.mobile} / 1.5) 0;
+        padding: calc(${props.theme.sizes.mobile} / 3) calc(${props.theme.sizes.mobile} / 1.5);
     `}
     
     ${props => props.theme.above.desktop`
@@ -177,6 +176,8 @@ const Header = ({
     const preloaderState = useContext(PreloaderContext)
     const delay = preloaderState == 'preloader' ? 5.0 : 2.0
 
+    const { width: windowWidth } = useWindowSize()
+
     const { logoImage, logoIcon } = useStaticQuery(graphql`{
         logoImage: allFile(filter: {relativePath: {eq: "rockstar-lifestyle.png"}}) {
             nodes {
@@ -243,7 +244,7 @@ const Header = ({
                         label='Get in touch' 
                         to={generatePath(lang, 'get-in-touch')} 
                         modal={{
-                            modal: true
+                            modal: windowWidth < 1023 ? false : true
                         }}
                     />
                 </InnerRight>

@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useStaticQuery, graphql } from 'gatsby'
 import gsap from 'gsap'
+import { useInView } from 'react-intersection-observer'
 
 import Container from './Layout/Container'
 import GridItem from './GridItem'
@@ -68,7 +69,6 @@ const List = styled.ul`
 
 const Grid = ({
     lang,
-    inView,
     data: {
         items,
         category,
@@ -84,6 +84,11 @@ const Grid = ({
     // Refs
     const itemRefs = useRef([])
     const filterRef = useRef(null)
+
+    const [gridRef, inView] = useInView({
+        threshold: 0,
+        triggerOnce: true
+    })
 
     const { 
         eventsAndTripsItems,
@@ -229,9 +234,9 @@ const Grid = ({
     useEffect(() => {
 
         if (category == 'Careers') {
-            setDefaultItems(careerItems.nodes)
+            setFilteredItems(careerItems.nodes)
         } else if (category == 'Trainers') {
-            setDefaultItems(trainerItems.nodes)
+            setFilteredItems(trainerItems.nodes)
         }
 
     }, [])
@@ -256,44 +261,33 @@ const Grid = ({
 
     useEffect(() => {
 
-        itemRefs.current.forEach((item, i) => {
-            if (item) gsap.fromTo(item, { y: 25.0, alpha: 0.0 }, { y: 0.0, alpha: 1.0, delay: i * 0.25, duration: 0.5, ease: 'sine.out' })
-        })
+        if (activeNewsItems == -1 && !inView) {
+            if (filterRef.current) gsap.set(filterRef.current, { x: -25.0, alpha: 0.0 })
+            itemRefs.current.forEach(item => {
+                gsap.set(item, { y: 25.0, alpha: 0.0 })
+            })
+        } else {
+            itemRefs.current.forEach((item, i) => {
+                if (item) gsap.fromTo(item, { y: 25.0, alpha: 0.0 }, { y: 0.0, alpha: 1.0, delay: i * 0.25, duration: 0.5, ease: 'sine.out' })
+            })
+        }
         
     }, [filteredItems])
 
     useEffect(() => {
         
-        gsap.set(filterRef.current, { x: -25.0, alpha: 0.0 })
-
-        // itemRefs.current.forEach(item => {
-        //     gsap.set(item, { y: 25.0, alpha: 0.0 })
-        // })
-        
         if (!inView) return
 
-        gsap.to(filterRef.current, { x: 0.0, alpha: 1.0, transformOrigin: 'left', ease: 'power3.out' })
+        if (filterRef.current) gsap.to(filterRef.current, { x: 0.0, alpha: 1.0, transformOrigin: 'left', ease: 'power3.out' })
         itemRefs.current.forEach((item, i) => {
             if (item) gsap.fromTo(item, { y: 25.0, alpha: 0.0 }, { y: 0.0, alpha: 1.0, delay: i * 0.25, duration: 0.5, ease: 'sine.out' })
         })
-        
-        // itemRefs.current.forEach((item, i) => {
-        //     gsap.fromTo(item, { y: 25.0, alpha: 0.0 }, { y: 0.0, alpha: 1.0, delay: i * 0.25, duration: 0.5, ease: 'sine.out' })
-        // })
 
     }, [inView])
 
-    let gridItems 
-
-    if (filteredItems.length > 0) {
-        gridItems = filteredItems
-    } else {
-        gridItems = defaultItems
-    }
-
     return (
         <Wrapper>
-            <Container>
+            <Container ref={gridRef}>
                 {showFilter && (
                     <Filter>
                         <FilterInner ref={filterRef}>
@@ -314,7 +308,7 @@ const Grid = ({
                     </Filter>
                 )}
                 <List>
-                    {gridItems.map((item, i) => {
+                    {filteredItems.map((item, i) => {
                         return (
                             <GridItem 
                                 key={i} 

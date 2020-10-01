@@ -58,7 +58,7 @@ const ImageWrapper = styled.div`
     opacity: 0.25;
 
     ${props => props.theme.below.desktop`
-        ${props => props.contact && `
+        ${props.contact && `
             display: none;
         `}
     `}
@@ -150,7 +150,7 @@ const NormalBanner = ({
     return (
         <Wrapper ref={wrapperRef}>
             {images && (
-                <ImageWrapper contact>
+                <ImageWrapper contact={contact}>
                     <AnimatedImage ref={imageRef}>
                         {images.map(({ fluid, title }, i) => (
                             <StyledImage key={i} fluid={fluid} alt={title} />

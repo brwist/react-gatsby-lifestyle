@@ -15,7 +15,7 @@ import TextRenderer from './../TextRenderer'
 const Wrapper = styled.section`
     position: relative;
 
-    padding: calc(${props => props.theme.sizes.mobile} * 3) 0;
+    padding: calc(${props => props.theme.sizes.mobile} * 2) 0 calc(${props => props.theme.sizes.mobile} * 5) 0;
     
     ${props => props.theme.above.desktop`
         padding: calc(${props.theme.sizes.desktop} * 5) 0;
@@ -169,7 +169,7 @@ const PopupPage = ({
     formInput
 }) => {
     
-    let showGlobalForm = slug == 'get-in-touch' || slug == 'reserve-your-space'
+    let showGlobalForm = slug == 'get-in-touch' || slug == 'reserve-your-space' || slug == 'join-us'
 
     return (
         <>

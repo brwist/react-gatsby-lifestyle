@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import gsap from 'gsap'
 import { BLOCKS } from '@contentful/rich-text-types'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import { useWindowSize } from 'react-use'
 
 import TextRenderer from './TextRenderer'
 import Tags from './Tags'
@@ -314,7 +315,7 @@ const StyledButtonPrimary = styled(ButtonPrimary)`
     `}
 `
 
-const getLinkComponent = (links, lang) => {
+const getLinkComponent = (links, lang, windowWidth) => {
 
     let linkElement
 
@@ -339,7 +340,7 @@ const getLinkComponent = (links, lang) => {
                 if (slug == null) {
                     modal = false
                 } else {
-                    modal = slug.includes('get-in-touch') || slug.includes('self-test') || slug.includes('reserve-your-space') ? true : false
+                    modal = slug.includes('get-in-touch') || slug.includes('self-test') || slug.includes('reserve-your-space') || slug.includes('join-us') ? true : false
                 }
                 
                 return (
@@ -350,7 +351,7 @@ const getLinkComponent = (links, lang) => {
                         label={label} 
                         inverted={i == 0}
                         modal={{
-                            modal: modal,
+                            modal: windowWidth < 1023 ? false : modal,
                             formInput: formInput 
                         }}
                     />
@@ -375,8 +376,11 @@ const Title = ({
     overlayColor
 }, ref) => {
 
+    // Refs
     const titleRef = useRef(null)
     const descriptionRef = useRef(null)
+
+    const { width: windowWidth } = useWindowSize()
 
     const duration = size == 'extra-large' ? 1.25 : size == 'large' ? 0.65 : 0.35
     const delay = size == 'extra-large' ? 1.5 : size == 'large' ? 0.8 : 0.5
@@ -470,7 +474,7 @@ const Title = ({
                             data={testimonial} 
                         />
                     )}
-                    {links && getLinkComponent(links, lang)}
+                    {links && getLinkComponent(links, lang, windowWidth)}
                 </DescriptionWrapper>
             )}
         </TitleWrapper>

@@ -167,6 +167,8 @@ const StyledVideo = styled(Video)`
     }
 `
 
+const ImageLink = styled.a``
+
 const StyledImage = styled.img`
     display: block;
 
@@ -208,9 +210,9 @@ const TextRenderer = ({
     const { width: windowWidth } = useWindowSize()
 
     const checkModal = uri => {
-        if (uri.includes('get-in-touch') || uri.includes('self-test') || uri.includes('reserve-your-space')) {
+        if (uri.includes('get-in-touch') || uri.includes('self-test') || uri.includes('reserve-your-space') || uri.includes('join-us')) {
             return {
-                modal: true,
+                modal: windowWidth < 1023 ? false : true,
                 formInput: uri
             }
         } else {
@@ -234,10 +236,36 @@ const TextRenderer = ({
                         const { data: { target: { fields } } } = node
 
                         if (typeof fields == 'undefined' || fields.file['en-US'] == 'undefined') return
+
+                        let link = false
                         
-                        return (
-                            <StyledImage className='embedded-asset' src={fields.file['en-US'].url} alt={fields.title['en-US'] || 'RL - Embedded Image'} />
-                        )
+                        if (fields.title['en-US'].includes('Uber')) {
+                            link = 'https://www.ubereats.com/nl-en/amsterdam/food-delivery/rockstar-kitchen/E5nm2Gj9QMS_J_mkFy9kAQ'
+                        } else if (fields.title['en-US'].includes('Thuisbezorgd')) {
+                            link = 'https://www.thuisbezorgd.nl/rockstar-kitchen'
+                        } else if (fields.title['en-US'].includes('Deliveroo')) {
+                            link = 'https://deliveroo.nl/en/menu/amsterdam/oost/rockstar-kitchen'
+                        }
+                        
+                        if (link) {
+                            return (
+                                <ImageLink href={link} target='_blank' className='embedded-asset'>
+                                    <StyledImage
+                                        className='embedded-asset-image'
+                                        src={fields.file['en-US'].url} 
+                                        alt={fields.title['en-US'] || 'RL - Embedded Image'} 
+                                    />
+                                </ImageLink>
+                            )
+                        } else {
+                            return (
+                                <StyledImage 
+                                    className='embedded-asset' 
+                                    src={fields.file['en-US'].url} 
+                                    alt={fields.title['en-US'] || 'RL - Embedded Image'} 
+                                />
+                            )
+                        }
                     },
                     [BLOCKS.EMBEDDED_ENTRY]: (node, children) => {
                         const { data: { target: { fields } } } = node

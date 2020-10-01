@@ -56,6 +56,8 @@ const Media = styled.div`
 
     overflow: hidden;
 
+    cursor: grab;
+
     .swiper-scrollbar {
         left: 50%;
         bottom: calc(${props => props.theme.sizes.mobile} / 2);
@@ -246,7 +248,7 @@ const ContentBlock = ({
 
     const params = {
         slidesPerView: 1,
-        // grabCursor: true,
+        grabCursor: true,
         effect: 'fade',
         preloadImages: false,
         // waitForTransition: true,

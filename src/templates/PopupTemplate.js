@@ -33,26 +33,29 @@ const PopupTemplate = ({
                 image={seoImage}
             />
             <ModalRoutingContext.Consumer>
-                {({ modal, closeTo }) => (
-                    <>
-                        {modal ? (
-                            <PopupModal 
-                                lang={langSlug}
-                                data={contentfulPopup}
-                                closeTo={closeTo}
-                                slug={slug}
-                                formInput={formInput}
-                            />
-                        ) : (
-                            <PopupPage 
-                                lang={langSlug}
-                                data={contentfulPopup}
-                                slug={slug}
-                                formInput={formInput}
-                            />
-                        )}
-                    </>
-                )}
+                {({ modal, closeTo }) => {
+                    console.log(location)
+                    return (
+                        <>
+                            {modal ? (
+                                <PopupModal 
+                                    lang={langSlug}
+                                    data={contentfulPopup}
+                                    closeTo={closeTo}
+                                    slug={slug}
+                                    formInput={formInput}
+                                />
+                            ) : (
+                                <PopupPage 
+                                    lang={langSlug}
+                                    data={contentfulPopup}
+                                    slug={slug}
+                                    formInput={formInput}
+                                />
+                            )}
+                        </>
+                    )
+                }}
             </ModalRoutingContext.Consumer>
         </>
     )
