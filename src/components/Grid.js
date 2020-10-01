@@ -79,6 +79,7 @@ const Grid = ({
     // States
     const [activeNewsItems, setActiveNewsItems] = useState(-1)
     const [filteredItems, setFilteredItems] = useState([])
+    const [defaultItems, setDefaultItems] = useState([])
 
     // Refs
     const itemRefs = useRef([])
@@ -114,6 +115,18 @@ const Grid = ({
                     }
                 }
             }
+            default: nodes {
+                slug
+                category
+                name
+                title
+                featuredImage {
+                    title
+                    fluid(maxWidth: 400, quality: 100) {
+                        ...GatsbyContentfulFluid_withWebp
+                    }
+                }
+            }
         },
         blogItems: allContentfulArticle(filter: {
             category: {
@@ -136,6 +149,18 @@ const Grid = ({
                         fluid(maxWidth: 400, quality: 100) {
                             ...GatsbyContentfulFluid_withWebp
                         }
+                    }
+                }
+            }
+            default: nodes {
+                slug
+                category
+                name
+                title
+                featuredImage {
+                    title
+                    fluid(maxWidth: 400, quality: 100) {
+                        ...GatsbyContentfulFluid_withWebp
                     }
                 }
             }
@@ -204,9 +229,9 @@ const Grid = ({
     useEffect(() => {
 
         if (category == 'Careers') {
-            setFilteredItems(careerItems.nodes)
+            setDefaultItems(careerItems.nodes)
         } else if (category == 'Trainers') {
-            setFilteredItems(trainerItems.nodes)
+            setDefaultItems(trainerItems.nodes)
         }
 
     }, [])
@@ -222,7 +247,7 @@ const Grid = ({
                 group.nodes.forEach(node => items.push(node))
             })
             
-            setFilteredItems(items)
+            setFilteredItems(categoryItems.default)
         } else {
             setFilteredItems(categoryItems.group[activeNewsItems].nodes)
         }
@@ -230,8 +255,6 @@ const Grid = ({
     }, [activeNewsItems])
 
     useEffect(() => {
-
-        if (!showFilter || !inView) return
 
         itemRefs.current.forEach((item, i) => {
             if (item) gsap.fromTo(item, { y: 25.0, alpha: 0.0 }, { y: 0.0, alpha: 1.0, delay: i * 0.25, duration: 0.5, ease: 'sine.out' })
@@ -241,21 +264,33 @@ const Grid = ({
 
     useEffect(() => {
         
-        gsap.set(filterRef.current, { x: -25.0, alpha: 0.0 })
+        // gsap.set(filterRef.current, { x: -25.0, alpha: 0.0 })
 
-        itemRefs.current.forEach(item => {
-            gsap.set(item, { y: 25.0, alpha: 0.0 })
-        })
+        // itemRefs.current.forEach(item => {
+        //     gsap.set(item, { y: 25.0, alpha: 0.0 })
+        // })
         
         if (!inView) return
 
-        gsap.to(filterRef.current, { x: 0.0, alpha: 1.0, transformOrigin: 'left', ease: 'power3.out' })
-        
         itemRefs.current.forEach((item, i) => {
-            gsap.fromTo(item, { y: 25.0, alpha: 0.0 }, { y: 0.0, alpha: 1.0, delay: i * 0.25, duration: 0.5, ease: 'sine.out' })
+            if (item) gsap.fromTo(item, { y: 25.0, alpha: 0.0 }, { y: 0.0, alpha: 1.0, delay: i * 0.25, duration: 0.5, ease: 'sine.out' })
         })
 
+        // gsap.to(filterRef.current, { x: 0.0, alpha: 1.0, transformOrigin: 'left', ease: 'power3.out' })
+        
+        // itemRefs.current.forEach((item, i) => {
+        //     gsap.fromTo(item, { y: 25.0, alpha: 0.0 }, { y: 0.0, alpha: 1.0, delay: i * 0.25, duration: 0.5, ease: 'sine.out' })
+        // })
+
     }, [inView])
+
+    let gridItems 
+
+    if (filteredItems.length > 0) {
+        gridItems = filteredItems
+    } else {
+        gridItems = defaultItems
+    }
 
     return (
         <Wrapper>
@@ -280,15 +315,17 @@ const Grid = ({
                     </Filter>
                 )}
                 <List>
-                    {filteredItems.map((item, i) => (
-                        <GridItem 
-                            key={i} 
-                            lang={lang} 
-                            data={item} 
-                            gridCategory={category} 
-                            ref={el => itemRefs.current[i] = el}
-                        />
-                    ))}
+                    {gridItems.map((item, i) => {
+                        return (
+                            <GridItem 
+                                key={i} 
+                                lang={lang} 
+                                data={item} 
+                                gridCategory={category} 
+                                ref={el => itemRefs.current[i] = el}
+                            />
+                        )
+                    })}
                 </List>
             </Container>
         </Wrapper>

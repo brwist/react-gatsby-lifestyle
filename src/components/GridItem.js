@@ -1,4 +1,4 @@
-import React, { useRef, forwardRef } from 'react'
+import React, { useRef, forwardRef, useImperativeHandle } from 'react'
 import styled from 'styled-components'
 import Image from 'gatsby-image'
 import { Link } from 'gatsby'
@@ -10,8 +10,6 @@ import { generatePath } from './../utils/helpers'
 import TextRenderer from './TextRenderer'
 
 const StyledItem = styled.li`
-    opacity: 0;
-    
     &:hover {
         img {
             transform: scale(1.05);
@@ -143,6 +141,24 @@ const GridItem = ({
     } else {
         link = `${category.toLowerCase()}/${slug}`
     }
+
+    // useImperativeHandle(ref, () => {
+    //     return {
+    //         transitionIn() {
+
+    //             gsap.set(imageRef.current, { scale: 1.0, alpha: 0.0 })
+    //             gsap.set(imageOverlayRef.current, { alpha: 1.0 })
+
+    //             const timeline = new gsap.timeline()
+                
+    //             timeline.to(imageOverlayRef.current, { alpha: 0.0, duration: 1.5, ease: 'power3.out' }, 0.0)
+    //             timeline.to(imageRef.current, { scale: 1.0, alpha: 1.0, duration: 1.5, ease: 'power3.out' }, 0.0)
+                
+    //             return timeline
+
+    //         }
+    //     }
+    // })
 
     return (
         <StyledItem

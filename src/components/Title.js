@@ -322,43 +322,42 @@ const getLinkComponent = (links, lang) => {
 
     if (links.length) {
         linkElement = links
-    } else if (!links.length && links.internal) {
+    } else if (links.internal) {
         linkElement = links.internal
     }
 
     return (
         <LinksWrapper>
-            {links.external ? (
+            {links.external && (
                 <StyledButtonPrimary 
                     href={links.external.link} 
                     label={links.external.label} 
                     inverted 
                 />
-            ) : (
-                linkElement.map(({ label, formInput, internalLink: { __typename, slug } }, i) => {           
-                    let modal
-
-                    if (slug == null) {
-                        modal = false
-                    } else {
-                        modal = slug.includes('get-in-touch') || slug.includes('self-test') || slug.includes('reserve-your-space') ? true : false
-                    }
-                    
-                    return (
-                        <StyledButtonPrimary 
-                            key={i} 
-                            lang={lang} 
-                            to={generatePath(lang, slug)} 
-                            label={label} 
-                            inverted={i == 0}
-                            modal={{
-                                modal: modal,
-                                formInput: formInput 
-                            }}
-                        />
-                    )
-                })
             )}
+            {linkElement && linkElement.map(({ label, formInput, internalLink: { __typename, slug } }, i) => {           
+                let modal
+
+                if (slug == null) {
+                    modal = false
+                } else {
+                    modal = slug.includes('get-in-touch') || slug.includes('self-test') || slug.includes('reserve-your-space') ? true : false
+                }
+                
+                return (
+                    <StyledButtonPrimary 
+                        key={i} 
+                        lang={lang} 
+                        to={generatePath(lang, slug)} 
+                        label={label} 
+                        inverted={i == 0}
+                        modal={{
+                            modal: modal,
+                            formInput: formInput 
+                        }}
+                    />
+                )
+            })}
         </LinksWrapper>
     )
 }

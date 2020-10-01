@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, forwardRef } from 'react'
 import { Link } from 'gatsby'
 import styled, { css } from 'styled-components'
 
@@ -145,7 +145,7 @@ const ButtonPrimary = ({
     colored,
     modal,
     share
-}) => {
+}, ref) => {
     if (onClick) {
         return (
             <StyledButton 
@@ -153,6 +153,7 @@ const ButtonPrimary = ({
                 onClick={onClick} 
                 inverted={inverted ? 'true' : 'false'}
                 colored={colored ? 'true' : 'false'}
+                ref={ref}
             >
                 {buttonInside(label)}
             </StyledButton>
@@ -165,6 +166,7 @@ const ButtonPrimary = ({
                     to={to} 
                     inverted={inverted ? 'true' : 'false'}
                     colored={colored ? 'true' : 'false'}
+                    ref={ref}
                     state={{
                         modal: modal.modal,
                         formInput: modal.formInput
@@ -180,6 +182,7 @@ const ButtonPrimary = ({
                     to={to} 
                     inverted={inverted ? 'true' : 'false'}
                     colored={colored ? 'true' : 'false'}
+                    ref={ref}
                 >
                     {buttonInside(label)}
                 </StyledInternal>
@@ -194,6 +197,7 @@ const ButtonPrimary = ({
                 target={url.includes('mailto') ? '' : '_blank'}
                 inverted={inverted ? 'true' : 'false'}
                 colored={colored ? 'true' : 'false'}
+                ref={ref}
             >
                 {buttonInside(label)}
             </StyledExternal>
@@ -221,6 +225,7 @@ const ButtonPrimary = ({
                     className={`button ${className || ''}`}
                     inverted={inverted ? 'true' : 'false'}
                     colored={colored ? 'true' : 'false'}
+                    ref={ref}
                 >
                     {buttonInside(label)}
                 </StyledButton>
@@ -233,6 +238,7 @@ const ButtonPrimary = ({
                     colored={colored ? 'true' : 'false'}
                     href={`https://web.whatsapp.com/send?text=${share.text}. Read more about it on ${share.link}`} 
                     target='_blank'
+                    ref={ref}
                 >
                     {buttonInside(label)}
                 </StyledExternal>
@@ -243,4 +249,4 @@ const ButtonPrimary = ({
     }
 }
 
-export default ButtonPrimary
+export default forwardRef(ButtonPrimary)

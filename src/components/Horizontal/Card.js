@@ -493,6 +493,7 @@ const Card = ({
                                 to={generatePath(lang, link)}
                                 inverted={true}
                                 colored={true}
+                                ref={buttonRef}
                             />
                         </ButtonWrapper>
                     )}
