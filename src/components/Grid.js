@@ -264,7 +264,7 @@ const Grid = ({
 
     useEffect(() => {
         
-        // gsap.set(filterRef.current, { x: -25.0, alpha: 0.0 })
+        gsap.set(filterRef.current, { x: -25.0, alpha: 0.0 })
 
         // itemRefs.current.forEach(item => {
         //     gsap.set(item, { y: 25.0, alpha: 0.0 })
@@ -272,11 +272,10 @@ const Grid = ({
         
         if (!inView) return
 
+        gsap.to(filterRef.current, { x: 0.0, alpha: 1.0, transformOrigin: 'left', ease: 'power3.out' })
         itemRefs.current.forEach((item, i) => {
             if (item) gsap.fromTo(item, { y: 25.0, alpha: 0.0 }, { y: 0.0, alpha: 1.0, delay: i * 0.25, duration: 0.5, ease: 'sine.out' })
         })
-
-        // gsap.to(filterRef.current, { x: 0.0, alpha: 1.0, transformOrigin: 'left', ease: 'power3.out' })
         
         // itemRefs.current.forEach((item, i) => {
         //     gsap.fromTo(item, { y: 25.0, alpha: 0.0 }, { y: 0.0, alpha: 1.0, delay: i * 0.25, duration: 0.5, ease: 'sine.out' })

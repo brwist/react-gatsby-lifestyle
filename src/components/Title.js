@@ -120,8 +120,6 @@ const StyledTitle = styled.h1`
 
         ${props.size == 'extra-large' && `
             font-size: ${props.theme.fontSizes.desktop.h1};
-
-            background: blue;
             
             .line-wrapper {
                 &:nth-of-type(2) {
