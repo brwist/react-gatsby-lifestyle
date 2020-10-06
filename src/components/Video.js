@@ -144,7 +144,8 @@ const Video = ({
                     height='100%'
                     playing={videoPlaying}
                     onReady={toggleVideoReady}
-                    muted={true}
+                    // muted={videoPlaying ? false : true}
+                    volume={videoPlaying ? 1 : 0}
                 />
             </StyledVideo>
             <Overlay onClick={() => setVideoPlaying(!videoPlaying)}></Overlay>
