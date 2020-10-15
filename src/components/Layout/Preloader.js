@@ -101,6 +101,8 @@ const Preloader = ({
 
         let vh = typeof window !== 'undefined' ? window.innerHeight * 0.01 : 1000
         preloaderRef.current.style.setProperty('--vh', `${vh}px`)
+
+        gsap.set(logoWrapperRef.current, { height: 0.0 })
         
     }, [])
 

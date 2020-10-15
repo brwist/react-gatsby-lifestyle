@@ -103,8 +103,6 @@ const HorizontalScroll = ({
 
     useEffect(() => {
         
-        if (!inView) return
-
         const tween = gsap.to(flowWrapperRef.current, { alpha: 1.0, duration: 1.0, delay: 1.0, ease: 'sine.out' })
 
         return () => {
@@ -122,7 +120,7 @@ const HorizontalScroll = ({
                     <StyledTitle 
                         ref={titleRef}
                         lang={lang}
-                        inView={inView}
+                        inView={true}
                         type={type}
                         title={title} 
                         description={description}
@@ -136,7 +134,7 @@ const HorizontalScroll = ({
                                 key={i}
                                 lang={lang}
                                 data={item}
-                                inView={inView}
+                                inView={true}
                                 index={i}
                                 component={component}
                                 information={information}
