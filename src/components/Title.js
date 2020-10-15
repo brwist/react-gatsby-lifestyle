@@ -329,7 +329,7 @@ const getLinkComponent = (links, lang, windowWidth) => {
         <LinksWrapper>
             {links.external && (
                 <StyledButtonPrimary 
-                    href={links.external.link} 
+                    href={links.external.link}
                     label={links.external.label} 
                     inverted 
                 />
@@ -382,8 +382,8 @@ const Title = ({
 
     const { width: windowWidth } = useWindowSize()
 
-    const duration = size == 'extra-large' ? 1.25 : size == 'large' ? 0.65 : 0.35
-    const delay = size == 'extra-large' ? 1.5 : size == 'large' ? 0.8 : 0.5
+    const duration = size == 'extra-large' ? 1.0 : size == 'large' ? 0.65 : 0.35
+    const delay = size == 'extra-large' ? 1.15 : size == 'large' ? 0.8 : 0.5
 
     useEffect(() => {
         title && gsap.set(titleRef.current, { scaleY: 1.0 })

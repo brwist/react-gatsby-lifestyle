@@ -397,6 +397,7 @@ const Card = ({
     component,
     information,
     type,
+    hidden,
     index,
     active,
     inView,

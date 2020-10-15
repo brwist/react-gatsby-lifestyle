@@ -1,6 +1,7 @@
 import React, { useRef, forwardRef } from 'react'
 import { Link } from 'gatsby'
 import styled, { css } from 'styled-components'
+import { scroller } from 'react-scroll'
 
 import { generatePath } from './../../utils/helpers'
 
@@ -17,6 +18,8 @@ const ButtonStyles = css`
     border-radius: ${props => props.theme.mobileVW(24)};
 
     color: ${props => props.theme.colors.light};
+
+    cursor: pointer;
 
     transition: all 0.5s cubic-bezier(.16,1.08,.38,.98);
 
@@ -189,19 +192,34 @@ const ButtonPrimary = ({
             )
         }
     } else if (href) {
-        const url = href.includes('@') && !href.includes('mailto') ? 'mailto:' + href : href
-        return (
-            <StyledExternal 
-                className={`button ${className || ''}`}
-                href={url}
-                target={url.includes('mailto') ? '' : '_blank'}
-                inverted={inverted ? 'true' : 'false'}
-                colored={colored ? 'true' : 'false'}
-                ref={ref}
-            >
-                {buttonInside(label)}
-            </StyledExternal>
-        )
+        if (href.includes('#')) {
+            const anchor = href.replace('#', '')
+            return (
+                <StyledButton
+                    className={`button ${className || ''}`} 
+                    smooth={true}
+                    inverted={inverted ? 'true' : 'false'}
+                    colored={colored ? 'true' : 'false'}
+                    onClick={() => scroller.scrollTo(anchor, {
+                        duration: 2000,
+                        offset: -50,
+                        smooth: 'easeInOutQuint'
+                    })}
+                >{buttonInside(label)}</StyledButton>
+            )
+        } else {
+            const url = href.includes('@') && !href.includes('mailto') ? 'mailto:' + href : href
+            return (
+                <StyledExternal 
+                    className={`button ${className || ''}`}
+                    href={url}
+                    target={url.includes('mailto') ? '' : '_blank'}
+                    inverted={inverted ? 'true' : 'false'}
+                    colored={colored ? 'true' : 'false'}
+                    ref={ref}
+                >{buttonInside(label)}</StyledExternal>
+            )
+        }
     } else if (share) {
         if (typeof window !== 'undefined' && window.navigator.share) {
 

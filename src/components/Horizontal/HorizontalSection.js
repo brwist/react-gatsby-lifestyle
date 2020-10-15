@@ -33,6 +33,7 @@ const renderComponent = ({
         gesture, // Draggable or Scrollable
         itemsInformation, // Title and excerpt, Excerpt or Extended
         items,
+        scrollToId,
         hashtags, // If Instagram
         contentTitle,
         contentDescription
@@ -51,6 +52,7 @@ const renderComponent = ({
                 component={component} 
                 type={type}
                 slug={slug}
+                scrollToId={scrollToId}
                 information={itemsInformation}
                 backgroundColor={backgroundColor}
                 title={contentTitle}
@@ -68,6 +70,7 @@ const renderComponent = ({
                     component={component} 
                     type={type}
                     slug={slug}
+                    scrollToId={scrollToId}
                     information={itemsInformation}
                     backgroundColor={backgroundColor}
                     title={contentTitle}

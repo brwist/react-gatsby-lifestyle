@@ -183,6 +183,7 @@ const Grid = ({
                 title: name
                 category
                 slug
+                hidden
                 excerpt {
                     json
                 }

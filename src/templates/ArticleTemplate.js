@@ -17,7 +17,7 @@ const Wrapper = styled.section`
     padding: ${props => props.theme.sizes.mobile} 0 calc(${props => props.theme.sizes.mobile} * 3) 0;
     
     ${props => props.theme.above.desktop`
-        padding: calc(${props.theme.sizes.desktop} * 10) 0 calc(${props.theme.sizes.desktop} * 5) 0;
+        padding: calc(${props.theme.sizes.desktop} * 5) 0 calc(${props.theme.sizes.desktop} * 5) 0;
     `}
 `
 
@@ -74,7 +74,7 @@ const InfoItem = styled.li`
         ${props.flex && `
             .button {
                 &:first-of-type {
-                    margin-bottom: ${props.theme.sizes.desktop};
+                    margin-bottom: calc(${props.theme.sizes.desktop} / 2);
                 }
             }
         `}
@@ -146,6 +146,16 @@ const ContentInner = styled.div`
     ${props => props.theme.above.desktop`
         max-width: ${props.theme.desktopVW(650)};
     `}
+`
+
+const StyledTextRenderer = styled(TextRenderer)`
+    a {
+        color: ${props => props.theme.colors.orange};
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 `
 
 const InfoBlock = ({
@@ -261,7 +271,10 @@ const ArticleTemplate = ({
                         />
                         <Content>
                             <ContentInner>
-                                <TextRenderer data={content} />
+                                <StyledTextRenderer 
+                                    data={content} 
+                                    useInlineLink
+                                />
                             </ContentInner>
                         </Content>
                         <InfoBlock 

@@ -18,7 +18,7 @@ const Wrapper = styled.div`
     padding: calc(${props => props.theme.sizes.mobile} * 3) 0;
     
     ${props => props.theme.above.desktop`
-        padding: calc(${props.theme.sizes.desktop} * 5) 0 calc(${props.theme.sizes.desktop} * 10) 0;
+        padding: calc(${props.theme.sizes.desktop} * 5) 0 calc(${props.theme.sizes.desktop} * 3) 0;
     `}
 `
 

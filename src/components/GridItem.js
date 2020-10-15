@@ -10,11 +10,15 @@ import { generatePath } from './../utils/helpers'
 import TextRenderer from './TextRenderer'
 
 const StyledItem = styled.li`
-    &:hover {
-        img {
-            transform: scale(1.05);
+    ${props => props.disabled ? `
+        pointer-events: none;
+    ` : `
+        &:hover {
+            img {
+                transform: scale(1.05);
+            }
         }
-    }
+    `}
 `
 
 const ImageWrapper = styled(Link)`
@@ -115,6 +119,7 @@ const GridItem = ({
     const { 
         title,
         slug,
+        hidden,
         category,
         featuredImage,
         buttonLabel,
@@ -165,6 +170,7 @@ const GridItem = ({
             ref={ref}
             onMouseEnter={() => buttonRef.current.classList.add('hover')} 
             onMouseLeave={() => buttonRef.current.classList.remove('hover')}
+            disabled={hidden}
         >
             <ImageWrapper to={generatePath(lang, link)}>
                 <StyledImage fluid={featuredImage.fluid} alt={featuredImage.title} />
@@ -181,13 +187,15 @@ const GridItem = ({
             {showDescription && (
                 <Description data={excerpt} />
             )}
-            <Footer>
-                <ButtonArrow 
-                    ref={buttonRef}
-                    label={buttonLabel || 'Read more'} 
-                    to={generatePath(lang, link)} 
-                />
-            </Footer>
+            {!hidden && (
+                <Footer>
+                    <ButtonArrow 
+                        ref={buttonRef}
+                        label={buttonLabel || 'Read more'} 
+                        to={generatePath(lang, link)} 
+                    />
+                </Footer>
+            )}
         </StyledItem>
     )
 }

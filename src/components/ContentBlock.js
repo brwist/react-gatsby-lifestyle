@@ -20,8 +20,8 @@ const Wrapper = styled(Container)`
         /* height: 300vh;
         height: 100vh; */
 
-        padding-top: calc(${props.theme.sizes.desktop} * 10);
-        padding-bottom: calc(${props.theme.sizes.desktop} * 10);
+        padding-top: calc(${props.theme.sizes.desktop} * 5);
+        padding-bottom: calc(${props.theme.sizes.desktop} * 3);
     `}
 `
 

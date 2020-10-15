@@ -122,6 +122,7 @@ const HorizontalDrag = ({
     description,
     component,
     type,
+    scrollToId,
     slug,
     category,
     information,
@@ -230,6 +231,7 @@ const HorizontalDrag = ({
             colors={getColors(backgroundColor)} 
             type={type}
             className={className}
+            id={scrollToId && scrollToId}
         >
             <StyledTitle 
                 ref={titleRef}

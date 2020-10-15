@@ -27,7 +27,9 @@ const StyledContainer = styled(Container)`
     ${props => props.theme.above.desktop`
         flex-direction: row;
         
-        padding: calc(${props.theme.sizes.desktop} * 5) 0;
+        padding: calc(${props.theme.sizes.desktop} * 2) 0 ${props.theme.sizes.desktop} 0;
+
+        min-height: 80vh;
     `}
 `
 

@@ -55,7 +55,7 @@ const HorizontalScroll = ({
     slug,
     information,
     component,
-    title, 
+    title,
     description,
     backgroundColor,
     className
@@ -125,7 +125,7 @@ const HorizontalScroll = ({
                         inView={inView}
                         type={type}
                         title={title} 
-                        description={description} 
+                        description={description}
                         overlayColor={backgroundColor}
                         size='normal'
                         useInlineLink={true}
