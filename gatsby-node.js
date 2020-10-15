@@ -173,13 +173,13 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
                 if (category == 'Normal' || category == 'Worlds') {
                     prefix = slug
                 } else if (category == 'Trainers') {
-                    prefix = `physical-development/trainers/${slug}`
+                    prefix = `physical-training/trainers/${slug}`
                 } else if (category == 'Events' || category == 'Trips') {
                     prefix = `events-and-trips/${category.toLowerCase()}/${slug}`
                 } else if (category == 'News' || category == 'Knowledge' || category == 'Recipes') {
                     prefix = `blog/${category.toLowerCase()}/${slug}`
                 } else if (category == 'Performance') {
-                    prefix = `physical-development/${slug}`
+                    prefix = `physical-training/${slug}`
                 } else if (category == 'Careers') {
                     prefix = `${category.toLowerCase()}/${slug}`
                 } else if (category == 'Workshops') {
