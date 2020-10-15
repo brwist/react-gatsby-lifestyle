@@ -67,7 +67,7 @@ const Video = styled.video`
     width: 100%;
     height: 100%;
 
-    opacity: 0.5;
+    opacity: 1;
 
     object-fit: cover;
     object-position: center;
