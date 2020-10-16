@@ -287,7 +287,7 @@ const Grid = ({
     }, [inView])
 
     return (
-        <Wrapper>
+        <Wrapper id={category.split(' ').join('-').toLowerCase()}>
             <Container ref={gridRef}>
                 {showFilter && (
                     <Filter>

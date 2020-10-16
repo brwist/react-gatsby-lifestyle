@@ -467,7 +467,7 @@ const Global = ({
                         </CheckboxLabel>
                     </CheckboxField>
                     <Note>
-                        We use Mailchimp for our email marketing. By clicking on sign up you give Mailchimp permission to process your information.
+                        We use Mailchimp for our digital communications. By clicking on sign up you give Mailchimp permission to process your information.
                         <Anchor href='https://mailchimp.com/legal/' target='_blank'>Read more about Mailchimp's privacy policy here.</Anchor>
                     </Note>
                 </GDPR>
