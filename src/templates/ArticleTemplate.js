@@ -263,7 +263,7 @@ const ArticleTemplate = ({
                 data={components}
             />
             {content && (
-                <Wrapper>
+                <Wrapper id='content'>
                     <StyledContainer>
                         <InfoBlock 
                             mobile='false' 
