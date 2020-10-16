@@ -40,7 +40,7 @@ const Seo = ({
             htmlAttributes={{
                 lang,
             }}
-            title={metaTitle}
+            title={`${title} - Rockstar Lifestyle`}
             meta={[
                 {
                     name: `viewport`,

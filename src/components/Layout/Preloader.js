@@ -40,9 +40,9 @@ const logoStyles = css`
     max-height: 15px;
 
     ${props => props.theme.above.desktop`
-        height: ${props.theme.desktopVW(20)};
+        height: ${props.theme.desktopVW(25)};
 
-        max-height: 35px;
+        max-height: 45px;
     `}
 `
 

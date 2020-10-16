@@ -98,6 +98,10 @@ const ContentItem = styled.li`
 const Address = styled(TextRenderer)`
     font-size: ${props => props.theme.fontSizes.mobile.s};
 
+    a {
+        color: ${props => props.theme.colors.orange};
+    }
+
     &:not(:last-of-type) {
         margin-bottom: 0;
     }
