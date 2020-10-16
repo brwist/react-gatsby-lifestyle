@@ -30,6 +30,8 @@ const LogoWrapper = styled.div`
     position: relative;
 
     overflow: hidden;
+
+    height: 0;
 `
 
 const logoStyles = css`
