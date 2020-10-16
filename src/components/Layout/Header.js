@@ -174,7 +174,7 @@ const Header = ({
 
     // Context
     const preloaderState = useContext(PreloaderContext)
-    const delay = preloaderState == 'preloader' ? 5.0 : 2.0
+    const delay = preloaderState == 'preloader' ? 4.0 : 2.0
 
     const { width: windowWidth } = useWindowSize()
 
