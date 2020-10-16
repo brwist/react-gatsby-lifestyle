@@ -110,7 +110,7 @@ const Preloader = ({
 
     useEffect(() => {
 
-        const timeline = new gsap.timeline({ delay: 1.0, onComplete: () => showPreloader() })
+        const timeline = new gsap.timeline({ onComplete: () => showPreloader() })
         timeline.fromTo(logoWrapperRef.current, { height: 0.0, transformOrigin: 'top' }, { height: 'auto', duration: 1.5, ease: 'power3.out' }, 0.5)
         timeline.to(logoWrapperRef.current, { alpha: 0.0, duration: 0.5, ease: 'power3.out' }, 2.0)
         timeline.to(preloaderRef.current, { alpha: 0.0, duration: 0.5, ease: 'sine.out' }, 2.5)
