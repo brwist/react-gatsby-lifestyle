@@ -38,7 +38,7 @@ const StyledNavigation = styled.nav`
 
         .label {
             font-family: ${props.theme.fontFamilies.nbBold};
-            font-size: ${props.theme.fontSizes.mobile.h4};
+            font-size: ${props.theme.fontSizes.mobile.h5};
             line-height: 1.25;
 
             text-transform: uppercase;
@@ -150,11 +150,15 @@ const Label = styled.span`
     display: block;
 
     font-family: ${props => props.theme.fontFamilies.plainLight};
-    font-size: ${props => props.theme.fontSizes.desktop.p};
+    font-size: ${props => props.theme.fontSizes.mobile.s};
     line-height: 1.5;
     font-weight: 100;
 
     color: currentColor;
+
+    ${props => props.theme.above.desktop`
+        font-size: ${props.theme.fontSizes.desktop.p};
+    `}
 `
 
 const Navigation = ({
@@ -232,7 +236,7 @@ const Navigation = ({
         if (name.includes('Development')) {
             return name.replace('Development', 'Dev.')
         } else if (name.includes('Rockstar')) {
-            return name.replace('Rockstar', '')
+            return name.replace('Rockstar', 'RS.')
         } else {
             return name
         }
