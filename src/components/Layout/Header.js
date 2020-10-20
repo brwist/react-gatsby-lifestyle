@@ -244,7 +244,8 @@ const Header = ({
                         label='Get in touch' 
                         to={generatePath(lang, 'get-in-touch')} 
                         modal={{
-                            modal: windowWidth < 1023 ? false : true
+                            modal: windowWidth < 1023 ? false : true,
+                            formInput: 'Get in touch'
                         }}
                     />
                 </InnerRight>
