@@ -34,7 +34,6 @@ const PopupTemplate = ({
             />
             <ModalRoutingContext.Consumer>
                 {({ modal, closeTo }) => {
-                    console.log(location)
                     return (
                         <>
                             {modal ? (
