@@ -167,6 +167,7 @@ const InfoBlock = ({
         author,
         date,
         link,
+        linkLabel,
         category
     }
 }) => {
@@ -214,7 +215,7 @@ const InfoBlock = ({
             <InfoItem flex={true}>
                 {link && (
                     <ButtonPrimary 
-                        label={getLinkLabel()} 
+                        label={linkLabel || getLinkLabel()} 
                         href={link} 
                         inverted 
                     />

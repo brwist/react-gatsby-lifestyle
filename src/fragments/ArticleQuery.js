@@ -31,6 +31,7 @@ export const ArticleQuery = graphql`
         author
         date(formatString: "DD / MM / YYYY")
         link
+        linkLabel
         relatedArticles {
             slug
             title
